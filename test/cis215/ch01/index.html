@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 1 classroom presentation: Introduction to Data Analysis.">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002B5C'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23F2B134'/%3E%3C/svg%3E">
+  <title>CIS215: Introduction to Data Analysis</title>
+  <!-- need to link to ../shared/deck.css -->
+  <link rel="stylesheet" href="../../shared/deck.css">
+
+
+</head>
+
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide dark active"
+      data-notes="Open with a show of hands or brief think-pair-share. Ask students where they have seen a chart influence a decision. Take only two examples, then connect them to the chapter.\n\nTime: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 1</div>
+        <div class="rule"></div>
+        <h1>Data tells a story.<br><span class="accent">You decide</span> what it means.</h1>
+        <p class="lede">Introduction to data analysis: questions, workflow, tools, and your first dataset.</p>
+        <div class="prompt">
+          <p><strong>Start here:</strong> Name one decision you have seen guided by data. What made you trust it?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Frame the class around what students will be able to do, not a list of chapter sections. Read the three statements quickly and tell students they will practice each one today.\n\nTime: 3-6 minutes.">
+      <div class="brand">CIS215 · Introduction to Data Analysis</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>By the end of class, you can explain the work behind a useful data decision.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">01</div>
+            <h3>Recognize</h3>
+            <p>the analysis, visualization, and prediction work inside a data project.</p>
+          </article>
+          <article class="panel">
+            <div class="number">02</div>
+            <h3>Trace</h3>
+            <p>a project through the five-phase analytics workflow.</p>
+          </article>
+          <article class="panel">
+            <div class="number">03</div>
+            <h3>Start</h3>
+            <p>a JupyterLab notebook, load data, and inspect a DataFrame.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold"
+      data-notes="Invite fast answers. The purpose is to surface the difference between a data source, a chart, and a model before defining those terms. Do not reveal the answer until students have committed.\n\nTime: 6-9 minutes.">
+      <div class="brand">CIS215 · Warm-up</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Warm-up: Spot the work</div>
+        <h2>A coffee chain wants to plan tomorrow’s menu.</h2>
+        <div class="split">
+          <div>
+            <p class="quote">It reviews past sales, charts rush-hour demand, then forecasts which muffins to bake.</p>
+          </div>
+          <div class="panel">
+            <p><strong>Talk with a partner:</strong></p>
+            <p>Which part examines the data? Which part communicates it? Which part looks ahead?</p>
+            <button class="reveal" type="button" aria-expanded="false">Reveal one answer</button>
+            <div class="answer">Reviewing sales is <strong>analysis</strong>. The chart is
+              <strong>visualization</strong>. Forecasting muffins is <strong>prediction</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Use this as the formal definition. Point out that the labels can overlap, but the three skills have distinct jobs. Ask students to remember the coffee-shop example as a running scenario.\n\nTime: 9-12 minutes.">
+      <div class="brand">CIS215 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">What data science is</div>
+        <div class="split">
+          <div>
+            <h2>Three connected kinds of work.</h2>
+            <p class="lede">Data science combines methods, computing, and domain knowledge to turn data into useful
+              insight.</p>
+          </div>
+          <div class="venn" role="img"
+            aria-label="Three overlapping circles labeled Analysis, Visualization, and Prediction with Data Science at their center.">
+            <div class="circle analysis">Analysis<br><small>Find what happened</small></div>
+            <div class="circle visual">Visualization<br><small>Make patterns visible</small></div>
+            <div class="circle predict">Prediction<br><small>Estimate what may happen</small></div>
+            <div class="venn-core">Data<br>science</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark"
+      data-notes="Give a 20-second explanation of each card. Then choose one local context such as campus services, retail, sports, or healthcare and ask which component would be most visible.\n\nTime: 12-16 minutes.">
+      <div class="brand">CIS215 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">The three components</div>
+        <h2>Each component answers a different question.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="signal">Analysis</div>
+            <h3>What is happening?</h3>
+            <p>Clean, transform, compare, group, and interpret data.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">Visualization</div>
+            <h3>What should people notice?</h3>
+            <p>Use charts and displays to make evidence easier to understand.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">Prediction</div>
+            <h3>What may happen next?</h3>
+            <p>Use past patterns to estimate a future outcome.</p>
+          </article>
+        </div>
+        <p class="lede">A strong project moves among all three. It does not stop at a spreadsheet.</p>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="This slide turns the prior definition into a low-stakes check. Have students point to or call out a category. Reveal after a few responses.\n\nTime: 16-18 minutes.">
+      <div class="brand">CIS215 · Check your thinking</div>
+      <div class="content">
+        <div class="eyebrow">Quick check</div>
+        <h2>Classify the move.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <h3>1. Group sales by store and month.</h3>
+            <p>Analysis, visualization, or prediction?</p>
+          </article>
+          <article class="panel">
+            <h3>2. Build a line chart of monthly sales.</h3>
+            <p>Analysis, visualization, or prediction?</p>
+          </article>
+          <article class="panel">
+            <h3>3. Estimate next month’s sales.</h3>
+            <p>Analysis, visualization, or prediction?</p>
+          </article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answers</button>
+        <div class="answer"><strong>1:</strong> analysis. <strong>2:</strong> visualization. <strong>3:</strong>
+          prediction. In a full project, each step can inform the next one.</div>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Introduce the workflow as a guide that protects quality. Read the five verbs together. Emphasize that students will use these labels in Skills Lab 1A.\n\nTime: 18-21 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">A workflow you can trust</div>
+        <h2>Good analysis has a path.</h2>
+        <div class="workflow" role="img"
+          aria-label="Five-phase analytics workflow: Get, Clean, Prepare, Analyze, and Visualize.">
+          <article class="phase"><strong>Get</strong>
+            <p>Bring in data from a file, database, API, or other source.</p>
+          </article>
+          <article class="phase"><strong>Clean</strong>
+            <p>Find missing, duplicate, inconsistent, or invalid values.</p>
+          </article>
+          <article class="phase"><strong>Prepare</strong>
+            <p>Shape data into a form that supports the question.</p>
+          </article>
+          <article class="phase"><strong>Analyze</strong>
+            <p>Compare, calculate, group, and look for insight.</p>
+          </article>
+          <article class="phase"><strong>Visualize</strong>
+            <p>Build a clear chart for the audience and decision.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold"
+      data-notes="Pause here to make cleaning feel concrete. Ask students to pick the two problems that would cause the worst decision. Reinforce that the point is not to memorize the list. It is to inspect data before trusting it.\n\nTime: 21-25 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Why cleaning matters</div>
+        <h2>Messy data can make a clean-looking chart lie.</h2>
+        <div class="four-up">
+          <article class="panel">
+            <h3>Missing</h3>
+            <p>Blank values where a measurement should exist.</p>
+          </article>
+          <article class="panel">
+            <h3>Duplicate</h3>
+            <p>The same record appears more than once.</p>
+          </article>
+          <article class="panel">
+            <h3>Inconsistent</h3>
+            <p>“NY,” “N.Y.,” and “New York” mean the same thing.</p>
+          </article>
+          <article class="panel">
+            <h3>Invalid</h3>
+            <p>Impossible values, wrong types, or future dates.</p>
+          </article>
+        </div>
+        <div class="prompt">
+          <p><strong>Question:</strong> Which problem could change a decision without being obvious in the chart?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Correct the common misunderstanding that the workflow is a straight line. Use a short example: a chart exposes an outlier, then the analyst returns to Clean or Prepare.\n\nTime: 25-28 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">The workflow loops</div>
+        <div class="split">
+          <div>
+            <h2>Return when the data tells you to.</h2>
+            <p class="lede">Analysis often sends you back to cleaning or preparation. That is normal. The goal is sound
+              evidence, not a perfect straight line.</p>
+          </div>
+          <div class="loop-figure" role="img"
+            aria-label="A looping cycle from clean to prepare to analyze to revise, then back to clean.">
+            <div class="loop-node">Clean</div>
+            <div class="loop-node">Prepare</div>
+            <div class="loop-node">Analyze</div>
+            <div class="loop-node">Revise</div>
+            <div class="loop-arrow a">→</div>
+            <div class="loop-arrow b">→</div>
+            <div class="loop-arrow c">→</div>
+            <div class="loop-arrow d">→</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark"
+      data-notes="Connect the chapter vocabulary to industry language. Explain that ETL is a related label that students will see in job postings and tools. Keep the distinction concise.\n\nTime: 28-30 minutes.">
+      <div class="brand">CIS215 · Industry language</div>
+      <div class="content">
+        <div class="eyebrow">One term to know</div>
+        <h2>ETL describes the early work that makes analysis possible.</h2>
+        <div class="etl" role="img" aria-label="ETL stands for Extract, Transform, and Load.">
+          <div class="etl-term">Extract</div>
+          <div class="etl-line"></div>
+          <div class="etl-term">Transform</div>
+          <div class="etl-line"></div>
+          <div class="etl-term">Load</div>
+        </div>
+        <p class="lede">In this course, Get, Clean, and Prepare give you a practical way to recognize ETL work.</p>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Shift from concepts to the workspace. Describe JupyterLab as a local tool that opens in a browser. Avoid a live setup demonstration unless the room needs it. The purpose is mental orientation.\n\nTime: 30-34 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">Your analysis workspace</div>
+        <div class="split">
+          <div>
+            <h2>JupyterLab lets you think in small, testable steps.</h2>
+            <p class="lede">You write a little code, run it, inspect the result, and document what you learned in the
+              same notebook.</p>
+          </div>
+          <div class="panel">
+            <h3>Why this course uses JupyterLab</h3>
+            <ul class="checklist">
+              <li>Run code one cell at a time.</li>
+              <li>Keep notes beside the work.</li>
+              <li>See charts below the code that made them.</li>
+              <li>Build a record a colleague can follow.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold"
+      data-notes="Ask students to name the two cells. Then use the short example to stress that code produces output and Markdown explains the work. Mention Shift+Enter only after the concept is clear.\n\nTime: 34-37 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Notebook basics</div>
+        <h2>Every notebook needs both kinds of cells.</h2>
+        <div class="split">
+          <article class="panel">
+            <div class="number">&gt;_</div>
+            <h3>Code cell</h3>
+            <p>Runs Python and shows output below the cell.</p>
+            <pre
+              class="code"><span class="function">print</span>(<span class="string">"Hello, Data Science!"</span>)</pre>
+          </article>
+          <article class="panel">
+            <div class="number">#</div>
+            <h3>Markdown cell</h3>
+            <p>Explains the purpose, reasoning, and findings in readable text.</p>
+            <pre class="code"><span class="keyword">#</span> Phase 1: Get the Data</pre>
+          </article>
+        </div>
+        <p class="lede">Press <strong>Shift+Enter</strong> to run the current cell and move to the next one.</p>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="This is a clean installation handoff. If students have not installed Anaconda, show this slide and point them to the module instructions. Do not spend more than three minutes on installer troubleshooting in the main lesson.\n\nTime: 37-39 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">Set up your environment</div>
+        <h2>One reliable starting point: Anaconda + JupyterLab.</h2>
+        <div class="split">
+          <div class="panel">
+            <h3>What Anaconda gives you</h3>
+            <p>Python, JupyterLab, pandas, NumPy, matplotlib, and a package manager in one install.</p>
+          </div>
+          <div class="panel">
+            <h3>Your first check</h3>
+            <pre class="code"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+<span class="function">print</span>(pd.__version__)</pre>
+            <p>Use the default <strong>base</strong> environment for this course.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark"
+      data-notes="Introduce these as a toolkit, not terms to memorize. State that pandas is the first focus. If time permits, have students repeat the standard abbreviation pd.\n\nTime: 39-42 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Python essentials</div>
+        <h2>Modules give Python its data toolkit.</h2>
+        <div class="four-up">
+          <article class="panel">
+            <div class="signal">pandas · pd</div>
+            <h3>DataFrames</h3>
+            <p>Load, clean, filter, and analyze tables.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">NumPy · np</div>
+            <h3>Numbers</h3>
+            <p>Work with arrays and numerical computing.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">matplotlib · plt</div>
+            <h3>Charts</h3>
+            <p>Create clear plots and figures.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">seaborn · sns</div>
+            <h3>Statistical visuals</h3>
+            <p>Build polished statistical charts.</p>
+          </article>
+        </div>
+        <p class="lede">Put import statements at the top of your notebook so readers can see what your work needs.</p>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Walk through this left to right. Name the module, method, argument, and descriptive DataFrame name. Do not teach every syntax rule. This should make the source text less intimidating.\n\nTime: 42-45 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Read code like an analyst</div>
+        <h2>A method does a job. An argument tells it how.</h2>
+        <pre
+          class="code"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+df_gapminder = pd.<span class="function">read_csv</span>(<span class="string">"assets/code/chapter-01/gapminder.csv"</span>)</pre>
+        <div class="three-up">
+          <article class="panel">
+            <h3><code>pd</code></h3>
+            <p>The standard abbreviation for the pandas module.</p>
+          </article>
+          <article class="panel">
+            <h3><code>read_csv()</code></h3>
+            <p>A method that reads a CSV file into memory.</p>
+          </article>
+          <article class="panel">
+            <h3><code>df_gapminder</code></h3>
+            <p>A descriptive variable name for a DataFrame.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold"
+      data-notes="Use the table as a recognizable representation of the CSV. Point out that a DataFrame has rows and columns, but methods reveal its size, types, and summary statistics. Ask students which method they would use first.\n\nTime: 45-48 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Your first DataFrame</div>
+        <h2>Inspect before you interpret.</h2>
+        <div class="split">
+          <table class="dataframe">
+            <caption class="sr-only">Sample rows from the Gapminder DataFrame</caption>
+            <thead>
+              <tr>
+                <th>country</th>
+                <th>year</th>
+                <th>continent</th>
+                <th>lifeExp</th>
+                <th>gdpPercap</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Afghanistan</td>
+                <td>1952</td>
+                <td>Asia</td>
+                <td>28.801</td>
+                <td>779.45</td>
+              </tr>
+              <tr>
+                <td>Albania</td>
+                <td>1952</td>
+                <td>Europe</td>
+                <td>55.230</td>
+                <td>1601.06</td>
+              </tr>
+              <tr>
+                <td>Algeria</td>
+                <td>1952</td>
+                <td>Africa</td>
+                <td>43.077</td>
+                <td>2449.01</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <h3>Start with these checks</h3>
+            <div class="chip-list"><span class="chip">.head()</span><span class="chip">.info()</span><span
+                class="chip">.describe()</span><span class="chip">.shape</span></div>
+            <p style="margin-top:1rem;">These checks show sample rows, data types, missing values, summary statistics,
+              and the table’s dimensions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark"
+      data-notes="Connect this directly to the lab. Do not read all tasks. Show students the arc: set up, explore, prepare, analyze, visualize, explain. Mention that the Markdown explanation is part of the work, not an afterthought.\n\nTime: 48-52 minutes.">
+      <div class="brand">CIS215 · Skills Lab 1A</div>
+      <div class="content">
+        <div class="eyebrow">Your first applied workflow</div>
+        <h2>Use the Gapminder dataset to make your process visible.</h2>
+        <div class="workflow" role="img"
+          aria-label="Skills Lab steps: Set up, Explore, Prepare, Analyze, and Visualize and explain.">
+          <article class="phase"><strong>Set up</strong>
+            <p>Launch JupyterLab and create your notebook.</p>
+          </article>
+          <article class="phase"><strong>Explore</strong>
+            <p>Use <code>.info()</code> and <code>.describe()</code>.</p>
+          </article>
+          <article class="phase"><strong>Prepare</strong>
+            <p>Create a calculated <code>gdp_total</code> column.</p>
+          </article>
+          <article class="phase"><strong>Analyze</strong>
+            <p>Find averages and the highest life expectancy.</p>
+          </article>
+          <article class="phase"><strong>Visualize</strong>
+            <p>Build a scatter plot and explain what it shows.</p>
+          </article>
+        </div>
+        <p class="lede">Your notebook should show <strong class="accent">what you did</strong> and <strong
+            class="accent">why the result matters</strong>.</p>
+      </div>
+    </section>
+
+    <section class="slide"
+      data-notes="Use this as the final retrieval practice. Ask students to write answers independently for one minute, then compare with a neighbor. Collect one response if you want an exit ticket.\n\nTime: 52-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>Before you leave, answer these without looking back.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">1</div>
+            <p>Name the three components of data science.</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <p>Why might an analyst return to an earlier workflow phase?</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <p>What would you inspect before trusting a new DataFrame?</p>
+          </article>
+        </div>
+        <div class="prompt">
+          <p><strong>Next step:</strong> Open Skills Lab 1A and make your first notebook show the full analysis process.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <!-- link to external and relative shared javascript -->
+  <script src="../../shared/deck.js"></script>
+
+</body>
+
+</html>
