@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 1 classroom presentation: Introduction to Data Analysis.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002B5C'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23F2B134'/%3E%3C/svg%3E">
+  <title>CIS215: Introduction to Data Analysis</title>
+  <style>
+    :root {
+      --navy: #002B5C;
+      --gold: #F2B134;
+      --blue: #2D7DD2;
+      --canvas: #F7F9FC;
+      --ink: #10243F;
+      --mist: #D9E5F2;
+      --white: #FFFFFF;
+      --good: #147A5B;
+      --danger: #A32D2D;
+      --display: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+      --body: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+      --code: "SFMono-Regular", Menlo, Consolas, monospace;
+      --ease: 360ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--navy);
+      font-family: var(--body);
+    }
+    button { font: inherit; }
+    .deck { height: 100%; position: relative; }
+    .slide {
+      display: none;
+      min-height: 100%;
+      padding: clamp(2rem, 4.5vw, 5.4rem) clamp(2rem, 6vw, 8rem) clamp(4.8rem, 7vw, 6rem);
+      position: relative;
+      overflow: hidden;
+      background: var(--canvas);
+    }
+    .slide.active { display: flex; animation: enter var(--ease) both; }
+    .slide.dark { background: var(--navy); color: var(--white); }
+    .slide.gold { background: var(--gold); color: var(--navy); }
+    .content {
+      width: min(100%, 86rem);
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1rem, 2vw, 2rem);
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      color: var(--blue);
+      font-size: clamp(.78rem, 1.2vw, 1.05rem);
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .dark .eyebrow { color: var(--gold); }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { font-family: var(--display); letter-spacing: -.04em; }
+    h1 { font-size: clamp(3.1rem, 7vw, 7.4rem); line-height: .91; max-width: 13ch; }
+    h2 { font-size: clamp(2.3rem, 4.5vw, 5.1rem); line-height: .96; max-width: 17ch; }
+    h3 { font-size: clamp(1.15rem, 1.7vw, 1.65rem); line-height: 1.05; }
+    p, li { font-size: clamp(1rem, 1.55vw, 1.48rem); line-height: 1.38; }
+    .lede { font-size: clamp(1.22rem, 2.1vw, 2rem); max-width: 48ch; line-height: 1.28; }
+    .accent { color: var(--gold); }
+    .navy-text { color: var(--navy); }
+    .rule { height: .45rem; width: min(13rem, 30vw); background: var(--gold); }
+    .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 4vw, 5rem); align-items: center; }
+    .three-up { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.8rem); }
+    .four-up { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.8rem, 1.8vw, 1.5rem); }
+    .panel {
+      border: .12rem solid var(--mist);
+      padding: clamp(1.1rem, 2vw, 2rem);
+      background: rgba(255,255,255,.7);
+      min-height: 100%;
+    }
+    .dark .panel { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.24); }
+    .panel .number { color: var(--blue); font-size: clamp(2.4rem, 4vw, 4.5rem); font-weight: 800; line-height: .85; }
+    .dark .panel .number { color: var(--gold); }
+    .panel p { margin-top: .7rem; font-size: clamp(.95rem, 1.25vw, 1.28rem); }
+    .signal {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      font-size: clamp(.8rem, 1.2vw, 1rem);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .signal::before { content: ""; width: .7rem; height: .7rem; border-radius: 50%; background: var(--gold); }
+    .prompt { border-left: .5rem solid var(--gold); padding: 1rem 0 1rem 1.2rem; max-width: 60rem; }
+    .prompt strong { color: var(--blue); }
+    .dark .prompt strong { color: var(--gold); }
+    .answer {
+      display: none;
+      margin-top: 1rem;
+      border-left: .34rem solid var(--good);
+      padding: .8rem 1rem;
+      background: #E8F5EF;
+      color: var(--ink);
+      max-width: 60rem;
+    }
+    .answer.show { display: block; }
+    .reveal {
+      align-self: start;
+      margin-top: .85rem;
+      padding: .55rem .85rem;
+      border: .12rem solid currentColor;
+      color: var(--navy);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .dark .reveal { color: var(--white); }
+    .reveal:hover, .reveal:focus-visible { background: var(--gold); color: var(--navy); outline: .2rem solid var(--gold); outline-offset: .15rem; }
+    .venn { position: relative; width: min(27rem, 78vw); aspect-ratio: 1; margin: 0 auto; }
+    .circle {
+      position: absolute;
+      width: 57%; aspect-ratio: 1; border: .22rem solid var(--navy); border-radius: 50%;
+      display: grid; place-items: center; padding: 1rem; text-align: center; font-weight: 800; color: var(--navy);
+      background: rgba(255,255,255,.46);
+    }
+    .circle.analysis { top: 2%; left: 21%; }
+    .circle.visual { bottom: 4%; left: 0; }
+    .circle.predict { bottom: 4%; right: 0; }
+    .venn-core { position: absolute; left: 50%; top: 51%; transform: translate(-50%, -50%); z-index: 2; font-weight: 900; text-align: center; width: 7.5rem; height: 7.5rem; padding-top: 2.3rem; border-radius: 50%; background: var(--gold); color: var(--navy); }
+    .workflow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .45rem; align-items: stretch; }
+    .phase { position: relative; padding: 1.3rem .9rem; background: var(--white); border-top: .6rem solid var(--blue); min-height: 13rem; }
+    .phase:nth-child(2) { border-color: #6D7F93; }
+    .phase:nth-child(3) { border-color: var(--gold); }
+    .phase:nth-child(4) { border-color: #5875B7; }
+    .phase:nth-child(5) { border-color: var(--good); }
+    .phase strong { display: block; font-size: clamp(1.15rem, 1.7vw, 1.65rem); margin-bottom: .55rem; }
+    .phase p { font-size: clamp(.82rem, 1.07vw, 1rem); }
+    .phase::after { content: "→"; color: var(--navy); font-size: 2rem; position: absolute; right: -.68rem; top: 43%; z-index: 2; }
+    .phase:last-child::after { content: "↺"; right: .35rem; top: .22rem; color: var(--good); }
+    .loop-figure { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto auto; align-items: center; gap: .5rem 1rem; max-width: 40rem; margin: 0 auto; }
+    .loop-node { text-align: center; padding: 1rem; font-weight: 800; background: var(--white); border: .14rem solid var(--navy); }
+    .loop-arrow { text-align: center; color: var(--blue); font-size: 2.5rem; font-weight: 800; }
+    .loop-node:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .loop-node:nth-child(2) { grid-column: 3; grid-row: 1; }
+    .loop-node:nth-child(3) { grid-column: 3; grid-row: 3; }
+    .loop-node:nth-child(4) { grid-column: 1; grid-row: 3; }
+    .loop-arrow.a { grid-column: 2; grid-row: 1; }
+    .loop-arrow.b { grid-column: 3; grid-row: 2; transform: rotate(90deg); }
+    .loop-arrow.c { grid-column: 2; grid-row: 3; transform: rotate(180deg); }
+    .loop-arrow.d { grid-column: 1; grid-row: 2; transform: rotate(-90deg); }
+    .etl { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: .65rem; max-width: 66rem; }
+    .etl-term { display: grid; place-items: center; width: clamp(5rem, 10vw, 8.5rem); aspect-ratio: 1; border-radius: 50%; background: var(--navy); color: var(--white); font-weight: 900; font-size: clamp(1rem, 1.7vw, 1.4rem); text-align: center; }
+    .etl-line { height: .22rem; background: var(--gold); }
+    .code {
+      margin: 0; padding: clamp(1rem, 2.2vw, 2rem); overflow: auto; color: #EAF4FF; background: #06192F; border-left: .55rem solid var(--gold); font: clamp(.82rem, 1.2vw, 1.15rem)/1.55 var(--code); max-width: 60rem; white-space: pre-wrap;
+    }
+    .code .comment { color: #94BCEB; }
+    .code .keyword { color: #FFD166; }
+    .code .function { color: #7FE3C0; }
+    .code .string { color: #FFB8B8; }
+    .dataframe { width: 100%; border-collapse: collapse; background: var(--white); font-size: clamp(.75rem, 1.15vw, 1rem); }
+    .dataframe th, .dataframe td { padding: .55rem .7rem; border-bottom: .08rem solid var(--mist); text-align: left; }
+    .dataframe th { background: var(--navy); color: var(--white); }
+    .dataframe tr:last-child td { border-bottom: 0; }
+    .chip-list { display: flex; flex-wrap: wrap; gap: .7rem; }
+    .chip { padding: .55rem .8rem; background: var(--mist); color: var(--navy); font-family: var(--code); font-size: clamp(.85rem, 1.25vw, 1.1rem); font-weight: 800; }
+    .checklist { list-style: none; padding: 0; display: grid; gap: .75rem; }
+    .checklist li { display: grid; grid-template-columns: 1.9rem 1fr; gap: .6rem; align-items: start; }
+    .checklist li::before { content: "✓"; width: 1.55rem; height: 1.55rem; display: grid; place-items: center; background: var(--gold); color: var(--navy); font-weight: 900; }
+    .quote { font-size: clamp(1.55rem, 3vw, 2.8rem); line-height: 1.1; max-width: 27ch; font-weight: 700; }
+    .quote::before { content: "“"; color: var(--gold); font-size: 1.4em; line-height: 0; vertical-align: -.25em; }
+    .brand { position: absolute; top: 1.25rem; right: clamp(1.4rem, 4vw, 5rem); color: var(--navy); font-size: clamp(.68rem, 1vw, .9rem); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .dark .brand { color: var(--white); }
+    .slide-number { position: absolute; bottom: 1.25rem; left: clamp(1.4rem, 4vw, 5rem); font-size: .9rem; font-weight: 800; color: var(--navy); }
+    .dark .slide-number { color: var(--white); }
+    .progress { position: absolute; height: .34rem; left: 0; bottom: 0; background: var(--gold); transition: width var(--ease); }
+    .nav { position: fixed; right: clamp(1rem, 3vw, 2.8rem); bottom: 1rem; z-index: 10; display: flex; gap: .5rem; }
+    .nav button { min-width: 2.45rem; min-height: 2.25rem; border: .1rem solid rgba(255,255,255,.38); background: rgba(0,43,92,.94); color: var(--white); cursor: pointer; font-weight: 800; }
+    .nav button:hover, .nav button:focus-visible { color: var(--navy); background: var(--gold); border-color: var(--gold); outline: .15rem solid var(--white); outline-offset: .12rem; }
+    .notes {
+      display: none; position: fixed; z-index: 20; right: 1rem; bottom: 4.2rem; width: min(31rem, calc(100vw - 2rem)); padding: 1.1rem 1.25rem; color: var(--white); background: rgba(6,25,47,.97); border-top: .35rem solid var(--gold); box-shadow: 0 .7rem 2rem rgba(0,0,0,.32);
+    }
+    .notes.open { display: block; }
+    .notes h2 { font-size: 1.25rem; letter-spacing: -.02em; }
+    .notes p { margin-top: .65rem; font-size: 1rem; }
+    .notes .time { color: var(--gold); font-weight: 800; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @keyframes enter { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 760px) {
+      .split, .three-up, .four-up { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr; }
+      .phase { min-height: auto; padding: .75rem .9rem; border-left: .55rem solid var(--blue); border-top: 0; }
+      .phase::after { content: "↓"; top: auto; right: 45%; bottom: -.78rem; }
+      .phase:last-child::after { content: "↺"; right: .5rem; top: .1rem; bottom: auto; }
+      .etl { grid-template-columns: 1fr; justify-items: center; }
+      .etl-line { width: .22rem; height: 1.8rem; }
+      .slide { padding-bottom: 5rem; }
+      .venn { width: min(21rem, 80vw); }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide dark active" data-notes="Open with a show of hands or brief think-pair-share. Ask students where they have seen a chart influence a decision. Take only two examples, then connect them to the chapter.\n\nTime: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 1</div>
+        <div class="rule"></div>
+        <h1>Data tells a story.<br><span class="accent">You decide</span> what it means.</h1>
+        <p class="lede">Introduction to data analysis: questions, workflow, tools, and your first dataset.</p>
+        <div class="prompt">
+          <p><strong>Start here:</strong> Name one decision you have seen guided by data. What made you trust it?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Frame the class around what students will be able to do, not a list of chapter sections. Read the three statements quickly and tell students they will practice each one today.\n\nTime: 3-6 minutes.">
+      <div class="brand">CIS215 · Introduction to Data Analysis</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>By the end of class, you can explain the work behind a useful data decision.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="number">01</div><h3>Recognize</h3><p>the analysis, visualization, and prediction work inside a data project.</p></article>
+          <article class="panel"><div class="number">02</div><h3>Trace</h3><p>a project through the five-phase analytics workflow.</p></article>
+          <article class="panel"><div class="number">03</div><h3>Start</h3><p>a JupyterLab notebook, load data, and inspect a DataFrame.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Invite fast answers. The purpose is to surface the difference between a data source, a chart, and a model before defining those terms. Do not reveal the answer until students have committed.\n\nTime: 6-9 minutes.">
+      <div class="brand">CIS215 · Warm-up</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Warm-up: Spot the work</div>
+        <h2>A coffee chain wants to plan tomorrow’s menu.</h2>
+        <div class="split">
+          <div>
+            <p class="quote">It reviews past sales, charts rush-hour demand, then forecasts which muffins to bake.</p>
+          </div>
+          <div class="panel">
+            <p><strong>Talk with a partner:</strong></p>
+            <p>Which part examines the data? Which part communicates it? Which part looks ahead?</p>
+            <button class="reveal" type="button" aria-expanded="false">Reveal one answer</button>
+            <div class="answer">Reviewing sales is <strong>analysis</strong>. The chart is <strong>visualization</strong>. Forecasting muffins is <strong>prediction</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use this as the formal definition. Point out that the labels can overlap, but the three skills have distinct jobs. Ask students to remember the coffee-shop example as a running scenario.\n\nTime: 9-12 minutes.">
+      <div class="brand">CIS215 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">What data science is</div>
+        <div class="split">
+          <div>
+            <h2>Three connected kinds of work.</h2>
+            <p class="lede">Data science combines methods, computing, and domain knowledge to turn data into useful insight.</p>
+          </div>
+          <div class="venn" role="img" aria-label="Three overlapping circles labeled Analysis, Visualization, and Prediction with Data Science at their center.">
+            <div class="circle analysis">Analysis<br><small>Find what happened</small></div>
+            <div class="circle visual">Visualization<br><small>Make patterns visible</small></div>
+            <div class="circle predict">Prediction<br><small>Estimate what may happen</small></div>
+            <div class="venn-core">Data<br>science</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Give a 20-second explanation of each card. Then choose one local context such as campus services, retail, sports, or healthcare and ask which component would be most visible.\n\nTime: 12-16 minutes.">
+      <div class="brand">CIS215 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">The three components</div>
+        <h2>Each component answers a different question.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="signal">Analysis</div><h3>What is happening?</h3><p>Clean, transform, compare, group, and interpret data.</p></article>
+          <article class="panel"><div class="signal">Visualization</div><h3>What should people notice?</h3><p>Use charts and displays to make evidence easier to understand.</p></article>
+          <article class="panel"><div class="signal">Prediction</div><h3>What may happen next?</h3><p>Use past patterns to estimate a future outcome.</p></article>
+        </div>
+        <p class="lede">A strong project moves among all three. It does not stop at a spreadsheet.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This slide turns the prior definition into a low-stakes check. Have students point to or call out a category. Reveal after a few responses.\n\nTime: 16-18 minutes.">
+      <div class="brand">CIS215 · Check your thinking</div>
+      <div class="content">
+        <div class="eyebrow">Quick check</div>
+        <h2>Classify the move.</h2>
+        <div class="three-up">
+          <article class="panel"><h3>1. Group sales by store and month.</h3><p>Analysis, visualization, or prediction?</p></article>
+          <article class="panel"><h3>2. Build a line chart of monthly sales.</h3><p>Analysis, visualization, or prediction?</p></article>
+          <article class="panel"><h3>3. Estimate next month’s sales.</h3><p>Analysis, visualization, or prediction?</p></article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answers</button>
+        <div class="answer"><strong>1:</strong> analysis. <strong>2:</strong> visualization. <strong>3:</strong> prediction. In a full project, each step can inform the next one.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Introduce the workflow as a guide that protects quality. Read the five verbs together. Emphasize that students will use these labels in Skills Lab 1A.\n\nTime: 18-21 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">A workflow you can trust</div>
+        <h2>Good analysis has a path.</h2>
+        <div class="workflow" role="img" aria-label="Five-phase analytics workflow: Get, Clean, Prepare, Analyze, and Visualize.">
+          <article class="phase"><strong>Get</strong><p>Bring in data from a file, database, API, or other source.</p></article>
+          <article class="phase"><strong>Clean</strong><p>Find missing, duplicate, inconsistent, or invalid values.</p></article>
+          <article class="phase"><strong>Prepare</strong><p>Shape data into a form that supports the question.</p></article>
+          <article class="phase"><strong>Analyze</strong><p>Compare, calculate, group, and look for insight.</p></article>
+          <article class="phase"><strong>Visualize</strong><p>Build a clear chart for the audience and decision.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Pause here to make cleaning feel concrete. Ask students to pick the two problems that would cause the worst decision. Reinforce that the point is not to memorize the list. It is to inspect data before trusting it.\n\nTime: 21-25 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Why cleaning matters</div>
+        <h2>Messy data can make a clean-looking chart lie.</h2>
+        <div class="four-up">
+          <article class="panel"><h3>Missing</h3><p>Blank values where a measurement should exist.</p></article>
+          <article class="panel"><h3>Duplicate</h3><p>The same record appears more than once.</p></article>
+          <article class="panel"><h3>Inconsistent</h3><p>“NY,” “N.Y.,” and “New York” mean the same thing.</p></article>
+          <article class="panel"><h3>Invalid</h3><p>Impossible values, wrong types, or future dates.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Question:</strong> Which problem could change a decision without being obvious in the chart?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Correct the common misunderstanding that the workflow is a straight line. Use a short example: a chart exposes an outlier, then the analyst returns to Clean or Prepare.\n\nTime: 25-28 minutes.">
+      <div class="brand">CIS215 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">The workflow loops</div>
+        <div class="split">
+          <div>
+            <h2>Return when the data tells you to.</h2>
+            <p class="lede">Analysis often sends you back to cleaning or preparation. That is normal. The goal is sound evidence, not a perfect straight line.</p>
+          </div>
+          <div class="loop-figure" role="img" aria-label="A looping cycle from clean to prepare to analyze to revise, then back to clean.">
+            <div class="loop-node">Clean</div><div class="loop-node">Prepare</div><div class="loop-node">Analyze</div><div class="loop-node">Revise</div>
+            <div class="loop-arrow a">→</div><div class="loop-arrow b">→</div><div class="loop-arrow c">→</div><div class="loop-arrow d">→</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Connect the chapter vocabulary to industry language. Explain that ETL is a related label that students will see in job postings and tools. Keep the distinction concise.\n\nTime: 28-30 minutes.">
+      <div class="brand">CIS215 · Industry language</div>
+      <div class="content">
+        <div class="eyebrow">One term to know</div>
+        <h2>ETL describes the early work that makes analysis possible.</h2>
+        <div class="etl" role="img" aria-label="ETL stands for Extract, Transform, and Load.">
+          <div class="etl-term">Extract</div><div class="etl-line"></div><div class="etl-term">Transform</div><div class="etl-line"></div><div class="etl-term">Load</div>
+        </div>
+        <p class="lede">In this course, Get, Clean, and Prepare give you a practical way to recognize ETL work.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Shift from concepts to the workspace. Describe JupyterLab as a local tool that opens in a browser. Avoid a live setup demonstration unless the room needs it. The purpose is mental orientation.\n\nTime: 30-34 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">Your analysis workspace</div>
+        <div class="split">
+          <div>
+            <h2>JupyterLab lets you think in small, testable steps.</h2>
+            <p class="lede">You write a little code, run it, inspect the result, and document what you learned in the same notebook.</p>
+          </div>
+          <div class="panel">
+            <h3>Why this course uses JupyterLab</h3>
+            <ul class="checklist">
+              <li>Run code one cell at a time.</li>
+              <li>Keep notes beside the work.</li>
+              <li>See charts below the code that made them.</li>
+              <li>Build a record a colleague can follow.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Ask students to name the two cells. Then use the short example to stress that code produces output and Markdown explains the work. Mention Shift+Enter only after the concept is clear.\n\nTime: 34-37 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Notebook basics</div>
+        <h2>Every notebook needs both kinds of cells.</h2>
+        <div class="split">
+          <article class="panel"><div class="number">&gt;_</div><h3>Code cell</h3><p>Runs Python and shows output below the cell.</p><pre class="code"><span class="function">print</span>(<span class="string">"Hello, Data Science!"</span>)</pre></article>
+          <article class="panel"><div class="number">#</div><h3>Markdown cell</h3><p>Explains the purpose, reasoning, and findings in readable text.</p><pre class="code"><span class="keyword">#</span> Phase 1: Get the Data</pre></article>
+        </div>
+        <p class="lede">Press <strong>Shift+Enter</strong> to run the current cell and move to the next one.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is a clean installation handoff. If students have not installed Anaconda, show this slide and point them to the module instructions. Do not spend more than three minutes on installer troubleshooting in the main lesson.\n\nTime: 37-39 minutes.">
+      <div class="brand">CIS215 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">Set up your environment</div>
+        <h2>One reliable starting point: Anaconda + JupyterLab.</h2>
+        <div class="split">
+          <div class="panel"><h3>What Anaconda gives you</h3><p>Python, JupyterLab, pandas, NumPy, matplotlib, and a package manager in one install.</p></div>
+          <div class="panel"><h3>Your first check</h3><pre class="code"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+<span class="function">print</span>(pd.__version__)</pre><p>Use the default <strong>base</strong> environment for this course.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Introduce these as a toolkit, not terms to memorize. State that pandas is the first focus. If time permits, have students repeat the standard abbreviation pd.\n\nTime: 39-42 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Python essentials</div>
+        <h2>Modules give Python its data toolkit.</h2>
+        <div class="four-up">
+          <article class="panel"><div class="signal">pandas · pd</div><h3>DataFrames</h3><p>Load, clean, filter, and analyze tables.</p></article>
+          <article class="panel"><div class="signal">NumPy · np</div><h3>Numbers</h3><p>Work with arrays and numerical computing.</p></article>
+          <article class="panel"><div class="signal">matplotlib · plt</div><h3>Charts</h3><p>Create clear plots and figures.</p></article>
+          <article class="panel"><div class="signal">seaborn · sns</div><h3>Statistical visuals</h3><p>Build polished statistical charts.</p></article>
+        </div>
+        <p class="lede">Put import statements at the top of your notebook so readers can see what your work needs.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Walk through this left to right. Name the module, method, argument, and descriptive DataFrame name. Do not teach every syntax rule. This should make the source text less intimidating.\n\nTime: 42-45 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Read code like an analyst</div>
+        <h2>A method does a job. An argument tells it how.</h2>
+        <pre class="code"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+df_gapminder = pd.<span class="function">read_csv</span>(<span class="string">"assets/code/chapter-01/gapminder.csv"</span>)</pre>
+        <div class="three-up">
+          <article class="panel"><h3><code>pd</code></h3><p>The standard abbreviation for the pandas module.</p></article>
+          <article class="panel"><h3><code>read_csv()</code></h3><p>A method that reads a CSV file into memory.</p></article>
+          <article class="panel"><h3><code>df_gapminder</code></h3><p>A descriptive variable name for a DataFrame.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use the table as a recognizable representation of the CSV. Point out that a DataFrame has rows and columns, but methods reveal its size, types, and summary statistics. Ask students which method they would use first.\n\nTime: 45-48 minutes.">
+      <div class="brand">CIS215 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Your first DataFrame</div>
+        <h2>Inspect before you interpret.</h2>
+        <div class="split">
+          <table class="dataframe">
+            <caption class="sr-only">Sample rows from the Gapminder DataFrame</caption>
+            <thead><tr><th>country</th><th>year</th><th>continent</th><th>lifeExp</th><th>gdpPercap</th></tr></thead>
+            <tbody><tr><td>Afghanistan</td><td>1952</td><td>Asia</td><td>28.801</td><td>779.45</td></tr><tr><td>Albania</td><td>1952</td><td>Europe</td><td>55.230</td><td>1601.06</td></tr><tr><td>Algeria</td><td>1952</td><td>Africa</td><td>43.077</td><td>2449.01</td></tr></tbody>
+          </table>
+          <div><h3>Start with these checks</h3><div class="chip-list"><span class="chip">.head()</span><span class="chip">.info()</span><span class="chip">.describe()</span><span class="chip">.shape</span></div><p style="margin-top:1rem;">These checks show sample rows, data types, missing values, summary statistics, and the table’s dimensions.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Connect this directly to the lab. Do not read all tasks. Show students the arc: set up, explore, prepare, analyze, visualize, explain. Mention that the Markdown explanation is part of the work, not an afterthought.\n\nTime: 48-52 minutes.">
+      <div class="brand">CIS215 · Skills Lab 1A</div>
+      <div class="content">
+        <div class="eyebrow">Your first applied workflow</div>
+        <h2>Use the Gapminder dataset to make your process visible.</h2>
+        <div class="workflow" role="img" aria-label="Skills Lab steps: Set up, Explore, Prepare, Analyze, and Visualize and explain.">
+          <article class="phase"><strong>Set up</strong><p>Launch JupyterLab and create your notebook.</p></article>
+          <article class="phase"><strong>Explore</strong><p>Use <code>.info()</code> and <code>.describe()</code>.</p></article>
+          <article class="phase"><strong>Prepare</strong><p>Create a calculated <code>gdp_total</code> column.</p></article>
+          <article class="phase"><strong>Analyze</strong><p>Find averages and the highest life expectancy.</p></article>
+          <article class="phase"><strong>Visualize</strong><p>Build a scatter plot and explain what it shows.</p></article>
+        </div>
+        <p class="lede">Your notebook should show <strong class="accent">what you did</strong> and <strong class="accent">why the result matters</strong>.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use this as the final retrieval practice. Ask students to write answers independently for one minute, then compare with a neighbor. Collect one response if you want an exit ticket.\n\nTime: 52-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>Before you leave, answer these without looking back.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="number">1</div><p>Name the three components of data science.</p></article>
+          <article class="panel"><div class="number">2</div><p>Why might an analyst return to an earlier workflow phase?</p></article>
+          <article class="panel"><div class="number">3</div><p>What would you inspect before trusting a new DataFrame?</p></article>
+        </div>
+        <div class="prompt"><p><strong>Next step:</strong> Open Skills Lab 1A and make your first notebook show the full analysis process.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const progress = document.createElement('div');
+      progress.className = 'progress';
+      document.querySelector('.deck').append(progress);
+      const notes = document.querySelector('#notes');
+      const notesContent = document.querySelector('#notes-content');
+      const notesButton = document.querySelector('#toggle-notes');
+      let current = 0;
+
+      function updateSlide(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === current;
+          slide.classList.toggle('active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          let number = slide.querySelector('.slide-number');
+          if (!number) {
+            number = document.createElement('div');
+            number.className = 'slide-number';
+            slide.append(number);
+          }
+          number.textContent = `${slideIndex + 1} / ${slides.length}`;
+        });
+        progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+        notesContent.innerHTML = (slides[current].dataset.notes || 'No presenter notes for this slide.').replace(/\\n/g, '<br>');
+        document.title = `${current + 1}/${slides.length} · CIS215: Introduction to Data Analysis`;
+        window.location.hash = `slide-${current + 1}`;
+      }
+
+      function toggleNotes() {
+        const open = notes.classList.toggle('open');
+        notesButton.setAttribute('aria-pressed', String(open));
+        notesButton.setAttribute('aria-label', open ? 'Hide presenter notes' : 'Show presenter notes');
+      }
+
+      document.querySelector('#previous').addEventListener('click', () => updateSlide(current - 1));
+      document.querySelector('#next').addEventListener('click', () => updateSlide(current + 1));
+      notesButton.addEventListener('click', toggleNotes);
+      document.querySelectorAll('.reveal').forEach((button) => {
+        button.addEventListener('click', () => {
+          const answer = button.nextElementSibling;
+          const isOpen = answer.classList.toggle('show');
+          button.setAttribute('aria-expanded', String(isOpen));
+          button.textContent = isOpen ? 'Hide answer' : 'Reveal answer';
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); updateSlide(current + 1); }
+        if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); updateSlide(current - 1); }
+        if (event.key.toLowerCase() === 'n') toggleNotes();
+        if (event.key === 'Home') updateSlide(0);
+        if (event.key === 'End') updateSlide(slides.length - 1);
+      });
+      const hashMatch = window.location.hash.match(/slide-(\d+)/);
+      updateSlide(hashMatch ? Math.min(Math.max(Number(hashMatch[1]) - 1, 0), slides.length - 1) : 0);
+    })();
+  </script>
+</body>
+</html>
