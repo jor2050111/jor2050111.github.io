@@ -33,6 +33,13 @@ body {
 
 button {
     font: inherit;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(242, 177, 52, .28);
+}
+
+:focus-visible {
+    outline: .2rem solid var(--gold);
+    outline-offset: .18rem;
 }
 
 .deck {
@@ -98,6 +105,12 @@ h2,
 h3 {
     font-family: var(--display);
     letter-spacing: -.04em;
+    text-wrap: balance;
+}
+
+p,
+li {
+    text-wrap: pretty;
 }
 
 h1 {
@@ -497,6 +510,7 @@ li {
     border-collapse: collapse;
     background: var(--white);
     font-size: clamp(.75rem, 1.15vw, 1rem);
+    font-variant-numeric: tabular-nums;
 }
 
 .dataframe th,
@@ -592,6 +606,7 @@ li {
     font-size: .9rem;
     font-weight: 800;
     color: var(--navy);
+    font-variant-numeric: tabular-nums;
 }
 
 .dark .slide-number {
@@ -599,7 +614,8 @@ li {
 }
 
 .progress {
-    position: absolute;
+    position: fixed;
+    z-index: 11;
     height: .34rem;
     left: 0;
     bottom: 0;
@@ -610,15 +626,15 @@ li {
 .nav {
     position: fixed;
     right: clamp(1rem, 3vw, 2.8rem);
-    bottom: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
     z-index: 10;
     display: flex;
     gap: .5rem;
 }
 
 .nav button {
-    min-width: 2.45rem;
-    min-height: 2.25rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
     border: .1rem solid rgba(255, 255, 255, .38);
     background: rgba(0, 43, 92, .94);
     color: var(--white);
@@ -661,6 +677,7 @@ li {
 .notes p {
     margin-top: .65rem;
     font-size: 1rem;
+    white-space: pre-line;
 }
 
 .notes .time {
@@ -693,6 +710,21 @@ li {
 }
 
 @media (max-width: 760px) {
+
+    html,
+    body {
+        height: auto;
+        min-height: 100%;
+    }
+
+    body {
+        overflow-y: auto;
+    }
+
+    .deck {
+        height: auto;
+        min-height: 100dvh;
+    }
 
     .split,
     .three-up,
@@ -736,11 +768,26 @@ li {
     }
 
     .slide {
-        padding-bottom: 5rem;
+        min-height: 100dvh;
+        overflow: visible;
+        padding: 4.5rem 1.25rem calc(6rem + env(safe-area-inset-bottom));
     }
 
     .venn {
         width: min(21rem, 80vw);
+    }
+
+    .nav {
+        right: max(.75rem, env(safe-area-inset-right));
+    }
+
+    .notes {
+        right: max(.75rem, env(safe-area-inset-right));
+        bottom: calc(4.65rem + env(safe-area-inset-bottom));
+        width: calc(100vw - 1.5rem);
+        max-height: calc(100dvh - 6rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 }
 

@@ -1,8 +1,10 @@
-# CIS215 Data Analysis: Phoenix College Classroom Style
+# Phoenix College Technical Classroom Style
 
 ## Style prompt
 
-A confident, approachable technical classroom presentation for Phoenix College CIS215. Use Phoenix College navy as the foundation, a warm gold accent for attention and participation, and pale blue for supporting data visuals. Make data feel practical and human. Favor crisp typography, generous open space, visible hierarchy, and a few purposeful diagrams over decorative effects. The deck should feel active, not corporate.
+Create a confident, approachable technical classroom presentation for Phoenix College. Use Phoenix College navy as the foundation, warm gold for attention and participation, and pale blue for supporting visuals. Make technical work feel practical and human. Favor crisp typography, open space, clear hierarchy, and purposeful diagrams over decorative effects. The deck should feel active and focused.
+
+Course-specific diagrams, labels, and examples may extend this base style. Keep shared controls and accessibility behavior consistent across every deck.
 
 ## Colors
 
@@ -24,13 +26,14 @@ A confident, approachable technical classroom presentation for Phoenix College C
 
 ## Layout and motion
 
-- 16:9 classroom slides with a quiet top rule and persistent slide count.
-- One central idea per slide. Split content when it would compete for attention.
-- Use gentle opacity and vertical transitions only. Respect reduced-motion preferences.
-- Pair color with labels, position, or icons so no meaning depends on color alone.
+- Use 16:9 classroom slides with a quiet progress line and persistent slide count.
+- Give each slide one central idea. Split content when ideas compete for attention.
+- Use gentle opacity and vertical transitions. Respect reduced-motion preferences.
+- Pair color with labels, position, or icons so meaning never depends on color alone.
+- Allow vertical scrolling on narrow screens so content stays available.
 
 ## Avoid
 
-- Dense dashboards, ornamental gradients, tiny type, auto-advancing slides, and decorative stock photos.
-- More than three new ideas on a slide.
-- Color-only instructions or feedback.
+- Dense dashboards, ornamental gradients, tiny type, auto-advancing slides, and decorative stock photos
+- More than three new ideas on one slide
+- Color-only instructions or feedback

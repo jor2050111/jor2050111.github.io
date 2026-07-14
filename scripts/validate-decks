@@ -1,0 +1,269 @@
+#!/usr/bin/env node
+
+const fs = require("node:fs");
+const path = require("node:path");
+
+const root = path.resolve(__dirname, "..");
+const slidesRoot = path.join(root, "slides");
+const findings = [];
+const decks = [];
+const jsonOutput = process.argv.includes("--json");
+
+function relative(filePath) {
+    return path.relative(root, filePath) || ".";
+}
+
+function add(level, filePath, message) {
+    findings.push({ level, file: relative(filePath), message });
+}
+
+function requireFile(filePath, description) {
+    if (!fs.existsSync(filePath)) {
+        add("error", filePath, `Missing ${description}.`);
+        return false;
+    }
+    return true;
+}
+
+function read(filePath) {
+    return fs.readFileSync(filePath, "utf8");
+}
+
+function has(content, pattern) {
+    return typeof pattern === "string"
+        ? content.includes(pattern)
+        : pattern.test(content);
+}
+
+function checkLocalReferences(filePath, content) {
+    const attributePattern = /\b(?:href|src)=["']([^"']+)["']/gi;
+    let match;
+
+    while ((match = attributePattern.exec(content)) !== null) {
+        const reference = match[1];
+        if (
+            reference.startsWith("#") ||
+            /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(reference)
+        ) {
+            continue;
+        }
+
+        const cleanReference = reference.split(/[?#]/, 1)[0];
+        let target = path.resolve(path.dirname(filePath), cleanReference);
+
+        if (reference.endsWith("/")) {
+            target = path.join(target, "index.html");
+        }
+
+        if (!fs.existsSync(target)) {
+            add("error", filePath, `Broken local reference: ${reference}`);
+        }
+    }
+}
+
+function checkLandingPage(filePath, description) {
+    if (!requireFile(filePath, description)) {
+        return;
+    }
+
+    const content = read(filePath);
+    if (!/<html\s[^>]*lang=["']en["']/i.test(content)) {
+        add("error", filePath, "The page needs lang=\"en\".");
+    }
+    if (!/<meta\s[^>]*name=["']viewport["']/i.test(content)) {
+        add("error", filePath, "The page needs a viewport meta tag.");
+    }
+    if (!/<main\b/i.test(content)) {
+        add("error", filePath, "The page needs a main landmark.");
+    }
+    checkLocalReferences(filePath, content);
+}
+
+function checkDeck(filePath) {
+    const content = read(filePath);
+    const slideMatches = content.match(
+        /<section\s+[^>]*class=["'][^"']*\bslide\b[^"']*["'][^>]*>/gi
+    ) || [];
+    const activeMatches = slideMatches.filter((tag) =>
+        /class=["'][^"']*\bactive\b/i.test(tag)
+    );
+    const notesMatches = content.match(/\bdata-notes=/gi) || [];
+
+    decks.push({ file: relative(filePath), slides: slideMatches.length });
+
+    if (!/^<!doctype html>/i.test(content.trimStart())) {
+        add("error", filePath, "The deck needs an HTML5 doctype.");
+    }
+    if (!/<html\s[^>]*lang=["']en["']/i.test(content)) {
+        add("error", filePath, "The deck needs lang=\"en\".");
+    }
+    if (!/<meta\s[^>]*name=["']viewport["']/i.test(content)) {
+        add("error", filePath, "The deck needs a viewport meta tag.");
+    }
+    if (!/<body\s[^>]*data-deck-title=["'][^"']+["']/i.test(content)) {
+        add("error", filePath, "The body needs a data-deck-title value.");
+    }
+    if (!/<main\s[^>]*class=["'][^"']*\bdeck\b/i.test(content)) {
+        add("error", filePath, "The deck needs a main.deck landmark.");
+    }
+    if (slideMatches.length === 0) {
+        add("error", filePath, "The deck has no slides.");
+    }
+    if (activeMatches.length !== 1) {
+        add("error", filePath, "Exactly one slide must start active.");
+    }
+    if (notesMatches.length !== slideMatches.length) {
+        add(
+            "warning",
+            filePath,
+            "Each slide should include a data-notes attribute."
+        );
+    }
+    if (!content.includes("../../shared/deck.css")) {
+        add("error", filePath, "The deck must use the shared stylesheet.");
+    }
+    if (!content.includes("../../shared/deck.js")) {
+        add("error", filePath, "The deck must use the shared script.");
+    }
+    if (/need to link/i.test(content)) {
+        add("error", filePath, "Remove stale link reminder comments.");
+    }
+    if (/\/Users\//.test(content)) {
+        add("error", filePath, "Remove machine-specific absolute paths.");
+    }
+
+    checkLocalReferences(filePath, content);
+}
+
+function findDecks() {
+    if (!requireFile(slidesRoot, "slides directory")) {
+        return;
+    }
+
+    const courseEntries = fs.readdirSync(slidesRoot, { withFileTypes: true });
+    for (const courseEntry of courseEntries) {
+        if (!courseEntry.isDirectory() || courseEntry.name === "shared") {
+            continue;
+        }
+
+        const coursePath = path.join(slidesRoot, courseEntry.name);
+        const chapterEntries = fs.readdirSync(coursePath, {
+            withFileTypes: true,
+        });
+        const chapterDirectories = chapterEntries.filter((entry) =>
+            entry.isDirectory()
+        );
+
+        if (chapterDirectories.length > 0) {
+            checkLandingPage(
+                path.join(coursePath, "index.html"),
+                `${courseEntry.name} landing page`
+            );
+        }
+
+        for (const chapterEntry of chapterDirectories) {
+            const deckPath = path.join(
+                coursePath,
+                chapterEntry.name,
+                "index.html"
+            );
+            if (requireFile(deckPath, "deck index")) {
+                checkDeck(deckPath);
+            }
+        }
+    }
+}
+
+function checkSharedRuntime() {
+    const scriptPath = path.join(slidesRoot, "shared", "deck.js");
+    const stylePath = path.join(slidesRoot, "shared", "deck.css");
+
+    if (requireFile(scriptPath, "shared deck script")) {
+        const script = read(scriptPath);
+        if (/CIS215: Introduction to Data Analysis/.test(script)) {
+            add("error", scriptPath, "The document title is hard-coded.");
+        }
+        if (!/dataset\.deckTitle|data-deck-title/.test(script)) {
+            add("error", scriptPath, "Read the title from deck metadata.");
+        }
+        if (!/hashchange|popstate/.test(script)) {
+            add("error", scriptPath, "Browser history is not synchronized.");
+        }
+        if (!/isInteractiveTarget/.test(script)) {
+            add("error", scriptPath, "Keyboard controls need a target guard.");
+        }
+        if (/\.innerHTML\s*=/.test(script)) {
+            add("warning", scriptPath, "Prefer textContent for speaker notes.");
+        }
+    }
+
+    if (requireFile(stylePath, "shared deck stylesheet")) {
+        const style = read(stylePath);
+        const requiredPatterns = [
+            [/:focus-visible/, "Add visible keyboard focus styles."],
+            [/prefers-reduced-motion/, "Respect reduced-motion preferences."],
+            [/touch-action:\s*manipulation/, "Optimize controls for touch."],
+            [/env\(safe-area-inset-bottom\)/, "Support mobile safe areas."],
+            [/overflow-y:\s*auto/, "Allow mobile slides to scroll."],
+        ];
+
+        for (const [pattern, message] of requiredPatterns) {
+            if (!has(style, pattern)) {
+                add("error", stylePath, message);
+            }
+        }
+        if (/transition:\s*all\b/.test(style)) {
+            add("error", stylePath, "List transition properties explicitly.");
+        }
+    }
+}
+
+function checkTooling() {
+    const createPath = path.join(root, "scripts", "create-deck");
+    const validatePath = path.join(root, "scripts", "validate-decks");
+
+    for (const [filePath, description] of [
+        [createPath, "deck creation script"],
+        [validatePath, "deck validation script"],
+    ]) {
+        if (!requireFile(filePath, description)) {
+            continue;
+        }
+
+        const executable = Boolean(fs.statSync(filePath).mode & 0o111);
+        if (!executable) {
+            add("error", filePath, "The script must be executable.");
+        }
+    }
+}
+
+checkLandingPage(
+    path.join(slidesRoot, "index.html"),
+    "presentation library landing page"
+);
+checkLandingPage(path.join(root, "index.html"), "site landing page");
+findDecks();
+checkSharedRuntime();
+checkTooling();
+
+const errorCount = findings.filter((item) => item.level === "error").length;
+const warningCount = findings.filter(
+    (item) => item.level === "warning"
+).length;
+const slideCount = decks.reduce((total, deck) => total + deck.slides, 0);
+
+if (jsonOutput) {
+    process.stdout.write(
+        `${JSON.stringify({ decks, findings, errorCount, warningCount }, null, 2)}\n`
+    );
+} else {
+    for (const finding of findings) {
+        const label = finding.level.toUpperCase().padEnd(7);
+        console.log(`${label} ${finding.file}: ${finding.message}`);
+    }
+    console.log("");
+    console.log(`Checked ${decks.length} deck(s) and ${slideCount} slide(s).`);
+    console.log(`${errorCount} error(s), ${warningCount} warning(s).`);
+}
+
+process.exitCode = errorCount > 0 ? 1 : 0;
