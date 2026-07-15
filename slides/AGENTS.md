@@ -143,6 +143,14 @@ From the repository root, scaffold a deck with:
 The script must not replace an existing chapter. After authoring:
 
 1. Add the chapter to its course landing page.
+   - Give the chapter card a `data-card-palette` value that exactly matches the
+     deck's `data-palette` value.
+   - Use the shared catalog card system to carry that palette into the card's
+     surface, accent, action, and focus treatment. Each card should feel tied to
+     its deck while the card layout, spacing, typography, and interaction stay
+     unified with the course landing page.
+   - When a deck palette changes, update its landing-page card in the same
+     change. Do not leave a new or revised chapter with the default card colors.
 2. Add a new course to `slides/index.html` when needed.
 3. Run `./scripts/validate-decks`.
 4. Serve the repository through a local web server.
