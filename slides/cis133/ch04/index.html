@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 4 classroom presentation: CSS Foundations.">
+  <meta name="theme-color" content="#03488F">
+  <title>CIS133: CSS Foundations</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2303488F'/%3E%3Cpath d='M16 18h32v8H16zm0 12h20v8H16zm0 12h28v8H16z' fill='%23FFC845'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: CSS Foundations" data-course="cis133"
+  data-chapter="ch04" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the club president's question from the chapter. The site is valid and meaningful, but it still looks gray. Ask students what language owns the missing decisions.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 4 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>CSS Foundations</h1>
+        <p class="lede">The site works. Why does it still look gray?</p>
+        <div class="file-tab" aria-hidden="true">club-styles.css</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect today's work to Chapters 2 and 3. Students already know the HTML skeleton, attributes, landmarks, and HTML validation. Read each outcome as an action they will perform.&#10;&#10;Time: 3-6 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Connect, target, and critique a stylesheet.</h2>
+        <div class="objective-lanes">
+          <article>
+            <span>01</span>
+            <h3>Connect</h3>
+            <p>Choose inline, internal, or external CSS for the job.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Target</h3>
+            <p>Aim element, class, and id selectors by role.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Critique</h3>
+            <p>Use HTML and CSS validators to repair defects.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Use the illustration to frame separation of concerns. Ask which workstation should change the club's colors and which must preserve the site's meaning. Emphasize that CSS changes what sighted visitors see without replacing semantic HTML.&#10;&#10;Time: 6-9 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Separation of concerns</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One site, two jobs</div>
+          <h2>HTML says what it is. CSS says how it looks.</h2>
+          <ul class="scope-list">
+            <li><strong>HTML:</strong> headings, links, landmarks, meaning</li>
+            <li><strong>CSS:</strong> color, size, spacing, presentation</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/separation-lab.png" alt="Two coordinated workstations show semantic HTML structure on one side and CSS visual styling on the other.">
+          <figcaption>Two languages share one page without sharing one job.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Build the rule from the outside in. Point to the selector, braces, property, value, colon, and semicolon. Ask students which word answers 'what changes' and which value answers 'to what.'&#10;&#10;Time: 9-12 minutes.">
+      <div class="brand">CIS133 · Rule anatomy</div>
+      <div class="content">
+        <div class="eyebrow">Read outside in</div>
+        <h2>Every CSS rule answers two questions.</h2>
+        <div class="rule-anatomy" role="img" aria-label="An h1 CSS rule labeled with selector, declaration block, property, and value.">
+          <div class="selector-callout">selector</div>
+          <code><mark>h1</mark> {<br>&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#1a5e5e</span>;<br>}</code>
+          <div class="block-callout">declaration block</div>
+          <div class="pair-callout"><strong>property</strong> + <strong>value</strong> = declaration</div>
+        </div>
+        <p class="lab-rule">Which elements change? What setting do they receive?</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give students 30 seconds before revealing. The selector is footer, the property is background-color, and the value is #1a5e5e. The semicolon ends the declaration.&#10;&#10;Time: 12-14 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Label the rule</div>
+        <h2>What does each part control?</h2>
+        <pre class="code-card"><code>footer { background-color: #1a5e5e; }</code></pre>
+        <div class="prompt">
+          <p><strong>Name:</strong> selector, property, and value.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Selector:</strong> footer · <strong>Property:</strong> background-color · <strong>Value:</strong> #1a5e5e</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Ask students to rank the three connection methods by reach before reading the labels. Stress that internal CSS is useful for one-page experiments, while external CSS is the site-building default.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Connection methods</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/three-connections.png" alt="Three connected workbench stations show inline CSS reaching one element, internal CSS reaching one page, and external CSS reaching three pages.">
+          <figcaption>Reach grows from one element to every linked page.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Three ways in</div>
+          <h2>Choose by reach, not convenience.</h2>
+          <div class="reach-key">
+            <p><code>style="..."</code><strong>One element</strong></p>
+            <p><code>&lt;style&gt;</code><strong>One page</strong></p>
+            <p><code>&lt;link&gt;</code><strong>Every linked page</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace the file relationship. Each HTML page opts in through its own link element. The CSS file does not broadcast itself. Ask what happens if contact.html forgets its link.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS133 · External stylesheet</div>
+      <div class="content">
+        <div class="eyebrow">The professional default</div>
+        <h2>One file can dress the whole site.</h2>
+        <div class="file-network" role="img" aria-label="Three HTML pages each link to one shared club-styles.css file.">
+          <div class="html-files">
+            <span>recycling-guide.html</span>
+            <span>drive-gallery.html</span>
+            <span>contact.html</span>
+          </div>
+          <div class="link-line"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;club-styles.css&quot;&gt;</code></div>
+          <div class="css-file">club-styles.css</div>
+        </div>
+        <p class="lab-rule">Each page opts in with one link in its <code>&lt;head&gt;</code>.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Explain the two cascade rules at this depth. Inline wins because it sits closest to the element. Among stylesheet rules with equal claims, the later rule wins. Specificity appears on the next selector sequence.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS133 · The cascade</div>
+      <div class="content">
+        <div class="eyebrow">When rules collide</div>
+        <h2>CSS needs a tie-breaker.</h2>
+        <div class="cascade-stack" role="img" aria-label="A layered stack ranks inline style above later internal style above earlier external style and browser defaults.">
+          <div><span>4</span><strong>Inline style</strong><small>closest claim</small></div>
+          <div><span>3</span><strong>Later equal rule</strong><small>later wins</small></div>
+          <div><span>2</span><strong>Earlier equal rule</strong><small>still matched</small></div>
+          <div><span>1</span><strong>Browser default</strong><small>holds the floor</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Use the targeting illustration to preview selector scope. Ask students which tool should style every footer, selected deadlines, and one meeting schedule. Then transition to the decision rule.&#10;&#10;Time: 23-26 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Selector scope</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Aim before you style</div>
+          <h2>Every, some, or exactly one?</h2>
+          <p class="lede">Your selector decides the reach before any declaration runs.</p>
+        </div>
+        <figure>
+          <img src="assets/selector-scope.png" alt="Three precision tools target every matching element, selected class members, or one unique id element.">
+          <figcaption>Selector syntax is a scope decision.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach the decision rule as a reusable sentence. Element selects every instance. Class selects chosen elements by role. Id selects one unique element. When students hesitate between class and id, choose class.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS133 · Selector decision rule</div>
+      <div class="content">
+        <div class="eyebrow">Set the aim</div>
+        <h2>Match the selector to the job.</h2>
+        <div class="selector-bench">
+          <article>
+            <code>footer</code>
+            <h3>Every one</h3>
+            <p>All matching elements</p>
+          </article>
+          <article>
+            <code>.deadline</code>
+            <h3>Some of these</h3>
+            <p>Chosen by a reusable role</p>
+          </article>
+          <article>
+            <code>#meeting-times</code>
+            <h3>Exactly this one</h3>
+            <p>Unique on one page</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Let pairs assign selector kinds. Reveal after one minute. Footer uses an element selector. Deadline paragraphs use a class. The unique announcements banner may use an id. Ask why .deadline is safer than .orange-text.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS133 · Guided practice</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Choose the selector</div>
+        <h2>Three requests need three levels of aim.</h2>
+        <ol class="request-list">
+          <li>Every page footer gets the same background.</li>
+          <li>Five deadline paragraphs need emphasis.</li>
+          <li>One announcements banner needs a highlight.</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><code>footer</code> · <code>.deadline</code> · <code>#announcements-banner</code></div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use the visual to reinforce role-based naming. Appearance names leak design decisions into HTML. If orange changes to green, .deadline stays true while .orange-box lies.&#10;&#10;Time: 32-35 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Durable names</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/role-names.png" alt="A role label named deadline remains attached as a component changes from orange to green, while an orange-box label becomes inaccurate.">
+          <figcaption>Role names survive a redesign.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Name the role</div>
+          <h2>Markup should not memorize the look.</h2>
+          <div class="name-tests">
+            <p class="pass"><code>.deadline</code><span>Still true after a rebrand</span></p>
+            <p class="fail"><code>.orange-box</code><span>Becomes a lie when colors change</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Introduce color and background-color as a pair. Explain that text readability is part of correct styling. The chapter's palette file lists approved text and background pairings. Pair color with labels and structure, not color alone.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS133 · Color properties</div>
+      <div class="content">
+        <div class="eyebrow">Design in pairs</div>
+        <h2>Text color and background belong together.</h2>
+        <div class="contrast-specimen">
+          <pre><code>body {
+  background-color: #fac78d;
+  color: #333333;
+}</code></pre>
+          <div class="rendered-sample">
+            <span>Rendered sample</span>
+            <p>Ink on light sand</p>
+            <strong>Approved pairing</strong>
+          </div>
+        </div>
+        <p class="lab-rule">A readable pairing earns its place. Color alone proves nothing.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Compare the three color systems. Names are quick but imprecise. Hex stores exact red, green, and blue pairs. rgb() states the same mix with 0 to 255 channels. Point out that teal and #268080 are not the same color.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS133 · Color systems</div>
+      <div class="content">
+        <div class="eyebrow">Three spellings</div>
+        <h2>Exact values protect the brand.</h2>
+        <div class="color-specimens">
+          <article>
+            <span class="swatch named"></span>
+            <code>teal</code>
+            <p>Fast test<br><strong>#008080</strong></p>
+          </article>
+          <article>
+            <span class="swatch hex"></span>
+            <code>#268080</code>
+            <p>Exact palette value</p>
+          </article>
+          <article>
+            <span class="swatch rgb"></span>
+            <code>rgb(38, 128, 128)</code>
+            <p>Same club teal</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Trace #f4a259 as three pairs: f4 red, a2 green, 59 blue. Students do not need mental color calculation. They should rank channel strength and copy exact values from the palette.&#10;&#10;Time: 41-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Hex channels</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Read the pairs</div>
+          <h2><span class="accent">#f4</span><span class="green-pair">a2</span><span class="blue-pair">59</span> mixes sunset orange.</h2>
+          <div class="channel-key">
+            <p><strong>f4</strong> red near full</p>
+            <p><strong>a2</strong> green in the middle</p>
+            <p><strong>59</strong> blue kept low</p>
+          </div>
+        </div>
+        <figure>
+          <img src="assets/color-channels.png" alt="Three labeled red, green, and blue light channels combine into the club's sunset orange hex color f4a259.">
+          <figcaption>Hex records red, green, and blue as three pairs.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Students predict before reveal. Sand #deb887 is lightest, green #5e9959 is next, and ink #333333 is darkest. Ask which repeated low pair makes #333333 easy to place.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS133 · Hex retrieval</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Read before the screen</div>
+        <h2>Rank lightest to darkest.</h2>
+        <div class="hex-rank">
+          <code>#deb887</code>
+          <code>#5e9959</code>
+          <code>#333333</code>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Lightest:</strong> #deb887 · <strong>Middle:</strong> #5e9959 · <strong>Darkest:</strong> #333333</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Explain why a page can look acceptable while its CSS still contains an error. Browsers skip declarations they cannot parse. The validator reports what the browser swallowed. Use the magnified line clue to teach students to look one declaration up after a missing semicolon.&#10;&#10;Time: 46-49 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · CSS validator</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/validator-clue.png" alt="A validator workbench magnifies a missing semicolon on the line above the line where the parser finally reports an error.">
+          <figcaption>The parser reports where confusion becomes visible.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Trust evidence, not silence</div>
+          <h2>Browsers skip errors. Validators explain them.</h2>
+          <div class="diagnostic-rule">
+            <strong>Report points at an innocent line?</strong>
+            <p>Look one declaration up for a missing semicolon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 4A as the complete workflow. Students should connect one file, style by scope, remove the leftover inline style, then validate three HTML pages and one CSS file to zero messages.&#10;&#10;Time: 49-52 minutes.">
+      <div class="brand">CIS133 · Skills Lab 4A</div>
+      <div class="content">
+        <div class="eyebrow">Dress the club site</div>
+        <h2>One stylesheet. Three pages. Zero validator messages.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Connect</strong><p>Link <code>club-styles.css</code> from every page.</p></article>
+          <article><span>2</span><strong>Target</strong><p>Use element, class, and id selectors.</p></article>
+          <article><span>3</span><strong>Clean</strong><p>Move one leftover inline style.</p></article>
+          <article><span>4</span><strong>Validate</strong><p>Check three HTML files and one CSS file.</p></article>
+        </div>
+        <p class="submission-note">Estimated lab time: 5-6 hours · Submit the complete zipped site folder.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use this as a retrieval map. Ask one student to explain each checkpoint without notes. Keep the final application tied to the club site.&#10;&#10;Time: 52-54 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Four checkpoints</div>
+          <h2>Can you explain the whole styling path?</h2>
+          <ol class="scope-list">
+            <li>Rule anatomy</li>
+            <li>Connection reach</li>
+            <li>Selector scope</li>
+            <li>Validator evidence</li>
+          </ol>
+        </div>
+        <figure>
+          <img src="assets/lab-handoff.png" alt="A completed CSS workbench connects rule anatomy, external stylesheet links, selector scopes, and validator checks to a three-page club site.">
+          <figcaption>The chapter ends where the lab begins.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening question. The site looked gray because browser defaults were holding the floor. Students can now replace those defaults with one external stylesheet without changing the site's semantic structure. Collect the exit ticket before dismissal.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>The site was never unstyled. The browser chose first.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> Why can one CSS file change the whole site without changing what its content means?</p>
+        </div>
+        <p class="next-step">Next: use the box model to give every colored region space.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
