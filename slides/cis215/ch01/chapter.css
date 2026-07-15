@@ -1,0 +1,176 @@
+/* CIS215 Chapter 1: sunlit data field journal */
+
+.slide {
+    background:
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+        linear-gradient(135deg, #f8fcff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+.slide::before {
+    content: "";
+    position: absolute;
+    width: 26rem;
+    height: 26rem;
+    right: -12rem;
+    bottom: -14rem;
+    border: .13rem solid rgba(3, 116, 181, .16);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2.5rem rgba(3, 116, 181, .05), 0 0 0 5rem rgba(3, 116, 181, .035);
+}
+
+.slide.dark::before {
+    border-color: rgba(255, 255, 255, .18);
+    box-shadow: 0 0 0 2.5rem rgba(255, 255, 255, .045), 0 0 0 5rem rgba(255, 255, 255, .025);
+}
+
+.title-slide .content,
+.visual-split {
+    position: relative;
+}
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-slide h1 {
+    max-width: 10ch;
+}
+
+.title-art,
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img,
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-art {
+    aspect-ratio: 16 / 10;
+    margin: 0;
+    border: .25rem solid rgba(255, 255, 255, .75);
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.panel {
+    border-radius: .65rem;
+}
+
+.workflow .phase {
+    min-height: 12.5rem;
+    border-radius: .65rem;
+    box-shadow: 0 .65rem 1.4rem rgba(0, 46, 93, .1);
+}
+
+.dataframe {
+    border-radius: .7rem;
+    overflow: hidden;
+    box-shadow: 0 .75rem 1.7rem rgba(0, 46, 93, .12);
+}
+
+.image-credit {
+    color: inherit;
+    font-size: .72rem;
+    opacity: .72;
+}
+
+@media (max-width: 720px) {
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .visual-split,
+    .visual-split.reverse {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+}
