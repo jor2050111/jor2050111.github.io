@@ -329,8 +329,13 @@ li {
     position: relative;
     padding: 1.3rem .9rem;
     background: var(--white);
+    color: var(--navy);
     border-top: .6rem solid var(--blue);
     min-height: 13rem;
+}
+
+.slide.dark .phase {
+    color: var(--navy);
 }
 
 .phase:nth-child(2) {
