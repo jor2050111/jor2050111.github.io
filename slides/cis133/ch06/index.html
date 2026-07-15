@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 6 classroom presentation: Layout with Flexbox.">
+  <meta name="theme-color" content="#002E5D">
+  <title>CIS133: Layout with Flexbox</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M10 26h44v12H10z' fill='%23FFC845'/%3E%3Crect x='14' y='29' width='8' height='6' fill='%23002E5D'/%3E%3Crect x='28' y='29' width='8' height='6' fill='%23002E5D'/%3E%3Crect x='42' y='29' width='8' height='6' fill='%23002E5D'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Layout with Flexbox" data-course="cis133"
+  data-chapter="ch06" data-palette="phoenix-classic">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the club site's stacked state. The pages now have color, space, and type, yet the logo, nav, and gallery still form one tall column. Ask what must change when the boxes are correct but their arrangement is not.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 6 · 55 minutes</div>
+        <div class="track-rule" aria-hidden="true"><i></i><i></i><i></i></div>
+        <h1>Layout with Flexbox</h1>
+        <p class="lede">The boxes look right. Why do they still stack?</p>
+        <div class="route-tag" aria-hidden="true">arrange the line</div>
+      </div>
+    </section>
+
+    <section class="slide light" data-notes="Connect the targets to Chapter 5. Students can already measure and style boxes. Today they will assign layout roles, control axes, scope selectors by tree relationship, and build the promised navigation bar.&#10;&#10;Time: 3-6 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Arrange a line, scope its states, and build the bar.</h2>
+        <div class="route-objectives">
+          <article><span>01</span><strong>Arrange</strong><p>Place, align, gap, and wrap flex items.</p></article>
+          <article><span>02</span><strong>Scope</strong><p>Target descendants and interaction states.</p></article>
+          <article><span>03</span><strong>Build</strong><p>Turn the semantic list into an accessible nav.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use the rail to introduce the model. The parent becomes the flex container. Its direct children become flex items. The gold line is the main axis and the blue line is the cross axis. Nested content stays inside each item.&#10;&#10;Time: 6-9 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Flexbox model</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One declaration, two roles</div>
+          <h2>The parent controls the line.</h2>
+          <pre class="code"><code>.officer-roster {
+  display: flex;
+}</code></pre>
+          <div class="role-key"><span><b></b>main axis</span><span><b></b>cross axis</span></div>
+        </div>
+        <figure>
+          <img src="assets/flex-axes.png" alt="Four direct-child cards ride a horizontal container rail crossed by a perpendicular axis.">
+          <figcaption>The container arranges its direct children.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Read the markup tree before adding layout. In this example, the three sections become items. Paragraphs inside the first section do not. Emphasize that display flex belongs on the parent whose children should move.&#10;&#10;Time: 9-12 minutes.">
+      <div class="brand">CIS133 · Direct children</div>
+      <div class="content">
+        <div class="eyebrow">Read the tree first</div>
+        <h2>Only one generation gets a flex-item role.</h2>
+        <div class="tree-bench" role="img" aria-label="Main is the flex container, three sections are direct-child flex items, and two paragraphs remain nested inside one section.">
+          <div class="tree-parent"><code>main</code><small>container</small></div>
+          <div class="tree-branch" aria-hidden="true"></div>
+          <div class="tree-items">
+            <div><code>section</code><small>item</small><span><code>p</code><code>p</code></span></div>
+            <div><code>section</code><small>item</small></div>
+            <div><code>section</code><small>item</small></div>
+          </div>
+        </div>
+        <p class="track-note">Put <code>display: flex</code> on the parent, not each card.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Let students answer from the tree. Main becomes the container. Its three sections become items. The paragraphs remain normal descendants because they are not direct children of main.&#10;&#10;Time: 12-14 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Call the roles</div>
+        <h2>Main holds three sections. One section holds two paragraphs.</h2>
+        <div class="prompt"><p><code>display: flex</code> lands on <code>main</code>. Which elements become items?</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The three <code>section</code> elements become flex items. Their nested paragraphs stay put.</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use the three tracks to show justify-content. Start places items at the line's beginning, center splits leftover space, and end puts leftover space first. Keep the axis language active.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Main-axis placement</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/alignment-tracks.png" alt="Three container tracks place the same four cards at the start, center, and end.">
+          <figcaption>Justify-content distributes items along the main axis.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Place along the line</div>
+          <h2>Leftover space tells the story.</h2>
+          <ul class="value-list">
+            <li><code>flex-start</code><span>space after</span></li>
+            <li><code>center</code><span>space split</span></li>
+            <li><code>flex-end</code><span>space before</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Separate the two axis controls. Justify-content works on the main axis. Align-items works on the cross axis. The default align-items value is stretch, which explains equal card heights in a row.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS133 · Axis controls</div>
+      <div class="content">
+        <div class="eyebrow">Ask which axis</div>
+        <h2>Justify runs along. Align works across.</h2>
+        <div class="axis-ledger">
+          <article><span>→</span><code>justify-content</code><strong>Main axis</strong><p>start · center · end · space-between</p></article>
+          <article><span>↕</span><code>align-items</code><strong>Cross axis</strong><p>stretch · start · center · end</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide light" data-notes="Contrast container-owned gap with item-owned margin. Gap appears only between neighbors. Margin surrounds each item and creates extra space at the outer edges. Ask which tool keeps a row's edges clean.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS133 · Spacing ownership</div>
+      <div class="content">
+        <div class="eyebrow">Who owns the space?</div>
+        <h2>Gap spaces neighbors. Margin surrounds items.</h2>
+        <div class="spacing-race">
+          <article>
+            <h3>Container owns it</h3>
+            <div class="mini-track gap-track" aria-label="Three cards separated by equal gaps with no extra space at the track edges."><i></i><i></i><i></i></div>
+            <code>gap: 16px;</code>
+          </article>
+          <article>
+            <h3>Each item owns it</h3>
+            <div class="mini-track margin-track" aria-label="Three cards have margins that add space between cards and at both track edges."><i></i><i></i><i></i></div>
+            <code>margin: 16px;</code>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Use the sweeping path to show wrapping. Without flex-wrap, the default is to shrink items. With wrap, a card moves whole to the next line and the gap remains. Connect this to responsive design.&#10;&#10;Time: 23-26 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Wrapping</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">When the line fills</div>
+          <h2>Wrap moves an item whole.</h2>
+          <pre class="code compact"><code>.announcement-board {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}</code></pre>
+        </div>
+        <figure>
+          <img src="assets/flex-wrap.png" alt="A four-card row reaches its edge, then the fourth card follows a curved path onto a second line.">
+          <figcaption>Wrap preserves item width and breaks the line.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide light" data-notes="Do the arithmetic from the chapter. Four 220-pixel cards need 880 pixels. Three 16-pixel gaps add 48. The row wants 928 pixels before the container's own padding and border. This explains why it must wrap near a 980-pixel window.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS133 · Line capacity</div>
+      <div class="content">
+        <div class="eyebrow">Predict before resizing</div>
+        <h2>The line breaks because the math says so.</h2>
+        <div class="capacity-equation" role="img" aria-label="Four cards at 220 pixels total 880 pixels. Three gaps at 16 pixels total 48 pixels. The line needs 928 pixels.">
+          <span><strong>4 × 220</strong><small>cards</small></span><b>+</b><span><strong>3 × 16</strong><small>gaps</small></span><b>=</b><span class="total"><strong>928px</strong><small>needed</small></span>
+        </div>
+        <p class="track-note">No wrap? Items shrink. Wrap? The full card drops to a new line.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give students time to reason with ownership. The correct choice is gap because it creates 20 pixels between neighbors and none at the row's ends. Margin would add space around every item.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS133 · Guided practice</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Choose the spacing tool</div>
+        <h2>A toolbar needs 20px only between buttons.</h2>
+        <div class="prompt"><p>Would you place <code>gap</code> on the toolbar or <code>margin</code> on each button?</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Use <code>gap: 20px</code> on the toolbar. The container opens space between neighbors without padding the outer edges.</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Shift from arrangement to selector scope. The tree visual shows a footer branch highlighted while links in nav and main stay untouched. Read descendant selectors from right to left.&#10;&#10;Time: 32-35 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Descendant scope</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/descendant-scope.png" alt="A document tree highlights only link nodes inside the footer branch while other branches remain blue.">
+          <figcaption>A relationship can aim more precisely than a new class.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Let the selector read the tree</div>
+          <h2>Scope the fix to links inside the footer.</h2>
+          <pre class="code compact"><code>footer a {
+  color: #fac78d;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Compare reach. A bare anchor selector catches every link. Footer space anchor catches anchors at any depth inside footer. Footer greater-than anchor would catch only direct children, so it misses the club site's nested links.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS133 · Combinators</div>
+      <div class="content">
+        <div class="eyebrow">Relationship changes reach</div>
+        <h2>A space can make a selector smarter.</h2>
+        <div class="selector-routes">
+          <p><code>a</code><span>every link</span><strong>too broad</strong></p>
+          <p><code>footer a</code><span>any link inside footer</span><strong>right scope</strong></p>
+          <p><code>footer &gt; a</code><span>direct-child links only</span><strong>too strict here</strong></p>
+        </div>
+        <p class="track-note">More specific scope beats a bare element selector.</p>
+      </div>
+    </section>
+
+    <section class="slide light" data-notes="Introduce pseudo-classes as state selectors. Hover serves a pointer. Focus serves the keyboard. Every hover style gets a focus twin, and focus outlines stay unless replaced with an equal signal.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS133 · Interaction states</div>
+      <div class="content">
+        <div class="eyebrow">Two inputs, equal signal</div>
+        <h2>Hover alone leaves keyboard users behind.</h2>
+        <pre class="state-code"><code>nav a:hover,
+nav a:focus {
+  background-color: #268080;
+  color: #ffffff;
+}</code></pre>
+        <div class="state-laws"><span>Pair <code>:hover</code> with <code>:focus</code>.</span><span>Keep a visible focus outline.</span></div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Use the two paths to reinforce equal treatment. Mouse and keyboard both reach the same link state. Point out the visible outline around the target. Ask what removing it would cost a keyboard visitor.&#10;&#10;Time: 41-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Equal states</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Pointer and keyboard</div>
+          <h2>Different paths need the same feedback.</h2>
+          <ul class="value-list light-list">
+            <li><code>:hover</code><span>pointer rests</span></li>
+            <li><code>:focus</code><span>keyboard arrives</span></li>
+            <li><code>outline</code><span>location stays visible</span></li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/equal-states.png" alt="A mouse path and a keyboard path converge on the same brightly outlined link target.">
+          <figcaption>One state signal serves two ways of reaching the link.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide light" data-notes="Build the navigation bar in two moves. The scoped nav ul rule removes the list defaults and creates a flex line. The nav anchor rule turns each inline link into a padded block target.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS133 · Navigation build</div>
+      <div class="content">
+        <div class="eyebrow">The semantic list stays</div>
+        <h2>Strip the list dressing. Keep its meaning.</h2>
+        <div class="nav-build">
+          <pre><code>nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+}</code></pre>
+          <pre><code>nav a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use this as a final code reading check. Students should identify why display block matters, why the underline may leave in this context, and why both states share the block. Reveal the concise model.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS133 · Navigation check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Read the finished bar</div>
+        <h2>What makes each link both clear and usable?</h2>
+        <div class="prompt"><p>Name the job of <code>display: block</code>, padding, and the hover-focus selector list.</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Block gives the link a full box. Padding enlarges its target. Hover and focus give pointer and keyboard users the same signal.</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Frame Skills Lab 6A as the Part II milestone. Students arrange the header and gallery, fix footer link scope, add equal states, and build the navigation bar. The visual shows the list entering the layout assembly line and leaving as a padded bar.&#10;&#10;Time: 50-53 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Skills Lab 6A</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/nav-assembly.png" alt="A bulleted list enters a layout assembly line and leaves as a three-link navigation bar with one focused link.">
+          <figcaption>Part II ends with a semantic, arranged, accessible bar.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">The club site gets its layout</div>
+          <h2>Arrange. Scope. Test. Explain.</h2>
+          <ol class="milestone-list">
+            <li><strong>Header</strong><span>flex row + wrap</span></li>
+            <li><strong>Gallery</strong><span>gap + wrap</span></li>
+            <li><strong>Links</strong><span>scoped states</span></li>
+            <li><strong>Nav</strong><span>semantic flex bar</span></li>
+          </ol>
+          <p class="track-note">Estimated lab time: 5-6 hours</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold closing-slide" data-notes="Resolve the opening problem. The boxes stacked because block layout was still in charge. Flexbox gives the parent a line and the controls for that line. Collect the exit ticket and close Part II with connect, control, arrange, done.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Close Part II</div>
+        <h2>The parent owns the line. The selector protects the scope.</h2>
+        <div class="prompt"><p><strong>Exit ticket:</strong> A card row must wrap with 16px between cards, and footer links need their own state colors. Write the two scoped rules.</p></div>
+        <p class="next-route">Next: Part III starts with user experience, sitemaps, and wireframes.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

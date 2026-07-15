@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 5 classroom presentation: The Box Model and Typography.">
+  <meta name="theme-color" content="#002E5D">
+  <title>CIS133: The Box Model and Typography</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Crect x='12' y='12' width='40' height='40' fill='%23FFC845'/%3E%3Crect x='20' y='20' width='24' height='24' fill='%23E3F2FA'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: The Box Model and Typography" data-course="cis133"
+  data-chapter="ch05" data-palette="canvas-light">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the club president's complaint from the chapter. The colors are right, but the site still looks like a form. Ask students what makes a page feel cramped before naming any CSS property.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 5 · 55 minutes</div>
+        <div class="measure-line" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <h1>The Box Model and Typography</h1>
+        <p class="lede">The colors are right. Why does the site still feel cramped?</p>
+        <div class="spec-tag" aria-hidden="true">space + type</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect today's work to Chapter 4. Students already own selectors, declarations, the cascade, and the validator habit. Read the targets as actions they will perform on the club site.&#10;&#10;Time: 3-6 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Measure space, set type, and diagnose readability.</h2>
+        <div class="objective-strips">
+          <article><span>01</span><h3>Measure</h3><p>Read content, padding, border, and margin.</p></article>
+          <article><span>02</span><h3>Control</h3><p>Write spacing, width, and type rules that hold up.</p></article>
+          <article><span>03</span><h3>Diagnose</h3><p>Use DevTools and four readability checks.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Introduce the box model from the inside out. Point to the four physical layers in the visual, then name them in order. Stress that every element students have written already owns this model.&#10;&#10;Time: 6-9 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Box model</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Read inside out</div>
+          <h2>Every element is four nested layers.</h2>
+          <ol class="layer-key">
+            <li><span>1</span><strong>Content</strong></li>
+            <li><span>2</span><strong>Padding</strong></li>
+            <li><span>3</span><strong>Border</strong></li>
+            <li><span>4</span><strong>Margin</strong></li>
+          </ol>
+        </div>
+        <figure>
+          <img src="assets/box-model-layers.png" alt="Four nested paper layers model content, padding, border, and margin on a measurement table.">
+          <figcaption>One element. Four measurable layers.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Teach the paint rule as the fastest padding-versus-margin decision. Background fills content and padding. It stops before margin. Ask students where orange should remain visible around reminder text.&#10;&#10;Time: 9-12 minutes.">
+      <div class="brand">CIS133 · The paint rule</div>
+      <div class="content">
+        <div class="eyebrow">Choose the layer</div>
+        <h2>Inside the paint is padding. Outside is margin.</h2>
+        <div class="paint-demo" role="img" aria-label="A colored reminder box shows padding inside its painted area and margin as clear space outside the border.">
+          <div class="margin-zone"><span>margin</span><div class="border-zone"><span>border</span><div class="padding-zone"><span>padding</span><div class="content-zone">content</div></div></div></div>
+        </div>
+        <p class="bench-note">Text touches its color? Add padding. Neighbors crowd? Add margin.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give students 30 seconds to choose both layers before revealing. The caption needs padding because the sand background should continue around the words. The figure needs margin because the paragraph is a neighbor.&#10;&#10;Time: 12-14 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Padding or margin?</div>
+        <h2>Two crowds need two different fixes.</h2>
+        <div class="prompt"><p>A caption touches its sand frame. The figure presses against the paragraph above it.</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Caption:</strong> padding keeps space inside the paint. <strong>Figure:</strong> margin separates neighboring boxes.</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Frame DevTools as an X-ray, not a repair button. The diagram reports the browser's computed numbers for each side. Remind students that browser defaults can supply margins they never wrote.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · DevTools</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/devtools-xray.png" alt="A measurement workstation links a browser card to a nested box-model diagram with rulers.">
+          <figcaption>The diagram reports the box the browser drew.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Stop guessing</div>
+          <h2>DevTools turns spacing into evidence.</h2>
+          <ul class="check-lines"><li>Select the element.</li><li>Find Computed or Layout.</li><li>Read all four sides.</li><li>Trace the rule that supplied them.</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Build shorthand in stages. One value reaches all sides. Two values mean vertical, then horizontal. Four travel clockwise from the top. Students will get the visual memory aid on the next slide.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS133 · Shorthand syntax</div>
+      <div class="content">
+        <div class="eyebrow">Fewer words, same box</div>
+        <h2>One, two, or four values can set every side.</h2>
+        <div class="shorthand-stack">
+          <p><code>padding: 24px;</code><span>all four sides</span></p>
+          <p><code>padding: 8px 20px;</code><span>vertical · horizontal</span></p>
+          <p><code>padding: 24px 32px 16px 32px;</code><span>top · right · bottom · left</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Add two details that often surprise beginners. Borders take width, style, and color. Adjacent vertical margins collapse to the larger value instead of adding. Keep the focus on diagnosis, not memorizing every border style.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS133 · Borders and margins</div>
+      <div class="content">
+        <div class="eyebrow">Two useful surprises</div>
+        <h2>Borders draw. Vertical margins negotiate.</h2>
+        <div class="two-specimens">
+          <article><div class="spec-number">A</div><h3>Border shorthand</h3><pre><code>border: 3px solid #deb887;</code></pre><p>Width, style, color.</p></article>
+          <article><div class="spec-number">B</div><h3>Margin collapse</h3><div class="collapse-bars" aria-label="Two 24 pixel vertical margins meet and produce one 24 pixel gap."><span>24</span><i></i><span>24</span></div><p>Two 24px margins meet as 24px, not 48px.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use the clockwise path as a memory cue. Start at the top and trace right, bottom, left. Then ask students to expand 12px 24px into four longhand values.&#10;&#10;Time: 23-26 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Shorthand clock</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Start at twelve</div>
+          <h2>Four values travel clockwise from the top.</h2>
+          <div class="clock-code"><code>top → right → bottom → left</code></div>
+          <p class="lede">Two values pair opposite sides: vertical, then horizontal.</p>
+        </div>
+        <figure>
+          <img src="assets/shorthand-clock.png" alt="Four measurement arms move clockwise around a centered square to model CSS shorthand order.">
+          <figcaption>Clockwise order turns shorthand into a repeatable pattern.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Connect line length to eye movement. A fixed width can overflow a phone, so max-width is the better promise. Auto side margins split leftover space and center the column.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS133 · Readable column</div>
+      <div class="content">
+        <div class="eyebrow">Cap, then center</div>
+        <h2>Readable text needs a limit, not a fixed cage.</h2>
+        <pre class="code"><code>main {
+  max-width: 640px;
+  margin: 0 auto;
+}</code></pre>
+        <div class="formula-strip"><span><strong>max-width</strong> caps the line</span><span><strong>auto</strong> splits leftover space</span></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Have students compute before revealing. Under content-box, width covers content only. Add 20 pixels of padding and 5 pixels of border on both sides: 400 + 40 + 10 = 450.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS133 · Width accounting</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Compute the visible box</div>
+        <h2>Why does a 400px box render at 450px?</h2>
+        <pre class="math-card"><code>width: 400px;
+padding: 20px;
+border: 5px solid;</code></pre>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>400 + 40 + 10 = 450px.</strong> The default width measures content. Padding and border grow outside it.</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Compare the two measured specimens. The left model shows content-box arithmetic. The right model shows border-box, where the declared width includes content, padding, and border. Introduce the universal selector baseline.&#10;&#10;Time: 32-35 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · box-sizing</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/border-box-measure.png" alt="Two measured boxes compare a box that grows beyond its declared width with one whose layers stay inside the outer width.">
+          <figcaption>Border-box makes the declared width match the visible box.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">End the width surprise</div>
+          <h2>Make width mean the whole visible box.</h2>
+          <pre class="code compact"><code>* {
+  box-sizing: border-box;
+}</code></pre>
+          <p class="lede">Padding now carves inward instead of growing outward.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Explain why font-family takes a list. The visitor's machine may not have the first choice. A generic family is a category the browser can always supply. Read the stack left to right.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS133 · Font stacks</div>
+      <div class="content">
+        <div class="eyebrow">Plan for another machine</div>
+        <h2>A font stack is a preference list with a safety net.</h2>
+        <div class="font-stack" role="img" aria-label="A three-step font stack moves from Georgia to Times New Roman to the generic serif family.">
+          <span><strong>1</strong><code>Georgia</code><small>first choice</small></span><i>→</i>
+          <span><strong>2</strong><code>"Times New Roman"</code><small>close backup</small></span><i>→</i>
+          <span><strong>3</strong><code>serif</code><small>generic safety net</small></span>
+        </div>
+        <p class="bench-note">Quote names with spaces. End with a generic family.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Contrast fixed pixels with rem. A rem respects the visitor's chosen base text size. Then reconnect semantics: change a heading's appearance with CSS, never by changing its HTML rank.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS133 · Type decisions</div>
+      <div class="content">
+        <div class="eyebrow">Size the look, preserve the meaning</div>
+        <h2>CSS changes type without demoting the heading.</h2>
+        <div class="unit-compare">
+          <article><code>16px</code><h3>Fixed</h3><p>The same pixel count for every visitor.</p></article>
+          <article><code>1.5rem</code><h3>Relative</h3><p>Scales from the visitor's base size.</p></article>
+          <article><code>h2 { ... }</code><h3>Semantic</h3><p>Keep the heading rank. Style its appearance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Use the visual as a three-stage fallback path. The browser tries the preferred face, then a similar installed face, then a generic family. Mention that Google Fonts still needs an honest local fallback.&#10;&#10;Time: 41-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Resilient type</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Fallback is part of the design</div>
+          <h2>The page keeps speaking when one font is missing.</h2>
+          <ul class="check-lines"><li>Choose the preferred face.</li><li>Match its character in the backup.</li><li>Finish with a generic family.</li></ul>
+        </div>
+        <figure>
+          <img src="assets/font-fallback.png" alt="Three abstract type specimen cards follow a fallback path toward a secure final slot.">
+          <figcaption>Fallbacks protect the design across devices.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Finish the type property set. Body text stays left aligned. Uppercase belongs on short labels. Underlines still identify links in body text. Unitless line-height scales with the text.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS133 · Text properties</div>
+      <div class="content">
+        <div class="eyebrow">Use each property for one job</div>
+        <h2>Readable type keeps its signals.</h2>
+        <div class="property-ledger">
+          <p><code>text-align</code><span>Left for body text. Center short display lines.</span></p>
+          <p><code>text-transform</code><span>Caps for labels, not paragraphs.</span></p>
+          <p><code>text-decoration</code><span>Keep body-link underlines.</span></p>
+          <p><code>line-height: 1.5</code><span>Give body text room to breathe.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Run the four-point checklist as a diagnosis, not a taste test. Contrast comes from the approved palette. Size should not drop below the browser default. Body line-height sits near 1.5. Max-width caps line length.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS133 · Readability check</div>
+      <div class="content">
+        <div class="eyebrow">Four points, four controls</div>
+        <h2>Readable is something you can test.</h2>
+        <div class="readability-meter">
+          <article><span>01</span><strong>Contrast</strong><code>color + background</code></article>
+          <article><span>02</span><strong>Size</strong><code>font-size</code></article>
+          <article><span>03</span><strong>Line height</strong><code>line-height</code></article>
+          <article><span>04</span><strong>Line length</strong><code>max-width</code></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Frame Skills Lab 5A as a measured upgrade. Students set border-box, space the regions, build the readable column, choose a font stack, and diagnose one remaining defect with DevTools. The visual shows the finished reading condition.&#10;&#10;Time: 50-53 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Skills Lab 5A</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/readable-column.png" alt="A centered article column is measured for comfortable line height and capped line length.">
+          <figcaption>Space and type turn a valid page into a readable one.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Give the club site breathing room</div>
+          <h2>Measure. Style. Inspect. Explain.</h2>
+          <ol class="lab-steps"><li><strong>Set</strong> border-box.</li><li><strong>Space</strong> each region.</li><li><strong>Build</strong> the readable column.</li><li><strong>Diagnose</strong> one remaining defect.</li></ol>
+          <p class="submission-note">Estimated lab time: 5-6 hours</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold closing-slide" data-notes="Resolve the opening complaint. The site felt cramped because defaults still controlled its layers and type. Collect the exit ticket, then preview Chapter 6, where students arrange these boxes with Flexbox.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Close the loop</div>
+        <h2>Space is not empty. It is a CSS decision.</h2>
+        <div class="prompt"><p><strong>Exit ticket:</strong> A reminder's text touches its colored edge, and the page runs too wide. Name the property that fixes each defect and explain why.</p></div>
+        <p class="next-step">Next: arrange these boxes along a line with Flexbox.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

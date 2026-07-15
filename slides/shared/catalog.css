@@ -200,6 +200,20 @@ h2 {
     --card-soft: var(--mist-blue);
 }
 
+.card[data-card-palette="canvas-light"] {
+    --card-dark: var(--midnight-navy);
+    --card-accent: var(--phoenix-gold);
+    --card-support: var(--canvas-blue-hover);
+    --card-soft: var(--navy-200);
+}
+
+.card[data-card-palette="phoenix-classic"] {
+    --card-dark: var(--midnight-navy);
+    --card-accent: var(--phoenix-gold);
+    --card-support: var(--canvas-blue);
+    --card-soft: var(--mist-blue);
+}
+
 .card:hover {
     transform: translateY(-.25rem);
     border-color: var(--blue);
