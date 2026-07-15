@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 3 classroom presentation: Semantic HTML and Images.">
+  <meta name="theme-color" content="#7c3626">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237C3626'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23FFD573'/%3E%3C/svg%3E">
+  <title>CIS133: Semantic HTML and Images</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Semantic HTML and Images" data-course="cis133"
+  data-chapter="ch03" data-palette="canyon-sand">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with Devon's problem from the chapter. The guide validates, but reaching the drop-off steps takes too long with a screen reader. Ask students why the validator stayed silent.\n\nTime: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="field-label">Chapter 3 · Field notes</div>
+        <h1>Valid markup is not the finish line.</h1>
+        <p class="lede">A page must communicate meaning to browsers, assistive technology, and software that never sees its pixels.</p>
+        <div class="question-slip"><strong>Opening case</strong><span>How can a page pass validation and still be hard to use?</span></div>
+      </div>
+    </section>
+
+    <section class="slide target-slide" data-notes="Introduce the three decisions students will make: semantic structure, image purpose, and file format. Connect the first two to accessibility.\n\nTime: 3-6 minutes.">
+      <div class="brand">CIS133 · Chapter 3</div>
+      <div class="content">
+        <div class="eyebrow">Today’s field study</div>
+        <h2>By the end of class, you can make a valid page meaningful.</h2>
+        <div class="objective-trail">
+          <article><span>01</span><h3>Name regions</h3><p>Choose landmarks and text elements by meaning.</p></article>
+          <article><span>02</span><h3>Describe purpose</h3><p>Write alt text that matches an image’s job.</p></article>
+          <article><span>03</span><h3>Select a format</h3><p>Match image properties to the right file type and folder.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide image-slide" data-notes="Use the image to introduce the three readers. Ask which reader sees pixels and what the other two inspect instead.\n\nTime: 6-10 minutes.">
+      <div class="brand">CIS133 · 3.1</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One file, three readers</div>
+          <h2>Pixels serve one reader. Semantics serve all three.</h2>
+          <ul class="reader-key"><li><strong>Browser:</strong> renders the page for sighted visitors.</li><li><strong>Assistive technology:</strong> announces the structure.</li><li><strong>Software:</strong> parses meaning without drawing the page.</li></ul>
+        </div>
+        <figure><img src="assets/three-readers.png" alt="One web page specimen viewed as pixels, a structured outline, and a network of semantic signals."></figure>
+      </div>
+    </section>
+
+    <section class="slide semantics-slide" data-notes="Read the two examples aloud. Stress this Friday in the first example. Treat the second as a warning. Then state the meaning test that separates semantic choices from visual styling.\n\nTime: 10-14 minutes.">
+      <div class="brand">CIS133 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Meaning inside a sentence</div>
+        <h2>Use <code>&lt;strong&gt;</code> for importance and <code>&lt;em&gt;</code> for spoken stress.</h2>
+        <div class="language-specimens">
+          <article><div class="pin"></div><code>&lt;p&gt;Drop-offs end &lt;em&gt;this&lt;/em&gt; Friday.&lt;/p&gt;</code><p>Stress changes which Friday the sentence means.</p></article>
+          <article><div class="pin"></div><code>&lt;strong&gt;Back up your data before the reset.&lt;/strong&gt;</code><p>Importance marks the warning visitors must not miss.</p></article>
+        </div>
+        <div class="field-rule">If removing the markup changes the meaning, choose a semantic element.</div>
+      </div>
+    </section>
+
+    <section class="slide container-slide" data-notes="Contrast semantic elements with div and span. Explain that both generic containers are useful when no meaningful element fits, especially as CSS and scripting hooks.\n\nTime: 14-17 minutes.">
+      <div class="brand">CIS133 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Use the blank labels last</div>
+        <h2><code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> group content without naming it.</h2>
+        <div class="container-map">
+          <article><div class="block-shape">Block</div><h3><code>&lt;div&gt;</code></h3><p>A generic block-level container that stacks like a brick.</p></article>
+          <article><div class="inline-shape">Inline</div><h3><code>&lt;span&gt;</code></h3><p>A generic inline container that flows inside a sentence.</p></article>
+          <aside><strong>Professional habit</strong><p>Reach for a semantic element first. Use a generic container when no meaningful element fits.</p></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide" data-notes="Use the three pinned specimens to compare a warning, spoken stress, and a visual-only treatment. Ask students which two preserve meaning in the file.\n\nTime: 17-20 minutes.">
+      <div class="brand">CIS133 · 3.1</div>
+      <div class="content visual-grid reverse">
+        <figure><img src="assets/meaning-signals.png" alt="Field notebook with three language specimens represented by a warning symbol, voice stress waveform, and paint brush."></figure>
+        <div>
+          <div class="eyebrow">The pixel test can mislead you</div>
+          <h2>Two elements can look alike while recording different meaning.</h2>
+          <div class="prompt"><p><strong>Quick check:</strong> If <code>&lt;strong&gt;</code> and <code>&lt;b&gt;</code> look bold, what does only one of them record?</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide landmark-slide" data-notes="Introduce the four top-level landmarks in order. Contrast head with header. Explain that a page gets one main because it marks where the primary content begins.\n\nTime: 20-24 minutes.">
+      <div class="brand">CIS133 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">Name the page regions</div>
+        <h2>Four landmarks turn one long hallway into labeled doors.</h2>
+        <div class="landmark-stack" role="img" aria-label="Page body containing header, navigation, one main content region, and footer in order.">
+          <div><code>&lt;header&gt;</code><span>Introduces the page</span></div>
+          <div><code>&lt;nav&gt;</code><span>Holds major links in a list</span></div>
+          <div class="main-region"><code>&lt;main&gt;</code><span>Holds the page’s primary content exactly once</span></div>
+          <div><code>&lt;footer&gt;</code><span>Closes with related information</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide decision-slide" data-notes="Use the two tests in order. A meeting recap can stand alone, so it is an article. Why It Matters is one themed chunk in a larger guide, so it is a section.\n\nTime: 24-28 minutes.">
+      <div class="brand">CIS133 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">Organize inside main</div>
+        <h2>Ask whether the content can stand alone.</h2>
+        <div class="fork-path">
+          <article><div class="route">Yes</div><h3><code>&lt;article&gt;</code></h3><p>Use it for a post, recap, review, or other portable content.</p></article>
+          <article><div class="route">No</div><h3><code>&lt;section&gt;</code></h3><p>Use it for one themed part of this page with its own heading.</p></article>
+          <article><div class="route">Neither</div><h3><code>&lt;div&gt;</code></h3><p>Use it only when you need a container and no meaningful element fits.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide image-slide map-slide" data-notes="Trace the shortcut from navigation to the main region. Point out that section and article organize content but do not join the screen reader's landmark menu.\n\nTime: 28-32 minutes.">
+      <div class="brand">CIS133 · 3.2</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">A landmark menu creates shortcuts</div>
+          <h2>One keystroke can reach the page’s main content.</h2>
+          <p class="lede">The visible page may look the same, but its structure becomes easier to explore.</p>
+        </div>
+        <figure><img src="assets/landmark-map.png" alt="Field map of a web page with header, navigation, main, and footer regions plus a direct route to main content."></figure>
+      </div>
+    </section>
+
+    <section class="slide image-code-slide" data-notes="Name the four image attributes. Stress that alt is required and dimensions must state the file's true size. A relative src keeps the site portable.\n\nTime: 32-36 minutes.">
+      <div class="brand">CIS133 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">Embed the file</div>
+        <h2>The <code>&lt;img&gt;</code> element works through attributes.</h2>
+        <pre class="code"><code>&lt;img
+    s&#114;c="images/cactus-garden.png"
+    alt="Three green cacti in a gravel garden under an orange sky"
+    width="400"
+    height="400"&gt;</code></pre>
+        <div class="attribute-cards">
+          <div><strong><code>src</code></strong><span>Addresses the file</span></div><div><strong><code>alt</code></strong><span>Stands in for pixels</span></div><div><strong><code>width</code> + <code>height</code></strong><span>Reserve honest space</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide alt-slide" data-notes="Ask the decision question before showing the three jobs. Stress that alt text describes purpose in this page, not the file in isolation.\n\nTime: 36-40 minutes.">
+      <div class="brand">CIS133 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">Write alt text by purpose</div>
+        <h2>What job is this image doing on this page?</h2>
+        <div class="alt-decisions">
+          <article><div class="specimen-tag">Informative</div><h3>Describe what matters.</h3><p>Replace the image with one useful sentence.</p></article>
+          <article><div class="specimen-tag">Decorative</div><h3>Use deliberate empty alt.</h3><p><code>alt=""</code> tells a screen reader to skip it.</p></article>
+          <article><div class="specimen-tag">Functional</div><h3>Name the destination.</h3><p>A linked logo describes where the link goes.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide" data-notes="Use the repeated cactus to show that the same file can have three jobs. For the functional example, alt text should name the home destination, not describe the cactus.\n\nTime: 40-44 minutes.">
+      <div class="brand">CIS133 · 3.3</div>
+      <div class="content visual-grid reverse">
+        <figure><img src="assets/alt-purpose.png" alt="The same cactus image used as informative content, a decorative divider, and a functional home link on three page specimens."></figure>
+        <div>
+          <div class="eyebrow">Purpose changes the decision</div>
+          <h2>Alt text belongs to the image’s job, not its filename.</h2>
+          <div class="prompt"><p><strong>Pair share:</strong> What page change could turn a decorative cactus into an informative one?</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide format-slide" data-notes="Have students match each format to its strongest use. Mention WebP as a modern raster format students will encounter, but keep the decision practice on the four chapter formats.\n\nTime: 44-48 minutes.">
+      <div class="brand">CIS133 · 3.4</div>
+      <div class="content">
+        <div class="eyebrow">Choose a format by trade-off</div>
+        <h2>Content and properties decide the file type.</h2>
+        <div class="format-matrix">
+          <article><strong>PNG</strong><span>Raster · Lossless</span><p>Flat illustrations, screenshots, and transparency</p></article>
+          <article><strong>JPEG</strong><span>Raster · Lossy</span><p>Photographs at a smaller file size</p></article>
+          <article><strong>GIF</strong><span>Raster · 256 colors</span><p>Simple frame animation</p></article>
+          <article><strong>SVG</strong><span>Vector · Scalable</span><p>Logos, icons, and diagrams</p></article>
+        </div>
+        <div class="prompt"><p><strong>Decision:</strong> Which format fits a logo that must stay sharp on a phone and a poster?</p></div>
+      </div>
+    </section>
+
+    <section class="slide lab-slide" data-notes="Connect relative image paths to Chapter 2's relative links. Preview the lab: retrofit landmarks, add images with alt decisions, then build the gallery and test all pages.\n\nTime: 48-52 minutes.">
+      <div class="brand">CIS133 · Skills Lab 3A</div>
+      <div class="content split">
+        <div>
+          <div class="eyebrow">Build a portable site</div>
+          <h2>Pages stay at the top. Images get their own folder.</h2>
+          <div class="folder-tree" role="img" aria-label="Site folder containing three HTML pages and an images folder with four image files.">
+            <code>skills-lab-3a-lastname/</code>
+            <span>├── recycling-guide.html</span><span>├── contact.html</span><span>├── drive-gallery.html</span><span>└── images/</span><span class="indent">├── club-logo.png</span><span class="indent">└── recycling-drive.png</span>
+          </div>
+        </div>
+        <div class="lab-notes">
+          <article><span>1</span><p>Retrofit landmarks and semantic text elements.</p></article>
+          <article><span>2</span><p>Add images, alt text, true dimensions, and a figure.</p></article>
+          <article><span>3</span><p>Build the gallery, test navigation, and validate all pages.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide closing-slide" data-notes="Resolve Devon's problem. Landmarks create a direct route to main content, and useful alt text preserves image meaning. Give students the exit ticket before Skills Lab 3A.\n\nTime: 52-55 minutes.">
+      <div class="brand">CIS133 · Chapter 3 complete</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Meaning changes access</div>
+          <h2>A page is finished when every reader can understand its purpose.</h2>
+          <div class="prompt"><p><strong>Exit ticket:</strong> Name one semantic choice and one image choice the validator cannot make for you.</p></div>
+        </div>
+        <figure><img src="assets/image-formats.png" alt="Archival drawers comparing a photograph, transparent illustration, simple frame animation, and scalable geometric logo."></figure>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

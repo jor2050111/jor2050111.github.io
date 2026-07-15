@@ -11,6 +11,8 @@ contract. This README explains the repository workflow.
 - Presentation library: `https://jor2050111.github.io/slides/`
 - CIS133 presentations: `https://jor2050111.github.io/slides/cis133/`
 - CIS133 Chapter 1: `https://jor2050111.github.io/slides/cis133/ch01/`
+- CIS133 Chapter 2: `https://jor2050111.github.io/slides/cis133/ch02/`
+- CIS133 Chapter 3: `https://jor2050111.github.io/slides/cis133/ch03/`
 - CIS215 presentations: `https://jor2050111.github.io/slides/cis215/`
 - CIS215 Chapter 1: `https://jor2050111.github.io/slides/cis215/ch01/`
 

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 2 classroom presentation: Basic HTML Elements.">
+  <meta name="theme-color" content="#002e5d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23FFC845'/%3E%3C/svg%3E">
+  <title>CIS133: Basic HTML Elements</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Basic HTML Elements" data-course="cis133"
+  data-chapter="ch02" data-palette="golden-hour">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the club president's reply from the chapter. Ask students what must exist before a browser can render a page. Connect their answer to Chapter 1's server files.\n\nTime: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="bench-tag">Chapter 2 · Build bench</div>
+        <h1>“Great. Now build the page.”</h1>
+        <p class="lede">You are moving from watching the web to writing the files a browser can render.</p>
+        <div class="start-card"><strong>Opening question</strong><span>What turns plain text into a structured page?</span></div>
+      </div>
+    </section>
+
+    <section class="slide target-slide" data-notes="Frame the session around building, choosing, and diagnosing. Tell students that no prior coding experience is expected and each move will be practiced.\n\nTime: 3-6 minutes.">
+      <div class="brand">CIS133 · Chapter 2</div>
+      <div class="content">
+        <div class="eyebrow">Today’s build</div>
+        <h2>By the end of class, you can build and validate a complete HTML page.</h2>
+        <div class="plan-strip">
+          <article><span>01</span><h3>Assemble</h3><p>Write the required document skeleton.</p></article>
+          <article><span>02</span><h3>Structure</h3><p>Choose headings, paragraphs, lists, and links by meaning.</p></article>
+          <article><span>03</span><h3>Diagnose</h3><p>Use validator reports to repair markup.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide" data-notes="Use the workbench image to show the chapter's full path: code becomes a structured document, then the browser renders it. Stress that HTML names the structure.\n\nTime: 6-9 minutes.">
+      <div class="brand">CIS133 · The structure layer</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">From file to page</div>
+          <h2>HTML tells the browser what each piece of content is.</h2>
+          <p class="lede">A heading, paragraph, list, and link begin as characters in a plain text file.</p>
+        </div>
+        <figure><img src="assets/html-workbench.png" alt="Blueprint workbench showing HTML code becoming a structured document and a rendered browser page."></figure>
+      </div>
+    </section>
+
+    <section class="slide file-slide" data-notes="Contrast plain text with word processor files. Then connect lower-case, hyphenated names to the URL rules students learned in Chapter 1.\n\nTime: 9-13 minutes.">
+      <div class="brand">CIS133 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Prepare the workspace</div>
+        <h2>Web pages are plain text files with disciplined names.</h2>
+        <div class="file-comparison">
+          <article class="specimen good"><div class="file-tab">about-us.html</div><h3>Use this pattern</h3><ul><li>All lowercase</li><li>No spaces</li><li>Hyphens between words</li><li><code>.html</code> extension</li></ul></article>
+          <article class="specimen caution"><div class="file-tab">Club Page.html</div><h3>This name carries risk</h3><ul><li>A space becomes <code>%20</code></li><li>Case can create different files</li><li>A renamed word processor file is not plain text</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide check-slide" data-notes="Give students 30 seconds for both answers. Use the reveal to confirm that the browser reads the local file directly and that unsaved edits cannot appear.\n\nTime: 13-16 minutes.">
+      <div class="brand">CIS133 · Check the workshop</div>
+      <div class="content">
+        <div class="eyebrow">Predict before you click</div>
+        <h2>The page did not change after refresh. What should you inspect first?</h2>
+        <div class="choice-row" role="list" aria-label="Possible explanations">
+          <div role="listitem">The Internet connection</div><div role="listitem">The unsaved file tab</div><div role="listitem">The server address</div>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Inspect the file tab.</strong> An unsaved edit does not exist for the browser yet. A <code>file://</code> page comes from your disk, so no server or Internet request is involved.</div>
+      </div>
+    </section>
+
+    <section class="slide image-slide cycle-slide" data-notes="Walk clockwise through edit, save, and refresh. Ask students to name the evidence at each station: changed characters, a saved file, then a changed browser result.\n\nTime: 16-20 minutes.">
+      <div class="brand">CIS133 · 2.1</div>
+      <div class="content visual-grid reverse">
+        <figure><img src="assets/edit-save-refresh.png" alt="Three-station blueprint showing code editing, a saved file, and a refreshed browser connected in a loop."></figure>
+        <div>
+          <div class="eyebrow">The developer loop</div>
+          <h2>Edit. Save. Refresh. Repeat.</h2>
+          <p class="lede">This short loop turns every change into evidence you can inspect.</p>
+          <div class="key-cap-row"><span>Edit</span><span>Save</span><span>Refresh</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide anatomy-slide" data-notes="Read the sample as three parts. Then point to the attribute inside the opening tag. Keep element, tag, content, and attribute distinct.\n\nTime: 20-24 minutes.">
+      <div class="brand">CIS133 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Read the parts</div>
+        <h2>An element carries structure. An attribute configures it.</h2>
+        <div class="markup-rig" role="img" aria-label="Paragraph element split into opening tag, visible content, and closing tag.">
+          <div><span>Opening tag</span><code>&lt;p&gt;</code></div>
+          <div class="wide"><span>Content</span><code>Meetings pause during finals week.</code></div>
+          <div><span>Closing tag</span><code>&lt;/p&gt;</code></div>
+        </div>
+        <div class="attribute-note"><code>&lt;html <mark>lang="en"</mark>&gt;</code><p>The <code>lang</code> attribute helps screen readers choose pronunciation rules.</p></div>
+      </div>
+    </section>
+
+    <section class="slide code-slide" data-notes="Trace the skeleton from the outside inward. Ask which lines never paint on screen and which region owns every visible element.\n\nTime: 24-28 minutes.">
+      <div class="brand">CIS133 · 2.2</div>
+      <div class="content split code-layout">
+        <div>
+          <div class="eyebrow">The required skeleton</div>
+          <h2>Every page starts with the same nested structure.</h2>
+          <p class="lede">The head informs the browser. The body holds what visitors see.</p>
+        </div>
+        <pre class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;title&gt;My Study Log&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;My Study Log&lt;/h1&gt;
+        &lt;p&gt;I am building web skills.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide" data-notes="Use the exploded structure to reinforce nesting. Point out the outer document frame, the information compartment, and the visible page compartment.\n\nTime: 28-32 minutes.">
+      <div class="brand">CIS133 · 2.2</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Nesting makes the structure visible</div>
+          <h2>First opened means last closed.</h2>
+          <p class="lede">An element opened inside another element must close before its parent closes.</p>
+          <div class="nest-rule"><code>&lt;p&gt;Bring &lt;strong&gt;working chargers&lt;/strong&gt;.&lt;/p&gt;</code></div>
+        </div>
+        <figure><img src="assets/document-skeleton.png" alt="Exploded blueprint of an HTML document with separate head and body compartments beside a browser result."></figure>
+      </div>
+    </section>
+
+    <section class="slide meaning-slide" data-notes="Use the shuffle test for lists. Then connect headings to page outline, not font size. Mention whitespace collapsing as the reason blank lines do not create paragraphs.\n\nTime: 32-36 minutes.">
+      <div class="brand">CIS133 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Choose by meaning</div>
+        <h2>Structure answers what the content is, not how it looks.</h2>
+        <div class="decision-board">
+          <article><div class="stamp">Heading</div><h3>Build an honest outline.</h3><p>Use one <code>&lt;h1&gt;</code>. Do not skip heading levels.</p></article>
+          <article><div class="stamp">Paragraph</div><h3>Wrap running text.</h3><p>Blank lines collapse. Two paragraphs need two <code>&lt;p&gt;</code> elements.</p></article>
+          <article><div class="stamp">List</div><h3>Apply the shuffle test.</h3><p>If order matters, use <code>&lt;ol&gt;</code>. Otherwise, use <code>&lt;ul&gt;</code>.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide links-slide" data-notes="Have students classify each address. Stress that useful link text names the destination when heard outside its paragraph.\n\nTime: 36-40 minutes.">
+      <div class="brand">CIS133 · 2.4</div>
+      <div class="content">
+        <div class="eyebrow">Connect the pages</div>
+        <h2>An anchor needs a destination and meaningful link text.</h2>
+        <div class="link-bench">
+          <article><span>Other site</span><code>href="https://www.phoenix.gov"</code><strong>Absolute URL</strong></article>
+          <article><span>Same folder</span><code>h&#114;ef="contact.html"</code><strong>Relative URL</strong></article>
+          <article><span>Email app</span><code>href="mailto:club@example.org"</code><strong>Mailto link</strong></article>
+        </div>
+        <div class="prompt"><p><strong>Link text test:</strong> Would the destination still make sense if you heard the link by itself?</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide" data-notes="Explain that browsers repair broken markup silently while the validator reports the grammar problem. One missing tag can cause several messages, so fix from the top and revalidate.\n\nTime: 40-44 minutes.">
+      <div class="brand">CIS133 · 2.4</div>
+      <div class="content visual-grid reverse">
+        <figure><img src="assets/validator-repair.png" alt="Developer repair bench showing one missing closing tag causing several errors, then one repair producing a clean result."></figure>
+        <div>
+          <div class="eyebrow">Validate the file</div>
+          <h2>One defect can create a cascade of messages.</h2>
+          <ol class="repair-list"><li>Fix the first reported defect.</li><li>Revalidate the page.</li><li>Let the phantom messages disappear.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide retrieval-slide" data-notes="Give pairs one minute to decide. Reveal the model answer, then ask which part is grammar and which part is judgment.\n\nTime: 44-48 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow">Diagnose before you edit</div>
+        <h2>A recipe uses a bulleted list and passes validation. Is the markup finished?</h2>
+        <div class="prompt"><p><strong>Discuss:</strong> What did the validator prove, and what decision did it never test?</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The validator proved that the markup follows HTML grammar. It did not judge meaning. Recipe steps break when shuffled, so an ordered list is the stronger choice.</div>
+      </div>
+    </section>
+
+    <section class="slide lab-slide" data-notes="Preview the three lab phases. Ask students to say where each objective appears: skeleton, content structure, and validator repair.\n\nTime: 48-52 minutes.">
+      <div class="brand">CIS133 · Skills Lab 2A</div>
+      <div class="content">
+        <div class="eyebrow">Build the club’s recycling guide</div>
+        <h2>Your lab turns the whole chapter into two connected pages.</h2>
+        <div class="build-sequence" role="list" aria-label="Skills Lab 2A sequence">
+          <article role="listitem"><span>1</span><h3>Foundation</h3><p>Write the skeleton and prove the edit-save-refresh cycle.</p></article>
+          <article role="listitem"><span>2</span><h3>Application</h3><p>Structure the guide with headings, paragraphs, lists, and links.</p></article>
+          <article role="listitem"><span>3</span><h3>Extension</h3><p>Repair the contact page, connect both pages, and validate again.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark image-slide closing-slide" data-notes="Resolve the opening question: HTML markup turns plain text into a structured page. Give students one minute for the exit ticket, then direct them to Skills Lab 2A.\n\nTime: 52-55 minutes.">
+      <div class="brand">CIS133 · Chapter 2 complete</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">The page is ready to build</div>
+          <h2>Plain text becomes a page when markup names its structure.</h2>
+          <div class="prompt"><p><strong>Exit ticket:</strong> Name one choice the validator checks and one choice only you can judge.</p></div>
+        </div>
+        <figure><img src="assets/lab-complete.png" alt="Blueprint workbench with two linked recycling website pages, organized files, a clean validation check, and a submission package."></figure>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
