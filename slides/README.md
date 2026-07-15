@@ -26,6 +26,7 @@ slides/
 │       ├── index.html
 │       └── previews/
 └── shared/
+    ├── brand.css
     ├── catalog.css
     ├── deck.css
     ├── deck.js
@@ -33,6 +34,22 @@ slides/
 ```
 
 Use a lowercase course slug and chapter slug for each deck. For example, Chapter 2 belongs in `slides/cis215/ch02/`.
+
+## Choose a brand palette
+
+New decks start with `phoenix-classic`. Choose one of six brand palettes by
+changing the `data-palette` value on the deck's `body` element:
+
+```html
+<body data-deck-title="CIS215: Data Preparation"
+  data-palette="twilight-data">
+```
+
+Available values are `phoenix-classic`, `midnight-gold`, `twilight-data`,
+`canvas-light`, `canyon-sand`, and `golden-hour`. See
+`shared/visual-style.md` for the color map, selection guidance, and contrast
+rules. Keep one palette for the full deck and match the page's `theme-color`
+meta value to that palette's dark field.
 
 ## Create and check decks
 

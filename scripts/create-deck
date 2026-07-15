@@ -101,11 +101,12 @@ const deckHtml = `<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${safeCourseName} ${safeChapterName} classroom presentation: ${safeTitle}.">
-  <meta name="theme-color" content="#002B5C">
+  <meta name="theme-color" content="#002E5D">
   <title>${fullTitle}</title>
   <link rel="stylesheet" href="../../shared/deck.css">
 </head>
-<body data-deck-title="${fullTitle}" data-course="${courseSlug}" data-chapter="${chapterSlug}">
+<body data-deck-title="${fullTitle}" data-course="${courseSlug}"
+  data-chapter="${chapterSlug}" data-palette="phoenix-classic">
   <main class="deck" id="presentation" aria-live="polite">
     <section class="slide dark active" data-notes="Welcome students and connect the topic to the prior class.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · ${safeCourseName}</div>
@@ -194,6 +195,9 @@ Replace the starter slides with the chapter content, then run:
 \`\`\`
 
 Add this chapter to \`slides/${courseSlug}/index.html\` before publication.
+
+The deck starts with \`data-palette="phoenix-classic"\`. See
+\`slides/shared/visual-style.md\` before choosing another brand palette.
 `;
 
 const courseIndex = `<!doctype html>
@@ -202,12 +206,12 @@ const courseIndex = `<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${safeCourseName} classroom presentation collection.">
-  <meta name="theme-color" content="#002B5C">
+  <meta name="theme-color" content="#002E5D">
   <title>${safeCourseName} Presentations | Phoenix College</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002B5C'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23F2B134'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23FFC845'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../shared/catalog.css">
 </head>
-<body>
+<body data-palette="phoenix-classic">
   <a class="skip-link" href="#main-content">Skip to chapters</a>
   <header class="site-header">
     <div class="site-header__inner">

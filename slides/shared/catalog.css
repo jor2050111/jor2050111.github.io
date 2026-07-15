@@ -1,12 +1,7 @@
+@import url("./brand.css");
+
 :root {
-    --navy: #002b5c;
-    --gold: #f2b134;
-    --blue: #2d7dd2;
-    --canvas: #f7f9fc;
-    --ink: #10243f;
-    --mist: #d9e5f2;
-    --white: #ffffff;
-    --shadow: 0 1.25rem 3rem rgba(16, 36, 63, .12);
+    --shadow: 0 1.25rem 3rem rgba(0, 46, 93, .12);
     font-family: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
     color: var(--ink);
     background: var(--canvas);
@@ -24,7 +19,7 @@ body {
     min-height: 100vh;
     margin: 0;
     background:
-        linear-gradient(135deg, rgba(45, 125, 210, .09), transparent 38rem),
+        linear-gradient(135deg, rgba(3, 116, 181, .09), transparent 38rem),
         var(--canvas);
 }
 
@@ -146,7 +141,7 @@ h2 {
 .card:hover {
     transform: translateY(-.25rem);
     border-color: var(--blue);
-    box-shadow: 0 1.6rem 3.4rem rgba(16, 36, 63, .17);
+    box-shadow: 0 1.6rem 3.4rem rgba(0, 46, 93, .17);
 }
 
 .card:focus-visible,
@@ -168,7 +163,7 @@ h2 {
 
 footer {
     padding: 0 0 2.5rem;
-    color: #4c6179;
+    color: var(--sand-700);
     font-size: .95rem;
 }
 

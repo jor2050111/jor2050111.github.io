@@ -8,6 +8,14 @@ const slidesRoot = path.join(root, "slides");
 const findings = [];
 const decks = [];
 const jsonOutput = process.argv.includes("--json");
+const allowedPalettes = new Set([
+    "phoenix-classic",
+    "midnight-gold",
+    "twilight-data",
+    "canvas-light",
+    "canyon-sand",
+    "golden-hour",
+]);
 
 function relative(filePath) {
     return path.relative(root, filePath) || ".";
@@ -88,8 +96,16 @@ function checkDeck(filePath) {
         /class=["'][^"']*\bactive\b/i.test(tag)
     );
     const notesMatches = content.match(/\bdata-notes=/gi) || [];
+    const paletteMatch = content.match(
+        /<body\s[^>]*\bdata-palette=["']([^"']+)["']/i
+    );
+    const palette = paletteMatch ? paletteMatch[1] : null;
 
-    decks.push({ file: relative(filePath), slides: slideMatches.length });
+    decks.push({
+        file: relative(filePath),
+        slides: slideMatches.length,
+        palette,
+    });
 
     if (!/^<!doctype html>/i.test(content.trimStart())) {
         add("error", filePath, "The deck needs an HTML5 doctype.");
@@ -102,6 +118,11 @@ function checkDeck(filePath) {
     }
     if (!/<body\s[^>]*data-deck-title=["'][^"']+["']/i.test(content)) {
         add("error", filePath, "The body needs a data-deck-title value.");
+    }
+    if (!palette) {
+        add("error", filePath, "The body needs a data-palette value.");
+    } else if (!allowedPalettes.has(palette)) {
+        add("error", filePath, `Unknown presentation palette: ${palette}`);
     }
     if (!/<main\s[^>]*class=["'][^"']*\bdeck\b/i.test(content)) {
         add("error", filePath, "The deck needs a main.deck landmark.");
@@ -177,6 +198,7 @@ function findDecks() {
 function checkSharedRuntime() {
     const scriptPath = path.join(slidesRoot, "shared", "deck.js");
     const stylePath = path.join(slidesRoot, "shared", "deck.css");
+    const brandPath = path.join(slidesRoot, "shared", "brand.css");
 
     if (requireFile(scriptPath, "shared deck script")) {
         const script = read(scriptPath);
@@ -214,6 +236,18 @@ function checkSharedRuntime() {
         }
         if (/transition:\s*all\b/.test(style)) {
             add("error", stylePath, "List transition properties explicitly.");
+        }
+        if (!style.includes('@import url("./brand.css")')) {
+            add("error", stylePath, "Import the shared brand tokens.");
+        }
+    }
+
+    if (requireFile(brandPath, "shared brand stylesheet")) {
+        const brand = read(brandPath);
+        for (const palette of allowedPalettes) {
+            if (!brand.includes(`data-palette="${palette}"`)) {
+                add("error", brandPath, `Missing presentation palette: ${palette}`);
+            }
         }
     }
 }

@@ -1,0 +1,147 @@
+:root {
+    /* Brand base palette */
+    --midnight-navy: #002e5d;
+    --twilight-blue: #03488f;
+    --phoenix-gold: #ffc845;
+    --desert-sand: #f7f4ec;
+    --canyon-600: #7c3626;
+    --mist-blue: #edf5fa;
+
+    /* Navy ramp */
+    --navy-900: #001a36;
+    --navy-800: #002e5d;
+    --navy-700: #033a72;
+    --navy-600: #03488f;
+    --navy-500: #1d5ea3;
+    --navy-400: #4d80ba;
+    --navy-300: #86a8d1;
+    --navy-200: #bcd0e6;
+    --navy-100: #e3ecf5;
+
+    /* Gold ramp */
+    --gold-700: #b8860b;
+    --gold-600: #e0a92e;
+    --gold-500: #ffc845;
+    --gold-400: #ffd573;
+    --gold-300: #ffe3a3;
+    --gold-200: #fff0cf;
+
+    /* Canvas interactive blue */
+    --canvas-blue: #0374b5;
+    --canvas-blue-hover: #025a8c;
+    --canvas-blue-tint: #e3f2fa;
+
+    /* Canyon ramp */
+    --canyon-700: #5e2a1d;
+    --canyon-500: #9a4a36;
+    --canyon-tint: #f4e7e1;
+
+    /* Sand ramp */
+    --sand-100: #ffffff;
+    --sand-200: #fbf9f3;
+    --sand-300: #f7f4ec;
+    --sand-400: #ece6d6;
+    --sand-500: #d9d1bd;
+    --sand-600: #b3a98f;
+    --sand-700: #7d7560;
+
+    /* Functional colors */
+    --status-success: #2f7d54;
+    --status-warning: #c9821f;
+    --status-danger: #a6321f;
+    --status-info: #0374b5;
+    --status-success-tint: #e8f5ef;
+
+    /* Phoenix Classic is the default when data-palette is omitted. */
+    --palette-dark: var(--midnight-navy);
+    --palette-accent: var(--phoenix-gold);
+    --palette-support: var(--canvas-blue);
+    --palette-light: var(--desert-sand);
+    --palette-ink: var(--twilight-blue);
+    --palette-soft: var(--mist-blue);
+    --palette-on-dark: var(--sand-100);
+
+    /* Backward-compatible component aliases. */
+    --navy: var(--palette-dark);
+    --gold: var(--palette-accent);
+    --blue: var(--palette-support);
+    --canvas: var(--palette-light);
+    --ink: var(--palette-ink);
+    --mist: var(--palette-soft);
+    --white: var(--palette-on-dark);
+    --good: var(--status-success);
+    --warning: var(--status-warning);
+    --danger: var(--status-danger);
+    --info: var(--status-info);
+}
+
+body[data-palette="phoenix-classic"] {
+    --palette-dark: var(--midnight-navy);
+    --palette-accent: var(--phoenix-gold);
+    --palette-support: var(--canvas-blue);
+    --palette-light: var(--desert-sand);
+    --palette-ink: var(--twilight-blue);
+    --palette-soft: var(--mist-blue);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette="midnight-gold"] {
+    --palette-dark: var(--navy-900);
+    --palette-accent: var(--gold-400);
+    --palette-support: var(--navy-500);
+    --palette-light: var(--navy-100);
+    --palette-ink: var(--navy-900);
+    --palette-soft: var(--navy-200);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette="twilight-data"] {
+    --palette-dark: var(--twilight-blue);
+    --palette-accent: var(--phoenix-gold);
+    --palette-support: var(--canvas-blue-hover);
+    --palette-light: var(--mist-blue);
+    --palette-ink: var(--navy-900);
+    --palette-soft: var(--navy-200);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette="canvas-light"] {
+    --palette-dark: var(--midnight-navy);
+    --palette-accent: var(--phoenix-gold);
+    --palette-support: var(--canvas-blue-hover);
+    --palette-light: var(--canvas-blue-tint);
+    --palette-ink: var(--navy-900);
+    --palette-soft: var(--navy-200);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette="canyon-sand"] {
+    --palette-dark: var(--canyon-600);
+    --palette-accent: var(--gold-400);
+    --palette-support: var(--twilight-blue);
+    --palette-light: var(--canyon-tint);
+    --palette-ink: var(--canyon-700);
+    --palette-soft: var(--sand-400);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette="golden-hour"] {
+    --palette-dark: var(--midnight-navy);
+    --palette-accent: var(--phoenix-gold);
+    --palette-support: var(--canyon-600);
+    --palette-light: var(--gold-200);
+    --palette-ink: var(--navy-900);
+    --palette-soft: var(--gold-300);
+    --palette-on-dark: var(--sand-100);
+}
+
+body[data-palette] {
+    /* Resolve the selected functional palette into existing components. */
+    --navy: var(--palette-dark);
+    --gold: var(--palette-accent);
+    --blue: var(--palette-support);
+    --canvas: var(--palette-light);
+    --ink: var(--palette-ink);
+    --mist: var(--palette-soft);
+    --white: var(--palette-on-dark);
+}
