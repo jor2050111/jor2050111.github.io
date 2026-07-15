@@ -1,10 +1,42 @@
 # Phoenix College Technical Classroom Style
 
+## Design priorities
+
+Make decisions in this order:
+
+1. Student outcome
+2. Main claim or question
+3. Evidence, example, or practice
+4. Narrative position in the lesson
+5. Layout and visual treatment
+
+Style supports the teaching message. A trend, effect, or template does not set
+the message.
+
 ## Style prompt
 
 Create a confident, approachable technical classroom presentation for Phoenix College. Use Phoenix College navy as the foundation, warm gold for attention and participation, and pale blue for supporting visuals. Make technical work feel practical and human. Favor crisp typography, open space, clear hierarchy, and purposeful diagrams over decorative effects. The deck should feel active and focused.
 
 Course-specific diagrams, labels, and examples may extend this base style. Keep shared controls and accessibility behavior consistent across every deck.
+
+## Narrative and density
+
+- Give each slide one central message and one teaching job.
+- Use a claim, question, or action as the slide title.
+- Keep visible text concise so students can listen and look at the same time.
+- Use one minute per slide as a planning check, not a quota.
+- Break complex ideas into a short sequence before showing the complete model.
+- Let the main claim stand without narration. Keep talk tracks and optional
+  detail in presenter notes.
+- Open with a reason to care and close by resolving that opening through
+  practice, synthesis, or a clear next action.
+- Keep the title slide minimal.
+- Split a crowded slide before reducing type or tightening spacing.
+
+Use low density for live instruction: large claims, one main visual, short
+prompts, and frequent practice. Add enough on-slide context for students who
+review the deck later. Use appendix slides or presenter notes for details that
+would interrupt the class sequence.
 
 ## Colors
 
@@ -84,17 +116,56 @@ status color for decoration.
 - Body: Avenir Next, Avenir, Helvetica Neue, Arial, sans-serif
 - Code: SFMono-Regular, Menlo, Consolas, monospace
 - Use sentence case. Keep headlines short. Use weight and scale before adding decoration.
+- Use no more than the display, body, and code roles above in one deck.
+- Do not shrink the shared type scale to make content fit. Split the slide.
+- Keep one-line titles and banners on one line at the intended desktop size.
+- Avoid all-cap paragraphs, underlining for emphasis, and long italic passages.
+
+## Visual storytelling
+
+- Prefer one strong visual that advances the lesson.
+- Use photos, diagrams, charts, code, and examples as evidence, not decoration.
+- Use panels only when they clarify comparison, sequence, or grouping.
+- Keep one photo treatment, illustration approach, and icon style per deck.
+- Add visible source credit for external images, quotations, and data.
+- Keep full source details in notes or a source slide when needed.
+- Use authentic or subject-specific images. Avoid generic stock scenes.
+- Use bold type, asymmetry, texture, and depth as accents when they reinforce the
+  topic.
+
+### Data slides
+
+- Put the main insight in the title.
+- Show one main comparison, relationship, or trend per chart.
+- Highlight the relevant mark with the deck accent and keep other marks neutral.
+- Label key values directly when this makes the chart easier to read.
+- Choose the chart form that matches the claim.
+- Avoid spreadsheet screenshots and crowded legends.
+- Explain what the evidence means and why it matters.
 
 ## Layout and motion
 
 - Use 16:9 classroom slides with a quiet progress line and persistent slide count.
 - Give each slide one central idea. Split content when ideas compete for attention.
 - Use gentle opacity and vertical transitions. Respect reduced-motion preferences.
+- Use motion only to reveal a sequence, show change, or direct attention.
+- Keep the core message available when motion is disabled or an export is static.
 - Pair color with labels, position, or icons so meaning never depends on color alone.
 - Allow vertical scrolling on narrow screens so content stays available.
+
+## Visual direction previews
+
+When the user asks for a new visual direction, build up to three title-slide
+previews with real deck content. Include one restrained Phoenix College option
+and alternatives that differ in typography, composition, or atmosphere. Do not
+place template names, style labels, or production notes inside the preview.
+Extend only the selected direction across the final deck.
 
 ## Avoid
 
 - Dense dashboards, ornamental gradients, tiny type, auto-advancing slides, and decorative stock photos
 - More than three new ideas on one slide
 - Color-only instructions or feedback
+- Spreadsheet screenshots, mixed icon styles, and decorative animation
+- Repeating the same card grid on most slides
+- External slide frameworks that bypass the shared runtime
