@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 1 classroom presentation: The Internet and the World Wide Web.">
+  <meta name="theme-color" content="#002B5C">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002B5C'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23F2B134'/%3E%3C/svg%3E">
+  <title>CIS133: The Internet and the World Wide Web</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <style>
+    .visual-split {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(20rem, 1.1fr);
+      gap: clamp(1.6rem, 4vw, 4.5rem);
+      align-items: center;
+    }
+
+    .visual-split.reverse {
+      grid-template-columns: minmax(20rem, 1.1fr) minmax(0, .9fr);
+    }
+
+    .visual-split figure {
+      margin: 0;
+    }
+
+    .visual-split img {
+      display: block;
+      width: 100%;
+      max-height: 66vh;
+      object-fit: contain;
+    }
+
+    .address {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+      max-width: 50rem;
+    }
+
+    .address span {
+      padding: .65rem .85rem;
+      color: var(--navy);
+      background: var(--white);
+      border-top: .35rem solid var(--blue);
+      font-family: var(--code);
+      font-size: clamp(.9rem, 1.4vw, 1.3rem);
+      font-weight: 800;
+    }
+
+    .address span:nth-child(2) { border-color: var(--gold); }
+    .address span:nth-child(3) { border-color: var(--good); }
+    .address span:nth-child(4) { border-color: #6D7F93; }
+    .address span:nth-child(5) { border-color: #5875B7; }
+
+    .trust-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: .7rem;
+    }
+
+    .trust-list div {
+      padding: 1rem .65rem;
+      color: var(--navy);
+      background: var(--white);
+      border-top: .42rem solid var(--gold);
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .trust-list div:nth-child(2) { border-color: var(--blue); }
+    .trust-list div:nth-child(3) { border-color: var(--good); }
+    .trust-list div:nth-child(4) { border-color: #6D7F93; }
+    .trust-list div:nth-child(5) { border-color: #5875B7; }
+
+    .completion-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: .8rem;
+      width: fit-content;
+      padding: .65rem 1rem;
+      color: var(--navy);
+      background: var(--gold);
+      font-size: clamp(1rem, 1.45vw, 1.35rem);
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .completion-banner::before {
+      content: "✓";
+      display: grid;
+      width: 1.5rem;
+      height: 1.5rem;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--gold);
+      background: var(--navy);
+    }
+
+    @media (max-width: 52rem) {
+      .visual-split,
+      .visual-split.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-split figure { order: -1; }
+      .trust-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+
+<body data-deck-title="CIS133: The Internet and the World Wide Web">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active" data-notes="Open by asking students to name the last website they used. Explain that this chapter makes the invisible work behind that visit visible.\n\nTime: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 1</div>
+        <div class="rule"></div>
+        <h1>The Internet moves data.<br><span class="accent">The web gives it meaning.</span></h1>
+        <p class="lede">Learn how a web page reaches a browser, how to find trustworthy information, and how to use the web responsibly.</p>
+        <div class="prompt"><p><strong>Start here:</strong> What happens after you press Enter on a web address?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Frame the class around what students will be able to explain and use. Read the targets quickly, then point out that the skills lab ties them together.\n\nTime: 3-6 minutes.">
+      <div class="brand">CIS133 · Chapter 1</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>By the end of class, you can trace and judge the path behind a web page.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="number">01</div><h3>Explain</h3><p>how the Internet and the web work together.</p></article>
+          <article class="panel"><div class="number">02</div><h3>Trace</h3><p>a request through a browser, DNS, a server, and a URL.</p></article>
+          <article class="panel"><div class="number">03</div><h3>Evaluate</h3><p>sources, security signals, privacy choices, and accessibility.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the visual to separate the physical network from the pages and links students interact with. Stress that the web depends on the Internet, but they are not the same thing.\n\nTime: 6-9 minutes.">
+      <div class="brand">CIS133 · 1.1</div>
+      <div class="content">
+        <div class="visual-split">
+          <div>
+            <div class="eyebrow">Two layers, one experience</div>
+            <h2>The Internet carries the message. The web organizes the pages.</h2>
+            <p class="lede">Networks, cables, servers, and devices make the Internet. HTML, HTTP, browsers, pages, and links make the World Wide Web.</p>
+          </div>
+          <figure><img src="assets/internet-and-web.png" alt="Illustration of connected devices and servers supporting browser pages and linked web documents."></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Introduce client and server in plain language. Ask students to name two devices they use as clients. Then connect the pair to every website they visit.\n\nTime: 9-12 minutes.">
+      <div class="brand">CIS133 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">The client-server model</div>
+        <h2>Clients ask. Servers answer.</h2>
+        <div class="split">
+          <article class="panel"><div class="signal">Client</div><h3>Your device makes the request.</h3><p>A laptop, phone, TV, or other connected device can act as a client when it asks for a page.</p></article>
+          <article class="panel"><div class="signal">Server</div><h3>A connected computer sends the files.</h3><p>A web server stores site files and returns the page a browser requested.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Quick check:</strong> When you open a site on your phone, which side is the client?</p></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Walk through the path in order. Explain that this is a useful troubleshooting model because each failed step leaves a different clue.\n\nTime: 12-16 minutes.">
+      <div class="brand">CIS133 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">The round trip</div>
+        <h2>A page request follows a path.</h2>
+        <div class="workflow" role="img" aria-label="Five steps of a web request: enter an address, look up the server, send a request, return the page, and render the result.">
+          <article class="phase"><strong>1. Start</strong><p>Enter an address or select a link.</p></article>
+          <article class="phase"><strong>2. Locate</strong><p>DNS finds the server for the address.</p></article>
+          <article class="phase"><strong>3. Request</strong><p>The browser asks the server for a page.</p></article>
+          <article class="phase"><strong>4. Return</strong><p>The server sends the requested files.</p></article>
+          <article class="phase"><strong>5. Render</strong><p>The browser turns code into a page.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Name the browser’s three jobs: request, receive, and render. The generated visual reinforces the conversation between browser and server.\n\nTime: 16-19 minutes.">
+      <div class="brand">CIS133 · 1.1</div>
+      <div class="content">
+        <div class="visual-split reverse">
+          <figure><img src="assets/client-server.png" alt="Illustration of a laptop browser exchanging request and response data with a web server."></figure>
+          <div>
+            <div class="eyebrow">What your browser does</div>
+            <h2>Request, receive, render.</h2>
+            <p class="lede">A browser asks the right server for a page, receives the files that return, then renders HTML and CSS into the page you see.</p>
+            <div class="prompt"><p><strong>Try it:</strong> View the source of any page. What did the server send that the browser turned into the finished page?</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Deconstruct the example URL one piece at a time. Connect each part to a concrete job rather than asking students to memorize a string.\n\nTime: 19-23 minutes.">
+      <div class="brand">CIS133 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">Web addresses</div>
+        <h2>A URL gives the browser a complete destination.</h2>
+        <div class="address" aria-label="URL parts: HTTPS protocol, www subdomain, phoenixcollege domain name, .edu top-level domain, and degrees-certificates path.">
+          <span>https://</span><span>www</span><span>phoenixcollege</span><span>.edu</span><span>/degrees-certificates</span>
+        </div>
+        <div class="three-up">
+          <article class="panel"><h3>Protocol</h3><p>Rules for how the browser and server communicate.</p></article>
+          <article class="panel"><h3>Domain</h3><p>A human-readable name for a site or organization.</p></article>
+          <article class="panel"><h3>Path</h3><p>The specific page or file the browser should request.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Explain that IP addresses work for routers but domain names work for people. DNS translates between them. Use a mistyped address as a familiar failure example.\n\nTime: 23-26 minutes.">
+      <div class="brand">CIS133 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">The translation service</div>
+        <h2>DNS turns a name you can read into an address computers can route.</h2>
+        <div class="split">
+          <div><p class="quote">You request <strong>phoenixcollege.edu</strong>. DNS returns an IP address. Then your browser knows where to send the page request.</p></div>
+          <div class="panel"><h3>Two failures can look different.</h3><p>A DNS failure means the browser cannot find an address. An HTTP 404 means it reached a server, but the requested page is missing.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Pause on the core idea that DNS is a lookup service. This visual is a cue to distinguish a name lookup failure from a page-not-found response.\n\nTime: 26-29 minutes.">
+      <div class="brand">CIS133 · 1.2</div>
+      <div class="content">
+        <div class="visual-split">
+          <div>
+            <div class="eyebrow">Address book for the Internet</div>
+            <h2>Names guide people. IP addresses guide packets.</h2>
+            <p class="lede">DNS keeps the web usable because you can remember a domain name while network devices use an IP address to reach the right server.</p>
+          </div>
+          <figure><img src="assets/dns-translation.png" alt="Illustration of a browser connecting through an address-book-like lookup service to a web server."></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Move from how pages are found to how information is found. Explain crawling, indexing, and ranking as separate stages that shape every search result.\n\nTime: 29-33 minutes.">
+      <div class="brand">CIS133 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Finding information</div>
+        <h2>Search engines do more than match words.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="number">01</div><h3>Crawl</h3><p>Automated programs follow links and read pages.</p></article>
+          <article class="panel"><div class="number">02</div><h3>Index</h3><p>The engine stores what it found in a searchable catalog.</p></article>
+          <article class="panel"><div class="number">03</div><h3>Rank</h3><p>It orders matching results by predicted usefulness.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Remember:</strong> A high rank does not prove a source is accurate.</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Share two operators students can use immediately. Then introduce the five questions as a repeatable way to judge a source before citing it.\n\nTime: 33-37 minutes.">
+      <div class="brand">CIS133 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">Search with judgment</div>
+        <h2>Find better results, then test what you found.</h2>
+        <div class="split">
+          <article class="panel"><h3>Two useful search moves</h3><p><code>site:.gov electronics recycling</code></p><p>Limits results to a domain ending.</p><p><code>"electronic waste" recycling</code></p><p>Finds an exact phrase.</p></article>
+          <div>
+            <div class="trust-list" role="list" aria-label="Five questions for evaluating a source"><div role="listitem">Author</div><div role="listitem">Host</div><div role="listitem">Currency</div><div role="listitem">Purpose</div><div role="listitem">Evidence</div></div>
+            <p class="lede" style="margin-top: 1.4rem;">Cross-reference a claim with unrelated reputable sources before you rely on it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The visual reinforces a habit: slow down before accepting a result. Ask students which of the five checks they already use and which one they tend to skip.\n\nTime: 37-40 minutes.">
+      <div class="brand">CIS133 · 1.3</div>
+      <div class="content">
+        <div class="visual-split reverse">
+          <figure><img src="assets/source-evaluation.png" alt="Illustration of a student reviewing web search results with a magnifier, checklist, and security shield."></figure>
+          <div>
+            <div class="eyebrow">Search results are starting points</div>
+            <h2>Trust comes from checking, not clicking.</h2>
+            <p class="lede">Ask who wrote the page, who hosts it, when it changed, what it wants from you, and what evidence supports its claims.</p>
+            <div class="prompt"><p><strong>Pair share:</strong> Which question would reveal the biggest weakness in a source with no named author?</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Treat these as choices that shape every site students build and every source they use. Do not turn the slide into a legal checklist. Emphasize the practical developer habits.\n\nTime: 40-45 minutes.">
+      <div class="brand">CIS133 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Build and browse responsibly</div>
+        <h2>Every web choice affects someone.</h2>
+        <div class="four-up">
+          <article class="panel"><h3>Copyright</h3><p>Credit creators and learn the limits of fair use.</p></article>
+          <article class="panel"><h3>HTTPS</h3><p>Look for encrypted connections and valid certificates.</p></article>
+          <article class="panel"><h3>Privacy</h3><p>Notice what data a site collects and why.</p></article>
+          <article class="panel"><h3>Accessibility</h3><p>Build pages people can use with different devices and needs.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Developer mindset:</strong> Clear structure, useful text, and secure choices help every visitor.</p></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Show the skills lab as an application of the whole chapter. Have students identify which step checks the page path and which step asks them to judge a source.\n\nTime: 45-49 minutes.">
+      <div class="brand">CIS133 · Skills Lab 1A</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Put it together</div>
+        <h2>Trace the web. Then judge what you find.</h2>
+        <div class="three-up">
+          <article class="panel"><div class="number">1</div><h3>Trace a request</h3><p>Explain how a browser, DNS, server, and page response work together.</p></article>
+          <article class="panel"><div class="number">2</div><h3>Read a URL</h3><p>Identify the protocol, domain, path, and what each part tells the browser.</p></article>
+          <article class="panel"><div class="number">3</div><h3>Judge a source</h3><p>Use the five questions to explain why a page deserves trust or caution.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Next activity:</strong> Open Skills Lab 1A and use your evidence to explain each choice.</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="End with a clear completion signal. Give students a moment to write the exit prompt before moving them to Skills Lab 1A.\n\nTime: 49-52 minutes.">
+      <div class="brand">CIS133 · Chapter 1</div>
+      <div class="content">
+        <div class="visual-split">
+          <div>
+            <div class="completion-banner">Presentation complete</div>
+            <h1>Chapter 1 complete.</h1>
+            <p class="lede">You can now explain how a page reaches a browser, use a URL and DNS to trace the request, and question the information you find.</p>
+            <div class="prompt"><p><strong>Next up:</strong> Complete Skills Lab 1A. Before you begin, write one question you can now answer about how the web works.</p></div>
+          </div>
+          <figure><img src="assets/chapter-complete.png" alt="Illustration of a completed learning milestone with a laptop showing an abstract web page and a path rising forward."></figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

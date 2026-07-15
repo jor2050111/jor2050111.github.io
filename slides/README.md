@@ -5,6 +5,8 @@ This directory contains browser-based classroom presentations. Shared styles and
 ## Published pages
 
 - Presentation library: `https://jor2050111.github.io/slides/`
+- CIS133 presentations: `https://jor2050111.github.io/slides/cis133/`
+- CIS133 Chapter 1: `https://jor2050111.github.io/slides/cis133/ch01/`
 - CIS215 presentations: `https://jor2050111.github.io/slides/cis215/`
 - CIS215 Chapter 1: `https://jor2050111.github.io/slides/cis215/ch01/`
 
@@ -13,6 +15,11 @@ This directory contains browser-based classroom presentations. Shared styles and
 ```text
 slides/
 ├── index.html
+├── cis133/
+│   ├── index.html
+│   └── ch01/
+│       ├── assets/
+│       └── index.html
 ├── cis215/
 │   ├── index.html
 │   └── ch01/
