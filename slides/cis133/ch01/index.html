@@ -9,113 +9,13 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M14 48V30h8v18zm14 0V18h8v30zm14 0V8h8v40z' fill='%23FFC845'/%3E%3C/svg%3E">
   <title>CIS133: The Internet and the World Wide Web</title>
   <link rel="stylesheet" href="../../shared/deck.css">
-  <style>
-    .visual-split {
-      display: grid;
-      grid-template-columns: minmax(0, .9fr) minmax(20rem, 1.1fr);
-      gap: clamp(1.6rem, 4vw, 4.5rem);
-      align-items: center;
-    }
-
-    .visual-split.reverse {
-      grid-template-columns: minmax(20rem, 1.1fr) minmax(0, .9fr);
-    }
-
-    .visual-split figure {
-      margin: 0;
-    }
-
-    .visual-split img {
-      display: block;
-      width: 100%;
-      max-height: 66vh;
-      object-fit: contain;
-    }
-
-    .address {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem;
-      align-items: center;
-      max-width: 50rem;
-    }
-
-    .address span {
-      padding: .65rem .85rem;
-      color: var(--navy);
-      background: var(--white);
-      border-top: .35rem solid var(--blue);
-      font-family: var(--code);
-      font-size: clamp(.9rem, 1.4vw, 1.3rem);
-      font-weight: 800;
-    }
-
-    .address span:nth-child(2) { border-color: var(--gold); }
-    .address span:nth-child(3) { border-color: var(--good); }
-    .address span:nth-child(4) { border-color: #6D7F93; }
-    .address span:nth-child(5) { border-color: #5875B7; }
-
-    .trust-list {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: .7rem;
-    }
-
-    .trust-list div {
-      padding: 1rem .65rem;
-      color: var(--navy);
-      background: var(--white);
-      border-top: .42rem solid var(--gold);
-      text-align: center;
-      font-weight: 850;
-    }
-
-    .trust-list div:nth-child(2) { border-color: var(--blue); }
-    .trust-list div:nth-child(3) { border-color: var(--good); }
-    .trust-list div:nth-child(4) { border-color: #6D7F93; }
-    .trust-list div:nth-child(5) { border-color: #5875B7; }
-
-    .completion-banner {
-      display: inline-flex;
-      align-items: center;
-      gap: .8rem;
-      width: fit-content;
-      padding: .65rem 1rem;
-      color: var(--navy);
-      background: var(--gold);
-      font-size: clamp(1rem, 1.45vw, 1.35rem);
-      font-weight: 900;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .completion-banner::before {
-      content: "✓";
-      display: grid;
-      width: 1.5rem;
-      height: 1.5rem;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--gold);
-      background: var(--navy);
-    }
-
-    @media (max-width: 52rem) {
-      .visual-split,
-      .visual-split.reverse {
-        grid-template-columns: 1fr;
-      }
-
-      .visual-split figure { order: -1; }
-      .trust-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-  </style>
+  <link rel="stylesheet" href="chapter.css">
 </head>
 
 <body data-deck-title="CIS133: The Internet and the World Wide Web"
-  data-palette="phoenix-classic">
+  data-palette="midnight-gold">
   <main class="deck" id="presentation" aria-live="polite">
-    <section class="slide dark active" data-notes="Open by asking students to name the last website they used. Explain that this chapter makes the invisible work behind that visit visible.\n\nTime: 0-3 minutes.">
+    <section class="slide dark active title-slide" data-notes="Open by asking students to name the last website they used. Explain that this chapter makes the invisible work behind that visit visible.\n\nTime: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS133</div>
       <div class="content">
         <div class="eyebrow">Chapter 1</div>
@@ -126,7 +26,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Frame the class around what students will be able to explain and use. Read the targets quickly, then point out that the skills lab ties them together.\n\nTime: 3-6 minutes.">
+    <section class="slide targets-slide" data-notes="Frame the class around what students will be able to explain and use. Read the targets quickly, then point out that the skills lab ties them together.\n\nTime: 3-6 minutes.">
       <div class="brand">CIS133 · Chapter 1</div>
       <div class="content">
         <div class="eyebrow">Today’s target</div>
@@ -139,7 +39,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Use the visual to separate the physical network from the pages and links students interact with. Stress that the web depends on the Internet, but they are not the same thing.\n\nTime: 6-9 minutes.">
+    <section class="slide dark visual-slide" data-notes="Use the visual to separate the physical network from the pages and links students interact with. Stress that the web depends on the Internet, but they are not the same thing.\n\nTime: 6-9 minutes.">
       <div class="brand">CIS133 · 1.1</div>
       <div class="content">
         <div class="visual-split">
@@ -153,7 +53,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Introduce client and server in plain language. Ask students to name two devices they use as clients. Then connect the pair to every website they visit.\n\nTime: 9-12 minutes.">
+    <section class="slide concept-slide" data-notes="Introduce client and server in plain language. Ask students to name two devices they use as clients. Then connect the pair to every website they visit.\n\nTime: 9-12 minutes.">
       <div class="brand">CIS133 · 1.1</div>
       <div class="content">
         <div class="eyebrow">The client-server model</div>
@@ -166,7 +66,7 @@
       </div>
     </section>
 
-    <section class="slide gold" data-notes="Walk through the path in order. Explain that this is a useful troubleshooting model because each failed step leaves a different clue.\n\nTime: 12-16 minutes.">
+    <section class="slide gold process-slide" data-notes="Walk through the path in order. Explain that this is a useful troubleshooting model because each failed step leaves a different clue.\n\nTime: 12-16 minutes.">
       <div class="brand">CIS133 · 1.1</div>
       <div class="content">
         <div class="eyebrow navy-text">The round trip</div>
@@ -181,7 +81,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Name the browser’s three jobs: request, receive, and render. The generated visual reinforces the conversation between browser and server.\n\nTime: 16-19 minutes.">
+    <section class="slide dark visual-slide" data-notes="Name the browser’s three jobs: request, receive, and render. The generated visual reinforces the conversation between browser and server.\n\nTime: 16-19 minutes.">
       <div class="brand">CIS133 · 1.1</div>
       <div class="content">
         <div class="visual-split reverse">
@@ -196,7 +96,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Deconstruct the example URL one piece at a time. Connect each part to a concrete job rather than asking students to memorize a string.\n\nTime: 19-23 minutes.">
+    <section class="slide url-slide" data-notes="Deconstruct the example URL one piece at a time. Connect each part to a concrete job rather than asking students to memorize a string.\n\nTime: 19-23 minutes.">
       <div class="brand">CIS133 · 1.2</div>
       <div class="content">
         <div class="eyebrow">Web addresses</div>
@@ -212,7 +112,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Explain that IP addresses work for routers but domain names work for people. DNS translates between them. Use a mistyped address as a familiar failure example.\n\nTime: 23-26 minutes.">
+    <section class="slide dns-slide" data-notes="Explain that IP addresses work for routers but domain names work for people. DNS translates between them. Use a mistyped address as a familiar failure example.\n\nTime: 23-26 minutes.">
       <div class="brand">CIS133 · 1.2</div>
       <div class="content">
         <div class="eyebrow">The translation service</div>
@@ -224,7 +124,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Pause on the core idea that DNS is a lookup service. This visual is a cue to distinguish a name lookup failure from a page-not-found response.\n\nTime: 26-29 minutes.">
+    <section class="slide dark visual-slide" data-notes="Pause on the core idea that DNS is a lookup service. This visual is a cue to distinguish a name lookup failure from a page-not-found response.\n\nTime: 26-29 minutes.">
       <div class="brand">CIS133 · 1.2</div>
       <div class="content">
         <div class="visual-split">
@@ -238,7 +138,7 @@
       </div>
     </section>
 
-    <section class="slide gold" data-notes="Move from how pages are found to how information is found. Explain crawling, indexing, and ranking as separate stages that shape every search result.\n\nTime: 29-33 minutes.">
+    <section class="slide gold process-slide" data-notes="Move from how pages are found to how information is found. Explain crawling, indexing, and ranking as separate stages that shape every search result.\n\nTime: 29-33 minutes.">
       <div class="brand">CIS133 · 1.3</div>
       <div class="content">
         <div class="eyebrow navy-text">Finding information</div>
@@ -252,7 +152,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Share two operators students can use immediately. Then introduce the five questions as a repeatable way to judge a source before citing it.\n\nTime: 33-37 minutes.">
+    <section class="slide search-slide" data-notes="Share two operators students can use immediately. Then introduce the five questions as a repeatable way to judge a source before citing it.\n\nTime: 33-37 minutes.">
       <div class="brand">CIS133 · 1.3</div>
       <div class="content">
         <div class="eyebrow">Search with judgment</div>
@@ -267,7 +167,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="The visual reinforces a habit: slow down before accepting a result. Ask students which of the five checks they already use and which one they tend to skip.\n\nTime: 37-40 minutes.">
+    <section class="slide dark visual-slide" data-notes="The visual reinforces a habit: slow down before accepting a result. Ask students which of the five checks they already use and which one they tend to skip.\n\nTime: 37-40 minutes.">
       <div class="brand">CIS133 · 1.3</div>
       <div class="content">
         <div class="visual-split reverse">
@@ -282,7 +182,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Treat these as choices that shape every site students build and every source they use. Do not turn the slide into a legal checklist. Emphasize the practical developer habits.\n\nTime: 40-45 minutes.">
+    <section class="slide responsibility-slide" data-notes="Treat these as choices that shape every site students build and every source they use. Do not turn the slide into a legal checklist. Emphasize the practical developer habits.\n\nTime: 40-45 minutes.">
       <div class="brand">CIS133 · 1.4</div>
       <div class="content">
         <div class="eyebrow">Build and browse responsibly</div>
@@ -297,7 +197,7 @@
       </div>
     </section>
 
-    <section class="slide gold" data-notes="Show the skills lab as an application of the whole chapter. Have students identify which step checks the page path and which step asks them to judge a source.\n\nTime: 45-49 minutes.">
+    <section class="slide gold lab-slide" data-notes="Show the skills lab as an application of the whole chapter. Have students identify which step checks the page path and which step asks them to judge a source.\n\nTime: 45-49 minutes.">
       <div class="brand">CIS133 · Skills Lab 1A</div>
       <div class="content">
         <div class="eyebrow navy-text">Put it together</div>
@@ -311,7 +211,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="End with a clear completion signal. Give students a moment to write the exit prompt before moving them to Skills Lab 1A.\n\nTime: 49-52 minutes.">
+    <section class="slide dark closing-slide" data-notes="End with a clear completion signal. Give students a moment to write the exit prompt before moving them to Skills Lab 1A.\n\nTime: 49-52 minutes.">
       <div class="brand">CIS133 · Chapter 1</div>
       <div class="content">
         <div class="visual-split">
