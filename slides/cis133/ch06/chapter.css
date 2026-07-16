@@ -34,13 +34,9 @@ body[data-palette="phoenix-classic"] {
 }
 
 .slide::before {
-  left: -4rem;
-  right: -4rem;
-  top: 52%;
-  height: .18rem;
-  background: var(--route-gold);
-  box-shadow: 0 .7rem 0 rgba(255, 200, 69, .25);
-  opacity: .32;
+  inset: 1.15rem;
+  border: .12rem dashed rgba(255, 200, 69, .26);
+  border-radius: .7rem;
 }
 
 .slide::after {
@@ -69,8 +65,7 @@ body[data-palette="phoenix-classic"] {
 
 .slide.light::before,
 .slide.gold::before {
-  background: var(--route-navy);
-  box-shadow: 0 .7rem 0 rgba(0, 46, 93, .14);
+  border-color: rgba(0, 46, 93, .26);
 }
 
 .content {
@@ -688,9 +683,7 @@ h2 {
 
 @media (max-width: 760px) {
   .slide::before {
-    left: 0;
-    right: 0;
-    top: 52%;
+    inset: .6rem;
   }
 
   .axis-ledger,
