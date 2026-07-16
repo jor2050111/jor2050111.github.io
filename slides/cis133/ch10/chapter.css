@@ -1,0 +1,662 @@
+:root {
+  --brd-navy: #002e5d;
+  --brd-deep: #001a36;
+  --brd-mid: #025a8c;
+  --brd-gold: #ffc845;
+  --brd-paper: #e3f2fa;
+  --brd-line: #bcd0e6;
+  --brd-ink: #001a36;
+  --brd-pass: #2f7d54;
+  --brd-fail: #a6321f;
+  --brd-warn: #c9821f;
+}
+
+body[data-palette="canvas-light"] {
+  background: var(--brd-deep);
+}
+
+/* Schedule board: ledger ruling with light column rules. */
+.slide {
+  isolation: isolate;
+  background-color: var(--brd-paper);
+  background-image:
+    linear-gradient(90deg, rgba(2, 90, 140, .08) .1rem, transparent .1rem),
+    linear-gradient(rgba(2, 90, 140, .09) .08rem, transparent .08rem);
+  background-size: 16rem 100%, 100% 3.2rem;
+}
+
+.slide::before {
+  position: absolute;
+  inset: 1.1rem;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  border: .12rem solid rgba(0, 46, 93, .28);
+  border-top-width: .34rem;
+  border-radius: .55rem;
+}
+
+/* Board tab: a three-cell strip with one filled slot. */
+.slide::after {
+  position: absolute;
+  top: .55rem;
+  left: 50%;
+  z-index: 1;
+  width: 7.2rem;
+  height: 1.15rem;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #fff 0 33.4%, var(--brd-gold) 33.4% 66.7%, #fff 66.7%);
+  border: .14rem solid var(--brd-navy);
+  border-radius: .45rem;
+  transform: translateX(-50%);
+}
+
+.slide.dark {
+  background-color: var(--brd-navy);
+  background-image:
+    linear-gradient(90deg, rgba(227, 242, 250, .07) .1rem, transparent .1rem),
+    linear-gradient(rgba(227, 242, 250, .07) .08rem, transparent .08rem);
+  background-size: 16rem 100%, 100% 3.2rem;
+}
+
+.slide.dark::before {
+  border-color: rgba(255, 200, 69, .34);
+}
+
+.slide.dark::after {
+  background:
+    linear-gradient(90deg, var(--brd-deep) 0 33.4%, var(--brd-gold) 33.4% 66.7%, var(--brd-deep) 66.7%);
+  border-color: rgba(255, 255, 255, .55);
+}
+
+.slide.gold {
+  background-color: var(--brd-gold);
+  background-image:
+    linear-gradient(90deg, rgba(0, 26, 54, .1) .1rem, transparent .1rem),
+    linear-gradient(rgba(0, 26, 54, .09) .08rem, transparent .08rem);
+  background-size: 16rem 100%, 100% 3.2rem;
+}
+
+.slide.gold::before {
+  border-color: rgba(0, 26, 54, .4);
+}
+
+.slide.gold::after {
+  background:
+    linear-gradient(90deg, #fff 0 33.4%, var(--brd-navy) 33.4% 66.7%, #fff 66.7%);
+  border-color: rgba(0, 26, 54, .55);
+}
+
+.content {
+  width: min(100%, 88rem);
+}
+
+.brand {
+  right: auto;
+  left: clamp(1.5rem, 4vw, 5rem);
+  color: var(--brd-mid);
+  letter-spacing: .09em;
+}
+
+/* A tiny four-cell grid marks the board. */
+.brand::before {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem;
+  content: "";
+  vertical-align: -.15rem;
+  background:
+    linear-gradient(currentColor 0 0) no-repeat 0 0 / 50% 50%,
+    linear-gradient(90deg, transparent calc(50% - .07rem), currentColor calc(50% - .07rem) calc(50% + .07rem), transparent 0),
+    linear-gradient(transparent calc(50% - .07rem), currentColor calc(50% - .07rem) calc(50% + .07rem), transparent 0);
+  border: .14rem solid currentColor;
+  border-radius: .16rem;
+}
+
+.dark .brand {
+  color: var(--brd-gold);
+}
+
+.eyebrow {
+  color: var(--brd-mid);
+  letter-spacing: .1em;
+}
+
+.dark .eyebrow {
+  color: var(--brd-gold);
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -.05em;
+}
+
+h2 {
+  max-width: 22ch;
+}
+
+/* Title slide: a stamped mini schedule with a lit cell. */
+.title-slide .content {
+  max-width: 78rem;
+  padding-right: 21rem;
+}
+
+.title-slide h1 {
+  max-width: 11ch;
+}
+
+.slide.dark.title-slide::after {
+  position: absolute;
+  top: 20%;
+  right: clamp(2.6rem, 8vw, 9rem);
+  bottom: auto;
+  left: auto;
+  z-index: 0;
+  width: clamp(12rem, 20vw, 20rem);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  content: "";
+  background:
+    linear-gradient(var(--brd-gold) 0 0) no-repeat 100% 50% / 33.4% 33.4%,
+    linear-gradient(90deg, transparent calc(33.3% - .11rem), var(--brd-gold) calc(33.3% - .11rem) calc(33.3% + .11rem), transparent 0),
+    linear-gradient(90deg, transparent calc(66.6% - .11rem), var(--brd-gold) calc(66.6% - .11rem) calc(66.6% + .11rem), transparent 0),
+    linear-gradient(transparent calc(33.3% - .11rem), var(--brd-gold) calc(33.3% - .11rem) calc(33.3% + .11rem), transparent 0),
+    linear-gradient(transparent calc(66.6% - .11rem), var(--brd-gold) calc(66.6% - .11rem) calc(66.6% + .11rem), transparent 0);
+  border: .4rem solid var(--brd-gold);
+  border-radius: .6rem;
+  opacity: .9;
+  transform: rotate(-8deg);
+}
+
+.board-tag {
+  width: fit-content;
+  padding: .5rem .9rem;
+  color: var(--brd-deep);
+  background: var(--brd-gold);
+  font-family: var(--code);
+  font-weight: 850;
+}
+
+/* Objective badges: schedule cards with a column rule. */
+.objective-badges {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.9rem, 2vw, 1.5rem);
+}
+
+.objective-badges.retrieval {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.objective-badges article {
+  position: relative;
+  min-height: 12.5rem;
+  padding: clamp(1rem, 2vw, 1.6rem);
+  background: #fff;
+  border: .12rem solid var(--brd-line);
+  border-top: .55rem solid var(--brd-mid);
+  border-radius: .5rem;
+  box-shadow: .65rem .65rem 0 rgba(2, 90, 140, .14);
+}
+
+.objective-badges article:nth-child(2) {
+  border-top-color: var(--brd-gold);
+}
+
+.objective-badges article:nth-child(3) {
+  border-top-color: var(--brd-navy);
+}
+
+.objective-badges span {
+  color: var(--brd-mid);
+  font-family: var(--code);
+  font-size: clamp(2rem, 3.6vw, 3.6rem);
+  font-weight: 900;
+  line-height: .9;
+}
+
+.objective-badges h3 {
+  margin-top: .4rem;
+  color: var(--brd-deep);
+}
+
+.objective-badges p {
+  margin-top: .55rem;
+  color: var(--brd-ink);
+  font-size: clamp(.95rem, 1.25vw, 1.18rem);
+}
+
+.objective-badges.retrieval article {
+  min-height: 10.5rem;
+}
+
+/* Figures framed as posted board plates with a corner slot. */
+.visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .84fr) minmax(26rem, 1.16fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4.4rem);
+}
+
+.visual-grid.reverse {
+  grid-template-columns: minmax(26rem, 1.16fr) minmax(0, .84fr);
+}
+
+.visual-grid figure {
+  position: relative;
+  margin: 0;
+  padding: .7rem .7rem .6rem;
+  background: #fff;
+  border: .12rem solid var(--brd-navy);
+  border-radius: .5rem;
+  box-shadow: .9rem .9rem 0 rgba(2, 90, 140, .26);
+}
+
+.dark .visual-grid figure {
+  background: var(--brd-paper);
+  border-color: var(--brd-gold);
+}
+
+.visual-grid figure::before {
+  position: absolute;
+  top: -.8rem;
+  right: 1.6rem;
+  z-index: 2;
+  width: 2.6rem;
+  height: 1.5rem;
+  content: "";
+  background:
+    linear-gradient(90deg, #fff 0 50%, var(--brd-gold) 50%);
+  border: .14rem solid var(--brd-navy);
+  border-radius: .35rem;
+}
+
+.visual-grid img {
+  display: block;
+  width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+  border-radius: .3rem;
+}
+
+.visual-grid figcaption {
+  padding: .55rem .3rem 0;
+  color: var(--brd-ink);
+  font-size: clamp(.78rem, 1vw, .95rem);
+  font-weight: 750;
+}
+
+.scope-list {
+  display: grid;
+  gap: .65rem;
+  margin: .4rem 0 0;
+  padding-left: 1.35rem;
+}
+
+.scope-list li {
+  font-size: clamp(.98rem, 1.3vw, 1.22rem);
+}
+
+.dark .scope-list strong {
+  color: var(--brd-gold);
+}
+
+.slide:not(.dark) .scope-list strong {
+  color: var(--brd-mid);
+}
+
+.dark .scope-list code {
+  color: var(--brd-gold);
+  font-weight: 800;
+}
+
+/* Axes rows: zero, one, two. */
+.axes-rows {
+  display: grid;
+  gap: .65rem;
+}
+
+.axes-rows p {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  align-items: center;
+  gap: .9rem;
+  padding: .55rem .8rem .55rem .55rem;
+  background: rgba(255, 255, 255, .92);
+  border-radius: .4rem;
+  font-size: clamp(.95rem, 1.25vw, 1.18rem);
+}
+
+.axes-rows strong {
+  display: grid;
+  height: 2.6rem;
+  place-items: center;
+  color: #fff;
+  background: var(--brd-mid);
+  border-radius: .35rem;
+  font-family: var(--code);
+  font-size: 1.4rem;
+}
+
+.axes-rows span {
+  color: var(--brd-ink);
+}
+
+.axes-rows .wins {
+  border: .12rem solid var(--brd-navy);
+  box-shadow: .45rem .45rem 0 rgba(2, 90, 140, .18);
+}
+
+.axes-rows .wins strong {
+  color: var(--brd-deep);
+  background: var(--brd-gold);
+}
+
+/* Practice request list. */
+.request-list {
+  display: grid;
+  gap: .7rem;
+  max-width: 64rem;
+  margin: 0;
+  padding-left: 2.5rem;
+}
+
+.request-list li {
+  padding: .6rem .85rem;
+  color: var(--brd-deep);
+  background: rgba(255, 255, 255, .78);
+  border-left: .35rem solid var(--brd-navy);
+}
+
+.board-note {
+  width: fit-content;
+  padding: .65rem 1rem;
+  color: #fff;
+  background: var(--brd-mid);
+  border-left: .45rem solid var(--brd-gold);
+  font-family: var(--code);
+  font-size: clamp(.85rem, 1.15vw, 1.08rem);
+  font-weight: 750;
+}
+
+/* Code cards. */
+.code-card {
+  width: 100%;
+  max-width: 66rem;
+  margin: 0;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  color: #eaf4ff;
+  background: #06192f;
+  border-left: .5rem solid var(--brd-gold);
+  box-shadow: .6rem .6rem 0 rgba(2, 90, 140, .16);
+  font-family: var(--code);
+  font-size: clamp(.8rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.dark .code-card {
+  box-shadow: .6rem .6rem 0 rgba(0, 26, 54, .4);
+}
+
+.code-card .comment {
+  color: #94bceb;
+}
+
+.code-card mark {
+  padding: .05rem .3rem;
+  color: var(--brd-deep);
+  background: var(--brd-gold);
+}
+
+.repair-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.8rem);
+  align-items: stretch;
+  max-width: 82rem;
+}
+
+.repair-pair .code-card {
+  max-width: 100%;
+}
+
+.code-card.broken {
+  border-left-color: var(--brd-fail);
+}
+
+.code-card.repaired {
+  border-left-color: var(--brd-pass);
+}
+
+/* Namer rows: th, td, thead, tbody. */
+.namer-rows {
+  display: grid;
+  gap: .65rem;
+  max-width: 70rem;
+}
+
+.namer-rows p {
+  display: grid;
+  grid-template-columns: minmax(9rem, 12rem) 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: .65rem .9rem;
+  background: rgba(255, 255, 255, .08);
+  border-left: .45rem solid var(--brd-gold);
+  border-radius: 0 .4rem .4rem 0;
+  font-size: clamp(.95rem, 1.3vw, 1.2rem);
+}
+
+.namer-rows code {
+  color: var(--brd-gold);
+  font-weight: 850;
+}
+
+.namer-rows span {
+  color: #fff;
+}
+
+/* Table anatomy: the chapter's centerpiece. */
+.table-anatomy {
+  position: relative;
+  display: grid;
+  width: min(100%, 74rem);
+  min-height: 21rem;
+  padding: 4rem 4.5rem;
+  place-items: center;
+  background: #06192f;
+  border: .14rem solid var(--brd-mid);
+  box-shadow: .85rem .85rem 0 rgba(255, 200, 69, .16);
+}
+
+.table-anatomy code {
+  color: #eaf4ff;
+  font-size: clamp(.82rem, 1.55vw, 1.5rem);
+  line-height: 1.6;
+}
+
+.table-anatomy mark {
+  padding: .05rem .3rem;
+  color: var(--brd-deep);
+  background: var(--brd-gold);
+}
+
+.table-anatomy .feature {
+  color: #7fe3c0;
+  font-weight: 800;
+}
+
+.callout {
+  position: absolute;
+  padding: .35rem .6rem;
+  color: var(--brd-deep);
+  background: #fff;
+  border: .1rem solid var(--brd-mid);
+  font-family: var(--code);
+  font-size: clamp(.72rem, .95vw, .95rem);
+  font-weight: 850;
+}
+
+.callout.own-title {
+  top: 1rem;
+  left: 3.2rem;
+}
+
+.callout.governs-down {
+  top: 1rem;
+  right: 3.2rem;
+}
+
+.callout.governs-across {
+  bottom: 1rem;
+  right: 3.2rem;
+}
+
+/* Lab pipeline. */
+.lab-pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .7rem;
+}
+
+.lab-pipeline article {
+  position: relative;
+  min-height: 12.5rem;
+  padding: 1rem;
+  color: var(--brd-deep);
+  background: #fff;
+  border-top: .5rem solid var(--brd-gold);
+  border-radius: .3rem;
+}
+
+.lab-pipeline article::after {
+  position: absolute;
+  top: 42%;
+  right: -.68rem;
+  z-index: 2;
+  content: "→";
+  color: var(--brd-gold);
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.lab-pipeline article:last-child::after {
+  content: "";
+}
+
+.lab-pipeline span {
+  display: block;
+  color: var(--brd-mid);
+  font-family: var(--code);
+  font-size: 2.3rem;
+  font-weight: 900;
+}
+
+.lab-pipeline strong {
+  display: block;
+  margin: .35rem 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+}
+
+.lab-pipeline p,
+.submission-note,
+.next-step {
+  font-size: clamp(.88rem, 1.15vw, 1.05rem);
+}
+
+.submission-note,
+.next-step {
+  width: fit-content;
+  padding: .65rem .85rem;
+  color: var(--brd-deep);
+  background: var(--brd-gold);
+  font-family: var(--code);
+  font-weight: 800;
+}
+
+.closing-slide h2 {
+  max-width: 19ch;
+}
+
+.prompt code {
+  font-weight: 800;
+}
+
+.answer code {
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .title-slide .content {
+    padding-right: 0;
+  }
+
+  .slide.dark.title-slide::after {
+    display: none;
+  }
+
+  .visual-grid,
+  .visual-grid.reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .repair-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .table-anatomy {
+    min-height: 0;
+    padding: 4rem 1.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .slide::before {
+    inset: .5rem;
+  }
+
+  .objective-badges,
+  .lab-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-grid figure {
+    order: 2;
+  }
+
+  .namer-rows p {
+    grid-template-columns: 1fr;
+    gap: .3rem;
+  }
+
+  .code-card,
+  .code-card code,
+  .table-anatomy code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .callout {
+    position: static;
+    width: fit-content;
+    margin: .3rem auto 0;
+  }
+
+  .table-anatomy {
+    gap: .4rem;
+    padding: 1.2rem 1rem;
+  }
+
+  .lab-pipeline article::after {
+    display: none;
+  }
+}

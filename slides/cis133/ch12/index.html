@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 12 classroom presentation: Scripting Concepts and Publishing.">
+  <meta name="theme-color" content="#002E5D">
+  <title>CIS133: Scripting Concepts and Publishing</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Ccircle cx='18' cy='20' r='6' fill='%23FFC845'/%3E%3Ccircle cx='32' cy='20' r='6' fill='%23FFC845'/%3E%3Ccircle cx='46' cy='20' r='6' fill='%23FFC845'/%3E%3Crect x='12' y='36' width='40' height='6' fill='%23FFC845'/%3E%3Crect x='12' y='48' width='26' height='6' fill='%230374B5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Scripting Concepts and Publishing" data-course="cis133"
+  data-chapter="ch12" data-palette="phoenix-classic">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the officers' question. The join page shipped, sign-ups beat the paper scraps, and at Tuesday's meeting they ask the question every stakeholder saves for last: it works on your machine, when can everyone see it? The question is fair. Every page lives at a file:// address, one visitor's private workshop.&#10;&#10;This last chapter pays three debts: the behind-the-scenes piece the join page admits it owes, the site plan's missing front door, and Chapter 2's promise that these files would earn their https.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 12 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Scripting and Publishing</h1>
+        <p class="lede">"It works on your machine. When can everyone see it?"</p>
+        <div class="console-tag" aria-hidden="true">Final chapter · The site ships</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three build targets. Students will read scripts and say what runs where, run the full pre-flight and publish over secure transfer, and produce the complete six-page site. Set the expectation early: this chapter is a preview, not a tutorial. Reading scripts is the deliverable. Writing them is a later course's work.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Read the scripts. Run the pre-flight. Ship the site.</h2>
+        <div class="objective-badges">
+          <article>
+            <span>01</span>
+            <h3>Read</h3>
+            <p>What scripting adds: the client's half and the server's half, in concept.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Ship</h3>
+            <p>The pre-flight check, secure transfer, and the live verification.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Complete</h3>
+            <p>The home page, six-page navigation, and every standard the course taught.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Ten chapters ran on two languages with a clean split: HTML says what content is, CSS says how it looks. The web has a third layer, saved for last. JavaScript is the scripting language of the web, and its layer is behavior: the page acting after it loads.&#10;&#10;A page without a script sits still once drawn. A page with one can answer a click, rewrite its own text, and know what day it is. Students use pages like that daily: suggestion boxes, panning maps, a learning system marking items done.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The third layer</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Structure · presentation · behavior</div>
+          <h2>The page learns to act after it loads.</h2>
+          <ul class="scope-list">
+            <li><strong>HTML:</strong> what the content is</li>
+            <li><strong>CSS:</strong> how the content looks</li>
+            <li><strong>JavaScript:</strong> what the page does next</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/three-layers.png" alt="One webpage exploded into three floating layers: a wireframe skeleton, flat color panels, and a top layer of motion sparks with a cursor and clock.">
+          <figcaption>A preview, not a tutorial: you will read scripts and say what ran where.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The script element attaches the behavior layer, and it travels like a stylesheet: in its own file, attached by one element, serving every page that links it. The src attribute names the file the way an img's src names its image.&#10;&#10;Placement gets one mention because the lab depends on it: a script acts on the page's elements, and the browser builds the page top down. A script element just before the closing body tag runs after everything above it exists. Nothing here upsets the checking stack: the playground validates to zero, script included.&#10;&#10;Time: 8-10 minutes.">
+      <div class="brand">CIS133 · Attaching behavior</div>
+      <div class="content">
+        <div class="eyebrow">One element, one placement rule</div>
+        <h2>A script travels like a stylesheet.</h2>
+        <pre class="code-card"><code>    <span class="comment">&lt;!-- Just before the closing body tag, so every
+         element above it already exists when it runs. --&gt;</span>
+    <mark>&lt;script src=&quot;footer-year.js&quot;&gt;&lt;/script&gt;</mark>
+&lt;/body&gt;</code></pre>
+        <p class="console-note">The browser builds top down. The script runs last, so the page it acts on is whole.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The chapter's centerpiece: the one script the club ships, one line of working code, read left to right. document is the page itself. getElementById finds the one element carrying that id, unique per page, the same rule the label contract leaned on. textContent is that element's own text, ready to be replaced. And new Date().getFullYear() asks the machine running the script for the current year.&#10;&#10;Put together: find the span, write this year into it. Nobody edits the site every January.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS133 · Script anatomy</div>
+      <div class="content">
+        <div class="eyebrow">One line, read left to right</div>
+        <h2>Find the span. Write this year into it.</h2>
+        <div class="script-anatomy" role="img" aria-label="The footer year script labeled in four parts: document is the page itself, getElementById finds the one element with that id, textContent is that element's own text, and new Date getFullYear asks the machine running the script for the current year.">
+          <code><mark>document</mark>.getElementById(<span class="feature">"footer-year"</span>)<br>&nbsp;&nbsp;.textContent = <span class="feature">new Date().getFullYear()</span>;</code>
+          <div class="callout the-page">the page itself</div>
+          <div class="callout find-one">finds the one element with this id</div>
+          <div class="callout own-text">that element's own text, replaced</div>
+          <div class="callout asks-machine">asks this machine for the year</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The script's comment states its contract, and here is the page's half: a span with the matching id, empty on purpose, and the script element just before the closing body tag. The script supplies the digits, so the markup never goes stale.&#10;&#10;The copy entity is how HTML writes the copyright mark, one more named character like Chapter 2's ampersand family.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS133 · The page's half</div>
+      <div class="content">
+        <div class="eyebrow">A contract in two files</div>
+        <h2>The span is empty on purpose.</h2>
+        <pre class="code-card"><code>&lt;footer&gt;
+  &lt;p&gt;&amp;copy; <mark>&lt;span id="footer-year"&gt;&lt;/span&gt;</mark> PC Computer Club&lt;/p&gt;
+&lt;/footer&gt;
+&lt;script src=&quot;footer-year.js&quot;&gt;&lt;/script&gt;</code></pre>
+        <p class="console-note">The script supplies the digits, so the markup never goes stale.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The client-side punchline. The server only stores and sends the files. The visitor's own browser runs the script, so every visitor's machine computes the year fresh at every visit. And nobody edits the site in January, because no file contains the digits at all: the markup ships an empty span.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Whose machine?</div>
+        <h2>The live footer shows this year, on every visit.</h2>
+        <div class="prompt">
+          <p><strong>Name:</strong> which machine computed those digits, and who edits the site next January?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>The visitor's machine:</strong> every browser computes the year fresh at every visit · <strong>January:</strong> nobody edits anything, because no file ever contained the digits</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Client-side scripts do three kinds of work, and the playground demos all three. They respond to events: Demo 1's button press swaps a paragraph's text through addEventListener. They read and change the page after it loads. And they know visit-time facts: Demo 3 already showed today's date before anyone touched anything, replacing a paragraph that ships reading, if you can read this, the script has not run.&#10;&#10;Reading an unfamiliar script comes down to three questions: what does it touch, what does it do, when does it run. The answers sit in the ids, the writes, and the listeners.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS133 · Three kinds of work</div>
+      <div class="content">
+        <div class="eyebrow">Everything a client-side script does</div>
+        <h2>Events, changes, and visit-time facts.</h2>
+        <div class="work-rows">
+          <p><strong>Respond</strong><span>to events · <code>addEventListener("click", ...)</code> waits for the press</span></p>
+          <p><strong>Change</strong><span>the loaded page · a <code>textContent</code> replacement, the footer's own move</span></p>
+          <p><strong>Know</strong><span>visit-time facts · today's date, written before you touched anything</span></p>
+        </div>
+        <p class="console-note">Reading a script is three questions: what does it touch, what does it do, when does it run.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The location has a consequence. For your machine to run a script, the server must send it whole: the page, the stylesheet, and every script it names. Everything sent to the browser is readable by the visitor, and the browser shows it to anyone who asks: right-click, View Page Source.&#10;&#10;Hold that truth while Demo 2 offers a locked door: a members corner asking for a pass phrase, with no server anywhere on the page.&#10;&#10;Time: 19-22 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The public truth</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">What the server sends, the visitor owns</div>
+          <h2>Everything sent to the browser is readable.</h2>
+          <ul class="scope-list">
+            <li><strong>The page:</strong> View Page Source shows the markup</li>
+            <li><strong>The files it names:</strong> stylesheet and scripts, whole</li>
+            <li><strong>The consequence:</strong> Demo 2's lock is about to open</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/drawn-lock.png" alt="A door holds a taped paper sheet with a padlock merely drawn on it, one corner peeling, while a visitor calmly lifts the corner to read behind it.">
+          <figcaption>The members corner asks for a pass phrase. No server is anywhere on the page.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The trap. Many students hunt for a clever hiding place, but there is none to find. With no server on the page, the check must run on the visitor's machine, so the phrase must travel to the visitor inside the script file. View Page Source names the file, VS Code opens it, and the phrase sits in plain text beside the note it guards. No guessing required.&#10;&#10;The lock was a drawing of a lock. The next slide shows the code that proves it.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Find the flaw</div>
+        <h2>Type the pass phrase to read the officers' note. No server involved.</h2>
+        <div class="prompt">
+          <p><strong>Answer two:</strong> where must the correct phrase live for the check to work, and could a visitor find it without guessing?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>In the script file,</strong> because the visitor's machine runs the check · <strong>and yes:</strong> View Page Source names the file, and the phrase sits in it in plain text</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The gate, verbatim. The if and else read like the words they are: if the box's value matches the phrase, write the note, otherwise write the refusal. To run that comparison, the visitor's machine needed the phrase, the note, and the refusal, so the server sent all three.&#10;&#10;Client-side scripting can never keep a secret, because the client belongs to the visitor. The web does keep secrets, passwords among them. They live on the one machine whose insides no visitor can read: the server.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS133 · The gate, verbatim</div>
+      <div class="content">
+        <div class="eyebrow">Everything traveled together</div>
+        <h2>A client-side secret is a drawing of a lock.</h2>
+        <pre class="code-card"><code>if (passPhraseBox.value === <mark>"cactus-club-2026"</mark>) {
+    gateAnswer.textContent = <mark>"Welcome, officer. ..."</mark>;
+} else {
+    gateAnswer.textContent = "That is not the pass phrase.";
+}</code></pre>
+        <p class="console-note">The phrase, the note, and the refusal all shipped to the visitor. The server can hold what the client cannot.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The join page has waited for this slide since it shipped. Here is the missing mail carrier, in concept: when the form submits for real, its pairs travel to a program on the server, at the address the action attribute finally names. That program re-checks both pairs and stores them in a database, organized storage a program can query later. Receive, re-check, store.&#10;&#10;Programs like that are server-side scripting, and this course ships none on purpose. The job is knowing which half of a task belongs to which machine, and the sign-up switches to POST the moment a receiver exists.&#10;&#10;Time: 26-29 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The server's half</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/server-trip.png" alt="A relay in three stations: a browser window, then a server tower with a checkmark shield, then a stacked database cylinder, joined by a dashed route.">
+          <figcaption>Every real sign-up on the web ends its trip this way.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">The missing mail carrier, hired</div>
+          <h2>Receive. Re-check. Store.</h2>
+          <ul class="scope-list">
+            <li><strong>The client</strong> collects, checks the claims, sends over https</li>
+            <li><strong>The receiver</strong> re-checks both pairs, and only then</li>
+            <li><strong>The database</strong> stores the sign-up for a later query</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Why check twice? The two checks do different jobs, and only one can be trusted. The browser's check is convenience: it catches honest mistakes before the trip and saves a round trip. It can never be the gate, because everything client-side belongs to the visitor, who can edit the page or disable the script. The server's check is the gate, because the server is the only machine the visitor cannot reach into.&#10;&#10;Worth memorizing as one rule: passwords are checked on the server, secrets live on the server, and client-side validation is help, never security. TIY 11.4's refusal was a kindness, not a lock.&#10;&#10;Time: 29-31 minutes.">
+      <div class="brand">CIS133 · Two checks, two jobs</div>
+      <div class="content">
+        <div class="eyebrow">Only one can be trusted</div>
+        <h2>Help is not security.</h2>
+        <div class="work-rows">
+          <p><strong>The browser</strong><span>convenience · catches honest mistakes before the trip · the visitor can switch it off</span></p>
+          <p><strong>The server</strong><span>the gate · the one machine the visitor cannot reach into</span></p>
+        </div>
+        <p class="console-note">Passwords are checked on the server. Secrets live on the server. Client-side validation is help.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The server's half is someone's job to provide, and for a site like the club's that someone is a web host: a business or service keeping your folder on an always-on server with a public address. You rent a folder the whole world can read.&#10;&#10;The club's site is a static site: the server hands every visitor the same ready-made files. That is a strength: fast, cheap to host, nothing on the server to break. And Chapter 1's law gains a live site to govern: the join page collects names and emails, so the live site must serve https. Your instructor provides the host, address, and credentials: the moves are the same on every host.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS133 · Hosting</div>
+      <div class="content">
+        <div class="eyebrow">Renting a folder the world can read</div>
+        <h2>A static site is a strength, not a limitation.</h2>
+        <div class="host-rows">
+          <p><strong>Shared hosting</strong><span>a rented slice of a commercial server, reached by secure transfer</span></p>
+          <p><strong>Static site host</strong><span>free or low-cost, built for ready-made files</span></p>
+          <p><strong>School space</strong><span>web space some colleges give enrolled students</span></p>
+        </div>
+        <p class="console-note">The join page collects data, so the live site serves https://. Chapter 1's law, now with a site to govern.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Getting the folder there is the file transfer family's work, the appointment Chapter 1 booked. FTP is the family's original, and it shows its age: plain FTP moves files and credentials unencrypted, the same sin as plain HTTP. The modern law follows a rule students own: transfer over SFTP or FTPS, which encrypt the whole trip. Free clients such as FileZilla speak both.&#10;&#10;The upload is one idea: copy the folder's contents into the server's public folder, keeping the structure. Keeping the structure is not neatness. It is what keeps every address true.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS133 · Secure transfer</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 1's appointment, kept</div>
+        <h2>Copy the contents. Keep the structure.</h2>
+        <pre class="code-card"><code><span class="comment">Your laptop                     The server's public folder</span>
+site-folder/index.html       →  index.html
+site-folder/club-styles.css  →  club-styles.css
+site-folder/images/logo.png  →  <mark>images/logo.png</mark></code></pre>
+        <p class="console-note">SFTP or FTPS, never plain FTP: unencrypted credentials are plain http's sin all over again.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="The payoff the course has arranged since Chapter 2. Why does a site built at file:// addresses work untouched at https://? Because no address ever mentioned the machine. Every href and src gives directions from the file's own folder: contact.html next door, images/club-logo.png one folder down. The move keeps the relationships, so the move keeps the links.&#10;&#10;The address that does not survive names a machine: an absolute local path points at a disk, and on every other machine on earth, including the server, that disk does not exist.&#10;&#10;Time: 35-37 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Why the site survives</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/folder-move.png" alt="A site folder lifts whole from a laptop toward a globe-marked server with its inner files still joined by taut threads, while one file with a snapped thread falls away.">
+          <figcaption>Relationships survive the move. A named disk does not.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Directions, not places</div>
+          <h2>You never wrote an address that named your machine.</h2>
+          <ul class="scope-list">
+            <li><strong>Survives:</strong> <code>images/club-logo.png</code> · one folder down</li>
+            <li><strong>Dies:</strong> <code>C:\Users\officer\...</code> · one machine's disk</li>
+            <li><strong>The rule:</strong> relative links describe relationships</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Diagnose with the rule. The src names a place, one machine's disk, and the place is not on the server, so the image breaks the moment the site leaves that laptop. It worked at home only because the disk happened to be there. The repair is directions from the page's own folder: images/photo.png, with the images folder uploaded whole beside the page.&#10;&#10;Time: 37-39 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One broken image, live</div>
+        <h2>The gallery works at home. Live, one photo is gone.</h2>
+        <div class="prompt">
+          <p><strong>Its src reads</strong> <code>C:\Users\sam\site\images\photo.png</code>. Diagnose the break and write the repaired src.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>The address names one machine's disk,</strong> and the server does not have it · <strong>Repair:</strong> <code>src=&quot;images/photo.png&quot;</code>, directions from the page's own folder</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="One naming convention completes the move, banked since Chapter 3: the web's default name for a site's home page is index.html. When a visitor asks for a bare folder, the server looks inside for a file with that name and serves it automatically. That is why a home page's address never seems to name a file. It does, and the file is index.html.&#10;&#10;The site plan's missing front door now has its reason and its name: the lab builds the one page whose file name a server convention chooses.&#10;&#10;Time: 39-41 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The front door</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">The default the server reaches for</div>
+          <h2>The bare address serves index.html.</h2>
+          <ul class="scope-list">
+            <li><strong>The visitor asks for</strong> <code>https://example.org/</code></li>
+            <li><strong>The server serves</strong> the folder's <code>index.html</code></li>
+            <li><strong>The lab builds it:</strong> the plan's missing front door</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/index-door.png" alt="An open folder stands like a building facade with file cards inside, and one glowing card forms the front door served to a visitor pointing at the bare folder.">
+          <figcaption>One page's file name is chosen for you, by convention.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Publishing multiplies every defect by the whole audience, so the checking stack gets one final promotion. The pre-flight check runs every check the course owns, on every page, before anything goes public, and again before every update. Checks 1 and 2: both validators. Check 3: the link walk, because a validator checks syntax, not reachability. Check 4: the Chapter 9 audit, all seven human checks. Check 5: the Tab walk. Checks 6 and 7: device mode and a second browser. Check 8 is new, and it runs on the far side of the upload.&#10;&#10;Time: 41-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The pre-flight</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One instrument, eight checks</div>
+          <h2>The whole stack flies as one instrument.</h2>
+          <ol class="preflight-list">
+            <li>HTML validator, every page</li>
+            <li>CSS validator, per stylesheet</li>
+            <li>Link walk: every promise lands</li>
+            <li>The seven-check audit</li>
+            <li>Tab walk, visible at every stop</li>
+            <li>Device mode: no sideways scroll</li>
+            <li>Second browser holds</li>
+            <li>Live-URL verify, after upload</li>
+          </ol>
+        </div>
+        <figure>
+          <img src="assets/preflight-board.png" alt="A launch-control board with a column of eight indicator lights, seven steady and the eighth set apart beyond a horizon line marked with a globe.">
+          <figcaption>Publishing multiplies every defect by the whole audience.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Then the site ships: connect with the secure method, copy the contents in, and load the real address. Verification starts where emulation ends: a real phone if one is in reach, because device mode predicts and the device decides. Then the validator's third door, promised since Chapter 2: paste the live https address into the address tab, and the validator checks what the server sends instead of what sits in the folder. A difference between the live run and the local run is the upload itself: a file missed, an old copy, a folder left behind.&#10;&#10;The update cycle makes it a habit: edit locally, re-run the pre-flight on what changed, re-upload, verify live. Nothing edits the server copy directly.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS133 · Verify live</div>
+      <div class="content">
+        <div class="eyebrow">The address changed. The bar did not.</div>
+        <h2>Ship, then prove it on the real address.</h2>
+        <div class="work-rows">
+          <p><strong>Real phone</strong><span>device mode predicts · the device decides</span></p>
+          <p><strong>Third door</strong><span>the validator fetches your live URL and grades what the server sent</span></p>
+          <p><strong>The cycle</strong><span>edit locally · pre-flight · re-upload · verify live · never edit the server copy</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Order the pre-flight for the midnight uploader. Checks 1 through 7 run locally, before anything travels. Only check 8, the live-URL verify, needs the upload. Upload-first inverts the instrument: whatever the seven local checks would have caught is live for the whole audience, on every device, all night. The pre-flight exists because publishing multiplies defects.&#10;&#10;Time: 46-48 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Order the instrument</div>
+        <h2>"Upload tonight, check in the morning. Check 8 needs the live site anyway."</h2>
+        <div class="prompt">
+          <p><strong>Sort it out:</strong> which checks run before the upload, and what does the morning plan risk?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Checks 1-7 run locally, before the upload.</strong> Only the live-URL verify waits · the morning plan publishes every uncaught defect to the whole audience, overnight</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 12A. Part 1 builds the front door from the officers' content and grows the nav to its final six links, Home first. Part 2 attaches footer-year.js on its contract and traces one sign-up's full trip on paper. Part 3 runs the pre-flight on all six pages, publishes over the secure method with the instructor's hosting details, and verifies live, validator's address tab included.&#10;&#10;If live hosting is unavailable, the local pre-flight plus packaging stands in, per the lab note. The lab is also the dress rehearsal for any independent project site.&#10;&#10;Time: 48-51 minutes.">
+      <div class="brand">CIS133 · Skills Lab 12A</div>
+      <div class="content">
+        <div class="eyebrow">The site ships</div>
+        <h2>Six pages promised. Six pages live.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Build</strong><p>The front door, and Home first in all six navs.</p></article>
+          <article><span>2</span><strong>Attach</strong><p>The one script, on its contract, footer only.</p></article>
+          <article><span>3</span><strong>Pre-flight</strong><p>Eight checks per page, audit first.</p></article>
+          <article><span>4</span><strong>Publish</strong><p>Secure transfer, then verify on the live URL.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 5-6 hours · Submit skills-lab-12a-lastname.zip · The live URL rides in the answers file</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: the three layers with each one's job, why a client-side secret can never hold and which machine can keep one, the address rule that survived the move, and the eight checks with the one that runs after upload.&#10;&#10;Time: 51-53 minutes.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four checkpoints</div>
+        <h2>Can you defend the whole launch?</h2>
+        <div class="objective-badges retrieval">
+          <article><span>1</span><h3>Three layers</h3><p>Structure, presentation, behavior: a clean split.</p></article>
+          <article><span>2</span><h3>The secret</h3><p>Clients read everything. Servers keep secrets.</p></article>
+          <article><span>3</span><h3>The move</h3><p>Relationships survive. Named disks die.</p></article>
+          <article><span>4</span><h3>The eight</h3><p>Seven local checks, then verify live.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the officers' question, and the course. Six pages promised in Chapter 7, six pages live at an address anyone can visit. The answer to when can everyone see it is: everyone, now.&#10;&#10;For the first time, no chapter waits after this one. Students know how to build, validate, and ship accessible sites, and every site they publish from now on carries their name. Close the hour with the book's last line: the course ends where the web begins.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop · course complete</div>
+        <h2>Everyone, now.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> trace the footer's year across the client-server line: what traveled, what ran where, and which part needed no server at all.</p>
+        </div>
+        <p class="next-step">Six pages live. Every site you publish now carries your name.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

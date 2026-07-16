@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 8 classroom presentation: Responsive Design and Media Queries.">
+  <meta name="theme-color" content="#001A36">
+  <title>CIS133: Responsive Design and Media Queries</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Crect x='8' y='14' width='30' height='22' rx='2' fill='none' stroke='%23FFD573' stroke-width='4'/%3E%3Crect x='42' y='22' width='14' height='28' rx='3' fill='none' stroke='%23FFD573' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Responsive Design and Media Queries" data-course="cis133"
+  data-chapter="ch08" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the gap Lab 7A left behind. The desktop wireframes were easy to trust. The phone frames were promises: nav labels stacking, regions narrowing, type stepping down, all below some chosen width. Chapter 7 admitted the toolbox could not keep those promises yet.&#10;&#10;Around half of web traffic arrives on a phone, and no club officer accepts 'works on my laptop' as done.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 8 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Responsive Design and Media Queries</h1>
+        <p class="lede">Your phone wireframes made promises. Today the stylesheet keeps them.</p>
+        <div class="width-tag" aria-hidden="true">@media (max-width: ?px)</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three build targets. Students will put the viewport tag in every head, write media queries at breakpoints their own content chooses, and learn which layer of a base-plus-overrides stylesheet owns each fix. Read each as an action they perform in Lab 8A.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Report, switch, and layer the stylesheet.</h2>
+        <div class="objective-modules">
+          <article>
+            <span>01</span>
+            <h3>Report</h3>
+            <p>Implement the viewport tag and test in device mode.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Switch</h3>
+            <p>Construct media queries at content-driven breakpoints.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Layer</h3>
+            <p>Diagnose which layer, base or override, owns a fix.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Take inventory before adding anything. Three mechanisms in club-styles.css already answer a narrow window: flex-wrap lets rows break, fluid images never overflow, and the readable column's max-width is a ceiling narrow windows duck under. Each pays a debt an earlier chapter carried.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The inventory</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">What already bends</div>
+          <h2>The site answers narrow windows three ways.</h2>
+          <ul class="scope-list">
+            <li><strong>flex-wrap:</strong> full rows break into new lines</li>
+            <li><strong>fluid images:</strong> nothing punches out of its box</li>
+            <li><strong>max-width:</strong> a ceiling, not a fixed size</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/bend-inventory.png" alt="Three mechanisms bend to a narrowing window: a row of cards wraps, an image shrinks inside its frame, and a text column stays under its ceiling.">
+          <figcaption>Three mechanisms, already shipped, already bending.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Pay the Chapter 6 pack's debt. This rule has been riding in the stylesheet since that pack, and its README promised Chapter 8 would explain it. An image with a fixed width bursts out of any box narrower than itself. Capped at 100 percent of its container, it shrinks with the box and never punches through. height: auto keeps its shape.&#10;&#10;Time: 8-10 minutes.">
+      <div class="brand">CIS133 · Fluid images</div>
+      <div class="content">
+        <div class="eyebrow">A debt, paid</div>
+        <h2>The pack rule finally gets its chapter.</h2>
+        <pre class="code-card"><code>img {
+  max-width: 100%;   <span class="comment">/* never wider than its box */</span>
+  height: auto;      <span class="comment">/* keep the shape while shrinking */</span>
+}</code></pre>
+        <p class="gauge-note">An 800px photo in a phone-width column: capped, shrunk, intact.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Name what all three mechanisms cannot do. They bend continuously, the same way at every width, because nothing in CSS so far can ask how wide the screen is. Laptop padding stays laptop-sized on a phone. Walk the promise table: three promises are already kept, two wait for the media query.&#10;&#10;Bending is not adapting.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS133 · The gap</div>
+      <div class="content">
+        <div class="eyebrow">Promises against tools</div>
+        <h2>Bending is not adapting.</h2>
+        <div class="promise-board">
+          <p class="kept"><span>Full rows break into stacks</span><strong>flex-wrap · Chapter 6</strong></p>
+          <p class="kept"><span>Images never overflow</span><strong>fluid images · owned</strong></p>
+          <p class="kept"><span>The column never outgrows the screen</span><strong>max-width · Chapter 5</strong></p>
+          <p class="waiting"><span>Regions rearrange below a chosen width</span><strong>media queries · today</strong></p>
+          <p class="waiting"><span>Type and spacing step down on phones</span><strong>media queries · today</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give pairs 45 seconds. The clubmate's two mechanisms bend continuously at every width. Neither can change a value because the screen changed: no rule they own can say 'on a small screen, use this value instead.' That sentence is the media query's job description.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Test the claim</div>
+        <h2>"The images shrink and the rows wrap. We're phone-ready."</h2>
+        <div class="prompt">
+          <p><strong>Name:</strong> what those two mechanisms do, and the one thing neither of them can do.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>They bend</strong> continuously at every width · <strong>Neither can</strong> change a value at a chosen width, because no rule so far can ask how wide the screen is</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The make-believe canvas. Hand most phone browsers a bare-headed page and they lay it out about 980 pixels wide, then shrink the picture to fit the glass. The visitor gets a postcard of a laptop page: everything visible, every word too small to read.&#10;&#10;The lie is history, not malice. Early phone browsers met a desktop-only web, and shrunken pages at least looked like themselves. Define viewport here: the area a browser gives a page to lay out in.&#10;&#10;Time: 15-18 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The viewport</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/postcard-lie.png" alt="A phone renders a full laptop page shrunk to a tiny postcard on a wide make-believe canvas, next to a phone showing the page at its true width.">
+          <figcaption>Silent pages get the postcard. Honest pages get the glass.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">The phone's make-believe canvas</div>
+          <h2>Silent pages get laid out 980 pixels wide.</h2>
+          <p class="lede">Then shrunk until they fit. The whole layout, none of the reading.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="One line ends the lie, and students should learn it as a unit. It is the same meta machinery that has carried charset since Chapter 2. width=device-width sets the layout viewport to the device's real width. initial-scale=1 starts the zoom at 100 percent.&#10;&#10;Be clear about what it buys: honesty, not magic. It hands the stylesheet the true width. The stylesheet still does the adapting.&#10;&#10;Time: 18-21 minutes.">
+      <div class="brand">CIS133 · One line in the head</div>
+      <div class="content">
+        <div class="eyebrow">Learn it as a unit</div>
+        <h2>The viewport meta tag ends the make-believe.</h2>
+        <div class="tag-anatomy" role="img" aria-label="The viewport meta tag with two labeled parts: width=device-width means no make-believe canvas, and initial-scale=1 means arrive at 100 percent zoom.">
+          <code>&lt;meta name="viewport"<br>&nbsp;&nbsp;content="<mark>width=device-width</mark>, <span class="scale">initial-scale=1</span>"&gt;</code>
+          <div class="callout real-width">the device's real width</div>
+          <div class="callout start-zoom">arrive at 100% zoom</div>
+        </div>
+        <p class="gauge-note">Honesty, not magic. The stylesheet still does the adapting.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two habits leave this slide. First, the head skeleton grows by one fixed line: encoding, viewport, title, stylesheet, from this chapter on. Second, the validator gap: the HTML validator does not require the tag. A bare-headed page validates with zero messages and still renders as a postcard on every phone. Valid and phone-ready are different standards, the same lesson as Chapter 4's valid-versus-well-built.&#10;&#10;Time: 21-23 minutes.">
+      <div class="brand">CIS133 · The skeleton grows</div>
+      <div class="content">
+        <div class="eyebrow">No tool will remind you</div>
+        <h2>Valid and phone-ready are different standards.</h2>
+        <pre class="code-card"><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  <mark>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</mark>
+  &lt;title&gt;Recycling Guide | PC Computer Club&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;club-styles.css&quot;&gt;
+&lt;/head&gt;</code></pre>
+        <p class="gauge-note">The validator never asks for this line. Your skeleton is the reminder.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Device mode is DevTools' phone emulation view: switch on the device toolbar, pick a phone profile, and the page re-renders at that phone's width with a readout of the rendered width. It is where you can watch the lie happen. A narrow desktop window can never show it, because a desktop window always gives the page its real width, tag or no tag.&#10;&#10;Emulation is not the last word. Chapter 12's pre-flight adds real devices. For this chapter, device mode is the right tool.&#10;&#10;Time: 23-26 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Device mode</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">A drawer of phones in DevTools</div>
+          <h2>Test every phone without owning one.</h2>
+          <ul class="scope-list">
+            <li>Renders at a chosen phone's true width</li>
+            <li>Reports the rendered width in numbers</li>
+            <li>Shows what the missing tag costs</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/device-drawer.png" alt="An open drawer holds a row of phone profiles at different widths, each with its own width readout, beside a browser DevTools panel.">
+          <figcaption>A narrow desktop window can never show you the lie. Device mode can.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The matched pair from the pack: identical bodies, heads differing by exactly one line. At the same phone profile, no-viewport.html lays out on the wide make-believe canvas and shrinks: tiny text, long lines, a rendered width near 980. viewport.html reports the phone's true width and arrives readable.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One line, two pages</div>
+        <h2>Same body. One head line apart. Same phone.</h2>
+        <div class="prompt">
+          <p><strong>Predict:</strong> what does device mode show for each page, and what rendered width does each one report?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>No tag:</strong> postcard shrink, width near 980 · <strong>With tag:</strong> readable text at the phone's true width</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The chapter's centerpiece. Read it outside in, the way Chapter 4 read its first rule. @media is an at-rule: an instruction to the stylesheet itself, the first rule in the course that does not start with a selector. The media feature in parentheses looks like a declaration and is not one. It is a question about the viewport. Between the braces sit ordinary rules, exactly as Chapter 4 taught them.&#10;&#10;Nothing inside the braces is new. What is new is the switch around them.&#10;&#10;Time: 28-31 minutes.">
+      <div class="brand">CIS133 · Query anatomy</div>
+      <div class="content">
+        <div class="eyebrow">Read outside in</div>
+        <h2>A condition wrapped around ordinary rules.</h2>
+        <div class="query-anatomy" role="img" aria-label="A media query labeled in three parts: the @media at-rule, the max-width 720px media feature in parentheses, and a block of ordinary CSS rules inside the braces.">
+          <code><mark>@media</mark> <span class="feature">(max-width: 720px)</span> {<br>&nbsp;&nbsp;.signup-banner {<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #5e9959;<br>&nbsp;&nbsp;}<br>}</code>
+          <div class="callout at-rule">the at-rule</div>
+          <div class="callout media-feature">the question in parentheses</div>
+          <div class="callout rule-block">ordinary rules, asleep until yes</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two media features carry the course, and they are mirror images. Before trusting any query, say it aloud as a sentence: at most, at least. The words settle the boundary question too, because each feature includes the width it names. Bank the consequence: a max-width 600 and a min-width 600 query would both fire at a 600-pixel window. When two queries must split every width cleanly, their numbers differ by one.&#10;&#10;Time: 31-34 minutes.">
+      <div class="brand">CIS133 · At least, at most</div>
+      <div class="content">
+        <div class="eyebrow">Say it aloud</div>
+        <h2>Two features, mirror images.</h2>
+        <div class="mirror-pair">
+          <article>
+            <code>@media (max-width: 600px)</code>
+            <h3>"At most 600 wide"</h3>
+            <p>The small-screen feature. Fires on narrow windows, sleeps on wide ones.</p>
+          </article>
+          <article>
+            <code>@media (min-width: 600px)</code>
+            <h3>"At least 600 wide"</h3>
+            <p>The wide-screen feature. Fires in the other direction.</p>
+          </article>
+        </div>
+        <p class="gauge-note">Each feature includes the width it names.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The boundary check. At exactly 600 pixels, both apply: 600 is at most 600, and 600 is at least 600. Say each aloud to prove it. Follow up: what does that mean for two queries that must split every width between them? Their numbers differ by one, like 699 and 700.&#10;&#10;Time: 34-36 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">The boundary</div>
+        <h2>The window is exactly 600 pixels wide.</h2>
+        <div class="prompt">
+          <p><strong>Which fires:</strong> <code>(max-width: 600px)</code>, <code>(min-width: 600px)</code>, or both?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Both.</strong> 600 is at most 600, and 600 is at least 600. Each feature includes the width it names.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The banner title's matched pair leaves a stretch of widths where neither condition is true. That is not an error. It is the base rule doing its job. Run the trace: 400 lands in the max-width query at 22px, 700 falls in the gap and keeps the 28px base, 1000 lands in the min-width query at 36px. Every window width lands in exactly one of three outcomes.&#10;&#10;Time: 36-39 minutes.">
+      <div class="brand">CIS133 · The trace</div>
+      <div class="content">
+        <div class="eyebrow">One title, three outcomes</div>
+        <h2>A width no query catches is not an error.</h2>
+        <div class="trace-board">
+          <p class="trace-head"><span>Window</span><span>Query awake</span><span>Computed size</span></p>
+          <p><span>400px</span><span><code>max-width: 500px</code></span><strong>22px · override</strong></p>
+          <p class="gap-row"><span>700px</span><span>none</span><strong>28px · the base</strong></p>
+          <p><span>1000px</span><span><code>min-width: 900px</code></span><strong>36px · override</strong></p>
+        </div>
+        <p class="gauge-note">Start from the base, then let each awake query overwrite it in source order.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Where breakpoints come from. The wrong answer is a chart of popular device widths: devices change sizes every year, and the content does not change with them. The right answer is a resize test: drag until the layout embarrasses itself, and read the width where it happens.&#10;&#10;Walk the playground arithmetic: cards 260 wide, gaps 20, row padding and borders 44. Two cards plus one gap need 540, plus 44 is 584. At 584 the row seats two cards, at 583 it drops to one. The number came from the boxes, not a chart.&#10;&#10;Time: 39-42 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Breakpoints</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/breakpoint-arithmetic.png" alt="A row of cards measured against a window ruler: card widths and gaps add up to the exact width where the row drops from two cards to one.">
+          <figcaption>260 + 20 + 260 + 44 = 584. The content picked the number.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Content, not charts</div>
+          <h2>Resize until the layout embarrasses itself.</h2>
+          <p class="lede">Read the width where it happens. That is your breakpoint.</p>
+          <p class="gauge-note">Name it after the content event: "where the card row drops to one."</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The architecture. Rules outside every query are base styles serving every screen. Rules inside a query are overrides carrying only the differences. On a narrow window the card keeps its background, border, and width from the base. Only the padding changes, because only the padding is written in the block.&#10;&#10;Name the trap: repeat the whole rule inside the query, and next month someone edits the base border while the query's forgotten copy quietly disagrees.&#10;&#10;Time: 42-45 minutes.">
+      <div class="brand">CIS133 · Base plus overrides</div>
+      <div class="content">
+        <div class="eyebrow">Only the difference</div>
+        <h2>An override never repeats the base.</h2>
+        <div class="layer-pair">
+          <pre class="code-card"><code><span class="comment">/* Base: every width the queries leave alone */</span>
+.update-card {
+  padding: 20px;
+}</code></pre>
+          <pre class="code-card override"><code><span class="comment">/* Override: only the difference */</span>
+@media (max-width: 600px) {
+  .update-card {
+    padding: 10px;
+  }
+}</code></pre>
+        </div>
+        <p class="gauge-note">Copy all five declarations into the block, and you plant next month's disagreement.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Why does the override win below 600? Not because queries outrank base rules. They do not. A rule inside a query has exactly the specificity its selector earns, so the two .update-card rules tie. Chapter 4's tie-breaker settles ties: the later rule wins. That is why every query block lives below the base rules it adjusts. Put it above, and the base has the last word at every width.&#10;&#10;A law of source order, not a preference. Gather every query block at the bottom of the file.&#10;&#10;Time: 45-47 minutes.">
+      <div class="brand">CIS133 · Source order law</div>
+      <div class="content">
+        <div class="eyebrow">Why the override wins</div>
+        <h2>Queries do not outrank. They come later.</h2>
+        <div class="order-stack">
+          <div><span>1</span><strong>Base rules</strong><small>serve every screen</small></div>
+          <div><span>2</span><strong>Query blocks below them</strong><small>tie on specificity, win on order</small></div>
+          <div class="broken"><span>✕</span><strong>Query block above the base</strong><small>the base gets the last word, overrides never show</small></div>
+        </div>
+        <p class="gauge-note">Chapter 4's tie-breaker, still on duty: among equals, later wins.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="The pattern reads in two directions. Mobile-first: the base describes the narrow layout, and min-width queries grant wider screens their room. Desktop-first: the base describes the wide layout, and max-width queries tighten small screens. The numbers 699 and 700 differ by one on purpose, splitting every whole-pixel width with no overlap.&#10;&#10;Starting from nothing, professionals usually go mobile-first. The club's stylesheet grew up at laptop width across three labs, so the lab retrofits with max-width overrides. Retrofit is honest, common industry work.&#10;&#10;Time: 47-49 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Two directions</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One pattern, read both ways</div>
+          <h2>Mobile-first builds. Retrofit repairs.</h2>
+          <div class="direction-tags">
+            <p><strong>Mobile-first:</strong> narrow base, <code>min-width</code> grants room</p>
+            <p><strong>Desktop-first:</strong> wide base, <code>max-width</code> tightens</p>
+          </div>
+          <p class="gauge-note">The club site grew up at laptop width. The lab retrofits, honestly.</p>
+        </div>
+        <figure>
+          <img src="assets/direction-split.png" alt="Two arrows read one layout pattern in opposite directions: from a narrow phone base outward to wide screens, and from a wide desktop base inward to phones.">
+          <figcaption>Same two layouts, same boundary, read from opposite ends.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The full trace, with one deliberate surprise. Base padding 20px, one max-width 600 override at 10px. At 480 the override fires: 10px. At 800 no query mentions padding: 20px base. At 1100, the surprise: still 20px, because no rule grants wide screens extra padding. Two of three widths match because the base serves every width the queries leave alone.&#10;&#10;Time: 49-51 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Run the trace</div>
+        <h2>Base 20px. One override: 10px at most 600.</h2>
+        <div class="prompt">
+          <p><strong>Compute</strong> the card's padding at 480, 800, and 1100 pixels.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>480:</strong> 10px, override · <strong>800:</strong> 20px, base · <strong>1100:</strong> 20px, still the base. No rule grants wide screens extra padding.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 8A. The club site returns exactly as Lab 6A shipped it and Chapter 7's audit left it: valid, and silent about phones. Students tag every head, diagnose at three widths, derive the gallery breakpoint from content, write the small-screen block with three overrides, add one query of their own, and prove everything in device mode plus both validators.&#10;&#10;Time: 51-53 minutes.">
+      <div class="brand">CIS133 · Skills Lab 8A</div>
+      <div class="content">
+        <div class="eyebrow">The club site meets every screen</div>
+        <h2>Tag it. Diagnose it. Derive the number. Prove it.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Tag</strong><p>The viewport line in all three heads.</p></article>
+          <article><span>2</span><strong>Diagnose</strong><p>Walk each page at three widths.</p></article>
+          <article><span>3</span><strong>Derive</strong><p>Pin the gallery's own breakpoint.</p></article>
+          <article><span>4</span><strong>Override</strong><p>One block, three differences, below the base.</p></article>
+          <article><span>5</span><strong>Prove</strong><p>Device mode, then both validators to zero.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 4-5 hours · Submit skills-lab-8a-lastname.zip</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Retrieval map. One student per checkpoint, no notes: recite the tag and what silent pages get, say both features aloud with the boundary answer, state where breakpoints come from, and explain why query blocks live below the base. Tie each answer back to the playground evidence.&#10;&#10;Time: 53-54 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Four checkpoints</div>
+          <h2>Can you trace the whole width story?</h2>
+          <ol class="scope-list">
+            <li>The tag, and what silent pages get</li>
+            <li>At most, at least, and the boundary</li>
+            <li>Breakpoints come from content</li>
+            <li>Overrides tie, then win on position</li>
+          </ol>
+        </div>
+        <figure>
+          <img src="assets/layer-stack.png" alt="A stylesheet drawn as physical layers: one wide base slab first, with thin override plates stacked after it in source order, each carrying only a few marks.">
+          <figcaption>One file, grown layers instead of copies.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The phone frames stop being promises today: one stylesheet, grown layers instead of copies, serving every screen from one URL. Collect the exit ticket.&#10;&#10;Next class: Chapter 9 asks whether the site serves every visitor, not just every screen. Device mode tested widths. Chapter 9 tests everything else.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>One stylesheet grew layers, not copies.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> Why must a query block sit below the base rules it adjusts? Name the tie-breaker.</p>
+        </div>
+        <p class="next-step">Next: the site serves every screen. Does it serve every visitor?</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

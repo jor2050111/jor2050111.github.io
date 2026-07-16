@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 7 classroom presentation: UX and Web Design.">
+  <meta name="theme-color" content="#002E5D">
+  <title>CIS133: UX and Web Design</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Crect x='12' y='12' width='40' height='10' fill='%23FFC845'/%3E%3Crect x='12' y='27' width='18' height='25' fill='%23FFC845'/%3E%3Crect x='35' y='27' width='17' height='25' fill='%23fff0cf'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: UX and Web Design" data-course="cis133"
+  data-chapter="ch07" data-palette="golden-hour">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the officers' request from the chapter. The club site shipped its Part II milestone, and the officers want three more pages. They also want to see a plan before anyone writes markup. Ask the class why professionals would insist on paper first.&#10;&#10;This chapter opens Part III, Design for Every User, and it runs on more drawing than typing.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 7 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>UX and Web Design</h1>
+        <p class="lede">The officers want more pages. And a plan before anyone writes markup.</p>
+        <div class="desk-tag" aria-hidden="true">site-plan · draft 1</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect to Chapters 1 through 6. Students own the full toolkit: semantic structure, CSS, the box model, and Flexbox. This chapter teaches them to decide what to build before building it. Read each outcome as an action they will perform in the lab.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Separate, draw, and defend the plan.</h2>
+        <div class="objective-cards">
+          <article>
+            <span>01</span>
+            <h3>Separate</h3>
+            <p>Tell UX from UI and measure both with five principles.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Draw</h3>
+            <p>Construct a sitemap and wireframes before any code.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Defend</h3>
+            <p>Critique a site against the principles and assemble a site plan.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Make the cost argument concrete. A sketch changes in minutes. Built pages change in hours, and the hours multiply across every page the change touches. Add one page to a three-page site and every navigation bar needs an edit. Discover the pages themselves are wrong after building, and the bill covers everything.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Why plan first</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Lopsided arithmetic</div>
+          <h2>Sketches change in minutes. Pages change in hours.</h2>
+          <p class="lede">And the hours multiply by every page the change touches.</p>
+        </div>
+        <figure>
+          <img src="assets/plan-vs-build.png" alt="A balance scale weighs one light paper sketch against a heavy stack of built web pages that all need the same edit.">
+          <figcaption>The cheap version of a change is the one on paper.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Planning needs no new software. It needs answers to three questions, in order. Stress the order: goals first, then audiences, then actions. The rest of the chapter turns the answers into diagrams a developer can build from.&#10;&#10;A checkable goal is one you can sit someone in front of the page and verify. 'So people know about us' is a wish, since no one can tell when it comes true.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS133 · Three questions</div>
+      <div class="content">
+        <div class="eyebrow">Ask in order</div>
+        <h2>Every plan starts with three answers.</h2>
+        <div class="question-cards">
+          <article>
+            <span>1</span>
+            <h3>What must it accomplish?</h3>
+            <p>Goals phrased as outcomes someone could test.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <h3>Who does it serve?</h3>
+            <p>Audiences named by what they know and what they come to do.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <h3>What will they do here?</h3>
+            <p>Actions that recur earn pages of their own.</p>
+          </article>
+        </div>
+        <p class="pin-note">Skip question three and the site organizes around the owner, not the visitor.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give pairs one minute before revealing. Accept any goal a tester could check on a real visitor. The sample answer follows the chapter's rewrites. Ask how the class would test their goal on one person.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Wish to goal</div>
+        <h2>Make the pantry's wish checkable.</h2>
+        <div class="prompt">
+          <p><strong>The wish:</strong> the campus food pantry wants a site "so people know we exist."</p>
+          <p><strong>Rewrite it</strong> as one checkable goal, then name one visitor action the site should invite.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Goal:</strong> a first-time visitor can say what the pantry does after one screen · <strong>Action:</strong> check the current needs list</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The tutoring center worked example. Every row starts with a visitor, and every page earns its place by answering one. Point out what the table is not: a list of what the staff find interesting. This table becomes the sitemap later in the deck.&#10;&#10;Time: 14-16 minutes.">
+      <div class="brand">CIS133 · Actions become pages</div>
+      <div class="content">
+        <div class="eyebrow">The tutoring center</div>
+        <h2>Every page must answer a visitor.</h2>
+        <div class="audience-rows">
+          <p><strong>Regulars</strong><span>check hours, book a slot</span><em>Hours and Booking</em></p>
+          <p><strong>First-timers</strong><span>learn what help exists</span><em>Subjects</em></p>
+          <p><strong>Both</strong><span>pick up exam-week advice</span><em>Study Tips</em></p>
+          <p><strong>Both</strong><span>find the room, ask a question</span><em>Contact</em></p>
+        </div>
+        <p class="pin-note">Audience → action → the page that answers it. Hold this table. It becomes a diagram.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The vocabulary slide. UX is the quality of the whole visit. UI is the controls and how each one looks. A button in a pleasing teal is UI. Whether a visitor can find it, and whether it visibly answers the press, is UX. A beautiful interface can still deliver a miserable visit, which is how a site wins a design award and loses its visitors.&#10;&#10;Hold the relationship straight: UI serves UX.&#10;&#10;Time: 16-19 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · UX and UI</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/ux-ui-layers.png" alt="A visitor's path flows across whole pages above a separate layer of individual buttons, menus, and controls.">
+          <figcaption>The visit is one layer. The controls are another.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Two words, two layers</div>
+          <h2>UI is the button. UX is the visit.</h2>
+          <div class="serve-rule">
+            <strong>UI serves UX.</strong>
+            <p>Every interface choice either serves the visitor's experience or gets in its way.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Five principles, none of them new. Each one names something students have shipped since Part I. Walk the lane labels: alt text and landmarks from Chapter 3, the one external stylesheet from Chapter 4, hover and focus twins from Chapter 6, flex-wrap from Chapter 6. Said as questions, the five become an audit, and the lab hands students a worksheet built from them.&#10;&#10;Time: 19-22 minutes.">
+      <div class="brand">CIS133 · Five principles</div>
+      <div class="content">
+        <div class="eyebrow">You already build for these</div>
+        <h2>Five principles measure the visit.</h2>
+        <div class="principle-rail">
+          <article><h3>Usability</h3><p>Tasks finish without guesswork</p><span>what do I do next?</span></article>
+          <article><h3>Accessibility</h3><p>Works for every visitor</p><span>alt text · landmarks · focus</span></article>
+          <article><h3>Consistency</h3><p>Nothing relearned page to page</p><span>one stylesheet, enforced</span></article>
+          <article><h3>Feedback</h3><p>Every action gets an answer</p><span>:hover and :focus twins</span></article>
+          <article><h3>Responsiveness</h3><p>Layout adapts to the screen</p><span>flex-wrap, half of it</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort with the chapter's own decision table. Give the class 45 seconds per row. Nav label order is UX serving consistency. The inverting link is UI serving feedback. The wrapping gallery row is UX serving responsiveness. Read the pattern afterward: UI rows pick the paint, UX rows shape the visit, and the principle column connects them.&#10;&#10;Time: 22-25 minutes.">
+      <div class="brand">CIS133 · Guided practice</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Sort the decisions</div>
+        <h2>Which layer? Which principle?</h2>
+        <ol class="request-list">
+          <li>The navigation bar keeps one label order on every page.</li>
+          <li>A link inverts its colors under the pointer and the Tab key.</li>
+          <li>The gallery row wraps on a narrow window instead of squeezing.</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>1:</strong> UX · consistency · <strong>2:</strong> UI · feedback · <strong>3:</strong> UX · responsiveness</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The principles argue with each other. Walk the self-hiding navigation bar: the screen gains room, a usability point on small displays. But the bar stops being findable, keyboard visitors may never summon it, and no other page behaves that way. One UI idea picked fights with usability, accessibility, and consistency at once.&#10;&#10;Land the definition: design is deciding which principle wins, on purpose, and writing the decision down.&#10;&#10;Time: 25-28 minutes.">
+      <div class="brand">CIS133 · Principles collide</div>
+      <div class="content">
+        <div class="eyebrow">A clubmate's proposal</div>
+        <h2>The nav bar hides until the pointer finds it.</h2>
+        <div class="collision-board">
+          <p class="gain"><strong>Gains</strong>screen room on small displays</p>
+          <p class="cost"><strong>Fights usability</strong>the bar stops being findable</p>
+          <p class="cost"><strong>Fights accessibility</strong>keyboard visitors may never summon it</p>
+          <p class="cost"><strong>Fights consistency</strong>no other page behaves this way</p>
+        </div>
+        <p class="lab-note">Design is deciding which principle wins, on purpose, in writing.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="First diagram. A sitemap decides what pages exist and how they connect. Read the tree from the top: Home is always index.html, the file a web server serves by default. Four pages one step down earn navigation labels. The FAQ sits deeper because its questions belong to the hours conversation, so that page links to it and the bar does not. That placement is a decision, and the diagram records it.&#10;&#10;Two working rules: a page not in the tree does not exist, and keep every page within two clicks of Home. The tree records structure, not every link.&#10;&#10;Time: 28-31 minutes.">
+      <div class="brand">CIS133 · The sitemap</div>
+      <div class="content">
+        <div class="eyebrow">Diagram one: structure</div>
+        <h2>The sitemap decides what pages exist.</h2>
+        <div class="sitemap-tree" role="img" aria-label="A sitemap tree: Home branches to Subjects, Hours and Booking, Study Tips, and Contact. FAQ branches one level deeper, under Hours and Booking.">
+          <div class="tree-root"><strong>Home</strong><code>index.html</code></div>
+          <div class="tree-row">
+            <div><strong>Subjects</strong><code>subjects.html</code></div>
+            <div class="has-child"><strong>Hours and Booking</strong><code>hours.html</code></div>
+            <div><strong>Study Tips</strong><code>study-tips.html</code></div>
+            <div><strong>Contact</strong><code>contact.html</code></div>
+          </div>
+          <div class="tree-leaf"><strong>FAQ</strong><code>faq.html</code><em>linked from Hours, not the bar</em></div>
+        </div>
+        <p class="pin-note">Name every page now, with its file name. Keep everything within two clicks of Home.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Second diagram. A wireframe is a grayscale sketch of one page's layout: labeled boxes and nothing else. The restraint is the point. A wireframe review should argue about structure. Show a full-color mockup instead and the meeting spends its hour debating the shade of teal.&#10;&#10;The recipe: outer boxes first, split main by job, mark side-by-side rows as flex lines, label everything, stop. Ugly wireframes work. A five-minute frame invites correction, and a polished one invites politeness.&#10;&#10;Time: 31-34 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The wireframe</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/wireframe-desk.png" alt="A hand-sketched grayscale wireframe shows labeled boxes for header, nav, main, and footer, with a narrow phone version beside it.">
+          <figcaption>Gray boxes keep the argument on structure.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Diagram two: layout</div>
+          <h2>No colors. No fonts. That is the point.</h2>
+          <ul class="scope-list">
+            <li>Labeled boxes, one per job the page does</li>
+            <li>Side-by-side rows marked as flex lines</li>
+            <li>Paint waits for the stylesheet</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Chapter 6 promised students could build any layout they can sketch. This slide is the payment. Every outer box is a landmark they have written since Chapter 3, and every side-by-side row is a flex line from Chapter 6. The whole sketch demands exactly one layout rule.&#10;&#10;A wireframe is not a drawing of a future skill. It is a drawing of their current one. It is also a document a stakeholder can read, which is why plans travel as sketches.&#10;&#10;Time: 34-37 minutes.">
+      <div class="brand">CIS133 · Boxes you own</div>
+      <div class="content">
+        <div class="eyebrow">The translation</div>
+        <h2>Every box is something you already own.</h2>
+        <div class="own-map">
+          <p><span>header · nav · footer</span><strong>landmarks, yours since Chapter 3</strong></p>
+          <p><span>h1: page heading</span><strong>the heading pair from Chapter 2</strong></p>
+          <p><span>row of three cards</span><strong>a flex line, yours since Chapter 6</strong></p>
+        </div>
+        <pre class="code-card"><code>.subject-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}</code></pre>
+        <p class="lab-note">The only layout rule the whole sketch asks for.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Plan every page at two widths, because phones are how a large share of visitors will meet the site. Compare the frames: the card row becomes a stack, the nav labels break onto new lines, every region narrows. One change is already owned: rows that break are flex-wrap. The rest, regions that rearrange only below a chosen width, needs Chapter 8's media queries.&#10;&#10;Draw the phone frame anyway. The plan should not shrink to fit the tools you have.&#10;&#10;Time: 37-39 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The phone twin</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Sketch both widths</div>
+          <h2>Phones are not an edge case.</h2>
+          <div class="promise-tags">
+            <p class="owned">Rows that break: <strong>flex-wrap, owned</strong></p>
+            <p class="waiting">"Below a chosen width": <strong>waits for Chapter 8</strong></p>
+          </div>
+        </div>
+        <figure>
+          <img src="assets/phone-twin.png" alt="A desktop wireframe and its narrow phone twin sit side by side. The card row in the wide frame becomes a stack in the narrow one.">
+          <figcaption>Same page, two frames. The plan keeps both promises.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Let pairs answer both parts before revealing. The footer becomes a flex container the moment its four logos share one row. The starting declaration is display: flex. Push further: what one property lets that sponsor row survive a narrow screen? flex-wrap.&#10;&#10;Time: 39-42 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Read the frame</div>
+        <h2>Four sponsor logos share one footer row.</h2>
+        <div class="prompt">
+          <p><strong>Name:</strong> what the footer becomes in CSS terms when you build that row, and the declaration that starts it.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>It becomes:</strong> a flex container · <strong>Declaration:</strong> <code>footer { display: flex; }</code></div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Navigation labels live under the law Chapter 3 gave all link text: descriptive, meaningful out of context, never Click Here. The test: could a first-time visitor say what the page holds from the label alone? Walk the three verdicts. The bar also keeps one order, one place, on every page, and conventions are boring on purpose. Visitors arrive carrying habits, and meeting those habits is free usability.&#10;&#10;Mention the F and Z scanning patterns: put what matters most where eyes land first, top and left.&#10;&#10;Time: 42-45 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Label law</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Predict before the click</div>
+          <h2>A label promises its page.</h2>
+          <div class="label-verdicts">
+            <p class="pass"><code>Recycling Guide</code><span>names the content</span></p>
+            <p class="borderline"><code>Resources</code><span>a page exists, holding what?</span></p>
+            <p class="fail"><code>Learn More</code><span>more about what?</span></p>
+          </div>
+        </div>
+        <figure>
+          <img src="assets/label-signposts.png" alt="Three signposts point toward pages. One names its destination clearly, one is vague, and one says only Learn More.">
+          <figcaption>A first-time visitor should predict the page from the label alone.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The food truck's bar reads Home, Info, Stuff, Click Here, and the truck posts a menu, weekly locations, and a catering request page. Grade the last three labels, then rewrite. Any rewrite that names the destination passes. Ask which label law each rewrite now obeys.&#10;&#10;Time: 45-47 minutes.">
+      <div class="brand">CIS133 · Guided practice</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Rewrite the bar</div>
+        <h2>Home · Info · Stuff · Click Here</h2>
+        <div class="prompt">
+          <p><strong>The truck posts:</strong> its menu, its weekly locations, and a catering request page. Rewrite the three failing labels.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Info →</strong> Menu · <strong>Stuff →</strong> Weekly Locations · <strong>Click Here →</strong> Catering</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Assemble the deliverable. A site plan carries six sections, each answering a question no one should answer at the keyboard. It does two jobs at once: the builder's blueprint, specific enough to code from, and the stakeholder's approval device.&#10;&#10;Add the ten-minute quality gate: hand the plan to someone who did not make it, give them a task, and count the guesses. Every hesitation marks a label or placement to fix while fixing still costs minutes.&#10;&#10;Time: 47-50 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The site plan</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/site-plan-binder.png" alt="A six-section site plan document lies assembled on a desk: goals, audience, sitemap, wireframes, navigation plan, and consistency rules.">
+          <figcaption>One document: the blueprint and the approval device.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Six sections, one document</div>
+          <h2>The plan is the deliverable.</h2>
+          <ol class="plan-list">
+            <li>Site goals</li>
+            <li>Target audience</li>
+            <li>Sitemap</li>
+            <li>Wireframes</li>
+            <li>Navigation plan</li>
+            <li>Consistency rules</li>
+          </ol>
+          <p class="lab-note">Then test it on one person for ten minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 7A. Students audit the shared club site against the five principles, draw the six-page sitemap and wireframes at two widths, and assemble the full site plan addressed to the officers. The same template supports Independent Project Milestone 1.&#10;&#10;Remind them the deliverable is a document, not a folder of code, and the officers' constraint stands: the colors and the logo stay.&#10;&#10;Time: 50-53 minutes.">
+      <div class="brand">CIS133 · Skills Lab 7A</div>
+      <div class="content">
+        <div class="eyebrow">The club site grows up</div>
+        <h2>Audit it. Map it. Frame it. Assemble the plan.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Audit</strong><p>Five principles against the shared club site.</p></article>
+          <article><span>2</span><strong>Map</strong><p>The six-page sitemap, every file named.</p></article>
+          <article><span>3</span><strong>Frame</strong><p>Wireframes at desktop and phone width.</p></article>
+          <article><span>4</span><strong>Assemble</strong><p>The six-section plan, addressed to the officers.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 4-5 hours · Submit skills-lab-7a-lastname.zip</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Retrieval map. Ask one student per checkpoint to explain it without notes: the three planning questions, UX against UI with the five principles, what each diagram decides, and the six plan sections. Keep the answers tied to the tutoring center and the club site.&#10;&#10;Time: 53-54 minutes.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four checkpoints</div>
+        <h2>Can you walk the whole planning path?</h2>
+        <div class="question-cards">
+          <article><span>1</span><h3>Three questions</h3><p>Goals, audiences, actions, in order.</p></article>
+          <article><span>2</span><h3>UX vs UI</h3><p>The visit, the controls, five principles.</p></article>
+          <article><span>3</span><h3>Two diagrams</h3><p>Sitemap decides pages. Wireframe decides layout.</p></article>
+          <article><span>4</span><h3>Six sections</h3><p>The site plan a stakeholder can approve.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The officers asked for a plan because plans are where changes are cheap. Every box in the plan is markup students already own, so the plan is not a delay. It is the fastest path to the right six pages.&#10;&#10;Collect the exit ticket before dismissal. Next class: Chapter 8's media queries keep the phone frames' promises.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>The plan was never a delay. It was the cheap draft.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> Your phone wireframe promises the nav stacks "below a chosen width." Which promise-keeping tool do you not own yet?</p>
+        </div>
+        <p class="next-step">Next: media queries keep every promise your narrow sketches made.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 10 classroom presentation: HTML Tables.">
+  <meta name="theme-color" content="#002E5D">
+  <title>CIS133: HTML Tables</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M12 14h40v36H12z' fill='none' stroke='%23FFC845' stroke-width='4'/%3E%3Cpath d='M12 26h40M12 38h40M28 14v36' stroke='%23FFC845' stroke-width='3'/%3E%3Crect x='28' y='26' width='24' height='12' fill='%23FFC845'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: HTML Tables" data-course="cis133"
+  data-chapter="ch10" data-palette="canvas-light">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the draft page. The officers asked for an events page, and a helpful clubmate pasted the six fall events in as six paragraphs. Ask the room to find the Fix-It Workshop's date. Everyone reads all six paragraphs, because prose gives a fact no address.&#10;&#10;This slide also opens Part IV. Part III planned, adapted, and audited. Part IV builds the pages the site plan promised, and the events page is the first.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 10 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>HTML Tables</h1>
+        <p class="lede">Six paragraphs held the fall schedule. Nobody could find the workshop.</p>
+        <div class="board-tag" aria-hidden="true">Part IV · The promised pages</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three build targets. Students will judge which content earns a grid, build tables every tool can read, and publish the club's events page. The verbs climb: differentiate, construct, produce. The chapter ends with a page live in the nav and a pattern ready for Independent Project Milestone 2.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Judge the data. Build the grid. Publish the page.</h2>
+        <div class="objective-badges">
+          <article>
+            <span>01</span>
+            <h3>Judge</h3>
+            <p>Tell table data from lists, prose, and layout, and defend the call.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Build</h3>
+            <p>Rows, headers, caption, and scope: a grid every tool can read.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Publish</h3>
+            <p>The events page: a styled schedule, live in every page's nav.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Name what the paragraphs threw away. The officers' notes answer the same five questions for every event: name, date, time, location, one detail. That repeating shape is structure, and prose flattens it.&#10;&#10;A table gives every fact two addresses: its row and its column. A visitor hunting the workshop date reads down one column, across one row, and the answer waits at the intersection. No full read required.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Two addresses</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">What the draft threw away</div>
+          <h2>A table gives every fact two addresses.</h2>
+          <ul class="scope-list">
+            <li><strong>Row:</strong> which event this fact belongs to</li>
+            <li><strong>Column:</strong> which question this fact answers</li>
+            <li><strong>Intersection:</strong> the answer, found at a glance</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/paragraph-haystack.png" alt="Six dense paragraphs form a haystack around a lost magnifying glass, while the same content as a grid lights one cell at a row and column intersection.">
+          <figcaption>The schedule was in the draft all along. The paragraphs hid it.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="The judgment call comes before the markup. Content is tabular data when every value takes its meaning from two directions at once. Run the tutoring center's three blocks through the test: the welcome paragraph has no axes, it reads as sentences. The enrollment steps have one axis, position in the sequence. The drop-in schedule has two: Thursday means nothing alone, it means what its row and column say together.&#10;&#10;Schedules, tallies, and comparisons pass. Procedures stay ordered lists, however grid-like they look. Prose stays prose.&#10;&#10;Time: 8-11 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The two-axes test</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/two-axes-crosshair.png" alt="A row band and a column band cross a data grid like a crosshair, and the one cell where they meet glows brightest.">
+          <figcaption>Cover a cell's row and column labels, and the value means nothing.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Count the axes of meaning</div>
+          <h2>Two axes earn a table. Fewer do not.</h2>
+          <div class="axes-rows">
+            <p><strong>0</strong><span>The welcome paragraph · sentences carry it · prose</span></p>
+            <p><strong>1</strong><span>The enrollment steps · position carries it · ordered list</span></p>
+            <p class="wins"><strong>2</strong><span>The drop-in schedule · row and column carry it · table</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort with the class. The loan log answers five questions per loan: date, student, device, return date. Every value means what its row and column say together, so two axes, a table. The booking guide is a sequence: each step stands alone and only its position matters. One axis, an ordered list, however tidy a grid might look.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Run the test</div>
+        <h2>Two blocks want onto the center's site.</h2>
+        <ol class="request-list">
+          <li>A printer-loan log: each loan's date, student, device, and return date</li>
+          <li>A three-step guide for booking a session</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Log:</strong> two axes, every value means row plus column · a table · <strong>Guide:</strong> one axis, position only · an ordered list</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="One prohibition ships with the element. Before CSS could lay out a page, developers built whole designs as giant invisible tables: banner in one cell, nav in another, every region nailed into fake data. That era is over. Flexbox arranges a line better, media queries adapt it, and neither one lies about the content.&#10;&#10;The lie is the disqualifier. A screen reader meeting a table announces a table and offers to read it by rows and columns. Aim that at page furniture and the tool narrates layout as if it were data. Chapter 3's division of labor has not moved: tables present data, CSS lays out pages.&#10;&#10;Time: 13-16 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The prohibition</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">A history lesson with teeth</div>
+          <h2>A layout table lies to every tool that listens.</h2>
+          <ul class="scope-list">
+            <li><strong>The old trick:</strong> whole designs nailed into invisible grids</li>
+            <li><strong>The cost:</strong> screen readers narrate furniture as data</li>
+            <li><strong>The law:</strong> tables present data · CSS lays out pages</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/layout-lie.png" alt="A page's banner, navigation, and content sit crammed inside a giant table grid while a screen reader icon emits confused scan lines reading it row by row.">
+          <figcaption>Flexbox and media queries do this job without lying about the content.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three elements build the grid, and their names say what the content is. table wraps the grid, tr holds one horizontal run of cells, td holds one value.&#10;&#10;Now the detail that surprises: the markup never mentions columns. No column element exists. Columns emerge from position, every row's first cell stacking into the first column. Position is a promise, so every row must carry the same number of cells. Break it and the browser calmly draws a gap, but the checker is less calm. Hold that thought two slides.&#10;&#10;Time: 16-19 minutes.">
+      <div class="brand">CIS133 · The grid's elements</div>
+      <div class="content">
+        <div class="eyebrow">Names that say what content is</div>
+        <h2>Columns are never written. They emerge.</h2>
+        <pre class="code-card"><code><span class="comment">&lt;!-- One tr per subject, one td per fact. --&gt;</span>
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Algebra&lt;/td&gt; &lt;td&gt;Monday&lt;/td&gt; &lt;td&gt;10:00 to 1:00&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Biology&lt;/td&gt; &lt;td&gt;Tuesday&lt;/td&gt; &lt;td&gt;1:00 to 4:00&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+        <p class="board-note">Every first cell stacks into column one. Position is a promise: same cell count, every row.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The top row should not be data cells at all. Subject, Day, and Hours are not facts about any subject: they are the names of the columns. th marks a cell that names things, and the claim matters more than the browser's bold-and-centered default look.&#10;&#10;Then one more layer of honesty separates the namers from the named: thead groups the header row, tbody groups the data rows. Nothing visible changes, which should ring the Chapter 3 bell. Landmarks changed no pixels either. Section 10.4 pays this split the moment a style rule needs to know where the data starts.&#10;&#10;colspan, rowspan, and tfoot get one mention: they exist, and this course never needs them.&#10;&#10;Time: 19-21 minutes.">
+      <div class="brand">CIS133 · Namers and named</div>
+      <div class="content">
+        <div class="eyebrow">Two kinds of cell, two kinds of row</div>
+        <h2>Headers name. Data answers.</h2>
+        <div class="namer-rows">
+          <p><code>&lt;th&gt;</code><span>this cell names things · Subject, Day, Hours</span></p>
+          <p><code>&lt;td&gt;</code><span>this cell holds one value · Algebra, Monday</span></p>
+          <p><code>&lt;thead&gt;</code><span>groups the header row · the namers</span></p>
+          <p><code>&lt;tbody&gt;</code><span>groups the data rows · the named</span></p>
+        </div>
+        <p class="board-note">Nothing visible changes. The split is a claim, and a style rule collects on it soon.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="TIY 10.3's discovery, staged for the room. The practice file never wrote a tbody: Ctrl+F proves it. Open DevTools and the Elements panel shows one anyway, wrapped around every row. The browser builds the grouping you never wrote.&#10;&#10;Writing the split yourself keeps the file honest with the page the browser serves. And this quiet repair is about to matter for real: hold it until the stripe slide.&#10;&#10;Time: 21-23 minutes.">
+      <div class="brand">CIS133 · The silent repair</div>
+      <div class="content">
+        <div class="eyebrow">The file against the Elements panel</div>
+        <h2>The browser builds what you never wrote.</h2>
+        <div class="repair-pair">
+          <pre class="code-card broken"><code><span class="comment">&lt;!-- YOUR FILE: no grouping written --&gt;</span>
+&lt;table&gt;
+  &lt;tr&gt;...&lt;/tr&gt;
+  &lt;tr&gt;...&lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+          <pre class="code-card repaired"><code><span class="comment">&lt;!-- DEVTOOLS: what the browser serves --&gt;</span>
+&lt;table&gt;
+  <mark>&lt;tbody&gt;</mark>
+    &lt;tr&gt;...&lt;/tr&gt;
+    &lt;tr&gt;...&lt;/tr&gt;
+  <mark>&lt;/tbody&gt;</mark>
+&lt;/table&gt;</code></pre>
+        </div>
+        <p class="board-note">Write the structure yourself, and your file matches the page every tool reads.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The position promise, cashed. The browser stays calm: it draws the short row with a gap where the missing cell would sit and shifts nothing. The checker answers with a warning, not an error: a table row was 1 columns wide, less than the count established by the first row. A warning is not an error, but the bar has been zero messages since Chapter 2, and a ragged row keeps a page from it.&#10;&#10;Time: 23-25 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">The position promise</div>
+        <h2>A three-column table has a row holding two cells.</h2>
+        <div class="prompt">
+          <p><strong>Predict:</strong> what does the browser draw for that row, and what does the checker report: error, warning, or silence?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Browser:</strong> the short row renders with a gap, nothing shifts · <strong>Checker:</strong> a warning, not an error · and the zero-messages bar counts warnings too</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The chapter's centerpiece: the finished schedule, read outside in like Chapter 4 read its first rule and Chapter 8 read its first query. The caption is the table's own title, first child by law. thead holds the namers, and each th scope col governs the cells below it. In the body, each subject cell is promoted to th scope row, because Chemistry is not a fact about its row. It is the row's name, and it governs across.&#10;&#10;Every part of this grid is a claim to the tools. The next three slides collect the payoffs one at a time.&#10;&#10;Time: 25-28 minutes.">
+      <div class="brand">CIS133 · Table anatomy</div>
+      <div class="content">
+        <div class="eyebrow">Read outside in</div>
+        <h2>Every part of the grid is a claim.</h2>
+        <div class="table-anatomy" role="img" aria-label="The finished schedule markup labeled in four parts: the caption as the table's own title and first child, the thead th scope col headers governing down, the th scope row subject cell governing across, and the td cells holding one value each.">
+          <code>&lt;table&gt;<br>&nbsp;&nbsp;<mark>&lt;caption&gt;</mark>Fall drop-in tutoring schedule&lt;/caption&gt;<br>&nbsp;&nbsp;&lt;thead&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt; &lt;th <span class="feature">scope="col"</span>&gt;Subject&lt;/th&gt; &lt;th <span class="feature">scope="col"</span>&gt;Hours&lt;/th&gt; &lt;/tr&gt;<br>&nbsp;&nbsp;&lt;/thead&gt;<br>&nbsp;&nbsp;&lt;tbody&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt; &lt;th <span class="feature">scope="row"</span>&gt;Chemistry&lt;/th&gt; &lt;td&gt;2:00 to 5:00&lt;/td&gt; &lt;/tr&gt;<br>&nbsp;&nbsp;&lt;/tbody&gt;<br>&lt;/table&gt;</code>
+          <div class="callout own-title">its own title · always first child</div>
+          <div class="callout governs-down">names the column · governs down</div>
+          <div class="callout governs-across">names the row · governs across</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Why not a heading above the table? On screen the two can look alike, and to tools they are strangers. The caption belongs to the table: a screen reader announces it on entering the grid, lists it in its menu of the page's tables, and wherever the table travels, the title travels inside it. figcaption made the same promise for figures in Chapter 3.&#10;&#10;First child is law, not style advice. Slip the caption in after the header row and the checker answers with an error: element caption not allowed as child of table in this context.&#10;&#10;Time: 28-30 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The caption</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/caption-nameplate.png" alt="A table carried by its handle keeps its riveted nameplate attached while a separate floating heading card drifts away from a second table.">
+          <figcaption>A nearby heading promises nothing. The caption rides inside.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">A title that travels with its grid</div>
+          <h2>The caption belongs to the table. A heading only stands near it.</h2>
+          <ul class="scope-list">
+            <li><strong>Announced</strong> the moment a reader enters the grid</li>
+            <li><strong>Listed</strong> in the page's menu of tables</li>
+            <li><strong>First child</strong> by law · the checker errors anywhere else</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="With caption and scope in place, the announcement assembles itself. Devon lands on a cell and asks for its headers, and the reader walks the markup: the row header says Chemistry, the column header says Hours, the cell says 2:00 to 5:00. No guesswork, no counting cells aloud.&#10;&#10;None of this needed a new standard. Caption, headers, and scope are POUR's perceivable and robust principles carried into the grid, at the same Level AA bar every page has answered since Chapter 9.&#10;&#10;Time: 30-33 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · What Devon hears</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Assembled from markup, nothing else</div>
+          <h2>"Chemistry, Thursday, 2:00 to 5:00."</h2>
+          <ul class="scope-list">
+            <li><strong>Row header:</strong> Chemistry · <code>scope="row"</code></li>
+            <li><strong>Column header:</strong> Thursday's column · <code>scope="col"</code></li>
+            <li><strong>The cell:</strong> the value, spoken with its addresses</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/announcement-build.png" alt="A screen reader icon assembles a spoken announcement from a row header chip and a column header chip that meet at one highlighted cell.">
+          <figcaption>Chapter 9's habits, carried into the grid. Same standard, same bar.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Scope runs by position. The room names lead their rows, so they become th scope row, governing across. The weekdays head the columns, so they become th scope col, governing down. Everything else stays td: values, governed from both directions.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Assign the scopes</div>
+        <h2>The study-room grid: rooms lead rows, weekdays head columns.</h2>
+        <div class="prompt">
+          <p><strong>Name</strong> which cells become <code>&lt;th&gt;</code>, and assign each its scope value.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Weekdays:</strong> <code>&lt;th scope="col"&gt;</code>, governing down · <strong>Room names:</strong> <code>&lt;th scope="row"&gt;</code>, governing across · every other cell stays a <code>&lt;td&gt;</code></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="TIY 10.2 delivered the verdict: the browser draws no grid at all, and the naked tally shrink-wrapped to 199 pixels. Styling starts with a surprise: border th and td and every interior line draws doubled, because the browser keeps a 2-pixel gap between neighboring cells. border-collapse: collapse merges neighbors into single shared lines.&#10;&#10;Read the division of labor. The collapse rides on the table, because the table owns the gaps. Borders and padding ride on the cells. text-align left seats headers flush over their columns, and width 100% lets the table claim its container instead of shrink-wrapping.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS133 · Dressing the grid</div>
+      <div class="content">
+        <div class="eyebrow">Each rule on the element that owns the job</div>
+        <h2>The table owns the gaps. The cells own the borders.</h2>
+        <pre class="code-card"><code>table {
+  <mark>border-collapse: collapse;</mark>  <span class="comment">/* one line per boundary */</span>
+  width: 100%;                <span class="comment">/* claim the container */</span>
+}
+th, td {
+  border: 1px solid #333333;
+  padding: 8px 12px;          <span class="comment">/* values off their walls */</span>
+  text-align: left;           <span class="comment">/* headers over their columns */</span>
+}</code></pre>
+        <p class="board-note">Without the collapse, every interior line draws doubled: the browser keeps a 2px gap between cells.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Zebra striping is the standing aid for wide grids, and its selector is deliberately the last new selector of the course. Chapter 6's hover and focus matched by state. A structural pseudo-class matches by position: where an element sits among its siblings. nth-child with even and odd selects alternating rows.&#10;&#10;Scoping to tbody starts the count at the first data row, because the header row lives in thead, outside the count. Then the hover rule sits after the stripe rule on purpose: the two tie on specificity, so the later rule wins and the highlight shows on striped rows too. Chapter 4's tie-breaker, still working.&#10;&#10;One caution: a stripe is a background behind body text, so the pairing clears the same contrast bar as any text. The lab shops from the palette's passing list.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS133 · The last new selector</div>
+      <div class="content">
+        <div class="eyebrow">Matching by position, not state</div>
+        <h2>The stripe counts rows. The split decides which.</h2>
+        <pre class="code-card"><code><span class="comment">/* Structural pseudo-class: position among siblings. */</span>
+tbody tr:<mark>nth-child(even)</mark> {
+  background-color: #f2f2f2;
+}
+<span class="comment">/* After the stripe on purpose: ties go to the later rule. */</span>
+tbody tr:hover {
+  background-color: #e0e0e0;
+}</code></pre>
+        <p class="board-note">A stripe sits behind body text. Same contrast bar as everything else: measured, never eyeballed.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The trap, and the silent repair pays it. Most rooms predict data rows 2 and 4: they assume the header row stands outside the count. But this file never wrote thead. The browser wraps every row, header included, in one implicit tbody, so the header row is child one, and even lands on the file's second, fourth, and sixth rows: data rows 1, 3, and 5.&#10;&#10;Write the split and the count restarts at the first data row: the stripe moves to data rows 2 and 4. Same rule, same rows, different structure. Structure decides.&#10;&#10;Time: 41-43 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Count carefully</div>
+        <h2>Six rows: one header, five data. No thead, no tbody written.</h2>
+        <div class="prompt">
+          <p><strong>Predict:</strong> the file adds <code>tbody tr:nth-child(even)</code>. Which rows paint?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Data rows 1, 3, and 5.</strong> The browser's implicit tbody wraps every row, so the header row counts as child one · write <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code> yourself and the stripe moves to data rows 2 and 4</div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Every page since Chapter 8 obeys one law: the page never scrolls sideways. Tables strain it harder than anything else, and the mechanism deserves its name. A cell will not wrap below its longest word, a column must seat its widest cell, and the sum of those minimums is a floor the table defends. Enough columns carry a floor wider than a phone, and the columns never squeeze to fit.&#10;&#10;The honest repair at this level: one wrapper, one rule. The div is right for Chapter 3's reason, no semantic element means scrolling viewport. The wrapper pans, the page stands still. Judge it the Chapter 8 way: device mode, phone profile, slow walk.&#10;&#10;Time: 43-46 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The phone test</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/floor-phone.png" alt="A wide table pans sideways inside a framed wrapper on a phone screen while the page around the frame holds perfectly still.">
+          <figcaption>A table that pans inside a page that stands still is the pass.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Wide grid, narrow screen</div>
+          <h2>The wrapper scrolls so the page never has to.</h2>
+          <pre class="code-card"><code>&lt;div class="table-scroll"&gt;
+  &lt;table&gt; ... &lt;/table&gt;
+&lt;/div&gt;
+
+.table-scroll {
+  <mark>overflow-x: auto;</mark>
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 10A. The officers' six fall events ship as labeled fields, so students copy values instead of retyping prose. Build the page and the accessible grid, wire the events link into all four navs in the site plan's order, dress the grid from the palette's passing list, then survive the phone and re-run the Chapter 9 habit.&#10;&#10;The same pattern supports Independent Project Milestone 2: draft pages of their own site, structurally honest, validating to zero.&#10;&#10;Time: 46-49 minutes.">
+      <div class="brand">CIS133 · Skills Lab 10A</div>
+      <div class="content">
+        <div class="eyebrow">The events page ships</div>
+        <h2>The fall schedule, published at last.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Build</strong><p>The page, the accessible grid, the nav on all four pages.</p></article>
+          <article><span>2</span><strong>Dress</strong><p>Collapse, borders, and a stripe from the passing list.</p></article>
+          <article><span>3</span><strong>Survive</strong><p>The phone test: audit first, then the wrapper.</p></article>
+          <article><span>4</span><strong>Prove</strong><p>Seven checks, both validators, zero messages.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 4-5 hours · Submit skills-lab-10a-lastname.zip · Milestone 2 follows this pattern</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: the two-axes test applied cold, the grid's anatomy recited caption-first, the stripe rule with its tbody reasoning, and the phone repair with the law it protects. Tie every answer back to the events page.&#10;&#10;Time: 49-52 minutes.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four checkpoints</div>
+        <h2>Can you defend the whole grid?</h2>
+        <div class="objective-badges retrieval">
+          <article><span>1</span><h3>The test</h3><p>Two axes earn a table. One stays a list.</p></article>
+          <article><span>2</span><h3>The anatomy</h3><p>Caption first, namers grouped, scope both ways.</p></article>
+          <article><span>3</span><h3>The stripe</h3><p>nth-child counts position. The split sets the count.</p></article>
+          <article><span>4</span><h3>The floor</h3><p>The wrapper pans. The page stands still.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The six paragraphs became a grid where every fact carries two addresses, and the workshop date now takes one glance to find. The events page is live in the nav: the site plan's first promised addition, paid.&#10;&#10;Next: the join page. The officers want to collect the name and email of every interested student, and collecting input is the job of HTML forms. Chapter 11 builds the first element that listens back.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop · one promise paid</div>
+        <h2>Every fact has two addresses now.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> name the two pieces of table markup that exist for tools, not pixels, and what a screen reader does with each.</p>
+        </div>
+        <p class="next-step">Next: the join page. Forms are the first element that listens back.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

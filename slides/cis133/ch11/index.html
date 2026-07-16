@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 11 classroom presentation: HTML Forms.">
+  <meta name="theme-color" content="#7C3626">
+  <title>CIS133: HTML Forms</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237C3626'/%3E%3Crect x='10' y='18' width='44' height='30' fill='none' stroke='%23FFD573' stroke-width='4'/%3E%3Cpath d='M10 18l22 16 22-16' fill='none' stroke='%23FFD573' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: HTML Forms" data-course="cis133"
+  data-chapter="ch11" data-palette="canyon-sand">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the drive table. Interested students crowd it, an officer collects names on whatever paper is handy, and by the next meeting half the scraps are gone. The officers named this problem in their Chapter 7 brief: collect the name and email of every student who wants to hear from us.&#10;&#10;The events page shipped in Chapter 10. The join page is the site plan's second promised addition, and it needs something no page in this course has carried: an element that listens back.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 11 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>HTML Forms</h1>
+        <p class="lede">Half the sign-up scraps were gone by the next meeting. The join page ends that.</p>
+        <div class="counter-tag" aria-hidden="true">The element that listens back</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three build targets. Students will construct labeled controls for every shape of answer, trace where submitted data travels, and design the club's join page. The middle target is the chapter's surprise: Chapter 1's query string comes home, written by a form they can edit.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Construct the controls. Trace the trip. Design the page.</h2>
+        <div class="objective-badges">
+          <article>
+            <span>01</span>
+            <h3>Construct</h3>
+            <p>Inputs, choices, menus, and the label contract on every control.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Trace</h3>
+            <p>Name-value pairs, GET and the query string, POST, and the server's role.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Design</h3>
+            <p>The join page: accessible, styled, and collecting only what it needs.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Put the problem in pictures. The paper system loses half its answers, and the officers' third request asks the site to do the collecting: name and email, so an officer can invite students to the next meeting.&#10;&#10;Note what they wrote beside the request: an explicit and-nothing-else list, plus a one-sentence promise the page must display. That discipline returns at the end of the hour.&#10;&#10;Time: 5-7 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The third request</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">From the officers' brief</div>
+          <h2>Paper loses half its answers. The page will not.</h2>
+          <ul class="scope-list">
+            <li><strong>Collect:</strong> name and email, nothing else</li>
+            <li><strong>Purpose:</strong> invite students to the next meeting</li>
+            <li><strong>Promise:</strong> one sentence about the data, on the page</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/paper-scraps.png" alt="Torn sign-up scraps scatter away from a club table while a tidy form card holds its rows safely.">
+          <figcaption>The join page is the site plan's second promised addition.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Every element the course owns presents content: headings announce, images show, tables answer questions. A form is the first element that listens back. It hands the visitor the keyboard, collects what they type and pick, and sends the answers on a trip this chapter teaches students to read.&#10;&#10;The form element wraps a page's controls and owns their shared trip. The input element is the workhorse, an empty element like img, and its type attribute picks its personality.&#10;&#10;Time: 7-10 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Listening back</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/listens-back.png" alt="One page broadcasts outward toward a person while a second page's form draws arrows inward from the person's hand.">
+          <figcaption>Ten chapters presented. This element collects.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">A first for this course</div>
+          <h2>The form is the first element that listens back.</h2>
+          <ul class="scope-list">
+            <li><strong><code>&lt;form&gt;</code></strong> wraps the controls and owns their shared trip</li>
+            <li><strong><code>&lt;input&gt;</code></strong> is the workhorse · empty, like <code>&lt;img&gt;</code></li>
+            <li><strong><code>type</code></strong> picks each control's personality</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The chapter's centerpiece, and Chapter 9's promise paid by name. A bare text box renders with no announcement: a sighted visitor guesses from nearby words, and Devon's screen reader reports an unnamed text box and moves on.&#10;&#10;The label element holds the control's visible name, and its for attribute points at the control's id. Matching values bind them. The third attribute serves a different master: name is the tag the answer travels under when the form submits. Section 11.3 tells that story. Until then: every control gets a paired label and a name, and both jobs are covered.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS133 · The label contract</div>
+      <div class="content">
+        <div class="eyebrow">Read the partnership</div>
+        <h2>One contract binds the words to the box.</h2>
+        <div class="contract-anatomy" role="img" aria-label="The label contract labeled in three parts: the label's for attribute points at the input's id, the matching values bind the pair, and the separate name attribute is the tag the answer travels under when the form submits.">
+          <code>&lt;label <mark>for="student-name"</mark>&gt;Full name&lt;/label&gt;<br>&lt;input type="text" <mark>id="student-name"</mark><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="feature">name="student-name"</span>&gt;</code>
+          <div class="callout points-at">for points at the id</div>
+          <div class="callout must-match">matching values bind the pair</div>
+          <div class="callout travels-under">the tag the answer travels under</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The contract pays two audiences at once. Focus lands on the control and the screen reader speaks the label with it: Full name, edit text. No guessing from nearby words, because the words are attached.&#10;&#10;The second audience needs no screen reader. TIY 11.1's clicks prove it: a paired label is part of its control's click target, so a small circle grows a target the size of its words. Chapter 7 asked for generous touch targets, and the contract delivers them for free. Zero pixels changed, which rings the Chapter 3 bell: meaning first, looks later.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS133 · Two beneficiaries</div>
+      <div class="content">
+        <div class="eyebrow">One contract, two payoffs</div>
+        <h2>The words announce the box, and they operate it.</h2>
+        <div class="pair-rows">
+          <p><strong>Devon</strong><span>focus lands, and the reader speaks "Full name, edit text"</span></p>
+          <p><strong>Every finger</strong><span>the label joins the click target, so a small circle grows word-sized</span></p>
+        </div>
+        <p class="counter-note">Zero pixels changed. Meaning first, looks later: the Chapter 3 bell rings again.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort with the class. On screen everything looks right, because looks never depended on the pairing. The broken contract costs Devon the announcement: the reader reports an unnamed text box. And it costs every mouse and finger the click target, because the words no longer operate the box.&#10;&#10;The repair is one edit: make the values match exactly.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Grade the pairing</div>
+        <h2>The label says for="full-name". The input says id="name-field".</h2>
+        <div class="prompt">
+          <p><strong>Call it:</strong> the page looks perfect on screen. What broke, and who pays?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>The contract broke:</strong> the values never matched · <strong>Devon</strong> hears an unnamed text box, and <strong>every visitor</strong> loses the label as a click target</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The request form needs more shapes of answer, and choosing the right control is most of the work. Walk the family: text for one line. Email looks identical on screen, but the browser records a promise it will check later. Radios offer one choice among a few. Checkboxes give each option its own yes or no. A select folds one choice among many into a menu. A textarea takes paragraphs, and a button starts the trip.&#10;&#10;Four types get one mention and no more: password, number, date, and file exist, and the join page needs none of them.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS133 · The input family</div>
+      <div class="content">
+        <div class="eyebrow">Match the control to the answer's shape</div>
+        <h2>Choosing the control is most of the work.</h2>
+        <div class="family-rows">
+          <p><code>type="text"</code><span>one line of text</span></p>
+          <p><code>type="email"</code><span>same box, plus a promise the browser records</span></p>
+          <p><code>type="radio"</code><span>one choice among a few · picking releases the rest</span></p>
+          <p><code>type="checkbox"</code><span>any number of independent yes-or-no answers</span></p>
+          <p><code>&lt;select&gt;</code><span>one choice among many, folded into a menu</span></p>
+          <p><code>&lt;textarea&gt;</code><span>a paragraph or more · <code>&lt;button&gt;</code> starts the trip</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The part that surprises beginners: no wrapper element declares which circles work together. The group is the name. Radios sharing a name form one group, and each carries its own value, the answer it stands for.&#10;&#10;TIY 11.2 proves it by breaking it: edit one radio's name and both circles can be selected at once, same fieldset, same legend, same labels. The shared name declares what nothing else on the form can.&#10;&#10;Time: 20-22 minutes.">
+      <div class="brand">CIS133 · The radio group</div>
+      <div class="content">
+        <div class="eyebrow">No wrapper declares the group</div>
+        <h2>The group is the name.</h2>
+        <pre class="code-card"><code>&lt;input type="radio" id="type-drop-in"
+       <mark>name="session-type"</mark> value="drop-in"&gt;
+&lt;label for="type-drop-in"&gt;Drop-in&lt;/label&gt;
+
+&lt;input type="radio" id="type-appointment"
+       <mark>name="session-type"</mark> value="appointment"&gt;
+&lt;label for="type-appointment"&gt;Appointment&lt;/label&gt;</code></pre>
+        <p class="counter-note">Rename one and the group splits: both circles select, and picking releases nothing.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A group of circles creates a naming problem one label cannot solve. Each option's label names that option: Drop-in, Appointment. Nothing yet names the question the whole group answers.&#10;&#10;Fieldset wraps the group and draws its boundary, and legend, written first inside it, names the group's question. Read the pair as the group's own label contract: a screen reader announces the legend alongside each option, so Devon hears Session type, Drop-in instead of a bare Drop-in. One habit rides along: wrap each choice in its own paragraph and the choices stack one per line.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS133 · Naming the question</div>
+      <div class="content">
+        <div class="eyebrow">The group's own label contract</div>
+        <h2>Labels name options. The legend names the question.</h2>
+        <pre class="code-card"><code>&lt;fieldset&gt;
+  <mark>&lt;legend&gt;Which days can you meet?&lt;/legend&gt;</mark>
+  &lt;p&gt;
+    &lt;input type="checkbox" id="day-monday"
+           name="meeting-day" value="monday"&gt;
+    &lt;label for="day-monday"&gt;Monday&lt;/label&gt;
+  &lt;/p&gt;
+&lt;/fieldset&gt;</code></pre>
+        <p class="counter-note">Devon hears "Which days can you meet? Monday", never a bare "Monday".</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort by shape. One membership level among three: radios, because picking one releases the rest. Any of six classes: checkboxes, each an independent yes or no. One campus among forty: a select, because forty circles would eat the page. The tell is always the same two questions: how many may they pick, and how many options are on offer.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Pick the control</div>
+        <h2>A fitness signup asks three shapes of question.</h2>
+        <ol class="request-list">
+          <li>One membership level among three</li>
+          <li>Any of six group classes</li>
+          <li>One home campus from a list of forty</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>1:</strong> radios, one pick releases the rest · <strong>2:</strong> checkboxes, independent yes-or-no · <strong>3:</strong> a select, forty circles would eat the page</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Press the button and face the question every form raises: where does the data go? The browser walks the controls and bundles each one's name with its current value. One control, one name-value pair. A control without a name contributes nothing and stays home, however carefully the visitor filled it in.&#10;&#10;The default method is GET, and it ships the pairs in plain sight, appended to the page's own address. Chapter 1's query string, the one Lab 1A dissected in other people's URLs, comes home written by a form students can edit.&#10;&#10;Time: 26-29 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The trip</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Press the button, read the address</div>
+          <h2>Every answer travels as a name-value pair.</h2>
+          <ul class="scope-list">
+            <li><strong>The name</strong> comes from your markup</li>
+            <li><strong>The value</strong> comes from the visitor</li>
+            <li><strong>No name?</strong> The answer stays home</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/pair-trip.png" alt="Matched pairs of luggage tags ride a dashed route from a form card up into a long address-bar capsule.">
+          <figcaption>GET ships the pairs in plain sight: Chapter 1's query string comes home.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The trap. Most rooms predict two pairs, name and email, reasoning that untouched controls stay home. The rule runs the other way. Named text controls travel even when empty, so notes= makes the trip blank. A select always has a selected option, its first by default, so subject=algebra travels as if the visitor chose it. The exception is choice controls: an untouched radio or checkbox group sends nothing at all.&#10;&#10;The false algebra answer sets up the repair on the next slide.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict the shipment</div>
+        <h2>A visitor types name and email, touches nothing else, and submits.</h2>
+        <div class="prompt">
+          <p><strong>The form also holds:</strong> a subject menu (Algebra listed first), a checkbox group, and a notes box. Which pairs travel?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Four pairs travel:</strong> the name, the email, <code>notes=</code> empty, and <code>subject=algebra</code>, because a select always has a selected option · only the untouched checkbox group stays home</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read one filled-out trip exactly as the browser wrote it. The question mark opens the query string, each pair reads name equals value, ampersands join them. Browsers encode for travel: the space rides as a plus, the at sign as percent-40, decoded on arrival.&#10;&#10;And there is the untouched menu, submitting algebra as if someone picked it. The center can defend that default. An optional menu usually cannot, and the repair is a neutral first option with an empty value, so a skipped menu sends an empty answer instead of a false one. The join page's optional menu wants exactly this.&#10;&#10;Time: 32-34 minutes.">
+      <div class="brand">CIS133 · Reading the trip</div>
+      <div class="content">
+        <div class="eyebrow">One submission, verbatim</div>
+        <h2>The address bar shows you everything.</h2>
+        <pre class="code-card"><code>?student-name=Jordan<mark>+</mark>Ortiz&amp;student-email=jordan<mark>%40</mark>example.org
+&amp;<mark>subject=algebra</mark>&amp;session-type=drop-in&amp;notes=</code></pre>
+        <pre class="code-card repaired"><code><span class="comment">&lt;!-- The optional menu's repair: skipped sends empty, not false. --&gt;</span>
+&lt;option value=""&gt;Choose one&lt;/option&gt;</code></pre>
+        <p class="counter-note">Encoded for travel: the space rides as + and the @ as %40. Decoded on arrival.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="GET has a sibling. POST sends the same pairs inside the request itself, out of the address bar entirely. The split is a judgment call students now own: GET fits requests safe to repeat, bookmark, and share. POST fits private or state-changing trips: a signup, a password, an order.&#10;&#10;Chapter 1's security rule returns with new weight: whichever method carries the pairs, never collect anything over plain http. A query string is only as private as the address bar it sits in, and HTTPS protects the whole trip either way.&#10;&#10;Time: 34-36 minutes.">
+      <div class="brand">CIS133 · GET and POST</div>
+      <div class="content">
+        <div class="eyebrow">A judgment call you now own</div>
+        <h2>Where the pairs ride decides which method fits.</h2>
+        <div class="method-rows">
+          <p><strong>GET</strong><span>pairs ride the URL · safe to repeat, bookmark, share · a search, a filter, a lookup</span></p>
+          <p><strong>POST</strong><span>pairs ride inside the request · private or state-changing · a signup, a password, an order</span></p>
+        </div>
+        <p class="counter-note">Either way, Chapter 1's law holds: never collect anything over plain http://.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The honest heart of the section. A form is a mailbox, and this course ships no mail carrier. Something on a server, a program with storage behind it, must receive the pairs and act on them. The form's action attribute names that receiving address, and every form in this chapter omits it, so the pairs travel to the page's own URL where students can read them and nothing more happens.&#10;&#10;The join page will admit this plainly, right on the page, in the officers' own words. Chapter 12 tells the server's half.&#10;&#10;Time: 36-38 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The missing carrier</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/no-carrier.png" alt="A full mailbox waits beside a form card while a dashed route leads toward a server building drawn only in faint outline.">
+          <figcaption>The pairs are ready to travel. Nothing is ready to receive them.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">A mailbox with no mail carrier</div>
+          <h2>This course ships the client's half. On purpose.</h2>
+          <ul class="scope-list">
+            <li><strong><code>action</code></strong> names the receiver · omitted for now</li>
+            <li><strong>The pairs</strong> land on the page's own URL, readable</li>
+            <li><strong>Chapter 12</strong> tells the server's half of the story</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Three attributes make the form kinder before any styling. required declares a field may not travel empty. autocomplete invites the browser to offer what it already knows, and Chapter 9's one-handed visitor feels that one most. Pair required with the email type's promise and the browser holds two claims it checks the instant the button is pressed.&#10;&#10;TIY 11.4 stages the refusal: empty name, no trip. Malformed email, no trip. The browser checked the markup's claims before anything left the machine, no CSS, no server. And it can confirm an email's shape but never that the visitor owns it: real sites re-check everything on the server. Help, never the gate.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS133 · The browser says no</div>
+      <div class="content">
+        <div class="eyebrow">Claims, checked before the trip</div>
+        <h2>Two refusals, and the trip never started.</h2>
+        <pre class="code-card"><code>&lt;label for="student-email"&gt;Email <mark>(required)</mark>&lt;/label&gt;
+&lt;input type="email" id="student-email"
+       name="student-email" <mark>required</mark> autocomplete="email"&gt;</code></pre>
+        <p class="counter-note">The browser checks the claim's shape. It can never check ownership. That job waits for a server.</p>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="The placeholder law, and the behavior behind it. A placeholder writes a gray hint inside a control. Type one word and the hint is gone. Empty the box and it returns. It exists only while the box is empty, and it speaks only to visitors who can see it.&#10;&#10;The label survives every state because it never shared the box: its own element, present while the box is empty, full, or focused. Anything a visitor must know belongs in the label. Same discipline for required: mark it in label text, never in color alone. A red label is invisible to Devon's ears and to anyone reading through glare.&#10;&#10;Time: 41-43 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The vanishing hint</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">A hint, never a label</div>
+          <h2>The label survives every state the placeholder cannot.</h2>
+          <ul class="scope-list">
+            <li><strong>Placeholder:</strong> lives inside the box, gone at the first keystroke</li>
+            <li><strong>Label:</strong> its own element, standing through every state</li>
+            <li><strong>Required:</strong> marked in label text, never in color alone</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/vanishing-hint.png" alt="A faint hint evaporates from inside one input box as typing arrives, while a solid label above a second box stays put.">
+          <figcaption>Anything a visitor must know belongs in the label.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The styling takes no new machinery: Chapter 10 declared nth-child the last new selector, and the promise holds. Labels render inline, so one declaration stacks each question on its own line. Controls fill the readable column, and the type is restated on purpose, because form controls ship with a small font of their own and ignore the body's rules until spoken to directly.&#10;&#10;Then the law that will not bend: the focus ring. Chapter 6 wrote it for links and it covers controls unchanged. Never remove the signal without a replacement at least as visible, and measure the replacement: the club's teal ring computes 3.04 to 1 against the sand background, past WCAG's 3 to 1 for non-text marks.&#10;&#10;Time: 43-46 minutes.">
+      <div class="brand">CIS133 · Dressing the form</div>
+      <div class="content">
+        <div class="eyebrow">Owned selectors only</div>
+        <h2>One column, restated type, and a ring you can measure.</h2>
+        <pre class="code-card"><code>label { display: block; margin: 16px 0 4px; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  <mark>font-size: 1rem;</mark>   <span class="comment">/* controls ignore the body until told */</span>
+}
+
+input:focus, select:focus, textarea:focus {
+  <mark>outline: 2px solid #268080;</mark>  <span class="comment">/* 3.04:1, measured */</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Amend, never delete. The brand can improve the ring: restyle it in the palette, thicker, offset, any visible replacement that clears 3 to 1 against the page. The one move off the table is outline none with nothing behind it, because the ring is the signal keyboard visitors steer by. The amendment protects the visitor running the whole session from the keyboard.&#10;&#10;Time: 46-48 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Amend the proposal</div>
+        <h2>"input:focus { outline: none; } · the default ring clashes with the brand."</h2>
+        <div class="prompt">
+          <p><strong>Fix it:</strong> amend the rule so the brand improves and the law holds. Who does your amendment protect?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Replace, never remove:</strong> <code>outline: 2px solid #268080;</code> restyles the signal in the palette · it protects the keyboard visitor, who steers by that ring</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The chapter's quiet rule governs what should travel at all. Chapter 1 made the promise: every field is a promise to handle someone's information responsibly, so collect only what the page needs and say what you will do with it. The officers honored it from their side: name, email, an explicit and-nothing-else list, and the one-sentence promise the page must display.&#10;&#10;The lab hands students a chance to break the rule, a field a lesser form would add, and Part 3 asks them to defend refusing it.&#10;&#10;Time: 48-50 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The collection rule</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Chapter 1's promise, paid</div>
+          <h2>Every field is a promise. Collect only what the page needs.</h2>
+          <ul class="scope-list">
+            <li><strong>The officers:</strong> name, email, "and nothing else"</li>
+            <li><strong>The page:</strong> displays the one-sentence data promise</li>
+            <li><strong>The lab:</strong> asks you to refuse a field, out loud</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/only-what-you-need.png" alt="A balance scale weighs two small essential field cards against a tall pile of extra data cards that an open hand pushes away.">
+          <figcaption>A form earns trust by what it refuses to ask.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 11A. The officers' field list ships in the pack: the two required fields, the optional menu that wants the neutral option, the interest checkboxes, the question box, and the promise sentence, word for word. Build the controls on the contract, add the helping attributes, dress everything from the passing list, then run the demonstration: submit, read the address bar, and log which pairs traveled.&#10;&#10;Part 3 closes with the collection defense: name the field a lesser form would add, and refuse it in writing.&#10;&#10;Time: 50-52 minutes.">
+      <div class="brand">CIS133 · Skills Lab 11A</div>
+      <div class="content">
+        <div class="eyebrow">The join page ships</div>
+        <h2>Signups the club can finally keep.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Build</strong><p>Every control on the contract, the promise on the page.</p></article>
+          <article><span>2</span><strong>Help</strong><p>required, autocomplete, and the placeholder law held.</p></article>
+          <article><span>3</span><strong>Dress</strong><p>Column, ring, and button from the passing list.</p></article>
+          <article><span>4</span><strong>Defend</strong><p>Read the trip, audit the page, refuse a field.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 4-5 hours · Submit skills-lab-11a-lastname.zip · Closes the plan's second promise</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: the contract with both attributes and both beneficiaries, the control for each shape of answer, the trip from button press to query string, and the collection rule with the officers' own list as evidence.&#10;&#10;Time: 52-54 minutes.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four checkpoints</div>
+        <h2>Can you defend the whole form?</h2>
+        <div class="objective-badges retrieval">
+          <article><span>1</span><h3>The contract</h3><p>for meets id, and two audiences win.</p></article>
+          <article><span>2</span><h3>The shapes</h3><p>Radios, boxes, menus: the data decides.</p></article>
+          <article><span>3</span><h3>The trip</h3><p>Pairs, encoding, and who stays home.</p></article>
+          <article><span>4</span><h3>The refusal</h3><p>Collect only what the page needs.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The scraps are retired: the join page collects the two answers the officers asked for, announces every control, and promises visitors exactly what happens to their data. The pairs still land in the address bar, and the page says so honestly.&#10;&#10;One chapter remains, and it keeps three promises at once: the server's half of this form's story, the site plan's missing front door, and the move to a live https address. The book's last chapter ships the site.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop · one promise left</div>
+        <h2>The mailbox is built. Chapter 12 hires the carrier.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> a control has a label but no name attribute. What does Devon hear, and what does the server receive?</p>
+        </div>
+        <p class="next-step">Next: scripting, hosting, the pre-flight, and the site ships.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

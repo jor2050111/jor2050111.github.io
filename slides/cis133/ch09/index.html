@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 9 classroom presentation: Web Accessibility.">
+  <meta name="theme-color" content="#03488F">
+  <title>CIS133: Web Accessibility</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2303488F'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23FFC845' stroke-width='5'/%3E%3Cpath d='M22 34l7 7 14-16' fill='none' stroke='%23FFC845' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: Web Accessibility" data-course="cis133"
+  data-chapter="ch09" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Open with the flyer story. A clubmate built a Drive Day flyer between classes: bright teal and sand, every date in place. Then Devon, whose email opened Chapter 3, tried to read it with a screen reader and gave up halfway down.&#10;&#10;Chapter 8 ended on the question this chapter answers: the site serves every screen size. Does it serve every visitor? The surprise: students have been building the answer since Chapter 1. This chapter names the standard behind their habits.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 9 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Web Accessibility</h1>
+        <p class="lede">The flyer was loud, cheerful, and closed to one of the club's own members.</p>
+        <div class="audit-tag" aria-hidden="true">WCAG · Level AA</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three build targets. Students will implement accessible structure, apply the perceivability rules to color, type, and images, and evaluate whole pages with an evaluator plus human checks. Nothing here asks them to start. It asks them to finish: see the habits as one framework and measure pages against it.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS133 · Build targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this module, you will be able to...</div>
+        <h2>Structure, perceive, and audit for every visitor.</h2>
+        <div class="objective-badges">
+          <article>
+            <span>01</span>
+            <h3>Structure</h3>
+            <p>Ordered headings, landmarks, honest links, visible focus.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Perceive</h3>
+            <p>AA contrast, color-independent meaning, rem type, honest alt.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Audit</h3>
+            <p>Evaluate against Level AA with tools and human checks.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Put faces on the words, then widen the lens. Devon reads by screen reader. A student with an arm in a cast runs whole sessions from the keyboard. A visitor doubles the zoom and leaves it doubled. Then the situations: phone glare in an Arizona parking lot, a parent browsing one-handed, a dead mouse battery.&#10;&#10;Permanent, temporary, situational: the same barriers stop all three, and the same repairs serve all three at once. That arithmetic is why accessibility work is never niche work.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Who it serves</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Permanent · temporary · situational</div>
+          <h2>One barrier stops three visitors. One repair frees them all.</h2>
+          <ul class="scope-list">
+            <li><strong>Permanent:</strong> Devon, reading by screen reader</li>
+            <li><strong>Temporary:</strong> typing one-handed in a cast</li>
+            <li><strong>Situational:</strong> phone glare in direct sun</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/three-limits.png" alt="Three different visitors meet the same barrier on one path, and a single repair opens the way for all three at once.">
+          <figcaption>The same repairs serve all three at once.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Name the standard. WCAG, the Web Content Accessibility Guidelines, written by the W3C, the same standards body behind both validators. Everything it asks sits under four principles remembered as POUR. Walk each principle with its course-owned example: alt text, protected focus outlines, the label law, and valid semantic markup.&#10;&#10;Read the list again and notice whose examples those are. This course has taught accessibility since Chapter 1 and withheld only the name.&#10;&#10;Time: 8-11 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · WCAG and POUR</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/pour-doors.png" alt="Four labeled doorways stand in a row, one per POUR principle, each opening onto the same welcoming page beyond.">
+          <figcaption>Four principles organize everything WCAG asks.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">The standard, named at last</div>
+          <h2>POUR: four principles you already serve.</h2>
+          <div class="pour-list">
+            <p><strong>P</strong><span>Perceivable · content reaches every sense</span></p>
+            <p><strong>O</strong><span>Operable · every control, every input</span></p>
+            <p><strong>U</strong><span>Understandable · labels predict, pages behave</span></p>
+            <p><strong>R</strong><span>Robust · markup any tool can parse</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort with the class before revealing. Alt text makes content reach a sense besides sight: Perceivable. The focus style keeps the keyboard a first-class input: Operable. Validating produces markup any tool can parse: Robust. Ask which principle got no example, and what course habit serves it: Understandable, the label law from Chapter 7.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Sort under POUR</div>
+        <h2>Three old habits. Which principle owns each?</h2>
+        <ol class="request-list">
+          <li>Alt text on the gallery figures</li>
+          <li>The nav links' <code>:focus</code> style</li>
+          <li>Validating every page before submission</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>1:</strong> Perceivable · <strong>2:</strong> Operable · <strong>3:</strong> Robust</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Standards need a pass bar, and WCAG defines three. Level A is the floor: rules whose absence locks visitors out entirely. Level AA adds contrast minimums and resizable text, and it is the working target across the industry and this course. Level AAA tightens every dial, and even accessibility organizations rarely promise it.&#10;&#10;One AA expectation is testable right now: pages must survive zoom. Raising zoom makes CSS pixels larger, so the page lays out as if the window were narrower. Chapter 8's responsive work was quietly preparing for zoom too.&#10;&#10;Time: 13-16 minutes.">
+      <div class="brand">CIS133 · Conformance levels</div>
+      <div class="content">
+        <div class="eyebrow">The pass bar</div>
+        <h2>This course grades against Level AA.</h2>
+        <div class="level-steps">
+          <div><strong>A</strong><span>The floor</span><p>Absence locks visitors out entirely</p></div>
+          <div class="target"><strong>AA</strong><span>The working target</span><p>Adds contrast minimums and resizable text</p></div>
+          <div><strong>AAA</strong><span>Every dial tightened</span><p>Rarely promised, even by the devoted</p></div>
+        </div>
+        <p class="audit-note">AA test you can run today: the page must survive 200% zoom. Chapter 8 already prepared you.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Devon does not read pages the way sighted visitors watch them render. A screen reader lists a page's headings, its landmarks, and its links as three separate menus, and its user jumps instead of scrolling. Every menu is built from the markup and from nothing else.&#10;&#10;This section walks the three menus, then the keyboard that drives them.&#10;&#10;Time: 16-18 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Three menus</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">How Devon reads</div>
+          <h2>A screen reader turns your markup into menus.</h2>
+          <ul class="scope-list">
+            <li><strong>Headings:</strong> the outline, skimmed in seconds</li>
+            <li><strong>Landmarks:</strong> the doors between regions</li>
+            <li><strong>Links:</strong> one list, read away from its sentences</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="assets/screenreader-menus.png" alt="One webpage fans out into three separate menus: a heading outline, a set of landmark regions, and a list of links.">
+          <figcaption>Three menus, built from your markup and nothing else.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The rule enforced since Chapter 2, finally explained. Screen reader users skim by heading list, and the levels are the outline's indentation. A page that steps from h2 to h4 promises a level that does not exist. It reads like a book with pages torn out.&#10;&#10;If the h4 was chosen for its smaller size, Chapter 4 handed over the honest tool: keep the level the outline needs, set the size in the stylesheet.&#10;&#10;Time: 18-21 minutes.">
+      <div class="brand">CIS133 · Heading order</div>
+      <div class="content">
+        <div class="eyebrow">The outline Devon hears</div>
+        <h2>Skipped levels tear pages out of the book.</h2>
+        <div class="repair-pair">
+          <pre class="code-card broken"><code><span class="comment">&lt;!-- BROKEN: the outline skips a level --&gt;</span>
+&lt;h1&gt;Campus Tutoring Center&lt;/h1&gt;
+&lt;h2&gt;Math Help&lt;/h2&gt;
+<mark>&lt;h4&gt;Drop-in Hours&lt;/h4&gt;</mark></code></pre>
+          <pre class="code-card repaired"><code><span class="comment">&lt;!-- REPAIRED: each step down is one level --&gt;</span>
+&lt;h1&gt;Campus Tutoring Center&lt;/h1&gt;
+&lt;h2&gt;Math Help&lt;/h2&gt;
+&lt;h3&gt;Drop-in Hours&lt;/h3&gt;</code></pre>
+        </div>
+        <p class="audit-note">Want the smaller size? Keep the level. Set the size in the stylesheet.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Chapter 3 built the landmark skeleton and admitted the payoff was invisible. Name it precisely now. Header is announced as the banner. Nav is announced with its link count before reading one. A single keystroke jumps to main, skipping the repeated banner and menu, which was the whole ask in Devon's Chapter 3 email. Footer is announced as content info.&#10;&#10;The club's pages have carried all four since Lab 3A, which is why the lab's checks here are confirmation walks, not repairs.&#10;&#10;Time: 21-23 minutes.">
+      <div class="brand">CIS133 · Landmarks</div>
+      <div class="content">
+        <div class="eyebrow">The doors, named</div>
+        <h2>Every landmark pays a precise payoff.</h2>
+        <div class="door-rows">
+          <p><code>&lt;header&gt;</code><span>announced as the page's banner</span></p>
+          <p><code>&lt;nav&gt;</code><span>announces its link count before reading one</span></p>
+          <p><code>&lt;main&gt;</code><span>one keystroke skips the repeated regions</span></p>
+          <p><code>&lt;footer&gt;</code><span>announced as content info, where fine print lives</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The third menu is the link list, read away from its sentences. Pulled out of its sentence, Click Here names nothing. This is not a new law: Chapter 3 demanded descriptive link text, Chapter 7's label law asked every navigation label to predict its page. WCAG asks the same of every link, and now students know the menu it protects.&#10;&#10;Time: 23-25 minutes.">
+      <div class="brand">CIS133 · The link list</div>
+      <div class="content">
+        <div class="eyebrow">Out of the sentence</div>
+        <h2>Every link must survive alone.</h2>
+        <div class="repair-pair">
+          <pre class="code-card broken"><code><span class="comment">&lt;!-- Heard in the links menu: --&gt;</span>
+<mark>Click here</mark>
+<mark>here</mark>
+<mark>this page</mark></code></pre>
+          <pre class="code-card repaired"><code><span class="comment">&lt;!-- Each names its destination: --&gt;</span>
+See the current tutoring schedule
+Browse the subjects we cover
+Read our exam-week study tips</code></pre>
+        </div>
+        <p class="audit-note">Chapter 3's law, Chapter 7's label test, one WCAG rule. Same demand, every link.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Keyboard navigation: Tab forward, Shift plus Tab back. Three things must be true: every interactive element is reachable, the order makes sense, and the current stop is always visible. That last demand is Chapter 6's law grown up, and it has a WCAG name: success criterion 2.4.7, Focus Visible, the only criterion number this course asks students to recognize.&#10;&#10;The walk is the cheapest test they own: put the mouse away and the page tells on itself in under a minute.&#10;&#10;Time: 25-28 minutes.">
+      <div class="brand">CIS133 · The keyboard walk</div>
+      <div class="content">
+        <div class="eyebrow">Criterion 2.4.7 · Focus Visible</div>
+        <h2>Put the mouse away. The page tells on itself.</h2>
+        <div class="repair-pair">
+          <pre class="code-card broken"><code><span class="comment">/* BROKEN: keyboard visitors go blind */</span>
+.study-links a {
+  <mark>outline: none;</mark>
+}</code></pre>
+          <pre class="code-card repaired"><code><span class="comment">/* REPAIRED: replace the signal, never delete it */</span>
+.study-links a:focus {
+  outline: 3px solid #268080;
+}</code></pre>
+        </div>
+        <p class="audit-note">Reachable · sensible order · visible at every stop. Under one minute, no installs.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Give pairs one minute. The heading list shows a hole at the fourth heading: h5 promises h3 and h4 levels that do not exist, so the outline reads like a book missing pages. The repair keeps the outline honest: the fourth heading becomes h3, one step down from h2. If the h5 was chosen for size, the stylesheet owns that decision.&#10;&#10;Time: 28-30 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Read the outline</div>
+        <h2>A page's headings run h1, h2, h2, h5.</h2>
+        <div class="prompt">
+          <p><strong>Describe:</strong> what Devon's heading list shows at the fourth heading, and write the repair.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>The list shows a hole:</strong> h5 promises levels that do not exist · <strong>Repair:</strong> make it <code>&lt;h3&gt;</code>, and set any size in the stylesheet</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The math the palette file has promised since Chapter 4. A contrast ratio compares how much light two colors give off. The scale runs 1.00, text on its own exact color, to 21.00, pure black on pure white. Level AA: 4.5 to 1 for body text, 3 to 1 for large text at 24px and up, or bold 18.7px and up.&#10;&#10;Put numbers on the club's own history: the Chapter 6 footer fix measures 4.85, past the bar. The wart it repaired, default link blue on deep teal, measures 1.26. Invisible ink, and every visitor squinting through glare met it head-on.&#10;&#10;Time: 30-33 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · Contrast ratio</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/contrast-meter.png" alt="A contrast gauge runs from 1 to 21 with the AA bars marked. One color pairing lands past the bar and one lands near the invisible floor.">
+          <figcaption>The scale runs from invisible to black-on-white.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">The palette's promise, paid</div>
+          <h2>Readable is a number, not an opinion.</h2>
+          <div class="ratio-rows">
+            <p class="pass"><strong>4.85 : 1</strong><span>the footer fix · past the AA bar</span></p>
+            <p class="bar"><strong>4.5 : 1</strong><span>AA body text · 3 : 1 for large type</span></p>
+            <p class="fail"><strong>1.26 : 1</strong><span>the old link wart · invisible ink</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="The eyeballing trap, staged. Gray #777777 on white measures 4.48 to 1, and nearly everyone calls it a pass by eye. It fails body text by two hundredths. It would pass as large text, where the bar is 3 to 1. That near-miss is the argument: eyes adapt, screens differ, and the WebAIM checker returns the number in seconds. Never eyeball a pairing.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Trust eyes or math?</div>
+        <h2>Gray #777777 on white measures 4.48 to 1.</h2>
+        <div class="prompt">
+          <p><strong>Call it:</strong> does the pairing pass for body text? For large text?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Body text:</strong> fails, 4.48 sits under the 4.5 bar · <strong>Large text:</strong> passes the 3 to 1 bar · Near-misses fool nearly everyone. Measure, never eyeball.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Contrast has a sibling rule: color may decorate a signal, never carry it alone. A visitor who cannot tell red from green loses it, a screen reader announces no color at all, and glare erases it for everyone. The repair removes nothing: the red stays for everyone it serves, and the label serves everyone else.&#10;&#10;Same rule guards the Chapter 5 habit: in-sentence links keep their underline, because color alone would be the only signal left.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS133 · Color and signal</div>
+      <div class="content">
+        <div class="eyebrow">The sibling rule</div>
+        <h2>Color decorates a signal. It never carries one alone.</h2>
+        <div class="repair-pair">
+          <pre class="code-card broken"><code><span class="comment">&lt;!-- BROKEN: the red is the only signal --&gt;</span>
+&lt;p&gt;Sessions shown in red are full.&lt;/p&gt;
+&lt;li class="session-full"&gt;Algebra, Tuesday 3:00&lt;/li&gt;</code></pre>
+          <pre class="code-card repaired"><code><span class="comment">&lt;!-- REPAIRED: the label carries it, the red decorates --&gt;</span>
+&lt;li class="session-full"&gt;Algebra, Tuesday 3:00 <mark>(full)</mark>&lt;/li&gt;</code></pre>
+        </div>
+        <p class="audit-note">The repair removes nothing. In-sentence links keep their underline for the same reason.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Two units, two promises. A pixel value is a fixed promise: 16px renders the same whatever the visitor's settings say. A rem is proportional: 1rem means the root text size, which comes from the visitor's own browser default. Many low-vision visitors raise that default once and leave it raised. Zoom is a per-page chore. The default follows the visitor everywhere.&#10;&#10;Converting is one division: the px value over 16. The unitless line-height from Chapter 5 scales for free.&#10;&#10;Time: 38-41 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · px and rem</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">Two promises</div>
+          <h2>px freezes the type. rem respects the visitor.</h2>
+          <pre class="code-card"><code>body {
+  font-size: 1rem;    <span class="comment">/* was 16px: 16 / 16 */</span>
+}
+.center-heading {
+  font-size: 1.5rem;  <span class="comment">/* was 24px: 24 / 16 */</span>
+}</code></pre>
+        </div>
+        <figure>
+          <img src="assets/rem-dial.png" alt="A browser default-size dial turns up. Text sized in rem grows with the dial while text sized in pixels stays frozen.">
+          <figcaption>Raise the default once, and rem text follows everywhere.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="One division. 32 over 16 is 2, so the heading ships as 2rem. The converted value respects the visitor's own browser default text size: 16 until they raise it, and their choice afterward. Ask who benefits: the low-vision visitor who raised the default once and expects every site to listen.&#10;&#10;Time: 41-43 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One division</div>
+        <h2>Convert a 32px heading to rem.</h2>
+        <div class="prompt">
+          <p><strong>Show</strong> the math, and name whose setting the converted value respects.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>32 / 16 = 2rem</strong> · It respects the visitor's own browser default text size, raised once and honored everywhere</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Chapter 3 taught alt text by the image's job and named three jobs. Audit work meets the fourth. Functional images change the question: the visitor deciding whether to press a linked logo does not need the picture described. They need to know where it goes.&#10;&#10;One recall keeps the table honest: the job belongs to the page, not the file. The same illustration can be informative here and decorative there. And one honesty rule covers all four: software detects a missing alt in an instant and can never grade a dishonest one. That thought is the plot of the audit section.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS133 · Four alt jobs</div>
+      <div class="content">
+        <div class="eyebrow">The decision table</div>
+        <h2>Alt text follows the image's job on this page.</h2>
+        <div class="alt-jobs">
+          <article><h3>Informative</h3><p>Describe what matters, about a sentence</p></article>
+          <article><h3>Decorative</h3><p><code>alt=""</code>, empty on purpose, tools skip it</p></article>
+          <article><h3>Functional</h3><p>Name the destination, never the picture</p></article>
+          <article><h3>Complex</h3><p>Deliver the finding, caption beside it</p></article>
+        </div>
+        <p class="audit-note">The job belongs to the page, not the file. No alt decision survives a copy and paste unexamined.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="The full checking stack. Four automated layers: the HTML validator, owned since Chapter 2, already catches a missing alt attribute and a skipped heading level. The CSS validator checks syntax and nothing about readability. The contrast checker grades one pairing at a time. The evaluator, WAVE, scans a whole rendered page for every barrier software can detect.&#10;&#10;Then the hard limit: no software judges whether alt text tells the truth, whether focus order makes sense, or whether the page survives zoom. Tools catch absence. Humans judge honesty. Seven human checks ship in the pack as a checklist.&#10;&#10;Time: 45-48 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS133 · The audit stack</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/audit-stack.png" alt="Four automated tool layers stack beneath a human checklist layer at the top, each layer catching what the ones below it cannot.">
+          <figcaption>Four tools, then seven checks no tool can run.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Tools, then humans</div>
+          <h2>Tools catch absence. Humans judge honesty.</h2>
+          <ul class="scope-list">
+            <li><strong>HTML validator:</strong> missing alt, skipped levels</li>
+            <li><strong>Contrast checker:</strong> one pairing, graded</li>
+            <li><strong>WAVE:</strong> a whole rendered page, flagged</li>
+            <li><strong>Seven human checks:</strong> truth, order, zoom</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The auditor's discipline. Audit first, repair second: log every finding before fixing the first one, because repairs change the page under your feet. Then triage, because a findings list is not a repair order until you rank it. Blockers lock visitors out: a missing alt on an informative image, a keyboard walk that cannot finish, failing body-text contrast. Polish degrades the visit without ending it. Repair blockers first, and be ready to defend the order out loud.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS133 · Triage</div>
+      <div class="content">
+        <div class="eyebrow">Audit first, repair second</div>
+        <h2>A findings list is not a repair order until you rank it.</h2>
+        <div class="triage-rows">
+          <p class="blocker"><strong>Blockers</strong><span>lock visitors out: missing alt, a walk that cannot finish, failing body contrast</span></p>
+          <p class="polish"><strong>Polish</strong><span>degrades the visit: a wordy decorative alt, a label that could read better</span></p>
+        </div>
+        <p class="audit-note">Repair blockers first, and defend the order out loud. A stakeholder will ask.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Frame Skills Lab 9A. The flyer from the opening ships in the pack, broken on purpose: 8 planted barriers, and the HTML validator catches exactly 2 of them, because its sins are decisions, not syntax. Students audit before repairing, fix structure, then perceivability, then prove the whole club site with WAVE, the seven-check list, and both validators.&#10;&#10;The lab closes the Part III milestone: plan, adapt, include.&#10;&#10;Time: 50-53 minutes.">
+      <div class="brand">CIS133 · Skills Lab 9A</div>
+      <div class="content">
+        <div class="eyebrow">The club site passes the audit</div>
+        <h2>Eight barriers. The validator catches two.</h2>
+        <div class="lab-pipeline">
+          <article><span>1</span><strong>Audit</strong><p>Log all findings before the first fix.</p></article>
+          <article><span>2</span><strong>Structure</strong><p>Headings, links, and focus repaired.</p></article>
+          <article><span>3</span><strong>Perceive</strong><p>Contrast, color, rem, and honest alt.</p></article>
+          <article><span>4</span><strong>Prove</strong><p>WAVE, seven checks, validators to zero.</p></article>
+        </div>
+        <p class="submission-note">Estimated time: 4-5 hours · Submit skills-lab-9a-lastname.zip · Closes the Part III milestone</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: POUR with one owned technique each, the two AA thresholds with their text sizes, the two type promises, and the division of labor between tools and humans. Tie answers to the flyer and the club site.&#10;&#10;Time: 53-54 minutes.">
+      <div class="brand">CIS133 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four checkpoints</div>
+        <h2>Can you defend the whole audit?</h2>
+        <div class="objective-badges retrieval">
+          <article><span>1</span><h3>POUR</h3><p>Four principles, each with an owned technique.</p></article>
+          <article><span>2</span><h3>The bars</h3><p>4.5 to 1 for body, 3 to 1 for large text.</p></article>
+          <article><span>3</span><h3>Two promises</h3><p>px freezes. rem respects the visitor.</p></article>
+          <article><span>4</span><h3>The split</h3><p>Tools catch absence. Humans judge honesty.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the flyer. It validated with two messages and held eight barriers, because valid and welcoming are different standards, and six of its sins were decisions no syntax checker can see. Students now hold the stack, the checklist, and the triage rule.&#10;&#10;Part III closes with its milestone: plan in Lab 7A, adapt in Lab 8A, include in Lab 9A. Next: Part IV builds the pages the site plan promised, starting with tables that arrive accessible from the first row.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop · Part III complete</div>
+        <h2>Plan. Adapt. Include. The milestone is yours.</h2>
+        <div class="prompt">
+          <p><strong>Exit ticket:</strong> WAVE comes back clean on a page. Name one thing that proves, and one thing it cannot.</p>
+        </div>
+        <p class="next-step">Next: Part IV builds the promised pages. Tables arrive accessible from row one.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
