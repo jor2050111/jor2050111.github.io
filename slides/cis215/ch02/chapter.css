@@ -87,37 +87,104 @@
     color: var(--gold);
 }
 
-/* Title slide key cluster */
+/* Title slide hero art */
 .title-slide .content {
     position: relative;
     width: min(100%, 90rem);
     margin-left: 0;
-    padding-right: min(34vw, 34rem);
+    padding-right: min(42vw, 42rem);
 }
 
-.title-keys {
+.title-art {
     position: absolute;
-    top: 50%;
-    right: clamp(2rem, 7vw, 9rem);
-    transform: translateY(-50%) rotate(-8deg);
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #001a36 0%, rgba(0, 26, 54, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Framed illustrations */
+.visual-split {
     display: grid;
-    gap: 1.4rem;
-    justify-items: end;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
 }
 
-.title-keys .keycap {
-    font-size: clamp(1.3rem, 2.6vw, 2.4rem);
-    padding: 1rem 1.6rem;
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
 }
 
-.title-keys .key-combo {
-    gap: .7rem;
+.visual-art {
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    border-radius: 1.1rem;
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 26, 54, .18);
 }
 
-.title-keys .key-combo .plus {
-    color: var(--gold);
-    font-weight: 900;
-    font-size: 1.6rem;
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.bench-print {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .16);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.bench-print::before {
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    content: "";
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.bench-print img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.bench-print figcaption {
+    padding: .65rem .25rem .7rem;
+    color: #001a36;
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.error-stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.3rem);
 }
 
 /* Keycaps */
@@ -579,17 +646,19 @@
         padding-right: 0;
     }
 
-    .title-keys {
-        top: auto;
-        bottom: 6.5rem;
-        right: 1.2rem;
-        transform: rotate(-8deg);
-        opacity: .18;
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
     }
 
-    .title-keys .keycap {
-        font-size: 1rem;
-        padding: .5rem .8rem;
+    .visual-split,
+    .visual-split.reverse {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .visual-art {
+        order: 2;
     }
 
     .shortcuts,

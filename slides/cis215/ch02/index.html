@@ -18,11 +18,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the driving analogy from the chapter. In Chapter 1 students moved the car: they typed code and pressed Shift+Enter. Today they learn mirrors, signals, and muscle memory. Take two quick answers to the starter prompt, then promise the payoff: by the end of the chapter the tool stops being the obstacle.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="title-keys" aria-hidden="true">
-        <span class="keycap">Esc</span>
-        <span class="key-combo"><span class="keycap">Shift</span><span class="plus">+</span><span class="keycap">Enter</span></span>
-        <span class="keycap">Tab</span>
-      </div>
+      <figure class="title-art" aria-hidden="true"><img src="assets/title-drive-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 2</div>
         <div class="rule"></div>
@@ -73,23 +69,7 @@
             </ul>
             <p class="field-note">localhost means your computer.</p>
           </div>
-          <figure class="window" role="img" aria-label="A browser window whose address bar reads localhost, showing JupyterLab runs on your own computer." style="margin:0;">
-            <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"><strong>localhost</strong>:8888/lab</span></div>
-            <div class="jl-menu"><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span></div>
-            <div class="jl-flex">
-              <div class="jl-side">
-                <div class="jl-file folder">cis215</div>
-                <div class="jl-file sel">skills-lab-2a.ipynb</div>
-                <div class="jl-file">cafe_sales.csv</div>
-              </div>
-              <div class="jl-main">
-                <span class="jl-tab">skills-lab-2a.ipynb</span>
-                <div class="jl-canvas">
-                  <div class="cellrow"><span class="gut">[1]:</span><span class="cbody">import pandas as pd</span></div>
-                </div>
-              </div>
-            </div>
-          </figure>
+          <figure class="visual-art bench-print"><img src="assets/localhost-loop.png" alt="A gold arrow loops from a browser window back into the laptop's own glowing chip, while a distant cloud hangs disconnected with an unplugged cable."><figcaption>localhost is a loop back into your own machine.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -320,17 +300,20 @@ y = 20</span></div>
       <div class="content">
         <div class="eyebrow">Errors</div>
         <h2>An error is information, not a verdict.</h2>
-        <div class="split">
-          <article class="panel">
-            <div class="signal">Syntax error</div>
-            <h3>The code never starts.</h3>
-            <p>The grammar is broken: a missing bracket, quote, or colon. Python cannot tell what you are asking.</p>
-          </article>
-          <article class="panel">
-            <div class="signal">Runtime error</div>
-            <h3>The code fails midway.</h3>
-            <p>The grammar is fine, but a step cannot finish: a variable or column that does not exist.</p>
-          </article>
+        <div class="visual-split reverse">
+          <figure class="visual-art bench-print"><img src="assets/error-map.png" alt="A magnifying glass over a red error panel reveals a gold map pin and a dotted path leading to one highlighted line in a code file."><figcaption>The message is a map to the fix, not a verdict.</figcaption></figure>
+          <div class="error-stack">
+            <article class="panel">
+              <div class="signal">Syntax error</div>
+              <h3>The code never starts.</h3>
+              <p>The grammar is broken: a missing bracket, quote, or colon. Python cannot tell what you are asking.</p>
+            </article>
+            <article class="panel">
+              <div class="signal">Runtime error</div>
+              <h3>The code fails midway.</h3>
+              <p>The grammar is fine, but a step cannot finish: a variable or column that does not exist.</p>
+            </article>
+          </div>
         </div>
         <p class="lede">Skilled analysts read error messages for a living. The message tells you where to look.</p>
       </div>
@@ -495,19 +478,22 @@ df_people = pd.DataFrame(people_data)</pre>
       <div class="content">
         <div class="eyebrow">Close the loop</div>
         <h2>Answer before you leave.</h2>
-        <div class="three-up">
-          <article class="panel">
-            <div class="number">1</div>
-            <p>Which mode and key add a cell below the current one?</p>
-          </article>
-          <article class="panel">
-            <div class="number">2</div>
-            <p>A KeyError names a column you can see in the file. What do you check first?</p>
-          </article>
-          <article class="panel">
-            <div class="number">3</div>
-            <p>Why must your notebook survive Restart Kernel and Run All Cells?</p>
-          </article>
+        <div class="visual-split">
+          <div class="three-up">
+            <article class="panel">
+              <div class="number">1</div>
+              <p>Which mode and key add a cell below the current one?</p>
+            </article>
+            <article class="panel">
+              <div class="number">2</div>
+              <p>A KeyError names a column you can see in the file. What do you check first?</p>
+            </article>
+            <article class="panel">
+              <div class="number">3</div>
+              <p>Why must your notebook survive Restart Kernel and Run All Cells?</p>
+            </article>
+          </div>
+          <figure class="visual-art"><img src="assets/cafe-notebook.png" alt="Receipt rows fly from a cafe register into an open notebook, landing as a tidy grid marked with a small gold flag."></figure>
         </div>
         <div class="prompt">
           <p><strong>Next step:</strong> Open Skills Lab 2A and make the cafe data yours.</p>
