@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 9 classroom presentation: Introduction to Statistical Analysis.">
+  <meta name="theme-color" content="#171A3A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23171A3A'/%3E%3Cpath d='M9 45h46M14 41l9-10 8 5 10-17 9 8' fill='none' stroke='%23F2C14E' stroke-width='4'/%3E%3Ccircle cx='41' cy='19' r='5' fill='%2379D2DE'/%3E%3C/svg%3E">
+  <title>CIS215: Introduction to Statistical Analysis</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Introduction to Statistical Analysis" data-course="cis215"
+  data-chapter="ch09" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the difference between seeing a sample pattern and judging how much evidence it provides. The signal trace shows observations around a trend, not certainty. Ask what information students would need before acting on a visible difference.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="signal-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 9</div><div class="rule"></div>
+        <h1>Treat uncertainty as data.</h1>
+        <p class="lede">Measure relationships, test differences, and report limits.</p>
+        <div class="prompt"><p><strong>Opening question:</strong> When is a visible pattern strong enough to inform a decision?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Preview the chapter's evidence path. Correlation quantifies a linear relationship. Hypothesis testing defines competing claims. T-tests compare two means. Chi-square tests compare categorical distributions. Interpretation must include what the result supports and what it does not.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Statistical analysis</div>
+      <div class="content">
+        <div class="eyebrow">Today's target</div>
+        <h2>Move from pattern to evidence without overstating the result.</h2>
+        <div class="evidence-path" role="img" aria-label="Four stages: relate numeric variables, state hypotheses, compare groups, and interpret the decision with limits."><article><span>01</span><strong>Relate</strong><p>Correlation</p></article><b>→</b><article><span>02</span><strong>State</strong><p>H0 and H1</p></article><b>→</b><article><span>03</span><strong>Test</strong><p>t or chi-square</p></article><b>→</b><article><span>04</span><strong>Interpret</strong><p>Decision plus limits</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use the three point clouds to bind sign to direction. Positive rises from left to right. Negative falls. Near-zero has no linear direction. Sign does not measure strength, and zero does not prove that the variables have no relationship of any kind.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 9.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Sign gives direction</div>
+        <h2>Correlation describes how two numeric variables move together.</h2>
+        <div class="correlation-trio" role="img" aria-label="A positive scatter rises, a negative scatter falls, and a near-zero scatter has no linear direction."><article><span>r &gt; 0</span><strong>Positive</strong><div class="cloud up"><i></i><i></i><i></i><i></i><i></i></div></article><article><span>r &lt; 0</span><strong>Negative</strong><div class="cloud down"><i></i><i></i><i></i><i></i><i></i></div></article><article><span>r ≈ 0</span><strong>No linear link</strong><div class="cloud flat"><i></i><i></i><i></i><i></i><i></i></div></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Read strength from absolute value. Negative 0.75 and positive 0.75 have equal strength but opposite direction. Use the textbook bands as descriptive language: very weak through 0.19, weak through 0.39, moderate through 0.59, strong through 0.79, and very strong from 0.80.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · Correlation strength</div>
+      <div class="content">
+        <div class="eyebrow">Magnitude gives strength</div>
+        <h2><code>|r|</code> ignores direction and measures distance from zero.</h2>
+        <div class="strength-meter" role="img" aria-label="Absolute correlation bands: 0 to 0.19 very weak, 0.20 to 0.39 weak, 0.40 to 0.59 moderate, 0.60 to 0.79 strong, and 0.80 to 1 very strong. Negative 0.75 and positive 0.75 have equal strength."><div class="meter-bands"><i>very weak</i><i>weak</i><i>moderate</i><i>strong</i><i>very strong</i></div><div class="mirror-values"><span>r = -0.75</span><b>equal strength</b><span>r = +0.75</span></div></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the textbook correlation matrix as a map of pairwise relationships. The diagonal is 1 because each variable matches itself. The matrix mirrors across the diagonal. StudyHours and ExamScore have r equals 0.781. SleepHours has only weak links to both.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS215 · Correlation matrix</div>
+      <div class="content">
+        <div class="eyebrow">Symmetry is a built-in check</div>
+        <h2>The same pair appears twice, and self-correlation stays 1.</h2>
+        <table class="corr-matrix" aria-label="Correlation matrix. StudyHours with ExamScore is 0.781. StudyHours with SleepHours is 0.114. ExamScore with SleepHours is 0.187. The diagonal is 1."><thead><tr><th></th><th>StudyHours</th><th>ExamScore</th><th>SleepHours</th></tr></thead><tbody><tr><th>StudyHours</th><td class="diag">1.000</td><td class="focus">0.781</td><td>0.114</td></tr><tr><th>ExamScore</th><td class="focus">0.781</td><td class="diag">1.000</td><td>0.187</td></tr><tr><th>SleepHours</th><td>0.114</td><td>0.187</td><td class="diag">1.000</td></tr></tbody></table>
+        <p class="field-note">The mirrored 0.781 cells describe one relationship.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Show why a scatter plot must accompany r. A clean line fits correlation's linear summary. A curved relationship can have an r near zero while remaining structured. One outlier can pull a coefficient away from the main cloud. The picture diagnoses what the single number hides.&#10;&#10;Time: 14-17 minutes.">
+      <div class="brand">CIS215 · Correlation limits</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One number cannot show shape</div>
+        <h2>Plot the points before you trust the coefficient.</h2>
+        <div class="shape-check" role="img" aria-label="Three miniature plots show a linear pattern suited to r, a curved pattern that r can miss, and a cluster whose r is distorted by one outlier."><article><span>Linear</span><div class="mini-shape linear"></div><p>r summarizes the pattern</p></article><article><span>Curved</span><div class="mini-shape curve"></div><p>r can sit near zero</p></article><article><span>Outlier</span><div class="mini-shape outlier"></div><p>one point can pull r</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Have students judge each claim before revealing. Correlation supports a linear association, not causation. A negative coefficient can be strong. A coefficient near zero rules out a linear link, not every possible relationship.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · Correlation check</div>
+      <div class="content">
+        <div class="eyebrow">Mark support or overreach</div>
+        <h2>What does <code>r = -0.85</code> earn?</h2>
+        <div class="claim-cards"><article><span>A</span><p>A strong negative linear relationship</p></article><article><span>B</span><p>Proof that X causes Y to fall</p></article><article><span>C</span><p>A reason to inspect the scatter plot</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>A and C are supported. B is not.</strong> Correlation measures association. It does not establish a causal mechanism.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Trace the four-step hypothesis process. State H0 and H1 before looking at the result. Calculate the statistic from sample data. Read the p-value under the null model. Compare p with a prespecified alpha and report the decision. The loop ends with interpretation, not a binary badge.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS215 · 9.2</div>
+      <div class="content">
+        <div class="eyebrow">A decision needs a declared test</div>
+        <h2>Hypothesis testing asks how surprising the data are under H0.</h2>
+        <div class="test-loop" role="img" aria-label="Four-step loop: state null and alternative hypotheses, calculate a test statistic, calculate the p-value under H0, and compare p with alpha before interpreting the result."><article><span>1</span><strong>State</strong><p>H0 · no effect<br>H1 · effect</p></article><b>→</b><article><span>2</span><strong>Calculate</strong><p>test statistic</p></article><b>→</b><article><span>3</span><strong>Ask</strong><p>p under H0</p></article><b>→</b><article><span>4</span><strong>Decide</strong><p>compare with α</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Bind the p-value to its conditional meaning. Start with H0 assumed true. Then ask how often random samples would produce this result or something more extreme. A p-value of 0.03 means 3 percent under that null model. It is not the probability that H0 is true and not an effect-size measure.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS215 · P-values</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Condition first, probability second</div>
+        <h2><code>p = 0.03</code> describes results under H0, not the truth of H0.</h2>
+        <div class="p-funnel" role="img" aria-label="If H0 were true, results at least this extreme would occur in 3 percent of random samples. The p-value is not the probability that H0 is true and not the size of the effect."><article><span>Assume</span><strong>H0 is true</strong></article><b>→</b><article><span>Count</span><strong>results this extreme or more</strong></article><b>→</b><article class="p-result"><span>Frequency</span><strong>3%</strong></article></div><div class="not-list"><span>Not P(H0 is true)</span><span>Not effect size</span><span>Not importance</span></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the alpha line for two exact decisions. At alpha 0.05, p 0.042 falls below the cutoff, so reject H0. P 0.18 falls above it, so fail to reject H0. Say fail to reject, not accept H0. A null result means the sample did not provide enough evidence for the alternative.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · Decision rule</div>
+      <div class="content">
+        <div class="eyebrow">Compare against a prespecified cutoff</div>
+        <h2>Alpha draws the line. It does not grade the finding.</h2>
+        <div class="alpha-line" role="img" aria-label="A number line from p equals zero to p equals 0.20 marks alpha at 0.05. P equals 0.042 lies in reject H0. P equals 0.18 lies in fail to reject H0."><div class="decision-zone reject">reject H0</div><div class="decision-zone retain">fail to reject H0</div><i class="alpha">α = .05</i><i class="p-one">p = .042</i><i class="p-two">p = .18</i></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Frame Type I and Type II errors as crossed truth and decision states. Rejecting a true H0 creates a Type I false positive. Failing to reject a false H0 creates a Type II false negative. Lowering alpha reduces Type I risk but can raise Type II risk.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS215 · Error trade-offs</div>
+      <div class="content">
+        <div class="eyebrow">Decision and truth can disagree</div>
+        <h2>Alpha controls one error risk, not every risk.</h2>
+        <table class="error-matrix" aria-label="Decision by truth matrix. Rejecting a true null hypothesis is a Type I false positive. Failing to reject a false null hypothesis is a Type II false negative. The other two cells are correct decisions."><thead><tr><th></th><th>H0 true</th><th>H0 false</th></tr></thead><tbody><tr><th>Reject H0</th><td class="error">Type I<br><small>false positive</small></td><td class="correct">correct detection</td></tr><tr><th>Fail to reject</th><td class="correct">correct restraint</td><td class="error">Type II<br><small>false negative</small></td></tr></tbody></table>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Separate statistical from practical significance with the textbook battery example. A 0.2-hour difference equals 12 minutes. The reported p-value of 0.001 says the difference is hard to explain under H0. It does not make 12 minutes useful to customers. Decision value needs context and effect size.&#10;&#10;Time: 32-35 minutes.">
+      <div class="brand">CIS215 · Practical significance</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Real is not the same as useful</div>
+        <h2>A tiny difference can earn a tiny p-value.</h2>
+        <div class="battery-compare" role="img" aria-label="Brand A lasts 52.1 hours and Brand B lasts 52.3 hours. The difference is 0.2 hours or 12 minutes. P equals 0.001, but practical value still needs judgment."><article><span>Brand A</span><strong>52.1 h</strong></article><article><span>Brand B</span><strong>52.3 h</strong></article><div class="effect-tag"><b>12 minutes</b><span>p = .001</span></div></div>
+        <p class="field-note">Report evidence, effect size, and decision context.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Build the independent-samples t-test from its data types and hypotheses. One categorical variable forms two independent groups. One numeric outcome supplies the means. H0 says population means are equal. H1 says they differ. The function returns a t-statistic and p-value.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · 9.3</div>
+      <div class="content">
+        <div class="eyebrow">Two groups, one numeric outcome</div>
+        <h2>A t-test weighs mean difference against within-group spread.</h2>
+        <div class="ttest-anatomy" role="img" aria-label="Method A scores have mean 73.12. Method B scores have mean 77.79. The independent t-test evaluates H0 that the two population means are equal against H1 that they differ."><article><span>Method A</span><div class="distribution a"></div><strong>mean 73.12</strong></article><div class="hypotheses"><code>H0: μA = μB</code><code>H1: μA ≠ μB</code><b>stats.ttest_ind(A, B)</b></div><article><span>Method B</span><div class="distribution b"></div><strong>mean 77.79</strong></article></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Trace the exact textbook result. Method B is 4.67 points higher. The t-statistic is negative because A minus B is negative. P is 0.053, above the prespecified 0.05 cutoff. Fail to reject H0. Report the exact p-value and observed gap without relabeling it as almost significant.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS215 · T-test decision</div>
+      <div class="content">
+        <div class="eyebrow">Observed gap does not settle inference</div>
+        <h2><code>p = .053</code> stays on the fail-to-reject side of <code>α = .05</code>.</h2>
+        <div class="decision-trace" role="img" aria-label="Method A mean 73.12 and Method B mean 77.79 create a 4.67-point observed gap. The t-statistic is negative 1.975. P equals 0.053, which is greater than alpha 0.05, so fail to reject H0."><article><span>Observed</span><strong>77.79 - 73.12</strong><b>4.67 points</b></article><b>→</b><article><span>Test</span><strong>t = -1.975</strong><b>p = .053</b></article><b>→</b><article class="decision"><span>Decision</span><strong>p &gt; α</strong><b>fail to reject H0</b></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Introduce chi-square with the textbook contingency table. Both variables are categorical. Each cell is a count, not a mean. The test compares observed counts with counts expected if satisfaction and region were independent. Larger discrepancies contribute more to chi-square.&#10;&#10;Time: 41-44 minutes.">
+      <div class="brand">CIS215 · 9.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Categories meet in counts</div>
+        <h2>Chi-square compares observed cells with independence.</h2>
+        <div class="chi-grid"><table aria-label="Observed satisfaction counts by region. East has 16 Excellent, 13 Fair, 16 Good, and 5 Poor. North has 11, 11, 24, and 4. South has 12, 9, 23, and 6. West has 19, 11, 15, and 5."><thead><tr><th>Region</th><th>Excellent</th><th>Fair</th><th>Good</th><th>Poor</th></tr></thead><tbody><tr><th>East</th><td>16</td><td>13</td><td>16</td><td>5</td></tr><tr><th>North</th><td>11</td><td>11</td><td class="focus">24</td><td>4</td></tr><tr><th>South</th><td>12</td><td>9</td><td>23</td><td>6</td></tr><tr><th>West</th><td>19</td><td>11</td><td>15</td><td>5</td></tr></tbody></table><div class="observed-expected"><article><span>Observed</span><strong>what the sample counted</strong></article><b>↕</b><article><span>Expected</span><strong>what independence predicts</strong></article></div></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Ask students to choose a test from variable types. Two numeric variables call for correlation. One numeric outcome across two groups calls for an independent t-test. Two categorical variables call for chi-square. Reveal after they state both variable types and the research question.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS215 · Test selector</div>
+      <div class="content">
+        <div class="eyebrow">Classify variables before syntax</div>
+        <h2>Which evidence tool matches each question?</h2>
+        <div class="claim-cards"><article><span>A</span><p>Study hours and math score</p></article><article><span>B</span><p>Mean score for two teaching methods</p></article><article><span>C</span><p>Study category and pass/fail</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Correlation, t-test, chi-square.</strong> The choices match two numbers, one number across two groups, and two categories.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the exact textbook chi-square result. Chi-square is 7.288 with 9 degrees of freedom and p 0.607. Since p is well above 0.05, fail to reject independence. The result does not prove the distributions are identical. It says the sample provides no evidence of association.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS215 · Chi-square decision</div>
+      <div class="content">
+        <div class="eyebrow">High p means weak evidence against H0</div>
+        <h2>The regional satisfaction gaps fit random variation.</h2>
+        <div class="chi-result" role="img" aria-label="Chi-square equals 7.288, degrees of freedom equals 9, and p equals 0.607. Since p exceeds alpha 0.05, fail to reject H0. There is no evidence of association between satisfaction and region."><article><span>Statistic</span><strong>χ² = 7.288</strong></article><article><span>Degrees of freedom</span><strong>9</strong></article><article><span>P-value</span><strong>.607</strong></article><article class="decision"><span>Decision</span><strong>fail to reject H0</strong><p>No evidence of association</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use Review Question 4 to quantify the multiple-testing risk. If 20 independent null tests each use alpha 0.05, the chance of at least one false positive is one minus 0.95 to the twentieth power, about 64.2 percent. One p-value of 0.04 deserves skepticism when it was selected from many tests without adjustment or prior planning.&#10;&#10;Time: 50-52 minutes.">
+      <div class="brand">CIS215 · Multiple testing</div>
+      <div class="content">
+        <div class="eyebrow navy-text">More tests create more false-positive chances</div>
+        <h2>Twenty tests make one <code>p &lt; .05</code> unsurprising under pure noise.</h2>
+        <div class="test-array" role="img" aria-label="Twenty hypothesis tests are shown. One is highlighted as a false positive. At alpha 0.05, the chance of at least one false positive across 20 independent null tests is about 64.2 percent."><div class="test-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="false"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="risk-equation"><code>1 - (1 - .05)<sup>20</sup></code><strong>≈ 64.2%</strong></div></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Handoff Skills Lab 9A with verified checkpoints. StudyHours has the strongest MathScore correlation at 0.641. Gender means differ by only 0.77 points and p is 0.625, so the test is not significant. Interactive teaching averages 81.20 versus 73.45 for Traditional, with p below 0.001. StudyCategory and PassFail are associated, chi-square 33.477 and p below 0.001. These synthetic data support association and group-difference claims, not broad causal claims.&#10;&#10;Time: 52-54 minutes.&#10;&#10;Source: Chapter 9 student_performance.csv.">
+      <div class="brand">CIS215 · Skills Lab 9A</div>
+      <div class="content">
+        <div class="eyebrow">Education data evidence board</div>
+        <h2>Each result needs a question, a statistic, and a limit.</h2>
+        <div class="lab-board"><article><span>Correlation</span><strong>r = .641</strong><p>StudyHours ↔ MathScore</p></article><article><span>Gender t-test</span><strong>p = .625</strong><p>77.70 vs 76.93 · not significant</p></article><article><span>Method t-test</span><strong>p &lt; .001</strong><p>81.20 vs 73.45 · significant</p></article><article><span>Study × pass</span><strong>χ² = 33.477</strong><p>p &lt; .001 · associated</p></article></div>
+        <p class="field-note">Synthetic records. Association does not establish causation.</p>
+      </div>
+    </section>
+
+    <section class="slide gold closing-slide" data-notes="Close with an interpretation template. Students should state the research question, report the observed values and exact test result, make the reject or fail-to-reject decision, and name one boundary on the claim. Collect one result sentence that avoids causal language unless the design supports it.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Close the loop</div>
+        <h2>A statistical result is evidence with conditions, not a verdict without limits.</h2>
+        <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab result. State the question, evidence, decision, and one claim the result does not support.</p></div>
+        <p class="field-note">Report what the test earns. Name what it cannot earn.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes"><h2>Presenter notes</h2><p id="notes-content"></p></div>
+  <nav class="nav" aria-label="Presentation controls"><button type="button" id="previous" aria-label="Previous slide">←</button><button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button><button type="button" id="next" aria-label="Next slide">→</button></nav>
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
