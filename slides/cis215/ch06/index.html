@@ -61,6 +61,7 @@
           <b aria-hidden="true">→</b>
           <article><span>5</span><strong>Verify</strong></article>
         </div>
+        <div class="loop-return"><b aria-hidden="true">↶</b><span>If verification finds a gap, profile the copy again.</span></div>
         <p class="field-note">A cleaning log begins before the first value changes.</p>
       </div>
     </section>
@@ -103,7 +104,7 @@
         <div class="eyebrow">The pattern guides the treatment</div>
         <h2>Age is most incomplete. Satisfaction matters most to the analysis.</h2>
         <div class="missing-bars" role="img" aria-label="Horizontal bars show missingness in the customer survey. Age is 7.5 percent, Satisfaction is 6.2 percent, and Customer Name is 3.8 percent.">
-          <div><span>Age</span><i style="--bar:100%"></i><strong>6 · 7.5%</strong></div>
+          <div class="focus"><span>Age</span><i style="--bar:100%"></i><strong>6 · 7.5%</strong></div>
           <div><span>Satisfaction</span><i style="--bar:83%"></i><strong>5 · 6.2%</strong></div>
           <div><span>Customer_Name</span><i style="--bar:50%"></i><strong>3 · 3.8%</strong></div>
         </div>
@@ -211,29 +212,47 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Explain duplicates as repeated evidence. duplicated flags later copies by default. drop_duplicates keeps the first copy by default. In the survey file, five rows are exact repeats, so leaving them in would let five respondents count twice.&#10;&#10;Time: 38-41 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
+    <section class="slide dark" data-notes="Explain duplicates as repeated evidence. duplicated flags later copies by default. drop_duplicates keeps the first copy by default. In the survey file, five rows are exact repeats, so leaving them in would let five respondents count twice. Response 1041 is one actual repeated row: Downtown, Satisfaction 3. The lower copy is the later occurrence and receives the duplicate flag.&#10;&#10;Time: 38-41 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
       <div class="brand">CIS215 · 6.4</div>
       <div class="content">
         <div class="eyebrow">Duplicate records</div>
         <h2>Five repeated rows would give five responses extra weight.</h2>
-        <div class="duplicate-stack" role="img" aria-label="Three survey rows are shown. Response 1042 appears twice, and the second copy is flagged as a duplicate that would give the response double weight.">
-          <div><span>1041</span><span>West</span><span>4</span><strong>keep</strong></div>
-          <div><span>1042</span><span>Central</span><span>2</span><strong>keep</strong></div>
-          <div class="duplicate"><span>1042</span><span>Central</span><span>2</span><strong>duplicate</strong></div>
+        <div class="duplicate-stack" role="img" aria-label="Three survey rows are shown. Response 1040 appears once. Response 1041 appears twice with Downtown and Satisfaction 3, and the second copy is flagged as a duplicate that would give the response double weight.">
+          <div><span>1040</span><span>downtown</span><span>3</span><strong>keep</strong></div>
+          <div><span>1041</span><span>downtown</span><span>3</span><strong>keep</strong></div>
+          <div class="duplicate"><span>1041</span><span>downtown</span><span>3</span><strong>duplicate</strong></div>
         </div>
         <pre class="code">duplicate_rows = df_survey.<span class="function">duplicated</span>().<span class="function">sum</span>()  <span class="comment"># 5</span></pre>
       </div>
     </section>
 
-    <section class="slide gold" data-notes="Teach the keep parameter. first keeps the original and removes later copies. last keeps the final record. False removes every member of a duplicated set. The correct choice depends on whether later records are corrections or repeated exports.&#10;&#10;Time: 41-43 minutes.">
+    <section class="slide gold" data-notes="Teach the keep parameter by replaying the actual duplicated response 1041 three times. With first, the earlier copy survives and the later copy is removed. With last, the later copy survives and the earlier copy is removed. With False, both copies are removed. Gold always marks the survivor. Dimmed, struck rows are removed. The correct policy depends on whether later records are corrections or repeated exports.&#10;&#10;Time: 41-43 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
       <div class="brand">CIS215 · Duplicate policy</div>
       <div class="content">
         <div class="eyebrow navy-text">Which copy survives?</div>
         <h2><code>keep</code> is a policy decision, not a cleanup switch.</h2>
-        <div class="keep-policies">
-          <article><code>keep='first'</code><strong>Keep the earliest copy</strong><p>Default for exact repeated exports</p></article>
-          <article><code>keep='last'</code><strong>Keep the latest copy</strong><p>Useful when later records are corrections</p></article>
-          <article><code>keep=False</code><strong>Keep no copy</strong><p>Use when every duplicate is suspect</p></article>
+        <div class="keep-policy-traces" role="img" aria-label="The duplicate pair for response 1041 is shown under three policies. Keep first preserves the earlier copy. Keep last preserves the later copy. Keep False removes both copies.">
+          <article>
+            <code>keep='first'</code>
+            <div class="copy-stack">
+              <div class="copy survivor"><span>earlier</span><b>1041</b><span>downtown · 3</span><strong>survives</strong></div>
+              <div class="copy removed"><span>later</span><b>1041</b><span>downtown · 3</span><strong>removed</strong></div>
+            </div>
+          </article>
+          <article>
+            <code>keep='last'</code>
+            <div class="copy-stack">
+              <div class="copy removed"><span>earlier</span><b>1041</b><span>downtown · 3</span><strong>removed</strong></div>
+              <div class="copy survivor"><span>later</span><b>1041</b><span>downtown · 3</span><strong>survives</strong></div>
+            </div>
+          </article>
+          <article>
+            <code>keep=False</code>
+            <div class="copy-stack">
+              <div class="copy removed"><span>earlier</span><b>1041</b><span>downtown · 3</span><strong>removed</strong></div>
+              <div class="copy removed"><span>later</span><b>1041</b><span>downtown · 3</span><strong>removed</strong></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>

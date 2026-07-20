@@ -303,6 +303,23 @@ h2 code {
   font-size: 1.7rem;
 }
 
+.loop-return {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .55rem;
+  margin-top: .7rem;
+  color: var(--audit-gold);
+  font-family: var(--code);
+  font-size: clamp(.72rem, .9vw, .84rem);
+  font-weight: 800;
+}
+
+.loop-return b {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
 /* Missing data */
 
 .missing-table {
@@ -406,13 +423,21 @@ h2 code {
   inset: 0 auto 0 0;
   width: var(--bar);
   content: "";
-  background: var(--audit-gold);
+  background: var(--audit-blue);
 }
 
 .missing-bars strong {
-  color: var(--audit-gold);
+  color: #d7e5f3;
   font-size: clamp(.76rem, 1vw, .92rem);
   text-align: right;
+}
+
+.missing-bars .focus i::before {
+  background: var(--audit-gold);
+}
+
+.missing-bars .focus strong {
+  color: var(--audit-gold);
 }
 
 .treatment-fork {
@@ -769,6 +794,85 @@ h2 code {
   font-size: clamp(.85rem, 1.06vw, 1rem);
 }
 
+/* Duplicate policy enacted on one exact source pair. */
+.keep-policy-traces {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.75rem, 1.5vw, 1.2rem);
+}
+
+.keep-policy-traces article {
+  display: grid;
+  gap: .7rem;
+  padding: .85rem;
+  background: rgba(255, 255, 255, .62);
+  border-top: .45rem solid var(--audit-canyon);
+}
+
+.keep-policy-traces article:nth-child(2) {
+  border-top-color: var(--audit-blue);
+}
+
+.keep-policy-traces article:nth-child(3) {
+  border-top-color: var(--danger);
+}
+
+.keep-policy-traces > article > code {
+  color: var(--audit-blue);
+  font-size: clamp(.8rem, 1.05vw, .96rem);
+  font-weight: 900;
+}
+
+.copy-stack {
+  display: grid;
+  gap: .45rem;
+}
+
+.copy {
+  display: grid;
+  grid-template-columns: 3.4rem 3.2rem minmax(0, 1fr);
+  align-items: center;
+  gap: .35rem;
+  min-height: 3.6rem;
+  padding: .48rem .55rem;
+  color: var(--audit-ink);
+  background: var(--audit-paper);
+  border: .1rem solid var(--audit-line);
+  font-family: var(--code);
+  font-size: clamp(.64rem, .78vw, .74rem);
+}
+
+.copy > span:first-child {
+  color: var(--audit-canyon);
+  font-size: .85em;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.copy b {
+  font-size: 1.12em;
+}
+
+.copy strong {
+  grid-column: 1 / -1;
+  font-size: .82em;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.copy.survivor {
+  background: var(--audit-gold);
+  border-color: #b8860b;
+  box-shadow: 0 .35rem .8rem rgba(124, 54, 38, .12);
+}
+
+.copy.removed {
+  opacity: .46;
+  text-decoration: line-through;
+  filter: grayscale(.45);
+}
+
 .string-chain,
 .category-collapse {
   display: grid;
@@ -1014,6 +1118,7 @@ h2 code {
   .strategy-cases,
   .dtype-cards,
   .keep-policies,
+  .keep-policy-traces,
   .lab-audit,
   .bool-trap,
   .treatment-fork,
@@ -1036,6 +1141,10 @@ h2 code {
 
   .audit-loop {
     grid-template-columns: 1fr;
+  }
+
+  .loop-return {
+    justify-content: flex-start;
   }
 
   .audit-loop > b,
