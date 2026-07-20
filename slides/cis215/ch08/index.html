@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 8 classroom presentation: Advanced Data Manipulation.">
+  <meta name="theme-color" content="#173F3A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23173F3A'/%3E%3Cpath d='M10 14h22v16H10zm22 20h22v16H32z' fill='%23F2B84B'/%3E%3Cpath d='m27 38 5-8 5 8' fill='none' stroke='%23F5F0E6' stroke-width='4'/%3E%3C/svg%3E">
+  <title>CIS215: Advanced Data Manipulation</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Advanced Data Manipulation" data-course="cis215"
+  data-chapter="ch08" data-palette="canyon-sand">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the idea that analysts change a table's arrangement without changing what each value means. Point to the folded worksheet mark. Chapter 8 adds four moves: order rows, summarize a grid, connect sources, and reshape columns into observations. Ask which move students would choose before naming any pandas method.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="fold-mark" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 8</div>
+        <div class="rule"></div>
+        <h1>Change the shape. Keep the meaning.</h1>
+        <p class="lede">Order, summarize, connect, and reshape DataFrames.</p>
+        <div class="prompt"><p><strong>Opening question:</strong> Which table move would make your next answer easier?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Preview the chapter as a sequence of analytical moves. Sort exposes order. Pivot compresses detail into a two-axis summary. Merge connects related sources through keys. Melt turns repeated columns into observations. Students should learn to name the needed change before reaching for syntax.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Advanced manipulation</div>
+      <div class="content">
+        <div class="eyebrow">Today's target</div>
+        <h2>Four moves turn stored data into answer-ready data.</h2>
+        <div class="move-track" role="img" aria-label="Four moves: order with sort, summarize with pivot, connect with merge, and reshape with melt."><article><span>01</span><strong>Order</strong><code>sort · rank</code></article><b>→</b><article><span>02</span><strong>Summarize</strong><code>pivot · crosstab</code></article><b>→</b><article><span>03</span><strong>Connect</strong><code>merge · concat</code></article><b>→</b><article><span>04</span><strong>Reshape</strong><code>melt · pivot</code></article></div>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Enact the difference between sorting and ranking with the five-product textbook table. Sorting moves the whole row. Ranking writes a new value while the original row order stays intact. Laptop is rank 1, Monitor rank 2, and Mouse rank 5. Ask students what evidence would be lost if only the sorted table were saved.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Same values, different result</div>
+        <h2>Sorting moves rows. Ranking adds standing.</h2>
+        <div class="sort-rank" role="img" aria-label="Original product rows are sorted by revenue into Laptop, Monitor, Keyboard, Webcam, Mouse. A separate rank view keeps the original order and adds ranks 1, 5, 3, 2, and 4.">
+          <article><span>Sort descending</span><ol><li><b>Laptop</b><em>$45,000</em></li><li><b>Monitor</b><em>$18,000</em></li><li><b>Keyboard</b><em>$5,600</em></li><li><b>Webcam</b><em>$3,200</em></li><li><b>Mouse</b><em>$2,300</em></li></ol></article>
+          <article><span>Rank in place</span><ol class="ranked"><li><b>Laptop</b><em>1</em></li><li><b>Mouse</b><em>5</em></li><li><b>Keyboard</b><em>3</em></li><li><b>Monitor</b><em>2</em></li><li><b>Webcam</b><em>4</em></li></ol></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace the two-column sort from the textbook. Region is the first rule and uses ascending order, so East appears before West. Revenue is the second rule and uses descending order inside each region. The two Boolean values bind by position to the two column names.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · Multiple sort keys</div>
+      <div class="content">
+        <div class="eyebrow">Rules bind by position</div>
+        <h2>Partition by region, then rank revenue inside each region.</h2>
+        <div class="sort-lanes" role="img" aria-label="East rows appear first with revenues 45,000, 18,000, and 2,300. West rows follow with revenues 38,000 and 1,800. Region uses ascending true, while revenue uses ascending false."><div class="code-ribbon"><code>by=['region', 'revenue']</code><code>ascending=[True, False]</code></div><article><span>East</span><p>Laptop <b>$45,000</b></p><p>Monitor <b>$18,000</b></p><p>Mouse <b>$2,300</b></p></article><article><span>West</span><p>Laptop <b>$38,000</b></p><p>Mouse <b>$1,800</b></p></article></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use the duplicate 92 scores to make tie policy visible. Average gives both tied rows 1.5. Min gives both 1. Dense gives both 1 and assigns the next distinct score rank 2. The textbook lists five methods. This slide enacts three of them so students can see that method changes the meaning of the rank.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS215 · Ranking ties</div>
+      <div class="content">
+        <div class="eyebrow">Policy becomes data</div>
+        <h2>Two 92s need one declared tie rule.</h2>
+        <div class="tie-grid" role="img" aria-label="Scores 92, 92, and 88 receive ranks 1.5, 1.5, and 3 with average. They receive 1, 1, and 3 with min. They receive 1, 1, and 2 with dense."><article><span>average</span><p><b>92</b><i>1.5</i></p><p><b>92</b><i>1.5</i></p><p><b>88</b><i>3</i></p></article><article><span>min</span><p><b>92</b><i>1</i></p><p><b>92</b><i>1</i></p><p><b>88</b><i>3</i></p></article><article><span>dense</span><p><b>92</b><i>1</i></p><p><b>92</b><i>1</i></p><p><b>88</b><i>2</i></p></article></div>
+        <p class="field-note">A rank is a result plus a policy.</p>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Pause for retrieval. Sorting changes row order. Ranking adds a standing value. Keeping an old index can preserve a link to original records. Reveal only after students state both effects.&#10;&#10;Time: 14-17 minutes.">
+      <div class="brand">CIS215 · Quick check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict the structure</div>
+        <h2>Which operation changes position, and which changes schema?</h2>
+        <div class="question-cards"><article><span>A</span><p>Place the highest revenue row first.</p></article><article><span>B</span><p>Keep row order and add performance standing.</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>A sorts. B ranks.</strong> Sorting reorders complete rows. Ranking adds a column whose values stay attached to those rows.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Build a pivot table from the six textbook transactions. The index supplies product rows. Columns supplies region columns. Values names revenue. Aggfunc sum combines repeated product-region transactions. The output has three product rows and two region columns.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · 8.2</div>
+      <div class="content">
+        <div class="eyebrow">Detail becomes a two-axis answer</div>
+        <h2>A pivot folds transaction rows into a comparison grid.</h2>
+        <div class="pivot-fold" role="img" aria-label="Six transaction rows flow through index product, columns region, values revenue, and aggregation sum into a three-row by two-column pivot table."><div class="raw-stack"><span>Laptop · East · 1200</span><span>Mouse · East · 25</span><span>Laptop · East · 1100</span><span>Mouse · East · 30</span><span>Keyboard · West · 75</span><span>Keyboard · West · 80</span></div><div class="fold-keys"><b>index</b><code>product</code><b>columns</b><code>region</code><b>values</b><code>revenue</code><b>aggfunc</b><code>sum</code></div><table class="matrix"><thead><tr><th></th><th>East</th><th>West</th></tr></thead><tbody><tr><th>Keyboard</th><td>NaN</td><td>155</td></tr><tr><th>Laptop</th><td>2300</td><td>NaN</td></tr><tr><th>Mouse</th><td>55</td><td>NaN</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Separate no observed pair from a measured zero. The original pivot displays NaN because there was no Keyboard-East transaction to aggregate. fill_value equals zero changes the report display. It does not create a source transaction. This distinction matters when zero and missing have different meanings.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS215 · Missing combinations</div>
+      <div class="content">
+        <div class="eyebrow">A display choice carries meaning</div>
+        <h2><code>fill_value=0</code> replaces absence in the result, not the source.</h2>
+        <div class="missing-zero" role="img" aria-label="A pivot cell changes from NaN labeled no observed pair to zero labeled report display. A source transaction is not added."><article><span>Before</span><strong>NaN</strong><p>No observed Keyboard-East pair</p></article><b aria-hidden="true">→</b><article class="filled"><span>After</span><strong>0</strong><p>Report displays zero revenue</p></article></div>
+        <p class="field-note">Confirm that zero is a valid interpretation before filling.</p>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Show the column hierarchy produced by multiple aggregation functions. Sum answers how much revenue. Count answers how many transactions. Keyboard-West has sum 155 and count 2. The same product-region cell can hold several measures without losing their labels.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS215 · Multiple aggregations</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One grid, two questions</div>
+        <h2>Column levels keep amount and frequency separate.</h2>
+        <table class="multi-matrix" aria-label="Pivot table with sum and count column levels. Keyboard West has sum 155 and count 2. Laptop East has sum 2300 and count 2. Mouse East has sum 55 and count 2."><thead><tr><th rowspan="2">Product</th><th colspan="2">sum</th><th colspan="2">count</th></tr><tr><th>East</th><th>West</th><th>East</th><th>West</th></tr></thead><tbody><tr><th>Keyboard</th><td>0</td><td class="focus">155</td><td>0</td><td class="focus">2</td></tr><tr><th>Laptop</th><td>2300</td><td>0</td><td>2</td><td>0</td></tr><tr><th>Mouse</th><td>55</td><td>0</td><td>2</td><td>0</td></tr></tbody></table>
+        <p class="field-note">Sum asks how much. Count asks how often.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Contrast pivot_table with crosstab. Pivot_table aggregates a named numeric value. Crosstab counts category pairs. Both can produce product by region grids, but the question decides which function fits. Reveal after students identify whether a measure exists.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · Pivot or crosstab</div>
+      <div class="content">
+        <div class="eyebrow">Choose by cell meaning</div>
+        <h2>What should each cell measure?</h2>
+        <div class="question-cards dark-cards"><article><span>Amount</span><p>Total revenue for each product-region pair</p></article><article><span>Frequency</span><p>Number of rows for each product-region pair</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Pivot table, then crosstab.</strong> The first aggregates a numeric value. The second counts paired categories.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Return to the Chapter 5 orders and show how one pivot replaces several separate groupby questions. Read one row across all four regions. Laptop revenue is 19,250 East, 28,850 North, 35,750 South, and 59,949 West. The grid supports both within-product and within-region comparisons.&#10;&#10;Time: 29-32 minutes.&#10;&#10;Source: Chapter 5 ecommerce_orders.csv and Chapter 8 Section 8.2.">
+      <div class="brand">CIS215 · Chapter 5 returns</div>
+      <div class="content">
+        <div class="eyebrow">One call builds the revenue map</div>
+        <h2>Laptop revenue leads every region in the orders pivot.</h2>
+        <table class="orders-matrix" aria-label="Revenue pivot from Chapter 5 orders. Laptop is 19,250 East, 28,850 North, 35,750 South, and 59,949 West. Monitor is 13,500 East, 8,450 North, 14,910 South, and 22,469 West."><thead><tr><th>Product</th><th>East</th><th>North</th><th>South</th><th>West</th></tr></thead><tbody><tr class="focus-row"><th>Laptop</th><td>$19,250</td><td>$28,850</td><td>$35,750</td><td>$59,949</td></tr><tr><th>Monitor</th><td>$13,500</td><td>$8,450</td><td>$14,910</td><td>$22,469</td></tr><tr><th>Keyboard</th><td>$3,750</td><td>$1,470</td><td>$4,560</td><td>$5,009</td></tr><tr><th>Mouse</th><td>$1,939</td><td>$755</td><td>$1,085</td><td>$3,194</td></tr></tbody></table>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Enact the default inner merge. The shared customer_id key connects customer facts to purchase facts. IDs 101 and 103 match. Lucia appears twice because customer 101 has two purchase rows. IDs 102, 104, and 105 do not enter the inner result because they lack a match on one side.&#10;&#10;Time: 32-35 minutes.">
+      <div class="brand">CIS215 · 8.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Keys connect sources</div>
+        <h2>An inner merge keeps matches and preserves their multiplicity.</h2>
+        <div class="merge-ledger" role="img" aria-label="Customer rows 101 Lucia, 102 Kai, 103 Imani, and 104 Tariq merge with purchase rows 101 Laptop, 103 Mouse, 101 Keyboard, and 105 Monitor. The inner result has Lucia Laptop, Lucia Keyboard, and Imani Mouse."><article><span>customers</span><p><b>101</b> Lucia</p><p>102 Kai</p><p><b>103</b> Imani</p><p>104 Tariq</p></article><div class="key-spine"><code>on='customer_id'</code><i></i><i></i></div><article><span>purchases</span><p><b>101</b> Laptop</p><p><b>103</b> Mouse</p><p><b>101</b> Keyboard</p><p>105 Monitor</p></article><article class="merge-result"><span>inner result</span><p>101 · Lucia · Laptop</p><p>101 · Lucia · Keyboard</p><p>103 · Imani · Mouse</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use a membership map for the four merge types. Inner keeps keys in both sources: 101 and 103. Left also retains 102 and 104. Right also retains 105. Outer retains all five unique keys. The values under each label make the set rule concrete.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · Merge types</div>
+      <div class="content">
+        <div class="eyebrow">The how parameter is a row policy</div>
+        <h2>Name which source must survive before choosing the merge.</h2>
+        <div class="merge-types" role="img" aria-label="Inner retains keys 101 and 103. Left retains 101, 102, 103, and 104. Right retains 101, 103, and 105. Outer retains 101 through 105."><article><span>inner</span><strong>101 · 103</strong><p>matches only</p></article><article><span>left</span><strong>101 · 102 · 103 · 104</strong><p>all customers</p></article><article><span>right</span><strong>101 · 103 · 105</strong><p>all purchases</p></article><article><span>outer</span><strong>101 · 102 · 103 · 104 · 105</strong><p>everything</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Make one-to-many cardinality explicit. One customer row for 101 connects to two purchase rows, so the merged result contains two 101 rows. This is correct, not a duplicate error. Before every merge, analysts should check key uniqueness and predict the result shape.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS215 · Merge cardinality</div>
+      <div class="content">
+        <div class="eyebrow">One key can produce several rows</div>
+        <h2>Lucia appears twice because customer 101 bought twice.</h2>
+        <div class="fanout" role="img" aria-label="One customer row, 101 Lucia East, fans out to two matched rows: Laptop 1200 and Keyboard 75."><article><span>One customer row</span><strong>101 · Lucia · East</strong></article><div class="fan-lines"><i></i><i></i></div><div><article><span>Matched purchase</span><strong>Laptop · $1,200</strong></article><article><span>Matched purchase</span><strong>Keyboard · $75</strong></article></div></div>
+        <p class="field-note">Audit key uniqueness before and after every merge.</p>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Separate merge from concat by mechanism. Merge matches keys and combines columns. Concat stacks compatible frames with no key matching. The textbook January and February rows become a four-row table with ignore_index True. Ask what would go wrong if concat were used to attach customer names to purchases.&#10;&#10;Time: 41-44 minutes.">
+      <div class="brand">CIS215 · Merge or concat</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Connect versus stack</div>
+        <h2>Merge matches identity. Concat extends an axis.</h2>
+        <div class="merge-concat" role="img" aria-label="Merge connects customer and purchase columns by customer ID. Concat stacks two January rows above two February rows to make four rows."><article><span>merge</span><div class="side-frames"><i>customer</i><b>key</b><i>purchase</i></div><p>Match shared values</p></article><article><span>concat axis 0</span><div class="stack-frames"><i>January · 2 rows</i><i>February · 2 rows</i><b>4 rows</b></div><p>Stack compatible schemas</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Enact the wide-to-long transformation with the two-date, three-city temperature example. Wide stores each city as a separate column, two rows by four columns. Melt keeps date, turns city headers into values, and produces six rows by three columns. Every temperature survives exactly once.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS215 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow">Reshape, do not recalculate</div>
+        <h2><code>melt()</code> turns repeated columns into observations.</h2>
+        <div class="melt-fold" role="img" aria-label="A wide table with date, New York, Los Angeles, and Chicago columns becomes a long table with date, city, and temperature columns. Two wide rows become six long rows."><table><thead><tr><th>date</th><th>New York</th><th>Los Angeles</th><th>Chicago</th></tr></thead><tbody><tr><td>Jan 15</td><td>32</td><td>68</td><td>25</td></tr><tr><td>Jan 16</td><td>28</td><td>72</td><td>22</td></tr></tbody></table><div class="melt-arrow"><code>melt</code><span>2 × 4 → 6 × 3</span></div><table><thead><tr><th>date</th><th>city</th><th>temp</th></tr></thead><tbody><tr><td>Jan 15</td><td>New York</td><td>32</td></tr><tr><td>Jan 16</td><td>New York</td><td>28</td></tr><tr><td>Jan 15</td><td>Los Angeles</td><td>68</td></tr><tr><td>Jan 16</td><td>Los Angeles</td><td>72</td></tr><tr><td>Jan 15</td><td>Chicago</td><td>25</td></tr><tr><td>Jan 16</td><td>Chicago</td><td>22</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Bind each melt parameter to the part of the output it controls. id_vars keeps date unchanged. var_name creates the city column from old headers. value_name creates the temperature column from cell values. The color bindings connect syntax to the enacted table.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS215 · Melt anatomy</div>
+      <div class="content">
+        <div class="eyebrow">Every parameter has a destination</div>
+        <h2>Read the output schema directly from the call.</h2>
+        <div class="melt-anatomy" role="img" aria-label="id_vars date maps to the unchanged date output. var_name city maps old headers to a city column. value_name temperature maps cell values to a temperature column."><pre class="code">df.melt(
+  <mark class="id-key">id_vars=['date']</mark>,
+  <mark class="var-key">var_name='city'</mark>,
+  <mark class="value-key">value_name='temperature'</mark>
+)</pre><div class="schema-card"><span class="id-key">date</span><span class="var-key">city</span><span class="value-key">temperature</span><p>Jan 15 · New York · 32</p><p>Jan 15 · Los Angeles · 68</p><p>Jan 15 · Chicago · 25</p></div></div>
+      </div>
+    </section>
+
+    <section class="slide sand" data-notes="Compare pivot with pivot_table at the duplicate boundary. Pivot only reshapes and needs one value for every date-city pair. Two Phoenix readings for one date make that mapping ambiguous, so pivot fails. Pivot_table asks for an aggregation policy, such as mean, and returns one value.&#10;&#10;Time: 50-52 minutes.">
+      <div class="brand">CIS215 · Pivot boundary</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Duplicates force a decision</div>
+        <h2><code>pivot()</code> fails where <code>pivot_table()</code> aggregates.</h2>
+        <div class="duplicate-boundary" role="img" aria-label="Two Phoenix readings, 70 and 74, share one date. Pivot reports duplicate keys. Pivot table with mean returns 72."><div class="duplicate-input"><p>Jan 15 · Phoenix · <b>70</b></p><p>Jan 15 · Phoenix · <b>74</b></p></div><article class="fails"><span>pivot</span><strong>duplicate keys</strong><p>No aggregation policy</p></article><article class="resolves"><span>pivot_table mean</span><strong>72</strong><p>Declared rollup</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Handoff Skills Lab 8A with traced course-data checkpoints. Regional sales has 60 wide rows and becomes 240 long rows after melting four quarter columns. West has the largest total revenue at 1,065,201 dollars. West-Laptop ranks first at 226,362 dollars. The merged revenue-rating correlation is about 0.139, which is weak and does not justify predicting revenue from rating. Ratings repeat across four regions, so students must discuss that structure.&#10;&#10;Time: 52-54 minutes.&#10;&#10;Source: Chapter 8 regional_sales.csv and customer_reviews.csv.">
+      <div class="brand">CIS215 · Skills Lab 8A</div>
+      <div class="content">
+        <div class="eyebrow">Regional sales transformation</div>
+        <h2>Trace shape, leaders, and limits through every operation.</h2>
+        <div class="lab-trace" role="img" aria-label="The regional sales file has 60 rows. West-Laptop ranks first with 226,362 dollars. Melting four quarters creates 240 rows. West totals 1,065,201 dollars. The revenue-rating correlation is 0.139 and is weak."><article><span>Load</span><strong>60 × 7</strong><p>wide sales rows</p></article><b>→</b><article><span>Rank</span><strong>$226,362</strong><p>West · Laptop · #1</p></article><b>→</b><article><span>Melt</span><strong>240 rows</strong><p>four quarters become observations</p></article><b>→</b><article><span>Merge</span><strong>r = 0.139</strong><p>weak association, not prediction</p></article></div>
+        <p class="field-note">West totals $1,065,201. Repeated product ratings need interpretation.</p>
+      </div>
+    </section>
+
+    <section class="slide sand closing-slide" data-notes="Close with a decision-first prompt. Students should name what must change, which pandas operation performs that change, and one check that protects meaning. Useful checks include row count, key uniqueness, totals, missingness, and whether every source value survives the reshape.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Close the loop</div>
+        <h2>A transformed table needs a preserved meaning and a verified shape.</h2>
+        <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab step. Name the table change, the pandas operation, and the check that would catch a wrong result.</p></div>
+        <p class="field-note">Change the structure. Prove the meaning survived.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes"><h2>Presenter notes</h2><p id="notes-content"></p></div>
+  <nav class="nav" aria-label="Presentation controls"><button type="button" id="previous" aria-label="Previous slide">←</button><button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button><button type="button" id="next" aria-label="Next slide">→</button></nav>
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
