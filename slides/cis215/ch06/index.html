@@ -36,11 +36,14 @@
       <div class="content">
         <div class="eyebrow">Today’s target</div>
         <h2>Make each repair visible and defensible.</h2>
-        <div class="cleaning-targets" role="img" aria-label="Four learning steps: detect quality problems, decide how to treat them, repair the data with pandas, and verify the result.">
-          <article><span>01</span><strong>Detect</strong><p>Missing values, wrong types, duplicates, and mismatched text</p></article>
-          <article><span>02</span><strong>Decide</strong><p>Drop, fill, convert, standardize, or leave unchanged</p></article>
-          <article><span>03</span><strong>Repair</strong><p>Apply pandas methods in a safe order</p></article>
-          <article><span>04</span><strong>Verify</strong><p>Rerun the audit and explain what changed</p></article>
+        <div class="visual-split">
+          <div class="cleaning-targets compact" role="img" aria-label="Four learning steps: detect quality problems, decide how to treat them, repair the data with pandas, and verify the result.">
+            <article><span>01</span><strong>Detect</strong><p>Missing values, wrong types, duplicates, and mismatched text</p></article>
+            <article><span>02</span><strong>Decide</strong><p>Drop, fill, convert, standardize, or leave unchanged</p></article>
+            <article><span>03</span><strong>Repair</strong><p>Apply pandas methods in a safe order</p></article>
+            <article><span>04</span><strong>Verify</strong><p>Rerun the audit and explain what changed</p></article>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/title-conservator-hero.png" alt="A conservator in white gloves repairs one cell of a data-table document under a work lamp, with a swatch logbook recording each intervention beside the bench."><figcaption>Cleaning is restoration: every repair visible, every choice logged.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -50,19 +53,20 @@
       <div class="content">
         <div class="eyebrow">Audit before repair</div>
         <h2>Keep the source. Change a copy. Compare both.</h2>
-        <div class="audit-loop" role="img" aria-label="A five-step loop moves from preserve raw data to profile, choose treatments, repair a copy, and verify. Verification loops back to profiling.">
-          <article><span>1</span><strong>Preserve raw</strong></article>
-          <b aria-hidden="true">→</b>
-          <article><span>2</span><strong>Profile</strong></article>
-          <b aria-hidden="true">→</b>
-          <article><span>3</span><strong>Choose</strong></article>
-          <b aria-hidden="true">→</b>
-          <article><span>4</span><strong>Repair copy</strong></article>
-          <b aria-hidden="true">→</b>
-          <article><span>5</span><strong>Verify</strong></article>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/source-sealed-copy.png" alt="An original data document rests sealed in a glass archive case while an exact working copy takes repairs on a bench, with a comparison stand holding both side by side."><figcaption>The source stays sealed. The copy takes the repairs.</figcaption></figure>
+          <div class="loop-stack">
+            <div class="audit-loop stacked" role="img" aria-label="A five-step loop moves from preserve raw data to profile, choose treatments, repair a copy, and verify. Verification loops back to profiling.">
+              <article><span>1</span><strong>Preserve raw</strong></article>
+              <article><span>2</span><strong>Profile</strong></article>
+              <article><span>3</span><strong>Choose</strong></article>
+              <article><span>4</span><strong>Repair copy</strong></article>
+              <article><span>5</span><strong>Verify</strong></article>
+            </div>
+            <div class="loop-return"><b aria-hidden="true">↶</b><span>If verification finds a gap, profile the copy again.</span></div>
+            <p class="field-note">A cleaning log begins before the first value changes.</p>
+          </div>
         </div>
-        <div class="loop-return"><b aria-hidden="true">↶</b><span>If verification finds a gap, profile the copy again.</span></div>
-        <p class="field-note">A cleaning log begins before the first value changes.</p>
       </div>
     </section>
 
@@ -71,17 +75,22 @@
       <div class="content">
         <div class="eyebrow">Missing has a marker</div>
         <h2><code>NaN</code> means the value is absent, not zero.</h2>
-        <table class="missing-table">
-          <caption class="sr-only">Employee data with one missing name, one missing age, and one missing salary</caption>
-          <thead><tr><th></th><th>Name</th><th>Age</th><th>Salary</th></tr></thead>
-          <tbody>
-            <tr><th>0</th><td>Amara</td><td>25.0</td><td>50000.0</td></tr>
-            <tr><th>1</th><td>Kai</td><td class="missing">NaN</td><td>60000.0</td></tr>
-            <tr><th>2</th><td class="missing">NaN</td><td>35.0</td><td class="missing">NaN</td></tr>
-            <tr><th>3</th><td>Naomi</td><td>28.0</td><td>55000.0</td></tr>
-          </tbody>
-        </table>
-        <div class="prompt"><p><strong>Distinction:</strong> Zero is a recorded value. <code>NaN</code> says no value is recorded.</p></div>
+        <div class="visual-split">
+          <div>
+            <table class="missing-table">
+              <caption class="sr-only">Employee data with one missing name, one missing age, and one missing salary</caption>
+              <thead><tr><th></th><th>Name</th><th>Age</th><th>Salary</th></tr></thead>
+              <tbody>
+                <tr><th>0</th><td>Amara</td><td>25.0</td><td>50000.0</td></tr>
+                <tr><th>1</th><td>Kai</td><td class="missing">NaN</td><td>60000.0</td></tr>
+                <tr><th>2</th><td class="missing">NaN</td><td>35.0</td><td class="missing">NaN</td></tr>
+                <tr><th>3</th><td>Naomi</td><td>28.0</td><td>55000.0</td></tr>
+              </tbody>
+            </table>
+            <div class="prompt"><p><strong>Distinction:</strong> Zero is a recorded value. <code>NaN</code> says no value is recorded.</p></div>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/nan-missing-jar.png" alt="A shelf of jars holds token stacks at different levels, one jar holds a single flat zero disc, and one shelf spot has no jar at all, only a dashed glowing outline with a hanging tag."><figcaption>Zero is a jar with a value inside. NaN is the missing jar.</figcaption></figure>
+        </div>
       </div>
     </section>
 
@@ -117,12 +126,13 @@
       <div class="content">
         <div class="eyebrow">Two paths</div>
         <h2>Drop removes evidence. Fill creates an estimate.</h2>
-        <div class="treatment-fork" role="img" aria-label="A missing value splits into two treatment paths. Dropna removes the row and may reduce representation. Fillna inserts an estimate and may reduce variation.">
-          <div class="gap-record"><span>Age</span><strong>NaN</strong></div>
-          <b aria-hidden="true">↙</b>
-          <article class="drop"><code>.dropna()</code><strong>Remove</strong><p>Fewer records remain. Groups may lose representation.</p></article>
-          <b aria-hidden="true">↘</b>
-          <article class="fill"><code>.fillna()</code><strong>Estimate</strong><p>The record remains. Spread may shrink.</p></article>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/drop-vs-fill.png" alt="A row with a glowing hole reaches a fork: on one track the whole row tips into a mine cart and leaves a struck-out gap in the table above, while on the other a repair arm fits a stitched gold patch and the row rejoins its table."><figcaption>One path removes the row. The other inserts material you must defend.</figcaption></figure>
+          <div class="treatment-fork stacked" role="img" aria-label="A missing value splits into two treatment paths. Dropna removes the row and may reduce representation. Fillna inserts an estimate and may reduce variation.">
+            <div class="gap-record"><span>Age</span><strong>NaN</strong></div>
+            <article class="drop"><code>.dropna()</code><strong>Remove</strong><p>Fewer records remain. Groups may lose representation.</p></article>
+            <article class="fill"><code>.fillna()</code><strong>Estimate</strong><p>The record remains. Spread may shrink.</p></article>
+          </div>
         </div>
       </div>
     </section>
@@ -325,15 +335,18 @@
       <div class="content">
         <div class="eyebrow">Make the reasoning inspectable</div>
         <h2>A colleague should be able to rebuild the clean dataset.</h2>
-        <table class="cleaning-log">
-          <caption class="sr-only">Example cleaning log with columns for problem, rule, impact, and reason</caption>
-          <thead><tr><th>Problem</th><th>Rule</th><th>Impact</th><th>Reason</th></tr></thead>
-          <tbody>
-            <tr><td>5 exact duplicates</td><td>Keep first</td><td>80 → 75 rows</td><td>Repeated exports</td></tr>
-            <tr><td>Missing Age</td><td>Fill median</td><td>6 estimates</td><td>Keep valid outcome records</td></tr>
-            <tr><td>7 store labels</td><td>Strip + title</td><td>7 → 3 groups</td><td>One spelling per location</td></tr>
-          </tbody>
-        </table>
+        <div class="visual-split">
+          <table class="cleaning-log">
+            <caption class="sr-only">Example cleaning log with columns for problem, rule, impact, and reason</caption>
+            <thead><tr><th>Problem</th><th>Rule</th><th>Impact</th><th>Reason</th></tr></thead>
+            <tbody>
+              <tr><td>5 exact duplicates</td><td>Keep first</td><td>80 → 75 rows</td><td>Repeated exports</td></tr>
+              <tr><td>Missing Age</td><td>Fill median</td><td>6 estimates</td><td>Keep valid outcome records</td></tr>
+              <tr><td>7 store labels</td><td>Strip + title</td><td>7 → 3 groups</td><td>One spelling per location</td></tr>
+            </tbody>
+          </table>
+          <figure class="visual-art print-frame"><img src="assets/rebuild-recipe.png" alt="Two different figures follow the same pictogram recipe card and each produces an identical clean data-table dish, joined by a gold double line."><figcaption>The log is a recipe: anyone can rerun it and get the same dataset.</figcaption></figure>
+        </div>
       </div>
     </section>
 
