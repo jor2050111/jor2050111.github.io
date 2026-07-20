@@ -16,7 +16,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the NOAA climate-normal contrast. Phoenix average highs rise from 67.2 degrees in January to 106.5 in July, then return to 66.2 in December. A list gives the values. A line makes the seasonal shape immediate. Ask which form helps them answer when the peak occurs.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Source: NOAA 1991-2020 climate normals in the CIS215 Chapter 7 course-data file.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="plot-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <figure class="title-art" aria-hidden="true"><img src="assets/title-pattern-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 7</div>
         <div class="rule"></div>
@@ -68,13 +68,18 @@
       <div class="content">
         <div class="eyebrow">The pyplot pipeline</div>
         <h2>Data becomes marks, then context, then a figure.</h2>
-        <div class="plot-pipeline" role="img" aria-label="Month and temperature sequences flow into plt.plot, then title and axis labels, then plt.show, which renders a line chart.">
-          <article><span>Data</span><code>months<br>temps</code></article><b>→</b>
-          <article><span>Marks</span><code>plt.plot(x, y)</code></article><b>→</b>
-          <article><span>Context</span><code>title · xlabel · ylabel</code></article><b>→</b>
-          <article class="render"><span>Render</span><code>plt.show()</code></article>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/figure-layers.png" alt="Three assembly stages on a bench: loose dots on a bare board, the same dots placed on ruled axes showing a trend, and the finished framed chart with title and legend strips on an easel."><figcaption>Marks first, context second, then the framed argument.</figcaption></figure>
+          <div class="pipeline-stack">
+            <div class="plot-pipeline stacked" role="img" aria-label="Month and temperature sequences flow into plt.plot, then title and axis labels, then plt.show, which renders a line chart.">
+              <article><span>Data</span><code>months<br>temps</code></article><b>↓</b>
+              <article><span>Marks</span><code>plt.plot(x, y)</code></article><b>↓</b>
+              <article><span>Context</span><code>title · xlabel · ylabel</code></article><b>↓</b>
+              <article class="render"><span>Render</span><code>plt.show()</code></article>
+            </div>
+            <pre class="code"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</pre>
+          </div>
         </div>
-        <pre class="code"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</pre>
       </div>
     </section>
 
@@ -240,8 +245,13 @@
       <div class="content">
         <div class="eyebrow navy-text">Close the loop</div>
         <h2>A chart is an argument about what deserves attention.</h2>
-        <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab question. Name the chart, the pattern it reveals, and one thing it makes harder to see.</p></div>
-        <p class="field-note">Build the chart. Defend the choice.</p>
+        <div class="visual-split">
+          <div>
+            <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab question. Name the chart, the pattern it reveals, and one thing it makes harder to see.</p></div>
+            <p class="field-note">Build the chart. Defend the choice.</p>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/table-vs-chart.png" alt="A hand lens finds one cell in a dense ledger table, while the same data drawn as a curve shows its rise, peak, and dip at a glance, with a gold thread linking the cell to its point."><figcaption>A table answers a lookup. A chart argues for the shape.</figcaption></figure>
+        </div>
       </div>
     </section>
   </main>
