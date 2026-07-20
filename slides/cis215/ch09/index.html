@@ -16,7 +16,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the difference between seeing a sample pattern and judging how much evidence it provides. The signal trace shows observations around a trend, not certainty. Ask what information students would need before acting on a visible difference.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="signal-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <figure class="title-art" aria-hidden="true"><img src="assets/title-uncertainty-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 9</div><div class="rule"></div>
         <h1>Treat uncertainty as data.</h1>
@@ -30,7 +30,10 @@
       <div class="content">
         <div class="eyebrow">Today's target</div>
         <h2>Move from pattern to evidence without overstating the result.</h2>
-        <div class="evidence-path" role="img" aria-label="Four stages: relate numeric variables, state hypotheses, compare groups, and interpret the decision with limits."><article><span>01</span><strong>Relate</strong><p>Correlation</p></article><b>→</b><article><span>02</span><strong>State</strong><p>H0 and H1</p></article><b>→</b><article><span>03</span><strong>Test</strong><p>t or chi-square</p></article><b>→</b><article><span>04</span><strong>Interpret</strong><p>Decision plus limits</p></article></div>
+        <div class="visual-split">
+          <div class="evidence-path stacked" role="img" aria-label="Four stages: relate numeric variables, state hypotheses, compare groups, and interpret the decision with limits."><article><span>01</span><strong>Relate</strong><p>Correlation</p></article><article><span>02</span><strong>State</strong><p>H0 and H1</p></article><article><span>03</span><strong>Test</strong><p>t or chi-square</p></article><article><span>04</span><strong>Interpret</strong><p>Decision plus limits</p></article></div>
+          <figure class="visual-art print-frame"><img src="assets/signal-vs-noise-scale.png" alt="A balance scale weighs a crisp gold bracket measuring the gap between two group means against two wide fuzzy overlapping spread mounds, and a verdict lamp begins to glow as the gap side wins."><figcaption>A difference earns significance only when it outweighs the noise.</figcaption></figure>
+        </div>
       </div>
     </section>
 
@@ -67,7 +70,10 @@
       <div class="content">
         <div class="eyebrow navy-text">One number cannot show shape</div>
         <h2>Plot the points before you trust the coefficient.</h2>
-        <div class="shape-check" role="img" aria-label="Three miniature plots show a linear pattern suited to r, a curved pattern that r can miss, and a cluster whose r is distorted by one outlier."><article><span>Linear</span><div class="mini-shape linear"></div><p>r summarizes the pattern</p></article><article><span>Curved</span><div class="mini-shape curve"></div><p>r can sit near zero</p></article><article><span>Outlier</span><div class="mini-shape outlier"></div><p>one point can pull r</p></article></div>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/same-dial-four-shapes.png" alt="Four scatter panels with very different point patterns, a straight rise, an arch, a flat line with one high outlier, and a vertical column, all wire down to one gauge showing a single needle position."><figcaption>Four different shapes, one identical reading: r cannot see shape.</figcaption></figure>
+          <div class="shape-check stacked" role="img" aria-label="Three patterns to check: a linear pattern suits r, a curved pattern can leave r near zero, and one outlier can pull r."><article><span>Linear</span><p>r summarizes the pattern</p></article><article><span>Curved</span><p>r can sit near zero</p></article><article><span>Outlier</span><p>one point can pull r</p></article></div>
+        </div>
       </div>
     </section>
 
@@ -180,7 +186,10 @@
       <div class="content">
         <div class="eyebrow navy-text">More tests create more false-positive chances</div>
         <h2>Twenty tests make one <code>p &lt; .05</code> unsurprising under pure noise.</h2>
-        <div class="test-array" role="img" aria-label="Twenty hypothesis tests are shown. One is highlighted as a false positive. At alpha 0.05, the chance of at least one false positive across 20 independent null tests is about 64.2 percent."><div class="test-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="false"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="risk-equation"><code>1 - (1 - .05)<sup>20</sup></code><strong>≈ 64.2%</strong></div></div>
+        <div class="visual-split">
+          <div class="test-array stacked" role="img" aria-label="Twenty hypothesis tests are shown. One is highlighted as a false positive. At alpha 0.05, the chance of at least one false positive across 20 independent null tests is about 64.2 percent."><div class="test-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="false"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="risk-equation"><code>1 - (1 - .05)<sup>20</sup></code><strong>≈ 64.2%</strong></div></div>
+          <figure class="visual-art print-frame"><img src="assets/twenty-machines.png" alt="In a grid of twenty identical slot machines, nineteen sit dark while one flashes a gold jackpot, and a small figure celebrates at that single machine."><figcaption>Run twenty tests and chance alone hands someone a jackpot.</figcaption></figure>
+        </div>
       </div>
     </section>
 
