@@ -206,17 +206,23 @@
       <div class="content">
         <div class="eyebrow">Say it aloud</div>
         <h2>Two features, mirror images.</h2>
-        <div class="mirror-pair">
-          <article>
-            <code>@media (max-width: 600px)</code>
-            <h3>"At most 600 wide"</h3>
-            <p>The small-screen feature. Fires on narrow windows, sleeps on wide ones.</p>
-          </article>
-          <article>
-            <code>@media (min-width: 600px)</code>
-            <h3>"At least 600 wide"</h3>
-            <p>The wide-screen feature. Fires in the other direction.</p>
-          </article>
+        <div class="width-ruler" role="img" aria-label="One shared width ruler runs from 0 to 1200 pixels. An amber band for max-width 600, read aloud as at most 600 wide, fires from 0 up to the 600 tick. A blue band for min-width 600, at least 600 wide, fires from the 600 tick upward. The two bands meet at a highlighted gold 600 tick, the width both features include.">
+          <div class="band-row">
+            <div class="band band-max">
+              <code>@media (max-width: 600px)</code>
+              <strong>“At most 600 wide”</strong>
+              <p>Fires from 0 up to the 600 tick, then sleeps.</p>
+            </div>
+            <div class="band band-min">
+              <code>@media (min-width: 600px)</code>
+              <strong>“At least 600 wide”</strong>
+              <p>Fires from the 600 tick up, without limit.</p>
+            </div>
+          </div>
+          <div class="fire-bars" aria-hidden="true"><i class="bar-max"></i><i class="bar-min"></i></div>
+          <div class="ruler-track" aria-hidden="true">
+            <span>0</span><span>200</span><span>400</span><span class="key">600</span><span>800</span><span>1000</span><span>1200</span>
+          </div>
         </div>
         <p class="gauge-note">Each feature includes the width it names.</p>
       </div>

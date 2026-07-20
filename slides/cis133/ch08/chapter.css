@@ -183,13 +183,7 @@ h2 {
   box-shadow: .65rem .65rem 0 rgba(0, 26, 54, .16);
 }
 
-.objective-modules article:nth-child(2) {
-  border-top-color: var(--lab8-gold);
-}
-
-.objective-modules article:nth-child(4) {
-  border-top-color: var(--lab8-gold);
-}
+/* All modules share one blue rail: position earns no recolor. */
 
 .objective-modules article::after {
   position: absolute;
@@ -442,48 +436,132 @@ h2 {
   right: 3.2rem;
 }
 
-/* Mirror pair. */
-.mirror-pair {
+/* The shared width ruler: amber owns "at most", blue owns "at
+   least", and the bands meet at the gold 600 tick. */
+.width-ruler {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2.4vw, 2rem);
+  gap: .55rem;
   max-width: 76rem;
 }
 
-.mirror-pair article {
-  padding: clamp(1rem, 2vw, 1.6rem);
+.band-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.band {
+  padding: clamp(.9rem, 1.8vw, 1.4rem);
   background: #fff;
   border: .12rem solid var(--lab8-line);
   box-shadow: .65rem .65rem 0 rgba(0, 26, 54, .14);
 }
 
-.mirror-pair article:first-child {
+.band-max {
   border-top: .55rem solid var(--lab8-warn);
 }
 
-.mirror-pair article:last-child {
+.band-min {
   border-top: .55rem solid var(--lab8-blue);
 }
 
-.mirror-pair code {
+.band code {
   display: block;
   width: fit-content;
   padding: .4rem .65rem;
   color: #fff;
   background: var(--lab8-deep);
-  font-size: clamp(.9rem, 1.4vw, 1.25rem);
+  font-size: clamp(.85rem, 1.3vw, 1.15rem);
   font-weight: 800;
 }
 
-.mirror-pair h3 {
-  margin-top: .8rem;
+.band strong {
+  display: block;
+  margin-top: .7rem;
   color: var(--lab8-deep);
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
 }
 
-.mirror-pair p {
-  margin-top: .5rem;
+.band p {
+  margin: .4rem 0 0;
   color: var(--lab8-ink);
-  font-size: clamp(.92rem, 1.2vw, 1.1rem);
+  font-size: clamp(.88rem, 1.15vw, 1.05rem);
+}
+
+.fire-bars {
+  position: relative;
+  display: flex;
+  height: 1.1rem;
+  margin-top: .3rem;
+}
+
+.fire-bars i {
+  display: block;
+  height: 100%;
+}
+
+.bar-max {
+  width: 50%;
+  background: var(--lab8-warn);
+  border-radius: .3rem 0 0 .3rem;
+}
+
+.bar-min {
+  width: 50%;
+  background: var(--lab8-blue);
+  border-radius: 0 .3rem .3rem 0;
+}
+
+.fire-bars::after {
+  content: "";
+  position: absolute;
+  top: -.45rem;
+  left: 50%;
+  width: .3rem;
+  height: 2rem;
+  background: var(--lab8-gold);
+  transform: translateX(-50%);
+}
+
+.ruler-track {
+  display: flex;
+  justify-content: space-between;
+  padding-top: .55rem;
+  border-top: .22rem solid var(--lab8-deep);
+  color: var(--lab8-deep);
+  font-family: var(--code);
+  font-size: clamp(.68rem, .95vw, .9rem);
+  font-weight: 800;
+}
+
+.ruler-track span {
+  position: relative;
+  padding-top: .3rem;
+}
+
+.ruler-track span::before {
+  content: "";
+  position: absolute;
+  top: -.55rem;
+  left: 50%;
+  width: .16rem;
+  height: .6rem;
+  background: var(--lab8-deep);
+  transform: translateX(-50%);
+}
+
+.ruler-track .key {
+  padding: .15rem .45rem;
+  color: var(--lab8-deep);
+  background: var(--lab8-gold);
+  border-radius: .2rem;
+}
+
+.ruler-track .key::before {
+  top: -.85rem;
+  width: .3rem;
+  height: .9rem;
+  background: var(--lab8-gold);
 }
 
 /* Trace board. */
@@ -729,9 +807,14 @@ h2 {
   }
 
   .objective-modules,
-  .mirror-pair,
+  .band-row,
   .lab-pipeline {
     grid-template-columns: 1fr;
+  }
+
+  .ruler-track span:nth-child(2),
+  .ruler-track span:nth-child(6) {
+    display: none;
   }
 
   .visual-grid figure {
