@@ -130,7 +130,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Resolve the opening numbers with the actual price distribution. The mode is $24.99, median $119.99, and mean $307.84. High-priced laptops stretch the right tail and pull the mean upward. The median better describes a typical order price here.&#10;&#10;Time: 23-27 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+    <section class="slide dark" data-notes="Resolve the opening numbers with the actual price distribution. The mode is $24.99, median $119.99, and mean $307.84. High-priced laptops stretch the right tail and pull the mean upward. Every dot uses the same neutral blue because the sketch shows distribution density, not categories. Gold is reserved for the three calculated statistic pins. The median better describes a typical order price here.&#10;&#10;Time: 23-27 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
       <div class="brand">CIS215 · Read the skew</div>
       <div class="content">
         <div class="eyebrow">The right tail pulls</div>
@@ -256,7 +256,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Use nlargest and nsmallest when the question asks for a short ranked list. These methods combine ordering and selection. They express the analyst's intent more clearly than sorting the full table and calling head.&#10;&#10;Time: 48-50 minutes.">
+    <section class="slide dark" data-notes="Use nlargest and nsmallest when the question asks for a short ranked list. Trace the actual top five Revenue rows from the chapter dataset. Orders 1055 and 1197 tie at $6,649.93. Orders 1035, 1088, and 1115 tie at $5,999.95. The list positions preserve the returned five-row order, while the note names both ties. These methods combine ordering and selection and express intent more clearly than sorting the full table and calling head.&#10;&#10;Time: 48-50 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
       <div class="brand">CIS215 · Top and bottom</div>
       <div class="content">
         <div class="eyebrow">Ask for only what you need</div>
@@ -266,9 +266,15 @@
 top_5 = df_orders.<span class="function">nlargest</span>(
     5, <span class="string">'Revenue'</span>
 )</pre>
-          <div class="rank-cards" aria-label="A ranked top five list represented by five descending bars."><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+          <ol class="rank-cards" aria-label="The five highest-revenue orders. Positions one and two each have revenue 6,649 dollars and 93 cents. Positions three through five each have revenue 5,999 dollars and 95 cents.">
+            <li class="top-tie" style="--bar:100%"><span>1</span><small>Order 1055 · West</small><strong>$6,649.93</strong></li>
+            <li class="top-tie" style="--bar:100%"><span>2</span><small>Order 1197 · West</small><strong>$6,649.93</strong></li>
+            <li style="--bar:90.2%"><span>3</span><small>Order 1035 · East</small><strong>$5,999.95</strong></li>
+            <li style="--bar:90.2%"><span>4</span><small>Order 1088 · South</small><strong>$5,999.95</strong></li>
+            <li style="--bar:90.2%"><span>5</span><small>Order 1115 · North</small><strong>$5,999.95</strong></li>
+          </ol>
         </div>
-        <p class="field-note"><code>.nsmallest()</code> answers the opposite question.</p>
+        <p class="field-note"><span>Ties: positions 1-2 and 3-5. Opposite: <code>.nsmallest()</code>.</span></p>
       </div>
     </section>
 
