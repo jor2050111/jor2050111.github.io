@@ -262,8 +262,26 @@ h2 {
 .visual-grid img {
   display: block;
   width: 100%;
-  max-height: 64vh;
+  max-height: 60vh;
   object-fit: contain;
+}
+
+.visual-grid figcaption {
+  padding: .55rem .3rem .15rem;
+  color: #5e2a1d;
+  font-size: clamp(.88rem, 1.25vw, 1.18rem);
+  font-weight: 800;
+}
+
+.visual-grid figcaption::before {
+  content: "";
+  display: inline-block;
+  width: .55rem;
+  height: .55rem;
+  margin-right: .5rem;
+  border-radius: 50%;
+  background: #ffd573;
+  box-shadow: 0 0 0 .14rem rgba(94, 42, 29, .35);
 }
 
 .reader-key {
@@ -443,6 +461,147 @@ h2 {
   border-color: #03488f;
 }
 
+/* Landmark census check */
+.census-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  max-width: 52rem;
+}
+
+.census-cards article {
+  display: grid;
+  justify-items: start;
+  gap: .45rem;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  background: #fffaf3;
+  border: .1rem solid rgba(94, 42, 29, .24);
+  box-shadow: .55rem .55rem 0 rgba(94, 42, 29, .09);
+}
+
+.census-cards code {
+  color: #03488f;
+  font-size: clamp(1.3rem, 2.2vw, 2.1rem);
+  font-weight: 900;
+}
+
+.census-cards p {
+  margin: 0;
+  color: #5e2a1d;
+  font-size: clamp(.9rem, 1.2vw, 1.1rem);
+}
+
+.tally-line {
+  width: 6.5rem;
+  height: 1.6rem;
+  border-bottom: .18rem dashed rgba(94, 42, 29, .45);
+}
+
+/* Zoom test: raster pixels surface, vector redraws */
+.zoom-bench {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  max-width: 72rem;
+}
+
+.zoom-pane {
+  display: grid;
+  justify-items: start;
+  gap: .6rem;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  background: #fffaf3;
+  border: .1rem solid rgba(94, 42, 29, .24);
+  box-shadow: .55rem .55rem 0 rgba(94, 42, 29, .09);
+}
+
+.zoom-tag {
+  width: fit-content;
+  padding: .3rem .55rem;
+  color: #fff;
+  background: #03488f;
+  font-size: clamp(.7rem, .95vw, .9rem);
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.zoom-pane:first-child .zoom-tag {
+  background: #7c3626;
+}
+
+.zoom-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 9rem;
+}
+
+.zoom-row i {
+  display: block;
+  background: #7c3626;
+}
+
+.dot-shape {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+}
+
+.px-shape {
+  width: 8.5rem;
+  height: 8.5rem;
+  clip-path: polygon(37.5% 0, 62.5% 0, 62.5% 12.5%, 75% 12.5%, 75% 25%, 87.5% 25%, 87.5% 37.5%, 100% 37.5%, 100% 62.5%, 87.5% 62.5%, 87.5% 75%, 75% 75%, 75% 87.5%, 62.5% 87.5%, 62.5% 100%, 37.5% 100%, 37.5% 87.5%, 25% 87.5%, 25% 75%, 12.5% 75%, 12.5% 62.5%, 0 62.5%, 0 37.5%, 12.5% 37.5%, 12.5% 25%, 25% 25%, 25% 12.5%, 37.5% 12.5%);
+}
+
+.zoom-row .vec-shape {
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+  background: #03488f;
+}
+
+.zoom-pane:last-child .dot-shape {
+  background: #03488f;
+}
+
+.zoom-arrow {
+  color: #5e2a1d;
+  font-size: clamp(.72rem, 1vw, .92rem);
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.zoom-arrow::after {
+  content: " →";
+}
+
+.zoom-pane p {
+  margin: 0;
+  font-size: clamp(.92rem, 1.2vw, 1.12rem);
+}
+
+.zoom-verdict {
+  color: #5e2a1d;
+  font-weight: 800;
+  font-size: clamp(.95rem, 1.35vw, 1.3rem);
+}
+
+.alt-sample,
+.format-sample {
+  display: block;
+  margin-top: .7rem;
+  padding: .4rem .5rem;
+  color: #5e2a1d;
+  background: rgba(124, 54, 38, .08);
+  border-radius: .2rem;
+  font-family: var(--code);
+  font-size: clamp(.66rem, .92vw, .9rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
 .format-matrix {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -461,11 +620,11 @@ h2 {
 }
 
 .format-matrix article:nth-child(3) {
-  border-top-color: #c9821f;
+  border-top-color: #e0a92e;
 }
 
 .format-matrix article:nth-child(4) {
-  border-top-color: #2f7d54;
+  border-top-color: #6d7f93;
 }
 
 .format-matrix strong {
@@ -553,8 +712,21 @@ h2 {
   .language-specimens,
   .container-map,
   .attribute-cards,
-  .format-matrix {
+  .format-matrix,
+  .census-cards,
+  .zoom-bench {
     grid-template-columns: 1fr;
+  }
+
+  .zoom-row {
+    flex-wrap: wrap;
+    min-height: auto;
+  }
+
+  .zoom-row .px-shape,
+  .zoom-row .vec-shape {
+    width: 6.5rem;
+    height: 6.5rem;
   }
 
   .objective-trail article:nth-child(2),

@@ -46,7 +46,7 @@
           <h2>Pixels serve one reader. Semantics serve all three.</h2>
           <ul class="reader-key"><li><strong>Browser:</strong> renders the page for sighted visitors.</li><li><strong>Assistive technology:</strong> announces the structure.</li><li><strong>Software:</strong> parses meaning without drawing the page.</li></ul>
         </div>
-        <figure><img src="assets/three-readers.png" alt="One web page specimen viewed as pixels, a structured outline, and a network of semantic signals."></figure>
+        <figure><img src="assets/three-readers.png" alt="One web page specimen viewed as pixels, a structured outline, and a network of semantic signals."><figcaption>Only one of the three readers ever sees pixels.</figcaption></figure>
       </div>
     </section>
 
@@ -79,7 +79,7 @@
     <section class="slide dark image-slide" data-notes="Use the three pinned specimens to compare a warning, spoken stress, and a visual-only treatment. Ask students which two preserve meaning in the file.\n\nTime: 17-20 minutes.">
       <div class="brand">CIS133 · 3.1</div>
       <div class="content visual-grid reverse">
-        <figure><img src="assets/meaning-signals.png" alt="Field notebook with three language specimens represented by a warning symbol, voice stress waveform, and paint brush."></figure>
+        <figure><img src="assets/meaning-signals.png" alt="Field notebook with three language specimens represented by a warning symbol, voice stress waveform, and paint brush."><figcaption>The file records meaning, or it records only a look.</figcaption></figure>
         <div>
           <div class="eyebrow">The pixel test can mislead you</div>
           <h2>Two elements can look alike while recording different meaning.</h2>
@@ -115,7 +115,7 @@
       </div>
     </section>
 
-    <section class="slide image-slide map-slide" data-notes="Trace the shortcut from navigation to the main region. Point out that section and article organize content but do not join the screen reader's landmark menu.\n\nTime: 28-32 minutes.">
+    <section class="slide image-slide map-slide" data-notes="Trace the shortcut from navigation to the main region. Point out that section and article organize content but do not join the screen reader's landmark menu.\n\nTime: 28-31 minutes.">
       <div class="brand">CIS133 · 3.2</div>
       <div class="content visual-grid">
         <div>
@@ -123,11 +123,26 @@
           <h2>One keystroke can reach the page’s main content.</h2>
           <p class="lede">The visible page may look the same, but its structure becomes easier to explore.</p>
         </div>
-        <figure><img src="assets/landmark-map.png" alt="Field map of a web page with header, navigation, main, and footer regions plus a direct route to main content."></figure>
+        <figure><img src="assets/landmark-map.png" alt="Field map of a web page with header, navigation, main, and footer regions plus a direct route to main content."><figcaption>The hallway has doors now, and every door has a label.</figcaption></figure>
       </div>
     </section>
 
-    <section class="slide image-code-slide" data-notes="Name the four image attributes. Stress that alt is required and dimensions must state the file's true size. A relative src keeps the site portable.\n\nTime: 32-36 minutes.">
+    <section class="slide check-slide" data-notes="This is the landmark census from the chapter. Give pairs one minute to commit both counts in writing before revealing. Wikipedia is professional markup at scale: exactly one main, and a nav for the menu, the table of contents, and the footer. Ask why the two counts must differ.\n\nTime: 31-34 minutes.">
+      <div class="brand">CIS133 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">Predict, then count</div>
+        <h2>A Wikipedia article holds how many of each?</h2>
+        <div class="census-cards">
+          <article><code>&lt;main&gt;</code><p>elements on the page</p><span class="tally-line" aria-hidden="true"></span></article>
+          <article><code>&lt;nav&gt;</code><p>elements on the page</p><span class="tally-line" aria-hidden="true"></span></article>
+        </div>
+        <div class="prompt"><p><strong>Commit:</strong> Write both counts, then defend each with the element’s job.</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>&lt;main&gt;: exactly 1.</strong> It marks the one place the primary content starts. <strong>&lt;nav&gt;: several.</strong> The site menu, the table of contents, and the footer links each earn one, so that count grows with the page.</div>
+      </div>
+    </section>
+
+    <section class="slide image-code-slide" data-notes="Name the four image attributes. Stress that alt is required and dimensions must state the file's true size. A relative src keeps the site portable.\n\nTime: 34-37 minutes.">
       <div class="brand">CIS133 · 3.3</div>
       <div class="content">
         <div class="eyebrow">Embed the file</div>
@@ -143,23 +158,23 @@
       </div>
     </section>
 
-    <section class="slide alt-slide" data-notes="Ask the decision question before showing the three jobs. Stress that alt text describes purpose in this page, not the file in isolation.\n\nTime: 36-40 minutes.">
+    <section class="slide alt-slide" data-notes="Ask the decision question before showing the three jobs. Stress that alt text describes purpose in this page, not the file in isolation. Read each written sample aloud so students hear what a screen reader delivers.\n\nTime: 37-40 minutes.">
       <div class="brand">CIS133 · 3.3</div>
       <div class="content">
         <div class="eyebrow">Write alt text by purpose</div>
         <h2>What job is this image doing on this page?</h2>
         <div class="alt-decisions">
-          <article><div class="specimen-tag">Informative</div><h3>Describe what matters.</h3><p>Replace the image with one useful sentence.</p></article>
-          <article><div class="specimen-tag">Decorative</div><h3>Use deliberate empty alt.</h3><p><code>alt=""</code> tells a screen reader to skip it.</p></article>
-          <article><div class="specimen-tag">Functional</div><h3>Name the destination.</h3><p>A linked logo describes where the link goes.</p></article>
+          <article><div class="specimen-tag">Informative</div><h3>Describe what matters.</h3><p>Replace the image with one useful sentence.</p><code class="alt-sample">alt="Three green cacti in a gravel garden under an orange sky"</code></article>
+          <article><div class="specimen-tag">Decorative</div><h3>Use deliberate empty alt.</h3><p><code>alt=""</code> tells a screen reader to skip it.</p><code class="alt-sample">alt=""</code></article>
+          <article><div class="specimen-tag">Functional</div><h3>Name the destination.</h3><p>A linked logo describes where the link goes.</p><code class="alt-sample">alt="PC Computer Club home"</code></article>
         </div>
       </div>
     </section>
 
-    <section class="slide dark image-slide" data-notes="Use the repeated cactus to show that the same file can have three jobs. For the functional example, alt text should name the home destination, not describe the cactus.\n\nTime: 40-44 minutes.">
+    <section class="slide dark image-slide" data-notes="Use the repeated cactus to show that the same file can have three jobs. For the functional example, alt text should name the home destination, not describe the cactus.\n\nTime: 40-43 minutes.">
       <div class="brand">CIS133 · 3.3</div>
       <div class="content visual-grid reverse">
-        <figure><img src="assets/alt-purpose.png" alt="The same cactus image used as informative content, a decorative divider, and a functional home link on three page specimens."></figure>
+        <figure><img src="assets/alt-purpose.png" alt="The same cactus image used as informative content, a decorative divider, and a functional home link on three page specimens."><figcaption>One file, three jobs, three different alt texts.</figcaption></figure>
         <div>
           <div class="eyebrow">Purpose changes the decision</div>
           <h2>Alt text belongs to the image’s job, not its filename.</h2>
@@ -168,22 +183,51 @@
       </div>
     </section>
 
-    <section class="slide format-slide" data-notes="Have students match each format to its strongest use. Mention WebP as a modern raster format students will encounter, but keep the decision practice on the four chapter formats.\n\nTime: 44-48 minutes.">
+    <section class="slide zoom-slide" data-notes="Run the zoom test on the two families. At true size the two circles look identical. Zoom the raster and the pixel squares surface as stair steps. Zoom the vector and the computer redraws the same sharp shape, because the file stores instructions, not squares.\n\nTime: 43-46 minutes.">
+      <div class="brand">CIS133 · 3.4</div>
+      <div class="content">
+        <div class="eyebrow">Two families, one zoom test</div>
+        <h2>Raster stores pixels. Vector stores instructions.</h2>
+        <div class="zoom-bench" role="img" aria-label="Two zoom tests side by side. A raster circle looks smooth at true size, but zooming four times reveals blocky stair-stepped pixel edges. A vector circle redraws perfectly smooth at both sizes because the file stores shape instructions instead of pixels.">
+          <article class="zoom-pane">
+            <span class="zoom-tag">Raster · a grid of pixels</span>
+            <div class="zoom-row">
+              <i class="dot-shape"></i>
+              <span class="zoom-arrow">zoom 4x</span>
+              <i class="px-shape"></i>
+            </div>
+            <p>Scale it past its true size and the squares show.</p>
+          </article>
+          <article class="zoom-pane">
+            <span class="zoom-tag">Vector · shapes as math</span>
+            <div class="zoom-row">
+              <i class="dot-shape"></i>
+              <span class="zoom-arrow">zoom 4x</span>
+              <i class="vec-shape"></i>
+            </div>
+            <p>The computer redraws it sharp at any size.</p>
+          </article>
+        </div>
+        <p class="zoom-verdict">Photos are raster by nature. Logos and diagrams live as vectors.</p>
+      </div>
+    </section>
+
+    <section class="slide format-slide" data-notes="Have students match each format to its strongest use, and read each card's club file as the worked example. Mention WebP as a modern raster format students will encounter, but keep the decision practice on the four chapter formats.\n\nTime: 46-49 minutes.">
       <div class="brand">CIS133 · 3.4</div>
       <div class="content">
         <div class="eyebrow">Choose a format by trade-off</div>
         <h2>Content and properties decide the file type.</h2>
         <div class="format-matrix">
-          <article><strong>PNG</strong><span>Raster · Lossless</span><p>Flat illustrations, screenshots, and transparency</p></article>
-          <article><strong>JPEG</strong><span>Raster · Lossy</span><p>Photographs at a smaller file size</p></article>
-          <article><strong>GIF</strong><span>Raster · 256 colors</span><p>Simple frame animation</p></article>
-          <article><strong>SVG</strong><span>Vector · Scalable</span><p>Logos, icons, and diagrams</p></article>
+          <article><strong>PNG</strong><span>Raster · Lossless</span><p>Flat illustrations, screenshots, and transparency</p><code class="format-sample">club-logo.png keeps its see-through corners</code></article>
+          <article><strong>JPEG</strong><span>Raster · Lossy</span><p>Photographs at a smaller file size</p><code class="format-sample">the fall drive photo, at a fraction of the bytes</code></article>
+          <article><strong>GIF</strong><span>Raster · 256 colors</span><p>Simple frame animation</p><code class="format-sample">the three-second sign-up demo</code></article>
+          <article><strong>SVG</strong><span>Vector · Scalable</span><p>Logos, icons, and diagrams</p><code class="format-sample">the logo redrawn sharp on a poster</code></article>
         </div>
         <div class="prompt"><p><strong>Decision:</strong> Which format fits a logo that must stay sharp on a phone and a poster?</p></div>
       </div>
     </section>
 
-    <section class="slide lab-slide" data-notes="Connect relative image paths to Chapter 2's relative links. Preview the lab: retrofit landmarks, add images with alt decisions, then build the gallery and test all pages.\n\nTime: 48-52 minutes.">
+    <section class="slide lab-slide" data-notes="Connect relative image paths to Chapter 2's relative links. Preview the lab: retrofit landmarks, add images with alt decisions, then build the gallery and test all pages.\n\nTime: 49-52 minutes.">
       <div class="brand">CIS133 · Skills Lab 3A</div>
       <div class="content split">
         <div>
@@ -210,7 +254,7 @@
           <h2>A page is finished when every reader can understand its purpose.</h2>
           <div class="prompt"><p><strong>Exit ticket:</strong> Name one semantic choice and one image choice the validator cannot make for you.</p></div>
         </div>
-        <figure><img src="assets/image-formats.png" alt="Archival drawers comparing a photograph, transparent illustration, simple frame animation, and scalable geometric logo."></figure>
+        <figure><img src="assets/image-formats.png" alt="Archival drawers comparing a photograph, transparent illustration, simple frame animation, and scalable geometric logo."><figcaption>Every format is a trade-off, chosen by content.</figcaption></figure>
       </div>
     </section>
   </main>
