@@ -65,31 +65,47 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="Compare the three creation routes. CSV is the normal ingestion route. A dictionary of lists is useful for small test data. A list of dictionaries mirrors records returned by many APIs. Ask what each dictionary key becomes.&#10;&#10;Time: 8-11 minutes.">
+    <section class="slide" data-notes="Compare the three creation routes by tracing the same two Arizona records. In the CSV, the first line becomes the headers and each later line becomes a row. In the dictionary of lists, the blue keys become column headers and each list fills downward. In the record list, each gold dictionary becomes one row. All three routes produce the rendered two-row DataFrame at right.&#10;&#10;Time: 8-11 minutes.">
       <div class="brand">CIS215 · 4.1</div>
       <div class="content">
         <div class="eyebrow">Three creation routes</div>
         <h2>Different sources can produce the same table.</h2>
-        <div class="source-routes">
-          <article>
-            <span class="source-mark">.csv</span>
-            <h3>File</h3>
-            <code>pd.read_csv(...)</code>
-            <p>Load a shared table from disk or a URL.</p>
-          </article>
-          <article>
-            <span class="source-mark">{ }</span>
-            <h3>Dictionary of lists</h3>
-            <code>pd.DataFrame(data)</code>
-            <p>Each key becomes one column name.</p>
-          </article>
-          <article>
-            <span class="source-mark">[{ }]</span>
-            <h3>List of records</h3>
-            <code>pd.DataFrame(rows)</code>
-            <p>Each dictionary becomes one row.</p>
-          </article>
-        </div>
+        <figure class="source-to-frame" role="img" aria-label="A CSV, a dictionary of lists, and a list of record dictionaries each feed the same two-row DataFrame with City and State columns for Phoenix and Tucson.">
+          <div class="route-lanes">
+            <article class="route csv-route">
+              <span class="route-kind">CSV file</span>
+              <pre><b>City,State</b>
+Phoenix,AZ
+Tucson,AZ</pre>
+              <small>Header line, then rows</small>
+            </article>
+            <article class="route dict-route">
+              <span class="route-kind">Dictionary of lists</span>
+              <pre>{<b>'City'</b>: ['Phoenix', 'Tucson'],
+ <b>'State'</b>: ['AZ', 'AZ']}</pre>
+              <small>Keys become columns</small>
+            </article>
+            <article class="route records-route">
+              <span class="route-kind">List of records</span>
+              <pre>[<mark>{'City':'Phoenix', 'State':'AZ'}</mark>,
+ <mark>{'City':'Tucson', 'State':'AZ'}</mark>]</pre>
+              <small>Each dictionary becomes a row</small>
+            </article>
+          </div>
+          <div class="route-arrows" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
+          <div class="frame-result">
+            <span class="route-kind">Same DataFrame</span>
+            <table class="mini-table">
+              <caption class="sr-only">The resulting City and State DataFrame</caption>
+              <thead><tr><th></th><th class="header-target">City</th><th class="header-target">State</th></tr></thead>
+              <tbody>
+                <tr class="record-target"><th>0</th><td>Phoenix</td><td>AZ</td></tr>
+                <tr class="record-target"><th>1</th><td>Tucson</td><td>AZ</td></tr>
+              </tbody>
+            </table>
+            <div class="route-legend"><span class="header-key"></span>keys and headers <span class="record-key"></span>records and rows</div>
+          </div>
+        </figure>
       </div>
     </section>
 
@@ -263,7 +279,7 @@ west_large = df_cities[
         <div class="membership" role="img" aria-label="A list containing California and Texas is used to keep city rows with CA or TX state abbreviations.">
           <div class="allowed"><span>CA</span><span>TX</span></div>
           <code>df_cities['State'].isin(['CA', 'TX'])</code>
-          <div class="matched"><span>Los Angeles</span><span>Houston</span><span>San Antonio</span><span>Dallas</span><span>Austin</span></div>
+          <div class="matched"><small>Example matches</small><span>Los Angeles</span><span>Houston</span><span>San Antonio</span><span>Dallas</span><span>Austin</span><span class="more">+ other CA and TX rows</span></div>
         </div>
       </div>
     </section>
@@ -300,17 +316,32 @@ west_large = df_cities[
       </div>
     </section>
 
-    <section class="slide gold" data-notes="Group four common operations by purpose. Add creates information, rename clarifies it, drop removes what is no longer needed, and inspect checks the resulting structure. Ask which operation changes values versus labels.&#10;&#10;Time: 46-49 minutes.">
+    <section class="slide gold" data-notes="Run four concrete moves on the product table. First calculate Total_Value: 999 times 5 is 4,995, 25 times 150 is 3,750, and 75 times 75 is 5,625. Then rename Price to Unit_Price. Drop Quantity with axis=1. Verify the result: three rows, three columns, one text column, and two integer columns. Each displayed value comes from the chapter's product example.&#10;&#10;Time: 46-49 minutes.">
       <div class="brand">CIS215 · Transform with intent</div>
       <div class="content">
         <div class="eyebrow navy-text">Four moves</div>
         <h2>Change the table, then check what changed.</h2>
-        <div class="operation-line">
-          <article><code>df['Total'] = ...</code><strong>Add</strong></article>
-          <article><code>.rename(columns={...})</code><strong>Clarify</strong></article>
-          <article><code>.drop(..., axis=1)</code><strong>Remove</strong></article>
-          <article><code>.shape · .dtypes</code><strong>Verify</strong></article>
-        </div>
+        <figure class="operation-trace" role="img" aria-label="Four runnable pandas moves add Total Value, rename Price to Unit Price, drop Quantity, and verify a final three-row by three-column product DataFrame with traced values.">
+          <ol class="operation-code">
+            <li><span>1 · Add</span><code>df['Total_Value'] = df['Price'] * df['Quantity']</code></li>
+            <li><span>2 · Rename</span><code>df = df.rename(columns={'Price': 'Unit_Price'})</code></li>
+            <li><span>3 · Drop</span><code>df = df.drop('Quantity', axis=1)</code></li>
+            <li><span>4 · Verify</span><code>print(df.shape)<br>print(df.dtypes)</code></li>
+          </ol>
+          <div class="trace-arrow" aria-hidden="true">→</div>
+          <div class="operation-result">
+            <table class="mini-table">
+              <caption class="sr-only">Final product DataFrame after the four operations</caption>
+              <thead><tr><th></th><th>Product</th><th class="renamed-col">Unit_Price</th><th class="added-col">Total_Value</th></tr></thead>
+              <tbody>
+                <tr><th>0</th><td>Laptop</td><td>999</td><td class="added-col">4,995</td></tr>
+                <tr><th>1</th><td>Mouse</td><td>25</td><td class="added-col">3,750</td></tr>
+                <tr><th>2</th><td>Keyboard</td><td>75</td><td class="added-col">5,625</td></tr>
+              </tbody>
+            </table>
+            <div class="verify-stamp"><strong>(3, 3)</strong><code>Product: str<br>Unit_Price: int64<br>Total_Value: int64</code></div>
+          </div>
+        </figure>
         <div class="prompt"><p><strong>Safety habit:</strong> Assign the result, then inspect the result.</p></div>
       </div>
     </section>
