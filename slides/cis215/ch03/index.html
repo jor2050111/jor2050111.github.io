@@ -18,11 +18,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the magic-spell problem from the chapter intro. Students have run pandas code that works, but they cannot yet say why it works. Take one or two honest answers to the starter prompt. Promise the payoff: after today they read and write the grammar underneath every pandas line, so examples become tools instead of incantations.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="title-brackets" aria-hidden="true">
-        <span class="b1">[&nbsp;]</span>
-        <span class="b2">(&nbsp;)</span>
-        <span class="b3">{&nbsp;}</span>
-      </div>
+      <figure class="title-art" aria-hidden="true"><img src="assets/title-grammar-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 3</div>
         <div class="rule"></div>
@@ -64,25 +60,22 @@
       <div class="content">
         <div class="eyebrow">Three containers</div>
         <h2>Match the container to the job.</h2>
-        <div class="three-up">
-          <article class="panel">
-            <div class="glyph" aria-hidden="true">[ ]</div>
-            <h3>List</h3>
-            <p class="mono">[72, 75, 68]</p>
-            <p>Ordered and changeable. The everyday workhorse.</p>
-          </article>
-          <article class="panel">
-            <div class="glyph" aria-hidden="true">( )</div>
-            <h3>Tuple</h3>
-            <p class="mono">(33.45, -112.07)</p>
-            <p>Ordered and locked. For values that must not change.</p>
-          </article>
-          <article class="panel">
-            <div class="glyph" aria-hidden="true">{ }</div>
-            <h3>Dictionary</h3>
-            <p class="mono">{'name': 'Imani'}</p>
-            <p>Labeled. You look values up by key, not by position.</p>
-          </article>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/container-shapes.png" alt="Three containers on a workbench: an open tray of ordered slots with one token mid-swap, a padlocked glass case of fixed pieces, and a card cabinet whose labeled drawer connects to its contents."><figcaption>Each container is a promise about how the data behaves.</figcaption></figure>
+          <div class="container-terms">
+            <article class="panel">
+              <div class="term-line"><span class="glyph" aria-hidden="true">[ ]</span><h3>List</h3><span class="mono">[72, 75, 68]</span></div>
+              <p>Ordered and changeable. The everyday workhorse.</p>
+            </article>
+            <article class="panel">
+              <div class="term-line"><span class="glyph" aria-hidden="true">( )</span><h3>Tuple</h3><span class="mono">(33.45, -112.07)</span></div>
+              <p>Ordered and locked. For values that must not change.</p>
+            </article>
+            <article class="panel">
+              <div class="term-line"><span class="glyph" aria-hidden="true">{ }</span><h3>Dictionary</h3><span class="mono">{'name': 'Imani'}</span></div>
+              <p>Labeled. You look values up by key, not by position.</p>
+            </article>
+          </div>
         </div>
         <p class="lede">The bracket shape tells you what you are reading before you read a single value.</p>
       </div>
@@ -425,18 +418,21 @@ patient['age'] = 35               <span class="comment"># update</span>
       <div class="content">
         <div class="eyebrow">while loops</div>
         <h2>Repeat until the condition fails.</h2>
-        <div class="split">
-          <pre class="code"><span class="keyword">while</span> temperature &gt; 100.4:
+        <div class="visual-split">
+          <div class="while-stack">
+            <pre class="code"><span class="keyword">while</span> temperature &gt; 100.4:
     print(<span class="string">"cooling..."</span>)
     temperature -= 0.5
 
 <span class="comment"># stops at 100.0°F</span></pre>
-          <article class="panel warn">
-            <div class="signal">Warning</div>
-            <h3>The exit must be reachable.</h3>
-            <p>The body has to push the condition toward false. Drop the <code>temperature -= 0.5</code> line and the loop runs forever.</p>
-            <p><code>for</code> fits a known collection. <code>while</code> fits an unknown count.</p>
-          </article>
+            <article class="panel warn">
+              <div class="signal">Warning</div>
+              <h3>The exit must be reachable.</h3>
+              <p>The body has to push the condition toward false. Drop the <code>temperature -= 0.5</code> line and the loop runs forever.</p>
+              <p><code>for</code> fits a known collection. <code>while</code> fits an unknown count.</p>
+            </article>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/while-exit-gate.png" alt="A runner circles a dashed track beside an exit gate whose meter drops one notch per lap, and the gate opens as the level reaches the threshold line."><figcaption>Every pass must push the loop toward its exit.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -560,19 +556,22 @@ print(<span class="string">f"Valid: {temp}"</span>)</pre>
       <div class="content">
         <div class="eyebrow">Close the loop</div>
         <h2>Three answers out the door.</h2>
-        <div class="three-up">
-          <article class="panel">
-            <div class="number">1</div>
-            <p>Which container fits a fixed GPS point, and why?</p>
-          </article>
-          <article class="panel">
-            <div class="number">2</div>
-            <p>Why must <code>score &gt;= 90</code> come before <code>score &gt;= 80</code> in the ladder?</p>
-          </article>
-          <article class="panel">
-            <div class="number">3</div>
-            <p>What does <code>[n * 2 for n in nums if n % 2 == 0]</code> keep, and what does it change?</p>
-          </article>
+        <div class="visual-split">
+          <div class="three-up">
+            <article class="panel">
+              <div class="number">1</div>
+              <p>Which container fits a fixed GPS point, and why?</p>
+            </article>
+            <article class="panel">
+              <div class="number">2</div>
+              <p>Why must <code>score &gt;= 90</code> come before <code>score &gt;= 80</code> in the ladder?</p>
+            </article>
+            <article class="panel">
+              <div class="number">3</div>
+              <p>What does <code>[n * 2 for n in nums if n % 2 == 0]</code> keep, and what does it change?</p>
+            </article>
+          </div>
+          <figure class="visual-art"><img src="assets/loop-scales.png" alt="One glowing loop mechanism processes a short stack of six record cards and a tall stack of dozens through the same machinery, both exiting as tidy graded stacks."></figure>
         </div>
         <div class="prompt">
           <p><strong>Next step:</strong> Open Skills Lab 3A. In Chapter 4, DataFrames build on the lists and dictionaries you now own.</p>
