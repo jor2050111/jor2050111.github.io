@@ -144,6 +144,14 @@ From the repository root, scaffold a deck with:
 
 The script must not replace an existing chapter. After authoring:
 
+Log deck rework in a per-course file at
+`slides/output/rework-log-<course>.md` (for example
+`rework-log-cis133.md`). One course per file, so sessions working on
+different courses never share a log. `slides/output/` is gitignored,
+and these logs stay local. Append one entry per chapter: what
+changed, why, textbook alignment findings, QA results, and the
+commit hash.
+
 1. Add the chapter to its course landing page.
    - Give the chapter card a `data-card-palette` value that exactly matches the
      deck's `data-palette` value.
