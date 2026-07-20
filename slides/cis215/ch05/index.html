@@ -48,12 +48,15 @@
       <div class="content">
         <div class="eyebrow">First-look protocol</div>
         <h2>Inspect before you calculate.</h2>
-        <ol class="inspection-stack">
-          <li><code>.info()</code><span>Structure, types, non-null counts</span></li>
-          <li><code>.head() · .tail()</code><span>Examples from both ends</span></li>
-          <li><code>.describe()</code><span>Numeric center, spread, and limits</span></li>
-          <li><code>.value_counts()</code><span>Category frequencies and odd labels</span></li>
-        </ol>
+        <div class="visual-split">
+          <ol class="inspection-stack">
+            <li><code>.info()</code><span>Structure, types, non-null counts</span></li>
+            <li><code>.head() · .tail()</code><span>Examples from both ends</span></li>
+            <li><code>.describe()</code><span>Numeric center, spread, and limits</span></li>
+            <li><code>.value_counts()</code><span>Category frequencies and odd labels</span></li>
+          </ol>
+          <figure class="visual-art print-frame"><img src="assets/inspect-first.png" alt="A table pauses at an inspection arch where a bright lamp reveals glowing empty cells and one cracked tile, while the calculating machine beyond waits dark."><figcaption>Find the gaps before any statistic is computed.</figcaption></figure>
+        </div>
       </div>
     </section>
 
@@ -122,10 +125,13 @@
       <div class="content">
         <div class="eyebrow navy-text">Three centers</div>
         <h2>“Typical” depends on what the distribution is doing.</h2>
-        <div class="center-tools">
-          <article><span>Σ ÷ n</span><strong>Mean</strong><p>Uses every value. Outliers can pull it.</p></article>
-          <article><span>⇤ ● ⇥</span><strong>Median</strong><p>Uses rank. Extreme values cannot drag it.</p></article>
-          <article><span>● ● ●</span><strong>Mode</strong><p>Finds the most common numeric or text value.</p></article>
+        <div class="visual-split">
+          <div class="center-tools stacked">
+            <article><span>Σ ÷ n</span><strong>Mean</strong><p>Uses every value. Outliers can pull it.</p></article>
+            <article><span>⇤ ● ⇥</span><strong>Median</strong><p>Uses rank. Extreme values cannot drag it.</p></article>
+            <article><span>● ● ●</span><strong>Mode</strong><p>Finds the most common numeric or text value.</p></article>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/title-two-stories-hero.png" alt="On a tilted balance beam, a white marker stands inside the cluster of ordinary values while one oversized gold outlier at the far end drags a gold marker away from the crowd."><figcaption>The mean rides the beam toward the outlier. The median stays with the crowd.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -180,14 +186,16 @@
       <div class="content">
         <div class="eyebrow">Split, apply, combine</div>
         <h2><code>.groupby()</code> turns one table into comparable groups.</h2>
-        <div class="groupby-flow" role="img" aria-label="Orders split into East, North, South, and West groups. Mean price is calculated for each group, then the four results combine into one summary.">
-          <div class="orders-stack"><span>200 orders</span><small>one DataFrame</small></div>
-          <b aria-hidden="true">→</b>
-          <div class="region-stack"><span>East</span><span>North</span><span>South</span><span>West</span></div>
-          <b aria-hidden="true">→</b>
-          <div class="apply-stamp"><code>.mean()</code><small>apply within each group</small></div>
-          <b aria-hidden="true">→</b>
-          <div class="summary-stack"><span>four results</span><small>one comparison</small></div>
+        <div class="visual-split reverse">
+          <figure class="visual-art print-frame"><img src="assets/groupby-trays.png" alt="One table whose rows carry three tab colors splits into three trays, each tray is weighed by an identical gold gauge, and the three readings stack into one small summary table."><figcaption>Split by label, weigh every group with the same gauge, combine the readings.</figcaption></figure>
+          <div class="sac-stack">
+            <pre class="code">df_orders.groupby(<span class="string">'Region'</span>)[<span class="string">'Price'</span>].mean()</pre>
+            <ul class="sac-list">
+              <li><strong>Split:</strong> one group for each Region label.</li>
+              <li><strong>Apply:</strong> the same <code>.mean()</code> inside every group.</li>
+              <li><strong>Combine:</strong> one row per region, ready to compare.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -298,12 +306,13 @@ top_5 = df_orders.<span class="function">nlargest</span>(
       <div class="content">
         <div class="eyebrow navy-text">Numbers need meaning</div>
         <h2>A useful brief connects result, explanation, and action.</h2>
-        <div class="brief-chain">
-          <article><span>Result</span><strong>West revenue: $90,621.98</strong></article>
-          <i aria-hidden="true">→</i>
-          <article><span>Explanation</span><strong>West combines order volume with laptop revenue.</strong></article>
-          <i aria-hidden="true">→</i>
-          <article><span>Action</span><strong>Test whether the pattern repeats next month.</strong></article>
+        <div class="visual-split">
+          <div class="brief-chain stacked">
+            <article><span>Result</span><strong>West revenue: $90,621.98</strong></article>
+            <article><span>Explanation</span><strong>West combines order volume with laptop revenue.</strong></article>
+            <article><span>Action</span><strong>Test whether the pattern repeats next month.</strong></article>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/brief-bridge.png" alt="Three stepping planks bridge a gorge from a chart easel to a figure at a decision doorway: a result plank, an explanation plank, and an action plank joined by one gold thread."><figcaption>Numbers reach a decision only when the bridge is complete.</figcaption></figure>
         </div>
       </div>
     </section>
