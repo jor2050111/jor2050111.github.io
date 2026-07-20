@@ -16,7 +16,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the idea that analysts change a table's arrangement without changing what each value means. Point to the folded worksheet mark. Chapter 8 adds four moves: order rows, summarize a grid, connect sources, and reshape columns into observations. Ask which move students would choose before naming any pandas method.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="fold-mark" aria-hidden="true"><i></i><i></i><i></i></div>
+      <figure class="visual-art print-frame title-print" aria-hidden="true"><img src="assets/title-origami-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 8</div>
         <div class="rule"></div>
@@ -159,7 +159,10 @@
       <div class="content">
         <div class="eyebrow navy-text">Connect versus stack</div>
         <h2>Merge matches identity. Concat extends an axis.</h2>
-        <div class="merge-concat" role="img" aria-label="Merge connects customer and purchase columns by customer ID. Concat stacks two January rows above two February rows to make four rows."><article><span>merge</span><div class="side-frames"><i>customer</i><b>key</b><i>purchase</i></div><p>Match shared values</p></article><article><span>concat axis 0</span><div class="stack-frames"><i>January · 2 rows</i><i>February · 2 rows</i><b>4 rows</b></div><p>Stack compatible schemas</p></article></div>
+        <div class="visual-split">
+          <div class="merge-concat stacked" role="img" aria-label="Merge connects customer and purchase columns by customer ID. Concat stacks two January rows above two February rows to make four rows."><article><span>merge</span><div class="side-frames"><i>customer</i><b>key</b><i>purchase</i></div><p>Match shared values</p></article><article><span>concat axis 0</span><div class="stack-frames"><i>January · 2 rows</i><i>February · 2 rows</i><b>4 rows</b></div><p>Stack compatible schemas</p></article></div>
+          <figure class="visual-art print-frame"><img src="assets/merge-vs-concat.png" alt="Above, cards from two decks click together in pairs where their key notches match while one unmatched card stays aside; below, two full trays simply slide end to end into one longer tray."><figcaption>Merge clicks records together by key. Concat only makes the stack longer.</figcaption></figure>
+        </div>
       </div>
     </section>
 
@@ -209,8 +212,13 @@
       <div class="content">
         <div class="eyebrow navy-text">Close the loop</div>
         <h2>A transformed table needs a preserved meaning and a verified shape.</h2>
-        <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab step. Name the table change, the pandas operation, and the check that would catch a wrong result.</p></div>
-        <p class="field-note">Change the structure. Prove the meaning survived.</p>
+        <div class="visual-split">
+          <div>
+            <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab step. Name the table change, the pandas operation, and the check that would catch a wrong result.</p></div>
+            <p class="field-note">Change the structure. Prove the meaning survived.</p>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/pivot-fold.png" alt="A long strip of transaction rows folds accordion-style into a compact grid where color tabs become row labels, shapes become column headers, and every value lands in its cell."><figcaption>Every value survives the fold. Only the arrangement changes.</figcaption></figure>
+        </div>
       </div>
     </section>
   </main>
