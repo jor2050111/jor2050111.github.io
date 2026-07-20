@@ -279,7 +279,9 @@ th, td {
       <div class="content">
         <div class="eyebrow">Matching by position, not state</div>
         <h2>The stripe counts rows. The split decides which.</h2>
-        <pre class="code-card"><code><span class="comment">/* Structural pseudo-class: position among siblings. */</span>
+        <div class="stripe-bench">
+          <div>
+            <pre class="code-card"><code><span class="comment">/* Structural pseudo-class: position among siblings. */</span>
 tbody tr:<mark>nth-child(even)</mark> {
   background-color: #f2f2f2;
 }
@@ -287,7 +289,28 @@ tbody tr:<mark>nth-child(even)</mark> {
 tbody tr:hover {
   background-color: #e0e0e0;
 }</code></pre>
-        <p class="board-note">A stripe sits behind body text. Same contrast bar as everything else: measured, never eyeballed.</p>
+            <p class="board-note">A stripe sits behind body text. Same contrast bar as everything else: measured, never eyeballed.</p>
+          </div>
+          <div class="split-pair" role="img" aria-label="The same four-subject schedule striped twice by one rule. With thead and tbody written, the header sits outside the count, the data rows number one to four, and the even tint lands on Biology and Writing. With no split written, the browser's implicit tbody wraps every row, the header counts as child one, and the same rule paints Math and Chemistry instead.">
+            <div class="mini-table">
+              <span class="table-tag">split written</span>
+              <div class="mt-row mt-head"><b class="mt-num out">thead</b><span>Subject</span></div>
+              <div class="mt-row"><b class="mt-num">1</b><span>Math</span></div>
+              <div class="mt-row painted"><b class="mt-num">2</b><span>Biology</span></div>
+              <div class="mt-row"><b class="mt-num">3</b><span>Chemistry</span></div>
+              <div class="mt-row painted"><b class="mt-num">4</b><span>Writing</span></div>
+            </div>
+            <div class="mini-table">
+              <span class="table-tag">no split written</span>
+              <div class="mt-row mt-head"><b class="mt-num">1</b><span>Subject</span></div>
+              <div class="mt-row painted"><b class="mt-num">2</b><span>Math</span></div>
+              <div class="mt-row"><b class="mt-num">3</b><span>Biology</span></div>
+              <div class="mt-row painted"><b class="mt-num">4</b><span>Chemistry</span></div>
+              <div class="mt-row"><b class="mt-num">5</b><span>Writing</span></div>
+            </div>
+            <p class="split-verdict">Same rule. The split moves the paint.</p>
+          </div>
+        </div>
       </div>
     </section>
 
