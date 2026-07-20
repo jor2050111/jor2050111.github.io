@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 7 classroom presentation: Data Visualization with matplotlib.">
+  <meta name="theme-color" content="#073B5C">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23073B5C'/%3E%3Cpath d='M12 50V12M12 50h42' stroke='%23F6C85F' stroke-width='4'/%3E%3Cpath d='m16 42 10-9 9 3 15-20' fill='none' stroke='%2379C7C5' stroke-width='5'/%3E%3C/svg%3E">
+  <title>CIS215: Data Visualization with matplotlib</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Data Visualization with matplotlib" data-course="cis215"
+  data-chapter="ch07" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the NOAA climate-normal contrast. Phoenix average highs rise from 67.2 degrees in January to 106.5 in July, then return to 66.2 in December. A list gives the values. A line makes the seasonal shape immediate. Ask which form helps them answer when the peak occurs.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Source: NOAA 1991-2020 climate normals in the CIS215 Chapter 7 course-data file.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="plot-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 7</div>
+        <div class="rule"></div>
+        <h1>Make the pattern visible.</h1>
+        <p class="lede">Build and choose clear charts with matplotlib.</p>
+        <div class="prompt"><p><strong>Opening question:</strong> When does a chart reveal more than the same values in a table?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect the three targets to Objectives 7.1 through 7.3. Students build common plots, label and style them, then defend a chart choice. Every example asks a specific analytical question before showing syntax.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Data Visualization</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Question first. Chart second. Evidence always.</h2>
+        <div class="target-track" role="img" aria-label="Three steps: build a plot, make its meaning clear, and choose a chart that fits the question.">
+          <article><span>01</span><strong>Build</strong><p>Line, bar, scatter, and histogram</p></article>
+          <b aria-hidden="true">→</b>
+          <article><span>02</span><strong>Clarify</strong><p>Title, units, legend, scale, and layout</p></article>
+          <b aria-hidden="true">→</b>
+          <article><span>03</span><strong>Choose</strong><p>Match the visual form to the analytical goal</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use four Phoenix months to enact the difference between lookup and pattern recognition. The table supports exact lookup. The connected plot reveals the rise to July and decline by October. Neither replaces the other. The question determines the useful view.&#10;&#10;Time: 5-8 minutes.&#10;&#10;Source: NOAA climate-normal file.">
+      <div class="brand">CIS215 · Why visualize</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Same values, different work</div>
+        <h2>A table supports lookup. A chart exposes shape.</h2>
+        <div class="table-chart">
+          <table class="data-table">
+            <caption class="sr-only">Phoenix average high temperatures for January, April, July, and October</caption>
+            <thead><tr><th>Month</th><th>Avg high</th></tr></thead>
+            <tbody><tr><td>Jan</td><td>67.2°F</td></tr><tr><td>Apr</td><td>85.2°F</td></tr><tr><td>Jul</td><td>106.5°F</td></tr><tr><td>Oct</td><td>89.4°F</td></tr></tbody>
+          </table>
+          <div class="transfer" aria-hidden="true">→</div>
+          <figure class="mini-line" role="img" aria-label="A line rises from 67.2 degrees in January to 106.5 in July, then falls to 89.4 in October.">
+            <div class="axis-y"><span>110</span><span>60</span></div>
+            <svg viewBox="0 0 420 170" aria-hidden="true"><polyline points="30,130 150,82 270,25 390,70"></polyline><circle cx="30" cy="130" r="7"></circle><circle cx="150" cy="82" r="7"></circle><circle cx="270" cy="25" r="7"></circle><circle cx="390" cy="70" r="7"></circle></svg>
+            <div class="axis-x"><span>Jan</span><span>Apr</span><span>Jul</span><span>Oct</span></div>
+            <figcaption>Seasonal rise, peak, and decline</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace the pyplot pipeline. Two aligned sequences become x and y. plt.plot places the marks on axes. Title and labels add context. plt.show renders the result. The key idea is not a magic command. It is a sequence from data to marks to meaning.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow">The pyplot pipeline</div>
+        <h2>Data becomes marks, then context, then a figure.</h2>
+        <div class="plot-pipeline" role="img" aria-label="Month and temperature sequences flow into plt.plot, then title and axis labels, then plt.show, which renders a line chart.">
+          <article><span>Data</span><code>months<br>temps</code></article><b>→</b>
+          <article><span>Marks</span><code>plt.plot(x, y)</code></article><b>→</b>
+          <article><span>Context</span><code>title · xlabel · ylabel</code></article><b>→</b>
+          <article class="render"><span>Render</span><code>plt.show()</code></article>
+        </div>
+        <pre class="code"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</pre>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the full Phoenix line from the course file. January begins at 67.2, July peaks at 106.5, and December closes at 66.2. The line joins ordered monthly observations, which is why it fits a time trend. Point out that every visible anchor is a traced source value.&#10;&#10;Time: 11-14 minutes.&#10;&#10;Source: NOAA climate-normal file.">
+      <div class="brand">CIS215 · Line plots</div>
+      <div class="content">
+        <div class="eyebrow">Trend across ordered time</div>
+        <h2>Phoenix average highs climb 40.3°F from winter to peak.</h2>
+        <figure class="full-line" role="img" aria-label="Phoenix monthly average highs are 67.2 in January, rise to a peak of 106.5 in July, and finish at 66.2 in December. The annual range is 40.3 degrees Fahrenheit.">
+          <svg viewBox="0 0 900 240" aria-hidden="true"><path class="grid" d="M55 30H875M55 105H875M55 180H875"></path><polyline points="60,172 133,159 206,136 279,104 352,69 425,32 498,23 571,31 644,49 717,91 790,138 865,177"></polyline><g><circle cx="60" cy="172" r="7"></circle><circle cx="133" cy="159" r="5"></circle><circle cx="206" cy="136" r="5"></circle><circle cx="279" cy="104" r="5"></circle><circle cx="352" cy="69" r="5"></circle><circle cx="425" cy="32" r="5"></circle><circle cx="498" cy="23" r="7"></circle><circle cx="571" cy="31" r="5"></circle><circle cx="644" cy="49" r="5"></circle><circle cx="717" cy="91" r="5"></circle><circle cx="790" cy="138" r="5"></circle><circle cx="865" cy="177" r="7"></circle></g></svg>
+          <div class="line-label start"><span>Jan</span><strong>67.2°F</strong></div><div class="line-label peak"><span>Jul</span><strong>106.5°F</strong></div><div class="line-label end"><span>Dec</span><strong>66.2°F</strong></div>
+          <figcaption>NOAA 1991-2020 climate normals · Average high temperature (°F)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use annual mean high temperature to teach bars. New York is 62.6, Los Angeles 75.2, and Chicago 59.9. Separate categories sit on the x-axis, and every bar begins at zero. Ask which city has the highest annual mean, then point to the exact label rather than estimating from height.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Source: calculated from the NOAA climate-normal file.">
+      <div class="brand">CIS215 · Bar charts</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Compare separate categories</div>
+        <h2>Los Angeles has the highest annual mean of these three cities.</h2>
+        <figure class="bar-figure" role="img" aria-label="Bars start at zero and show annual mean high temperatures: New York 62.6, Los Angeles 75.2, and Chicago 59.9 degrees Fahrenheit.">
+          <div class="bars"><div style="--h:62.6%"><strong>62.6°F</strong><i></i><span>New York</span></div><div class="focus" style="--h:75.2%"><strong>75.2°F</strong><i></i><span>Los Angeles</span></div><div style="--h:59.9%"><strong>59.9°F</strong><i></i><span>Chicago</span></div></div>
+          <figcaption>Zero baseline · Annual mean high temperature</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace the textbook study-hours example. Each point keeps a pair together. The cloud rises from two hours and 65 to nine hours and 92, which suggests a positive relationship. A scatter plot does not prove that studying caused the scores. It exposes the pattern to investigate.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · Scatter plots</div>
+      <div class="content">
+        <div class="eyebrow">Two numeric variables</div>
+        <h2>Each point carries one paired observation.</h2>
+        <figure class="scatter" role="img" aria-label="Eight points show study hours paired with exam scores: 2 and 65, 3 and 68, 4 and 75, 5 and 80, 6 and 82, 7 and 88, 8 and 90, and 9 and 92. The pattern slopes upward.">
+          <div class="scatter-grid"><i style="--x:8%;--y:12%"></i><i style="--x:20%;--y:20%"></i><i style="--x:33%;--y:39%"></i><i style="--x:46%;--y:53%"></i><i style="--x:59%;--y:59%"></i><i style="--x:72%;--y:76%"></i><i style="--x:85%;--y:82%"></i><i style="--x:96%;--y:88%"></i></div>
+          <div class="scatter-x">Hours studied →</div><div class="scatter-y">Exam score →</div>
+          <figcaption>Positive relationship, not proof of causation</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Have students commit to one chart for each question. Reveal after they name the structure of the data, not only the chart name. Trend over ordered months uses a line. Separate regional totals use bars. Two numeric variables use a scatter plot.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS215 · Quick check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Name the question shape</div>
+        <h2>Which chart earns the job?</h2>
+        <div class="question-cards"><article><span>Ordered time</span><p>Monthly website traffic</p></article><article><span>Categories</span><p>Complaints by product</p></article><article><span>Two numbers</span><p>House size and price</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Line, bar, scatter.</strong> Time supplies order, categories need comparable lengths, and paired numbers need independent points.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Bind each label to the chart part it explains. Blue names the x-axis and month. Gold names the plotted series and title. Rust names the y-axis and units. A reader should never have to infer Fahrenheit or guess what the line represents.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS215 · 7.2</div>
+      <div class="content">
+        <div class="eyebrow">Chart anatomy</div>
+        <h2>Titles state the claim. Axes name the variables and units.</h2>
+        <figure class="anatomy-plot" role="img" aria-label="A chart titled Phoenix Average High has a Month x-axis, an Average high degrees Fahrenheit y-axis, and a labeled Phoenix series. Exact colors connect each chart part to its code call.">
+          <div class="chart-title">Phoenix Average High</div><div class="chart-y">Average high (°F)</div><div class="chart-x">Month</div><div class="chart-series"><svg viewBox="0 0 400 120" aria-hidden="true"><polyline points="10,100 110,70 210,15 310,58 390,102"></polyline></svg><span>Phoenix</span></div>
+          <div class="anatomy-code"><code class="title-key">plt.title(...)</code><code class="x-key">plt.xlabel('Month')</code><code class="y-key">plt.ylabel('Average high (°F)')</code></div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Compare the same six-month line before and after purposeful styling. The second chart adds a descriptive title, units, visible points, and stronger contrast. It does not add 3D effects or decorative clutter. Ask which change speeds interpretation most.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · Purposeful styling</div>
+      <div class="content">
+        <div class="eyebrow">Every mark must earn its place</div>
+        <h2>Style should shorten the reader’s path to the pattern.</h2>
+        <div class="style-compare"><article class="plain"><span>Default</span><div class="tiny-plot"><i></i></div><p>No units. No question. Weak hierarchy.</p></article><article class="clear"><span>Communicative</span><h3>Phoenix highs rise into summer</h3><div class="tiny-plot"><i></i><b></b><b></b><b></b></div><p>Named claim, Fahrenheit units, and visible observations.</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use two actual city series to explain legends. New York and Los Angeles need distinct colors and markers. The legend repeats those exact encodings. Emphasize that a legend becomes necessary only because more than one series shares the axes.&#10;&#10;Time: 29-32 minutes.&#10;&#10;Source: NOAA climate-normal file.">
+      <div class="brand">CIS215 · Legends</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Several series, one coordinate system</div>
+        <h2>The legend repeats the chart’s exact encodings.</h2>
+        <figure class="legend-plot" role="img" aria-label="Two six-month temperature lines compare New York and Los Angeles. A blue circle line labels New York. A rust square line labels Los Angeles.">
+          <svg viewBox="0 0 600 190" aria-hidden="true"><polyline class="ny" points="30,160 135,150 240,125 345,90 450,55 570,30"></polyline><polyline class="la" points="30,78 135,76 240,72 345,65 450,60 570,50"></polyline></svg>
+          <div class="legend"><span class="ny-key">● New York</span><span class="la-key">■ Los Angeles</span></div><figcaption>Jan-Jun average highs (°F)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach figure size as an output decision. figsize uses inches, width first and height second. Twelve by six gives a two-to-one canvas suited to a wide comparison. It does not change the data or the number of points.&#10;&#10;Time: 32-34 minutes.">
+      <div class="brand">CIS215 · Figure size</div>
+      <div class="content">
+        <div class="eyebrow">Plan the canvas</div>
+        <h2><code>figsize=(12, 6)</code> sets the stage, not the evidence.</h2>
+        <div class="figure-ruler" role="img" aria-label="A rectangular plotting canvas is labeled 12 inches wide and 6 inches high, matching figsize equals 12 comma 6."><div class="width-mark">12 inches</div><div class="height-mark">6 inches</div><div class="canvas"><span>same data<br>more room</span></div></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace the object model for subplots. plt.subplots returns one figure and two axes objects. ax1 receives one plot. ax2 receives the other. The figure owns the shared canvas and the suptitle. This is why axes methods begin with ax instead of plt.&#10;&#10;Time: 34-37 minutes.">
+      <div class="brand">CIS215 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow">One figure, several axes</div>
+        <h2><code>plt.subplots(1, 2)</code> creates two places to draw.</h2>
+        <div class="subplot-model" role="img" aria-label="A Figure object contains two axes named ax1 and ax2. Code from plt.subplots one row two columns points to both axes."><code>fig, (ax1, ax2) = plt.subplots(1, 2)</code><div class="figure-box"><span>fig</span><article><b>ax1</b><i></i></article><article><b>ax2</b><i></i></article></div></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Show why shared axes matter. With separate scales, two modest trends can look equally steep even when their ranges differ. With sharey True, both panels use the same vertical scale, so the magnitude difference survives. Shared scales support honest comparison.&#10;&#10;Time: 37-40 minutes.">
+      <div class="brand">CIS215 · Shared scales</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Comparison needs common coordinates</div>
+        <h2><code>sharey=True</code> keeps slope and magnitude honest.</h2>
+        <div class="scale-compare"><article><span>Separate y-scales</span><div class="scale-panels"><i class="steep"></i><i class="steep"></i></div><p>Both panels fill their frames.</p></article><article class="honest"><span>Shared y-scale</span><div class="scale-panels"><i class="steep"></i><i class="shallow"></i></div><p>The smaller change stays smaller.</p></article></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Demonstrate tight layout as collision repair. The before panel lets titles and y-labels crowd the center. The after panel adds safe spacing without changing either plot. Run tight_layout after titles and labels are in place.&#10;&#10;Time: 40-42 minutes.">
+      <div class="brand">CIS215 · Layout repair</div>
+      <div class="content">
+        <div class="eyebrow">Prevent label collisions</div>
+        <h2><code>plt.tight_layout()</code> gives every label room.</h2>
+        <div class="layout-repair" role="img" aria-label="Before tight layout, two subplot labels collide at the center. After tight layout, a visible gap separates both panels and their labels."><article class="crowded"><span>Before</span><div><i></i><i></i></div><b>labels collide</b></article><strong aria-hidden="true">→</strong><article class="spaced"><span>After</span><div><i></i><i></i></div><b>labels clear</b></article></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the decision map as the chart-selection rule. Time series goes to a line. Category amounts go to bars. Two numeric variables go to scatter. One numeric distribution goes to a histogram. Ask students to state both the data shape and the question before choosing.&#10;&#10;Time: 42-45 minutes.">
+      <div class="brand">CIS215 · 7.4</div>
+      <div class="content">
+        <div class="eyebrow">Match form to question</div>
+        <h2>Chart choice begins with the relationship you need to see.</h2>
+        <div class="choice-map"><article><span>Ordered time</span><strong>Trend</strong><code>line</code></article><article><span>Separate groups</span><strong>Comparison</strong><code>bar</code></article><article><span>Two numbers</span><strong>Relationship</strong><code>scatter</code></article><article><span>One number</span><strong>Distribution</strong><code>histogram</code></article></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use the review-question values to enact a misleading baseline. Pacific has 5,100 visits and Eastern 5,300, a difference of only 200 or 3.9% of Pacific. A truncated axis from 5,000 makes Eastern look three times taller. A zero baseline restores the proportional difference.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS215 · Honest bars</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Length encodes value</div>
+        <h2>A truncated baseline turns 3.9% into a visual cliff.</h2>
+        <div class="baseline-compare" role="img" aria-label="Two bar charts compare Pacific 5,100 visits and Eastern 5,300. A chart starting at 5,000 makes Eastern appear three times taller. A chart starting at zero shows a small 3.9 percent difference."><article><span>Starts at 5,000</span><div class="truncated"><i style="--h:25%">5,100</i><i style="--h:75%">5,300</i></div><b>Misleading</b></article><article><span>Starts at 0</span><div class="zeroed"><i style="--h:96.2%">5,100</i><i style="--h:100%">5,300</i></div><b>Proportional</b></article></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Have students choose a chart for each scenario before the reveal. Quarterly profit across time uses a line. Complaints across five products use bars. Age and purchase amount use scatter. Ask one student to name a reasonable alternative and its trade-off.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS215 · Chart-choice check</div>
+      <div class="content">
+        <div class="eyebrow">Defend the mapping</div>
+        <h2>Choose, then explain what the chart makes easy to see.</h2>
+        <div class="scenario-list"><article><span>1</span><p>Quarterly profit, 2020-2023</p></article><article><span>2</span><p>Complaints across five products</p></article><article><span>3</span><p>Customer age and purchase amount</p></article></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Line, bar, scatter.</strong> The choices reveal change over time, category differences, and a numeric relationship.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Handoff Skills Lab 7A with the verified annual ranges. Chicago varies most at 51.7 degrees. Miami varies least at 15.0, just below Los Angeles at 17.0. Phoenix has the highest annual mean at 86.9 but not the widest range. Students must choose charts that make those distinctions clear and name NOAA in the title.&#10;&#10;Time: 50-53 minutes.&#10;&#10;Source: NOAA climate-normal file and Skills Lab 7A.">
+      <div class="brand">CIS215 · Skills Lab 7A</div>
+      <div class="content">
+        <div class="eyebrow">Temperature Trends</div>
+        <h2>Five cities turn chart choice into an evidence decision.</h2>
+        <div class="range-strips" role="img" aria-label="Annual average-high ranges are Chicago 51.7, New York 45.4, Phoenix 40.3, Los Angeles 17.0, and Miami 15.0 degrees Fahrenheit."><div style="--w:100%"><span>Chicago</span><i></i><strong>51.7°F</strong></div><div style="--w:87.8%"><span>New York</span><i></i><strong>45.4°F</strong></div><div style="--w:77.9%"><span>Phoenix</span><i></i><strong>40.3°F</strong></div><div style="--w:32.9%"><span>Los Angeles</span><i></i><strong>17.0°F</strong></div><div style="--w:29%"><span>Miami</span><i></i><strong>15.0°F</strong></div></div>
+        <p class="field-note">Name the question, source, units, and trade-off in every chart choice.</p>
+      </div>
+    </section>
+
+    <section class="slide gold closing-slide" data-notes="Close with the chart-choice memo standard. A strong answer names the question, the data shape, why the chosen chart helps, and what an alternative would hide. Collect one sentence that starts with I chose this chart because.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Close the loop</div>
+        <h2>A chart is an argument about what deserves attention.</h2>
+        <div class="exit-card"><p><strong>Exit ticket:</strong> Choose one Skills Lab question. Name the chart, the pattern it reveals, and one thing it makes harder to see.</p></div>
+        <p class="field-note">Build the chart. Defend the choice.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes"><h2>Presenter notes</h2><p id="notes-content"></p></div>
+  <nav class="nav" aria-label="Presentation controls"><button type="button" id="previous" aria-label="Previous slide">←</button><button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button><button type="button" id="next" aria-label="Next slide">→</button></nav>
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
