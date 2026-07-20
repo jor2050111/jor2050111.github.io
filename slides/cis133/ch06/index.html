@@ -125,12 +125,12 @@
         <div class="spacing-race">
           <article>
             <h3>Container owns it</h3>
-            <div class="mini-track gap-track" aria-label="Three cards separated by equal gaps with no extra space at the track edges."><i></i><i></i><i></i></div>
+            <div class="mini-track gap-track" role="img" aria-label="Three cards separated by equal gaps with no extra space at the track edges."><i></i><i></i><i></i></div>
             <code>gap: 16px;</code>
           </article>
           <article>
             <h3>Each item owns it</h3>
-            <div class="mini-track margin-track" aria-label="Three cards have margins that add space between cards and at both track edges."><i></i><i></i><i></i></div>
+            <div class="mini-track margin-track" role="img" aria-label="Three cards have margins that add space between cards and at both track edges."><i></i><i></i><i></i></div>
             <code>margin: 16px;</code>
           </article>
         </div>
@@ -243,24 +243,45 @@ nav a:focus {
       </div>
     </section>
 
-    <section class="slide light" data-notes="Build the navigation bar in two moves. The scoped nav ul rule removes the list defaults and creates a flex line. The nav anchor rule turns each inline link into a padded block target.&#10;&#10;Time: 44-47 minutes.">
+    <section class="slide light" data-notes="Build the navigation bar in two moves and watch the transformation happen. The scoped nav ul rule removes the list defaults and creates a flex line. The nav anchor rule turns each inline link into a padded block target. In the after state, point at the middle link: that is the visible focus outline a keyboard visitor sees.&#10;&#10;Time: 44-47 minutes.">
       <div class="brand">CIS133 · Navigation build</div>
       <div class="content">
         <div class="eyebrow">The semantic list stays</div>
         <h2>Strip the list dressing. Keep its meaning.</h2>
-        <div class="nav-build">
-          <pre><code>nav ul {
+        <div class="nav-build-grid">
+          <div class="nav-rules">
+            <pre><code>nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   gap: 8px;
 }</code></pre>
-          <pre><code>nav a {
+            <pre><code>nav a {
   display: block;
   padding: 8px 12px;
   text-decoration: none;
 }</code></pre>
+          </div>
+          <div class="nav-transform" role="img" aria-label="A bulleted list of three underlined links, Recycling Guide, Spring Drive Gallery, and Contact the Club, runs through the two rules and becomes a horizontal bar: bullets and underlines gone, the three links sitting as padded blocks on one line, and Spring Drive Gallery holding the visible keyboard focus outline.">
+            <div class="list-before">
+              <span class="stage-label">Before · the browser’s dressing</span>
+              <ul>
+                <li>Recycling Guide</li>
+                <li>Spring Drive Gallery</li>
+                <li>Contact the Club</li>
+              </ul>
+            </div>
+            <div class="transform-arrow" aria-hidden="true"><span>the two rules run</span>↓</div>
+            <div class="bar-after">
+              <span class="stage-label">After · the navigation bar</span>
+              <div class="mini-nav">
+                <span>Recycling Guide</span>
+                <span class="focused">Spring Drive Gallery</span>
+                <span>Contact the Club</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
