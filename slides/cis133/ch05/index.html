@@ -82,17 +82,29 @@
       </div>
     </section>
 
-    <section class="slide visual-slide" data-notes="Frame DevTools as an X-ray, not a repair button. The diagram reports the browser's computed numbers for each side. Remind students that browser defaults can supply margins they never wrote.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide visual-slide" data-notes="Frame DevTools as an X-ray, not a repair button. Walk the pane inside out and match every number to the rule beside it: content 300 wide, 24 of padding, 3 of border, 16 of margin below. The colors bind each declaration to its layer. Remind students that browser defaults can supply margins they never wrote.&#10;&#10;Time: 14-17 minutes.">
       <div class="brand">CIS133 · DevTools</div>
-      <div class="content visual-grid reverse">
-        <figure>
-          <img src="assets/devtools-xray.png" alt="A measurement workstation links a browser card to a nested box-model diagram with rulers.">
-          <figcaption>The diagram reports the box the browser drew.</figcaption>
-        </figure>
+      <div class="content computed-layout">
         <div>
           <div class="eyebrow">Stop guessing</div>
           <h2>DevTools turns spacing into evidence.</h2>
-          <ul class="check-lines"><li>Select the element.</li><li>Find Computed or Layout.</li><li>Read all four sides.</li><li>Trace the rule that supplied them.</li></ul>
+          <pre class="code compact rule-source"><code>.event-notice {
+  width: 300px;
+  <span class="v-pad">padding: 24px;</span>
+  <span class="v-border">border: 3px solid #268080;</span>
+  <span class="v-margin">margin-bottom: 16px;</span>
+}</code></pre>
+          <p class="bench-note">Every number in the pane has a rule behind it.</p>
+        </div>
+        <div class="computed-pane" role="img" aria-label="The DevTools Computed pane for the event notice box. Read inside out: content 300 by 120, padding 24 on every side, border 3 on every side, margin 0 on three sides and 16 below. Each number matches one declaration in the rule beside the pane.">
+          <div class="pane-head">DevTools · Computed</div>
+          <div class="cp-zone cp-margin"><span class="cp-label">margin</span><b class="n-top">0</b><b class="n-left">0</b><b class="n-right">0</b><b class="n-bottom">16</b>
+            <div class="cp-zone cp-border"><span class="cp-label">border</span><b class="n-top">3</b><b class="n-left">3</b><b class="n-right">3</b><b class="n-bottom">3</b>
+              <div class="cp-zone cp-padding"><span class="cp-label">padding</span><b class="n-top">24</b><b class="n-left">24</b><b class="n-right">24</b><b class="n-bottom">24</b>
+                <div class="cp-content">300 × 120</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -117,7 +129,7 @@
         <h2>Borders draw. Vertical margins negotiate.</h2>
         <div class="two-specimens">
           <article><div class="spec-number">A</div><h3>Border shorthand</h3><pre><code>border: 3px solid #deb887;</code></pre><p>Width, style, color.</p></article>
-          <article><div class="spec-number">B</div><h3>Margin collapse</h3><div class="collapse-bars" aria-label="Two 24 pixel vertical margins meet and produce one 24 pixel gap."><span>24</span><i></i><span>24</span></div><p>Two 24px margins meet as 24px, not 48px.</p></article>
+          <article><div class="spec-number">B</div><h3>Margin collapse</h3><div class="collapse-bars" role="img" aria-label="Two 24 pixel vertical margins meet and produce one 24 pixel gap."><span>24</span><i></i><span>24</span></div><p>Two 24px margins meet as 24px, not 48px.</p></article>
         </div>
       </div>
     </section>
@@ -196,16 +208,23 @@ border: 5px solid;</code></pre>
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Contrast fixed pixels with rem. A rem respects the visitor's chosen base text size. Then reconnect semantics: change a heading's appearance with CSS, never by changing its HTML rank.&#10;&#10;Time: 38-41 minutes.">
+    <section class="slide dark" data-notes="Run the two visitors across the bench. Visitor B raised the browser's base text size to 20 pixels to read comfortably. The 1.5rem heading grows with that choice, 24 to 30 pixels. The 16px heading ignores it. Then reconnect semantics: change a heading's appearance with CSS, never by changing its HTML rank.&#10;&#10;Time: 38-41 minutes.">
       <div class="brand">CIS133 · Type decisions</div>
       <div class="content">
         <div class="eyebrow">Size the look, preserve the meaning</div>
         <h2>CSS changes type without demoting the heading.</h2>
-        <div class="unit-compare">
-          <article><code>16px</code><h3>Fixed</h3><p>The same pixel count for every visitor.</p></article>
-          <article><code>1.5rem</code><h3>Relative</h3><p>Scales from the visitor's base size.</p></article>
-          <article><code>h2 { ... }</code><h3>Semantic</h3><p>Keep the heading rank. Style its appearance.</p></article>
+        <div class="rem-bench" role="img" aria-label="One h2 heading rendered for two visitors. With font-size 1.5rem, visitor A at the 16 pixel base sees 24 pixel text and visitor B, who raised the base to 20, sees 30 pixel text: the heading grows with the reader's setting. With font-size 16px, both visitors see identical 16 pixel text, and visitor B's larger base is ignored.">
+          <span class="rb-corner" aria-hidden="true"></span>
+          <span class="rb-vis">Visitor A · base 16px</span>
+          <span class="rb-vis raised">Visitor B · base raised to 20px</span>
+          <code class="rb-rule">h2 { font-size: 1.5rem; }</code>
+          <span class="rb-sample s24">Drive Day<small>24px</small></span>
+          <span class="rb-sample s30 grew">Drive Day<small>30px</small></span>
+          <code class="rb-rule">h2 { font-size: 16px; }</code>
+          <span class="rb-sample s16">Drive Day<small>16px</small></span>
+          <span class="rb-sample s16">Drive Day<small>16px</small></span>
         </div>
+        <p class="bench-note">Too big? Change font-size, never the heading's rank.</p>
       </div>
     </section>
 
@@ -238,16 +257,25 @@ border: 5px solid;</code></pre>
       </div>
     </section>
 
-    <section class="slide" data-notes="Run the four-point checklist as a diagnosis, not a taste test. Contrast comes from the approved palette. Size should not drop below the browser default. Body line-height sits near 1.5. Max-width caps line length.&#10;&#10;Time: 47-50 minutes.">
+    <section class="slide" data-notes="Run the four-point checklist as a live diagnosis on the rendered paragraph. Contrast: ink on white measures 12.63 to 1, the strongest pairing on the palette's list. Size: body text at the browser's own default. Line height: 1.5. Line length: the column caps at 640. Four measured passes, one readable region.&#10;&#10;Time: 47-50 minutes.">
       <div class="brand">CIS133 · Readability check</div>
       <div class="content">
         <div class="eyebrow">Four points, four controls</div>
         <h2>Readable is something you can test.</h2>
-        <div class="readability-meter">
-          <article><span>01</span><strong>Contrast</strong><code>color + background</code></article>
-          <article><span>02</span><strong>Size</strong><code>font-size</code></article>
-          <article><span>03</span><strong>Line height</strong><code>line-height</code></article>
-          <article><span>04</span><strong>Line length</strong><code>max-width</code></article>
+        <div class="diagnosis-bench">
+          <div class="club-specimen">
+            <span class="specimen-head">recycling-guide.html</span>
+            <div class="specimen-page">
+              <strong>Recycle your old electronics.</strong>
+              <p>Bring chargers, cables, and any laptop the club can refurbish. Volunteer sign-up for the fall drive closes Friday, October 2, at 5:00 p.m.</p>
+            </div>
+          </div>
+          <div class="diagnosis-list">
+            <p><span>01</span><strong>Contrast</strong><em>ink on white · 12.63:1</em><b class="pass-chip">✓ pass</b></p>
+            <p><span>02</span><strong>Size</strong><em>16px, the browser's default</em><b class="pass-chip">✓ pass</b></p>
+            <p><span>03</span><strong>Line height</strong><em>1.5 on body text</em><b class="pass-chip">✓ pass</b></p>
+            <p><span>04</span><strong>Line length</strong><em>column capped at 640px</em><b class="pass-chip">✓ pass</b></p>
+          </div>
         </div>
       </div>
     </section>
