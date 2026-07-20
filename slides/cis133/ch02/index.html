@@ -46,7 +46,7 @@
           <h2>HTML tells the browser what each piece of content is.</h2>
           <p class="lede">A heading, paragraph, list, and link begin as characters in a plain text file.</p>
         </div>
-        <figure><img src="assets/html-workbench.png" alt="Blueprint workbench showing HTML code becoming a structured document and a rendered browser page."></figure>
+        <figure><img src="assets/html-workbench.png" alt="Blueprint workbench showing HTML code becoming a structured document and a rendered browser page."><figcaption>Markup names each piece before the browser draws it.</figcaption></figure>
       </div>
     </section>
 
@@ -78,7 +78,7 @@
     <section class="slide image-slide cycle-slide" data-notes="Walk clockwise through edit, save, and refresh. Ask students to name the evidence at each station: changed characters, a saved file, then a changed browser result.\n\nTime: 16-20 minutes.">
       <div class="brand">CIS133 · 2.1</div>
       <div class="content visual-grid reverse">
-        <figure><img src="assets/edit-save-refresh.png" alt="Three-station blueprint showing code editing, a saved file, and a refreshed browser connected in a loop."></figure>
+        <figure><img src="assets/edit-save-refresh.png" alt="Three-station blueprint showing code editing, a saved file, and a refreshed browser connected in a loop."><figcaption>Every save turns a change into evidence.</figcaption></figure>
         <div>
           <div class="eyebrow">The developer loop</div>
           <h2>Edit. Save. Refresh. Repeat.</h2>
@@ -98,29 +98,30 @@
           <div class="wide"><span>Content</span><code>Meetings pause during finals week.</code></div>
           <div><span>Closing tag</span><code>&lt;/p&gt;</code></div>
         </div>
-        <div class="attribute-note"><code>&lt;html <mark>lang="en"</mark>&gt;</code><p>The <code>lang</code> attribute helps screen readers choose pronunciation rules.</p></div>
+        <div class="attribute-note"><code>&lt;html <mark>lang="en"</mark>&gt;</code><p>One attribute, two audiences: screen readers pick pronunciation, search engines match the language.</p></div>
       </div>
     </section>
 
-    <section class="slide code-slide" data-notes="Trace the skeleton from the outside inward. Ask which lines never paint on screen and which region owns every visible element.\n\nTime: 24-28 minutes.">
+    <section class="slide code-slide" data-notes="Trace the skeleton from the outside inward. Ask which lines never paint on screen and which region owns every visible element. Point at the comment line: browsers skip it, your grader reads it. Comments carry each lab's documentation.\n\nTime: 24-28 minutes.">
       <div class="brand">CIS133 · 2.2</div>
       <div class="content split code-layout">
         <div>
           <div class="eyebrow">The required skeleton</div>
           <h2>Every page starts with the same nested structure.</h2>
-          <p class="lede">The head informs the browser. The body holds what visitors see.</p>
+          <p class="lede">The head informs the browser. The body holds what visitors see. The comment speaks only to humans.</p>
         </div>
-        <pre class="code"><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-    &lt;head&gt;
-        &lt;meta charset="UTF-8"&gt;
-        &lt;title&gt;My Study Log&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;h1&gt;My Study Log&lt;/h1&gt;
-        &lt;p&gt;I am building web skills.&lt;/p&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+        <pre class="code"><code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html</span> lang=<span class="string">"en"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;head&gt;</span>
+        <span class="keyword">&lt;meta</span> charset=<span class="string">"UTF-8"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;title&gt;</span>My Study Log<span class="keyword">&lt;/title&gt;</span>
+    <span class="keyword">&lt;/head&gt;</span>
+    <span class="keyword">&lt;body&gt;</span>
+        <span class="comment">&lt;!-- CIS133 Chapter 2 practice page --&gt;</span>
+        <span class="keyword">&lt;h1&gt;</span>My Study Log<span class="keyword">&lt;/h1&gt;</span>
+        <span class="keyword">&lt;p&gt;</span>I am building web skills.<span class="keyword">&lt;/p&gt;</span>
+    <span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code></pre>
       </div>
     </section>
 
@@ -133,11 +134,11 @@
           <p class="lede">An element opened inside another element must close before its parent closes.</p>
           <div class="nest-rule"><code>&lt;p&gt;Bring &lt;strong&gt;working chargers&lt;/strong&gt;.&lt;/p&gt;</code></div>
         </div>
-        <figure><img src="assets/document-skeleton.png" alt="Exploded blueprint of an HTML document with separate head and body compartments beside a browser result."></figure>
+        <figure><img src="assets/document-skeleton.png" alt="Exploded blueprint of an HTML document with separate head and body compartments beside a browser result."><figcaption>Each compartment closes inside its parent.</figcaption></figure>
       </div>
     </section>
 
-    <section class="slide meaning-slide" data-notes="Use the shuffle test for lists. Then connect headings to page outline, not font size. Mention whitespace collapsing as the reason blank lines do not create paragraphs.\n\nTime: 32-36 minutes.">
+    <section class="slide meaning-slide" data-notes="Use the shuffle test for lists. Then connect headings to page outline, not font size. Mention whitespace collapsing as the reason blank lines do not create paragraphs.\n\nTime: 32-35 minutes.">
       <div class="brand">CIS133 · 2.3</div>
       <div class="content">
         <div class="eyebrow">Choose by meaning</div>
@@ -150,7 +151,34 @@
       </div>
     </section>
 
-    <section class="slide links-slide" data-notes="Have students classify each address. Stress that useful link text names the destination when heard outside its paragraph.\n\nTime: 36-40 minutes.">
+    <section class="slide shuffle-slide" data-notes="Run the shuffle test live on the textbook's device-prep steps. Both versions pass the validator. In the shuffled bullets, factory reset lands before backup, and the files are gone. Ask who gets hurt when steps carry no numbers.\n\nTime: 35-38 minutes.">
+      <div class="brand">CIS133 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">The shuffle test, run live</div>
+        <h2>Both lists validate. Only one protects the reader.</h2>
+        <div class="shuffle-pair">
+          <article class="specimen list-specimen"><div class="file-tab">the steps as &lt;ol&gt;</div>
+            <ol>
+              <li>Back up your files.</li>
+              <li>Sign out, then factory reset.</li>
+              <li>Remove any SIM or memory card.</li>
+            </ol>
+            <p class="verdict pass">Numbers promise the sequence holds.</p>
+          </article>
+          <article class="specimen list-specimen caution"><div class="file-tab">same items as &lt;ul&gt;, shuffled</div>
+            <ul>
+              <li class="harm">Sign out, then factory reset.</li>
+              <li>Back up your files.</li>
+              <li>Remove any SIM or memory card.</li>
+            </ul>
+            <p class="verdict fail">Reset before backup erases the files.</p>
+          </article>
+        </div>
+        <div class="prompt"><p><strong>The validator passes both.</strong> The meaning choice is yours.</p></div>
+      </div>
+    </section>
+
+    <section class="slide links-slide" data-notes="Have students classify each address. Stress that useful link text names the destination when heard outside its paragraph.\n\nTime: 38-41 minutes.">
       <div class="brand">CIS133 · 2.4</div>
       <div class="content">
         <div class="eyebrow">Connect the pages</div>
@@ -158,25 +186,36 @@
         <div class="link-bench">
           <article><span>Other site</span><code>href="https://www.phoenix.gov"</code><strong>Absolute URL</strong></article>
           <article><span>Same folder</span><code>h&#114;ef="contact.html"</code><strong>Relative URL</strong></article>
-          <article><span>Email app</span><code>href="mailto:club@example.org"</code><strong>Mailto link</strong></article>
+          <article><span>Email app</span><code>href="mailto:computer-club@example.org"</code><strong>Mailto link</strong></article>
         </div>
         <div class="prompt"><p><strong>Link text test:</strong> Would the destination still make sense if you heard the link by itself?</p></div>
       </div>
     </section>
 
-    <section class="slide dark image-slide" data-notes="Explain that browsers repair broken markup silently while the validator reports the grammar problem. One missing tag can cause several messages, so fix from the top and revalidate.\n\nTime: 40-44 minutes.">
+    <section class="slide dark validator-slide" data-notes="Explain that browsers repair broken markup silently while the validator reports the grammar problem. Walk the card top to bottom: three messages, one defect. Only the middle message names it. The last message blames line 9, a line with nothing wrong on it. Fix the first defect in the file, revalidate, and the phantoms disappear.\n\nThese are the validator's real messages for this exact line, taken from the textbook.\n\nTime: 41-45 minutes.">
       <div class="brand">CIS133 · 2.4</div>
-      <div class="content visual-grid reverse">
-        <figure><img src="assets/validator-repair.png" alt="Developer repair bench showing one missing closing tag causing several errors, then one repair producing a clean result."></figure>
-        <div>
-          <div class="eyebrow">Validate the file</div>
-          <h2>One defect can create a cascade of messages.</h2>
-          <ol class="repair-list"><li>Fix the first reported defect.</li><li>Revalidate the page.</li><li>Let the phantom messages disappear.</li></ol>
+      <div class="content">
+        <div class="eyebrow">Validate the file</div>
+        <h2>One defect can create a cascade of messages.</h2>
+        <div class="validator-bench">
+          <div class="defect-card">
+            <span class="defect-label">Line 8 of the file</span>
+            <pre class="code defect-code"><code><span class="keyword">&lt;p&gt;</span>Bring <span class="keyword">&lt;em&gt;</span>working chargers to the drive.<span class="keyword">&lt;/p&gt;</span></code></pre>
+            <span class="ghost-tag"><code>&lt;/em&gt;</code> never closes</span>
+          </div>
+          <div class="report-card" role="img" aria-label="A W3C validator report lists three error messages caused by the one missing closing em tag. The middle message, unclosed element em at line 8, names the real defect. The first and third messages are cascade errors, and the third blames line 9, a line with nothing wrong on it. After the one repair the report reads: document checking completed, no errors.">
+            <div class="report-head">validator.w3.org · showing report for study-log.html</div>
+            <div class="report-row"><span class="row-tag">Error</span><p>End tag "p" seen, but there were open elements.</p><span class="row-line">line 8, col 48</span><span class="row-note">cascade</span></div>
+            <div class="report-row real"><span class="row-tag">Error</span><p>Unclosed element "em".</p><span class="row-line">line 8, col 14</span><span class="row-note">the defect</span></div>
+            <div class="report-row"><span class="row-tag">Error</span><p>End tag for "body" seen, but there were unclosed elements.</p><span class="row-line">line 9, col 1</span><span class="row-note">cascade</span></div>
+            <div class="report-clean"><span>After the one repair</span><p>Document checking completed. No errors.</p></div>
+          </div>
         </div>
+        <p class="repair-rule">Fix the first defect in the file, revalidate, and the phantoms vanish.</p>
       </div>
     </section>
 
-    <section class="slide retrieval-slide" data-notes="Give pairs one minute to decide. Reveal the model answer, then ask which part is grammar and which part is judgment.\n\nTime: 44-48 minutes.">
+    <section class="slide retrieval-slide" data-notes="Give pairs one minute to decide. Reveal the model answer, then ask which part is grammar and which part is judgment.\n\nTime: 45-48 minutes.">
       <div class="brand">CIS133 · Retrieval check</div>
       <div class="content">
         <div class="eyebrow">Diagnose before you edit</div>
@@ -208,7 +247,7 @@
           <h2>Plain text becomes a page when markup names its structure.</h2>
           <div class="prompt"><p><strong>Exit ticket:</strong> Name one choice the validator checks and one choice only you can judge.</p></div>
         </div>
-        <figure><img src="assets/lab-complete.png" alt="Blueprint workbench with two linked recycling website pages, organized files, a clean validation check, and a submission package."></figure>
+        <figure><img src="assets/lab-complete.png" alt="Blueprint workbench with two linked recycling website pages, organized files, a clean validation check, and a submission package."><figcaption>Two valid pages, linked both ways, ready to ship.</figcaption></figure>
       </div>
     </section>
   </main>
