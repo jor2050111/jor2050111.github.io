@@ -40,8 +40,13 @@
 }
 
 .workflow .phase {
+    border-color: var(--blue);
     border-radius: .65rem;
     box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .1);
+}
+
+.workflow .phase:last-child::after {
+    color: var(--blue);
 }
 
 .code {
@@ -238,6 +243,16 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.jl-file.folder::before {
+    display: inline-block;
+    width: 1rem;
+    height: .72rem;
+    margin-right: .35rem;
+    content: "";
+    background: currentColor;
+    clip-path: polygon(0 18%, 38% 18%, 48% 0, 82% 0, 92% 18%, 100% 18%, 100% 100%, 0 100%);
 }
 
 .jl-file.sel {
@@ -464,6 +479,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: clamp(1rem, 2.4vw, 2.2rem);
+    width: fit-content;
+    padding: .7rem .9rem;
+    border-radius: .55rem;
+    color: #eaf4ff;
+    background: #06192f;
 }
 
 .sig-legend span {
@@ -477,12 +497,12 @@
 .sig-legend .swatch {
     width: 1.7rem;
     height: 0;
-    border-bottom: .28rem solid #2f7d54;
+    border-bottom: .28rem solid #7fe3c0;
 }
 
 .sig-legend .swatch.dotted {
     border-bottom-style: dotted;
-    border-bottom-color: #b8860b;
+    border-bottom-color: #ffd166;
 }
 
 /* Traceback figure */
