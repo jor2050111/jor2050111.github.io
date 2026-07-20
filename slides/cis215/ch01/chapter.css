@@ -1,28 +1,42 @@
-/* CIS215 Chapter 1: sunlit data field journal */
+/* CIS215 Chapter 1: sunlit analyst field notebook */
 
-/* The ringed-circle corner motif is painted as a background layer, never
-   as a positioned box, so it can bleed off the slide edge without creating
-   scrollable overflow inside the slide. */
+/* The stacked-note corner motif and ruled paper are painted as background
+   layers. They can bleed off the edge without creating a focus scroll trap. */
 
 .slide {
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(3,116,181,0.035)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(3,116,181,0.05)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(3,116,181,0.16)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='122' y='102' width='312' height='216' rx='8' stroke='rgba(3,72,143,0.07)' stroke-width='18'/%3E%3Crect x='96' y='76' width='312' height='216' rx='8' stroke='rgba(3,72,143,0.18)' stroke-width='2.4'/%3E%3Cpath d='M136 132h230M136 174h230M136 216h230' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Ccircle cx='116' cy='120' r='9' stroke='rgba(3,72,143,0.25)' stroke-width='3'/%3E%3Ccircle cx='116' cy='184' r='9' stroke='rgba(3,72,143,0.25)' stroke-width='3'/%3E%3Ccircle cx='116' cy='248' r='9' stroke='rgba(3,72,143,0.25)' stroke-width='3'/%3E%3Cpath d='M366 76v54h42' stroke='rgba(255,200,69,0.55)' stroke-width='9'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.35rem, rgba(3, 116, 181, .055) 3.35rem calc(3.35rem + 1px)),
         radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
         linear-gradient(135deg, #f8fcff, var(--canvas));
 }
 
 .slide.dark {
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(255,255,255,0.025)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(255,255,255,0.045)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(255,255,255,0.18)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='122' y='102' width='312' height='216' rx='8' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='96' y='76' width='312' height='216' rx='8' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Cpath d='M136 132h230M136 174h230M136 216h230' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Ccircle cx='116' cy='120' r='9' stroke='rgba(255,255,255,0.22)' stroke-width='3'/%3E%3Ccircle cx='116' cy='184' r='9' stroke='rgba(255,255,255,0.22)' stroke-width='3'/%3E%3Ccircle cx='116' cy='248' r='9' stroke='rgba(255,255,255,0.22)' stroke-width='3'/%3E%3Cpath d='M366 76v54h42' stroke='rgba(255,200,69,0.5)' stroke-width='9'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.35rem, rgba(255, 255, 255, .045) 3.35rem calc(3.35rem + 1px)),
         radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
         linear-gradient(135deg, #002e5d, #03488f);
 }
 
 .slide.gold {
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(3,116,181,0.035)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(3,116,181,0.05)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(3,116,181,0.16)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='122' y='102' width='312' height='216' rx='8' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='96' y='76' width='312' height='216' rx='8' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Cpath d='M136 132h230M136 174h230M136 216h230' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Ccircle cx='116' cy='120' r='9' stroke='rgba(0,46,93,0.22)' stroke-width='3'/%3E%3Ccircle cx='116' cy='184' r='9' stroke='rgba(0,46,93,0.22)' stroke-width='3'/%3E%3Ccircle cx='116' cy='248' r='9' stroke='rgba(0,46,93,0.22)' stroke-width='3'/%3E%3Cpath d='M366 76v54h42' stroke='rgba(3,116,181,0.45)' stroke-width='9'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.35rem, rgba(0, 46, 93, .06) 3.35rem calc(3.35rem + 1px)),
         radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
         linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.45rem;
+    height: .95rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .14rem;
+    background: repeating-linear-gradient(to bottom, transparent 0 .2rem, currentColor .2rem .27rem);
+    vertical-align: -.12rem;
 }
 
 .title-slide .content,
@@ -102,6 +116,43 @@
     border: .25rem solid rgba(255, 255, 255, .75);
 }
 
+.visual-art.field-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.field-frame::before {
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    content: "";
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.field-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.field-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
 .dark .visual-art {
     border-color: rgba(255, 255, 255, .25);
 }
@@ -138,8 +189,56 @@
 
 .workflow .phase {
     min-height: 12.5rem;
+    border-color: var(--blue);
     border-radius: .65rem;
     box-shadow: 0 .65rem 1.4rem rgba(0, 46, 93, .1);
+}
+
+.workflow .phase:last-child::after {
+    color: var(--blue);
+}
+
+.coffee-flow .phase {
+    min-height: 13.3rem;
+    padding: 1.05rem .72rem;
+}
+
+.coffee-flow .phase strong {
+    margin-bottom: .35rem;
+}
+
+.coffee-flow .phase p {
+    margin-top: .5rem;
+    line-height: 1.35;
+}
+
+.coffee-flow .phase b {
+    color: var(--navy);
+}
+
+.trace-token {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    padding: .3rem .5rem;
+    color: var(--navy);
+    background: var(--gold);
+    font-family: var(--code);
+    font-size: clamp(.7rem, .92vw, .88rem);
+    font-weight: 800;
+}
+
+.trace-bar {
+    min-width: 4.6rem;
+    justify-content: flex-end;
+    background: linear-gradient(90deg, var(--gold) 0 78%, rgba(255, 200, 69, .2) 78%);
+}
+
+.scenario-note {
+    margin-top: .8rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
 }
 
 .dataframe {
