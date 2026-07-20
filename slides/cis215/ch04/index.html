@@ -16,12 +16,7 @@
 
     <section class="slide dark active title-slide" data-notes="Open with the city-data challenge. Students already know lists and dictionaries. Today they gain a tool that can answer a question across 60 city records without writing a loop. Ask for one filter they might use when comparing places to expand a service.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS215</div>
-      <div class="table-field" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-        <span></span><span class="selected"></span><span class="selected"></span><span></span><span></span><span></span>
-        <span></span><span class="selected"></span><span class="selected"></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-      </div>
+      <figure class="title-art" aria-hidden="true"><img src="assets/title-rows-hero.png" alt=""></figure>
       <div class="content">
         <div class="eyebrow">Chapter 4</div>
         <div class="rule"></div>
@@ -38,12 +33,13 @@
       <div class="content">
         <div class="eyebrow">Today’s target</div>
         <h2>Turn a table into the evidence you need.</h2>
-        <div class="objective-path" role="img" aria-label="Three learning steps: build a DataFrame, select a precise slice, and filter rows that meet a condition.">
-          <article><span>01</span><strong>Build</strong><p>Create a DataFrame from a CSV or Python data.</p></article>
-          <i aria-hidden="true">→</i>
-          <article><span>02</span><strong>Select</strong><p>Choose rows and columns by label or position.</p></article>
-          <i aria-hidden="true">→</i>
-          <article><span>03</span><strong>Filter</strong><p>Keep records that pass a useful condition.</p></article>
+        <div class="visual-split">
+          <div class="objective-path stacked" role="img" aria-label="Three learning steps: build a DataFrame, select a precise slice, and filter rows that meet a condition.">
+            <article><span>01</span><strong>Build</strong><p>Create a DataFrame from a CSV or Python data.</p></article>
+            <article><span>02</span><strong>Select</strong><p>Choose rows and columns by label or position.</p></article>
+            <article><span>03</span><strong>Filter</strong><p>Keep records that pass a useful condition.</p></article>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/sources-one-table.png" alt="A drawer stack, a pile of record cards, and a comma-marked CSV sheet pour through three funnels into one identical glowing table."><figcaption>Wherever the data starts, it becomes one table you can question.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -380,11 +376,16 @@ west_large = df_cities[
       <div class="content">
         <div class="eyebrow">Close the loop</div>
         <h2>State the question before you write the filter.</h2>
-        <div class="exit-grid">
-          <p><strong>Question:</strong> Which Arizona or California cities have more than one million residents?</p>
-          <p><strong>Your task:</strong> Name the best filtering approach and explain why.</p>
+        <div class="visual-split">
+          <div>
+            <div class="exit-grid">
+              <p><strong>Question:</strong> Which Arizona or California cities have more than one million residents?</p>
+              <p><strong>Your task:</strong> Name the best filtering approach and explain why.</p>
+            </div>
+            <p class="field-note">A precise subset is the start of a defensible answer.</p>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/mask-gate.png" alt="Rows on a conveyor receive gold check flags or grey cross flags at a test stamp; checked rows pass a gold gate onto a clean result tray while crossed rows divert aside intact."><figcaption>The filter is a gate: rows that pass the test become your evidence.</figcaption></figure>
         </div>
-        <p class="field-note">A precise subset is the start of a defensible answer.</p>
       </div>
     </section>
   </main>
