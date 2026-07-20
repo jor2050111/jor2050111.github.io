@@ -2,9 +2,11 @@
 
 This directory contains browser-based classroom presentations. Shared styles and controls keep each course deck consistent while allowing course-specific content.
 
-Future agents must read `AGENTS.md` and `shared/visual-style.md` before creating
-or revising a deck. `AGENTS.md` defines the authoring, accessibility, and QA
-contract. This README explains the repository workflow.
+Future agents must read `AGENTS.md`, `shared/visual-style.md`, and
+`shared/exemplars.md` before creating or revising a deck. `AGENTS.md` defines
+the authoring, accessibility, and QA contract. `shared/exemplars.md` sets the
+execution bar with canonical slides and the ten quality patterns. This README
+explains the repository workflow.
 
 ## Published pages
 

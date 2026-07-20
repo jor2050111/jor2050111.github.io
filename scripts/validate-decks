@@ -163,7 +163,11 @@ function findDecks() {
 
     const courseEntries = fs.readdirSync(slidesRoot, { withFileTypes: true });
     for (const courseEntry of courseEntries) {
-        if (!courseEntry.isDirectory() || courseEntry.name === "shared") {
+        if (
+            !courseEntry.isDirectory() ||
+            courseEntry.name === "shared" ||
+            courseEntry.name === "output"
+        ) {
             continue;
         }
 

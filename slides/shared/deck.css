@@ -482,7 +482,7 @@ li {
     color: #EAF4FF;
     background: #06192F;
     border-left: .55rem solid var(--gold);
-    font: clamp(.82rem, 1.2vw, 1.15rem)/1.55 var(--code);
+    font: clamp(1rem, 1.45vw, 1.75rem)/1.55 var(--code);
     max-width: 60rem;
     white-space: pre-wrap;
 }

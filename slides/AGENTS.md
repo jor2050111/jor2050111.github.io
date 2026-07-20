@@ -21,9 +21,11 @@ Read these files before creating or revising a deck:
 
 1. `README.md`
 2. `shared/visual-style.md`
-3. The target course landing page and the nearest completed chapter deck
-4. `shared/brand.css` when choosing or changing a palette
-5. `../scripts/validate-decks` before changing shared behavior or markup rules
+3. `shared/exemplars.md` for the quality bar, its canonical slides, and the
+   ten patterns
+4. The target course landing page and the nearest completed chapter deck
+5. `shared/brand.css` when choosing or changing a palette
+6. `../scripts/validate-decks` before changing shared behavior or markup rules
 
 Preserve unrelated changes in the worktree.
 
