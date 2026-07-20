@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 6 classroom presentation: Data Cleaning and Preparation.">
+  <meta name="theme-color" content="#7C3626">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237C3626'/%3E%3Cpath d='M12 12h40v40H12z' fill='%23F4E7E1'/%3E%3Cpath d='M18 25h28M18 34h28M18 43h18' stroke='%2303488F' stroke-width='4'/%3E%3Cpath d='m38 15 4 4 8-9' fill='none' stroke='%23FFD573' stroke-width='5'/%3E%3C/svg%3E">
+  <title>CIS215: Data Cleaning and Preparation</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Data Cleaning and Preparation" data-course="cis215"
+  data-chapter="ch06" data-palette="canyon-sand">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the verified survey result. The source file has 80 rows. The specified cleaning workflow leaves 67 analysis rows. Ask whether losing 13 rows is good, bad, or impossible to judge without knowing why. The lesson begins with that uncertainty.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset, fixed-seed synthetic data with fictional names.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="audit-ticket" role="img" aria-label="A data quality ticket shows 80 source rows, five duplicate rows, eight rows removed for missing names or satisfaction after deduplication, and 67 analysis rows remaining.">
+        <div><span>source rows</span><strong>80</strong></div>
+        <div class="flag"><span>duplicates</span><strong>5</strong></div>
+        <div class="flag"><span>missing key fields</span><strong>8</strong></div>
+        <div class="pass"><span>analysis rows</span><strong>67</strong></div>
+      </div>
+      <div class="content">
+        <div class="eyebrow">Chapter 6</div>
+        <div class="rule"></div>
+        <h1>Every cleaning choice changes the evidence.</h1>
+        <p class="lede">Find the problem, choose a treatment, and record the decision.</p>
+        <div class="prompt"><p><strong>Opening question:</strong> When is removing a row the honest choice?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect the targets to the learning objectives. Students will identify missingness, handle missing values, then repair types, duplicates, and strings. Add a fourth visible step, verify, because the skill is incomplete without a post-clean audit.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Data Cleaning</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Make each repair visible and defensible.</h2>
+        <div class="cleaning-targets" role="img" aria-label="Four learning steps: detect quality problems, decide how to treat them, repair the data with pandas, and verify the result.">
+          <article><span>01</span><strong>Detect</strong><p>Missing values, wrong types, duplicates, and mismatched text</p></article>
+          <article><span>02</span><strong>Decide</strong><p>Drop, fill, convert, standardize, or leave unchanged</p></article>
+          <article><span>03</span><strong>Repair</strong><p>Apply pandas methods in a safe order</p></article>
+          <article><span>04</span><strong>Verify</strong><p>Rerun the audit and explain what changed</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Teach the cleaning loop before any method. Preserve the raw DataFrame, profile it, choose treatments, apply repairs to a copy, and verify. Point out that skipping the first profile makes it impossible to prove improvement.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · Cleaning workflow</div>
+      <div class="content">
+        <div class="eyebrow">Audit before repair</div>
+        <h2>Keep the source. Change a copy. Compare both.</h2>
+        <div class="audit-loop" role="img" aria-label="A five-step loop moves from preserve raw data to profile, choose treatments, repair a copy, and verify. Verification loops back to profiling.">
+          <article><span>1</span><strong>Preserve raw</strong></article>
+          <b aria-hidden="true">→</b>
+          <article><span>2</span><strong>Profile</strong></article>
+          <b aria-hidden="true">→</b>
+          <article><span>3</span><strong>Choose</strong></article>
+          <b aria-hidden="true">→</b>
+          <article><span>4</span><strong>Repair copy</strong></article>
+          <b aria-hidden="true">→</b>
+          <article><span>5</span><strong>Verify</strong></article>
+        </div>
+        <p class="field-note">A cleaning log begins before the first value changes.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Explain how missing values appear. None may enter through Python objects. NaN is the common displayed marker in DataFrames. Missing numeric values can push an integer column to float because NaN needs a floating-point representation.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 6.1</div>
+      <div class="content">
+        <div class="eyebrow">Missing has a marker</div>
+        <h2><code>NaN</code> means the value is absent, not zero.</h2>
+        <table class="missing-table">
+          <caption class="sr-only">Employee data with one missing name, one missing age, and one missing salary</caption>
+          <thead><tr><th></th><th>Name</th><th>Age</th><th>Salary</th></tr></thead>
+          <tbody>
+            <tr><th>0</th><td>Amara</td><td>25.0</td><td>50000.0</td></tr>
+            <tr><th>1</th><td>Kai</td><td class="missing">NaN</td><td>60000.0</td></tr>
+            <tr><th>2</th><td class="missing">NaN</td><td>35.0</td><td class="missing">NaN</td></tr>
+            <tr><th>3</th><td>Naomi</td><td>28.0</td><td>55000.0</td></tr>
+          </tbody>
+        </table>
+        <div class="prompt"><p><strong>Distinction:</strong> Zero is a recorded value. <code>NaN</code> says no value is recorded.</p></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Contrast isnull, isnull sum, and isnull mean. The Boolean mask shows location. Sum shows count. Mean gives a share because True behaves like 1 and False like 0. Use the survey values: Age has 6 missing out of 80, which is 7.5%.&#10;&#10;Time: 11-14 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
+      <div class="brand">CIS215 · Count the gaps</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Three levels of evidence</div>
+        <h2>Location, count, and percentage answer different questions.</h2>
+        <div class="missing-levels">
+          <article><code>.isnull()</code><strong>Where?</strong><p>A True or False for every cell</p></article>
+          <article><code>.isnull().sum()</code><strong>How many?</strong><p>Age is missing in <b>6</b> rows</p></article>
+          <article><code>.isnull().mean()</code><strong>What share?</strong><p>Age is missing in <b>7.5%</b> of rows</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the actual survey missingness. Missing Age is most common at 7.5%, Satisfaction is 6.2%, and Customer_Name is 3.8%. Ask whether Age and Satisfaction should receive the same treatment. The answer depends on their roles, not only their percentages.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
+      <div class="brand">CIS215 · Missingness profile</div>
+      <div class="content">
+        <div class="eyebrow">The pattern guides the treatment</div>
+        <h2>Age is most incomplete. Satisfaction matters most to the analysis.</h2>
+        <div class="missing-bars" role="img" aria-label="Horizontal bars show missingness in the customer survey. Age is 7.5 percent, Satisfaction is 6.2 percent, and Customer Name is 3.8 percent.">
+          <div><span>Age</span><i style="--bar:100%"></i><strong>6 · 7.5%</strong></div>
+          <div><span>Satisfaction</span><i style="--bar:83%"></i><strong>5 · 6.2%</strong></div>
+          <div><span>Customer_Name</span><i style="--bar:50%"></i><strong>3 · 3.8%</strong></div>
+        </div>
+        <div class="prompt"><p><strong>Ask next:</strong> Why is the value missing, and what role does the column play?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Compare dropping and filling as evidence decisions. Dropping reduces the represented population. Filling adds an estimate that can reduce variability. Neither is neutral. Ask which choice requires the stronger explanation. Both do.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow">Two paths</div>
+        <h2>Drop removes evidence. Fill creates an estimate.</h2>
+        <div class="treatment-fork" role="img" aria-label="A missing value splits into two treatment paths. Dropna removes the row and may reduce representation. Fillna inserts an estimate and may reduce variation.">
+          <div class="gap-record"><span>Age</span><strong>NaN</strong></div>
+          <b aria-hidden="true">↙</b>
+          <article class="drop"><code>.dropna()</code><strong>Remove</strong><p>Fewer records remain. Groups may lose representation.</p></article>
+          <b aria-hidden="true">↘</b>
+          <article class="fill"><code>.fillna()</code><strong>Estimate</strong><p>The record remains. Spread may shrink.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Apply the lab strategy to three columns. Missing names are dropped because the record cannot be tied to a respondent. Missing Age is filled with the median because Age supports subgroup analysis and the median resists outliers. Missing Satisfaction is dropped because it is the main outcome. Filling it would invent the result.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS215 · Match treatment to meaning</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Same dataset, three decisions</div>
+        <h2>The column’s role matters more than one blanket rule.</h2>
+        <div class="strategy-cases">
+          <article><span>Customer_Name</span><strong>Drop row</strong><p>You cannot identify who responded.</p></article>
+          <article><span>Age</span><strong>Fill median</strong><p>Keep the response and use a resistant estimate.</p></article>
+          <article><span>Satisfaction</span><strong>Drop row</strong><p>Do not invent the main outcome.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the temperature prediction to test strategy reasoning. Forward fill fits frequent time-series readings when nearby values are likely similar. Mean fill ignores time order and can flatten a changing trend. Students should name the assumption behind either choice.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS215 · Predict first</div>
+      <div class="content">
+        <div class="eyebrow">Fill strategies carry assumptions</div>
+        <h2>Which estimate respects time order?</h2>
+        <div class="temperature-strip" role="img" aria-label="Hourly temperatures read 71, 72, missing, and 74 degrees. Forward fill would use 72. Mean fill would use about 72.3 but ignore the sequence.">
+          <div><span>9 AM</span><strong>71°</strong></div>
+          <div><span>10 AM</span><strong>72°</strong></div>
+          <div class="gap"><span>11 AM</span><strong>NaN</strong></div>
+          <div><span>12 PM</span><strong>74°</strong></div>
+        </div>
+        <div class="prompt"><p><strong>Commit:</strong> Forward fill or mean fill? State the assumption your choice makes.</p></div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Forward fill is often the stronger first choice</strong> for closely spaced time-series readings because the prior reading has local context. Mean fill ignores the sequence.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Introduce dtypes as behavior rules. Price stored as str cannot support numeric summary, Last_Order stored as str cannot expose months, and a product ID stored as int invites meaningless math. The right type protects the operations that follow.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · 6.3</div>
+      <div class="content">
+        <div class="eyebrow">Types control operations</div>
+        <h2>A value can look right and still behave wrong.</h2>
+        <div class="dtype-cards">
+          <article><code>'29.99'</code><span>str</span><strong>Cannot calculate a numeric mean</strong></article>
+          <article><code>'2026-04-15'</code><span>str</span><strong>Cannot use <code>.dt.month</code></strong></article>
+          <article><code>10042</code><span>int</span><strong>An ID should not support arithmetic</strong></article>
+        </div>
+        <pre class="code"><span class="function">print</span>(df_products.dtypes)</pre>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Teach the Boolean string trap. Python treats every non-empty string as True, including the word False. Comparing the normalized text against 'true' expresses the intended conversion. Ask what an empty string would do under astype bool.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS215 · Boolean trap</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Non-empty text is truthy</div>
+        <h2><code>astype(bool)</code> turns both <code>'True'</code> and <code>'False'</code> into True.</h2>
+        <div class="bool-trap">
+          <article class="wrong"><span>Wrong</span><code>df['In_Stock'].astype(bool)</code><p><b>'True' → True</b><br><b>'False' → True</b></p></article>
+          <article class="right"><span>Right</span><code>df['In_Stock'].str.lower() == 'true'</code><p><b>'True' → True</b><br><b>'False' → False</b></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Contrast astype with to_numeric errors coerce. astype is strict and raises an error on 'invalid'. to_numeric with coerce converts valid strings and marks invalid text as NaN. That does not finish the cleaning. It exposes the bad value so the analyst can decide what to do.&#10;&#10;Time: 32-35 minutes.">
+      <div class="brand">CIS215 · Conversion errors</div>
+      <div class="content">
+        <div class="eyebrow">Fail loudly or expose the problem</div>
+        <h2><code>errors='coerce'</code> turns invalid text into a visible gap.</h2>
+        <div class="coerce-flow" role="img" aria-label="Text values 100, 200, invalid, and 300 pass through pandas to numeric with errors set to coerce. The valid values become numbers and invalid becomes NaN.">
+          <div class="raw-values"><span>'100'</span><span>'200'</span><span class="bad">'invalid'</span><span>'300'</span></div>
+          <code>pd.to_numeric(...,<br>errors='coerce')</code>
+          <div class="clean-values"><span>100.0</span><span>200.0</span><span class="gap">NaN</span><span>300.0</span></div>
+        </div>
+        <p class="field-note">Coercion finds the problem. Your cleaning rule still needs to handle it.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Show what datetime unlocks. After to_datetime, students can extract year, month, weekday, or compute elapsed days. The survey lab uses Response_Date to compare satisfaction by weekday and calculate Days_Since_Response.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · Datetime</div>
+      <div class="content">
+        <div class="eyebrow">Convert once, unlock many questions</div>
+        <h2>A datetime column carries calendar structure.</h2>
+        <div class="date-unlock" role="img" aria-label="The text date 2026-04-15 is converted with pandas to datetime, which unlocks the year 2026, month 4, weekday Wednesday, and elapsed-days calculations.">
+          <div class="date-source"><code>'2026-04-15'</code><span>str</span></div>
+          <b aria-hidden="true">→</b>
+          <code>pd.to_datetime()</code>
+          <b aria-hidden="true">→</b>
+          <div class="date-parts"><span>year · 2026</span><span>month · 4</span><span>weekday · Wednesday</span><span>elapsed days</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Explain duplicates as repeated evidence. duplicated flags later copies by default. drop_duplicates keeps the first copy by default. In the survey file, five rows are exact repeats, so leaving them in would let five respondents count twice.&#10;&#10;Time: 38-41 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
+      <div class="brand">CIS215 · 6.4</div>
+      <div class="content">
+        <div class="eyebrow">Duplicate records</div>
+        <h2>Five repeated rows would give five responses extra weight.</h2>
+        <div class="duplicate-stack" role="img" aria-label="Three survey rows are shown. Response 1042 appears twice, and the second copy is flagged as a duplicate that would give the response double weight.">
+          <div><span>1041</span><span>West</span><span>4</span><strong>keep</strong></div>
+          <div><span>1042</span><span>Central</span><span>2</span><strong>keep</strong></div>
+          <div class="duplicate"><span>1042</span><span>Central</span><span>2</span><strong>duplicate</strong></div>
+        </div>
+        <pre class="code">duplicate_rows = df_survey.<span class="function">duplicated</span>().<span class="function">sum</span>()  <span class="comment"># 5</span></pre>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Teach the keep parameter. first keeps the original and removes later copies. last keeps the final record. False removes every member of a duplicated set. The correct choice depends on whether later records are corrections or repeated exports.&#10;&#10;Time: 41-43 minutes.">
+      <div class="brand">CIS215 · Duplicate policy</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Which copy survives?</div>
+        <h2><code>keep</code> is a policy decision, not a cleanup switch.</h2>
+        <div class="keep-policies">
+          <article><code>keep='first'</code><strong>Keep the earliest copy</strong><p>Default for exact repeated exports</p></article>
+          <article><code>keep='last'</code><strong>Keep the latest copy</strong><p>Useful when later records are corrections</p></article>
+          <article><code>keep=False</code><strong>Keep no copy</strong><p>Use when every duplicate is suspect</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Demonstrate a string cleaning chain. strip removes outer whitespace. lower or title standardizes case. replace or map unifies alternate forms. Explain that each method returns a Series, so the chain feeds one clean result into the next.&#10;&#10;Time: 43-46 minutes.">
+      <div class="brand">CIS215 · String normalization</div>
+      <div class="content">
+        <div class="eyebrow">One meaning, one spelling</div>
+        <h2>Normalize text before you count or group it.</h2>
+        <div class="string-chain" role="img" aria-label="Messy store labels West, lowercase west, and West with surrounding spaces pass through strip and title methods and become the single standard value West.">
+          <div class="messy"><span>'West'</span><span>'west'</span><span>'  WEST  '</span></div>
+          <b aria-hidden="true">→</b>
+          <code>.str.strip()<br>.str.title()</code>
+          <b aria-hidden="true">→</b>
+          <div class="standard"><span>West</span><strong>one category</strong></div>
+        </div>
+        <pre class="code">df[<span class="string">'Store_Location'</span>] = (
+    df[<span class="string">'Store_Location'</span>].str.<span class="function">strip</span>().str.<span class="function">title</span>()
+)</pre>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use the verified survey result. Before cleaning, value_counts sees seven distinct store labels because case and whitespace split the same locations. After strip and title, only three valid locations remain. Grouping before cleaning would produce a false seven-group story.&#10;&#10;Time: 46-48 minutes.&#10;&#10;Source: CIS215 Chapter 6 customer survey dataset.">
+      <div class="brand">CIS215 · Grouping depends on clean labels</div>
+      <div class="content">
+        <div class="eyebrow">False categories disappear</div>
+        <h2>Seven spellings become three locations.</h2>
+        <div class="category-collapse" role="img" aria-label="Seven messy store labels collapse into three standardized locations after string cleaning.">
+          <div class="before"><span>West</span><span>west</span><span> WEST </span><span>Central</span><span>central</span><span>East</span><span> EAST</span></div>
+          <b aria-hidden="true">→</b>
+          <div class="after"><span>West</span><span>Central</span><span>East</span></div>
+        </div>
+        <p class="field-note">Clean first. Group second.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach the order of operations from the lab. Work on a copy. Remove exact duplicates before counting other removals. Handle missing names and satisfaction. Fill Age before converting it to int. Convert the date before creating date features. Normalize text before grouping. End with the same audit methods used at the start.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS215 · Cleaning order</div>
+      <div class="content">
+        <div class="eyebrow">Order protects the workflow</div>
+        <h2>Each repair creates the conditions for the next one.</h2>
+        <ol class="repair-order">
+          <li><span>1</span><strong>Copy raw data</strong></li>
+          <li><span>2</span><strong>Remove duplicates</strong></li>
+          <li><span>3</span><strong>Handle missing values</strong></li>
+          <li><span>4</span><strong>Convert types</strong></li>
+          <li><span>5</span><strong>Normalize text</strong></li>
+          <li><span>6</span><strong>Rerun the audit</strong></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Handoff to Skills Lab 6A. Students audit 80 rows, apply column-specific treatments, compare satisfaction before and after, then write a data-quality memo. The specified workflow leaves 67 rows, or 83.8% of the source file, and changes the mean satisfaction from 3.533 to 3.612. Students must calculate and explain their own results.&#10;&#10;Time: 50-53 minutes.&#10;&#10;Source: CIS215 Skills Lab 6A and course data pack.">
+      <div class="brand">CIS215 · Skills Lab 6A</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Customer Survey Cleaning</div>
+        <h2>Show what changed, why it changed, and who remains.</h2>
+        <div class="lab-audit">
+          <article><span>80</span><strong>source rows</strong><p>Audit missingness, types, duplicates, and text labels.</p></article>
+          <article><span>67</span><strong>analysis rows</strong><p>83.8% survive the specified cleaning rules.</p></article>
+          <article><span>+0.079</span><strong>mean change</strong><p>Satisfaction moves from 3.533 to 3.612.</p></article>
+          <article><span>100-150</span><strong>memo words</strong><p>Explain the three worst problems and one prevention step.</p></article>
+        </div>
+        <p class="submission-note">Estimated lab time: 4-5 hours · Submit <code>skills_lab_6a.ipynb</code>.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Model a compact cleaning log. It records the problem, rule, impact, and reason. This documentation lets a colleague review the choices and rebuild the result. Ask what evidence belongs in the impact column for a fill operation.&#10;&#10;Time: 53-54 minutes.">
+      <div class="brand">CIS215 · Cleaning log</div>
+      <div class="content">
+        <div class="eyebrow">Make the reasoning inspectable</div>
+        <h2>A colleague should be able to rebuild the clean dataset.</h2>
+        <table class="cleaning-log">
+          <caption class="sr-only">Example cleaning log with columns for problem, rule, impact, and reason</caption>
+          <thead><tr><th>Problem</th><th>Rule</th><th>Impact</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>5 exact duplicates</td><td>Keep first</td><td>80 → 75 rows</td><td>Repeated exports</td></tr>
+            <tr><td>Missing Age</td><td>Fill median</td><td>6 estimates</td><td>Keep valid outcome records</td></tr>
+            <tr><td>7 store labels</td><td>Strip + title</td><td>7 → 3 groups</td><td>One spelling per location</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening question. Removing a row is defensible when the missing field prevents the row from answering the stated question and the impact is documented. It is not defensible as a silent convenience. Collect the exit response in two sentences.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>Clean data is not untouched data. It is explained data.</h2>
+        <div class="exit-case">
+          <p><strong>Case:</strong> Satisfaction is missing, but Age and Store_Location are present.</p>
+          <p><strong>Exit ticket:</strong> Drop or fill? State the decision, the risk, and what you would disclose.</p>
+        </div>
+        <p class="field-note">The method changes the table. The explanation protects trust.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 4 classroom presentation: Working with pandas DataFrames.">
+  <meta name="theme-color" content="#03488F">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2303488F'/%3E%3Cpath d='M10 13h44v38H10z' fill='%23EDF5FA'/%3E%3Cpath d='M10 25h44M10 38h44M25 13v38M41 13v38' stroke='%2303488F' stroke-width='3'/%3E%3Cpath d='M25 25h16v13H25z' fill='%23FFC845'/%3E%3C/svg%3E">
+  <title>CIS215: Working with pandas DataFrames</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Working with pandas DataFrames" data-course="cis215"
+  data-chapter="ch04" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the city-data challenge. Students already know lists and dictionaries. Today they gain a tool that can answer a question across 60 city records without writing a loop. Ask for one filter they might use when comparing places to expand a service.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="table-field" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span class="selected"></span><span class="selected"></span><span></span><span></span><span></span>
+        <span></span><span class="selected"></span><span class="selected"></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="content">
+        <div class="eyebrow">Chapter 4</div>
+        <div class="rule"></div>
+        <h1>Stop moving rows one at a time.</h1>
+        <p class="lede">Build, select, and filter pandas DataFrames.</p>
+        <div class="prompt">
+          <p><strong>Opening question:</strong> Which few rows would answer your question?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect the targets to the chapter objectives. Students will create DataFrames, select rows and columns, then filter with conditions. Frame every syntax choice as a question about shape, labels, or logic.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Working with DataFrames</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Turn a table into the evidence you need.</h2>
+        <div class="objective-path" role="img" aria-label="Three learning steps: build a DataFrame, select a precise slice, and filter rows that meet a condition.">
+          <article><span>01</span><strong>Build</strong><p>Create a DataFrame from a CSV or Python data.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span>02</span><strong>Select</strong><p>Choose rows and columns by label or position.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span>03</span><strong>Filter</strong><p>Keep records that pass a useful condition.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Teach the DataFrame as a meeting place for three ideas students know. Columns carry variables, rows carry records, and the index labels rows. Point to one value and have students name its row, column, and index.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">DataFrame anatomy</div>
+        <h2>A cell only makes sense inside its structure.</h2>
+        <div class="anatomy-grid" role="img" aria-label="A city DataFrame with index labels 0 through 2, columns City, State, and Population, and the Los Angeles population cell highlighted.">
+          <div class="axis-label rows-label">index</div>
+          <div class="axis-label cols-label">columns</div>
+          <div class="corner"></div><div class="thead">City</div><div class="thead">State</div><div class="thead">Population</div>
+          <div class="index">0</div><div>New York</div><div>NY</div><div>8,405,837</div>
+          <div class="index">1</div><div>Los Angeles</div><div>CA</div><div class="focus-cell">3,884,307</div>
+          <div class="index">2</div><div>Chicago</div><div>IL</div><div>2,718,782</div>
+        </div>
+        <p class="field-note">Rows are records. Columns are variables. The index labels each row.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Compare the three creation routes. CSV is the normal ingestion route. A dictionary of lists is useful for small test data. A list of dictionaries mirrors records returned by many APIs. Ask what each dictionary key becomes.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">Three creation routes</div>
+        <h2>Different sources can produce the same table.</h2>
+        <div class="source-routes">
+          <article>
+            <span class="source-mark">.csv</span>
+            <h3>File</h3>
+            <code>pd.read_csv(...)</code>
+            <p>Load a shared table from disk or a URL.</p>
+          </article>
+          <article>
+            <span class="source-mark">{ }</span>
+            <h3>Dictionary of lists</h3>
+            <code>pd.DataFrame(data)</code>
+            <p>Each key becomes one column name.</p>
+          </article>
+          <article>
+            <span class="source-mark">[{ }]</span>
+            <h3>List of records</h3>
+            <code>pd.DataFrame(rows)</code>
+            <p>Each dictionary becomes one row.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Walk the four lines. The import names the library. read_csv loads the file. shape checks the dimensions. head previews records. Use the verified course data pack result: 60 rows and 6 columns. The source is the plotly US cities dataset derived from Census estimates, with course-added region labels.&#10;&#10;Time: 11-14 minutes.&#10;&#10;Source: CIS215 course data pack, Chapter 4 README.">
+      <div class="brand">CIS215 · Read a CSV</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Ingest, then inspect</div>
+        <h2>Four lines establish trust.</h2>
+        <div class="code-result">
+          <pre class="code"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+df_cities = pd.<span class="function">read_csv</span>(
+    <span class="string">"city_populations.csv"</span>
+)
+
+<span class="function">print</span>(df_cities.shape)
+df_cities.<span class="function">head</span>(3)</pre>
+          <div class="shape-stamp" role="img" aria-label="The loaded city DataFrame has 60 rows and 6 columns.">
+            <span>rows</span><strong>60</strong>
+            <b>×</b>
+            <span>columns</span><strong>6</strong>
+          </div>
+        </div>
+        <p class="source-line">City data: plotly datasets, derived from US Census estimates.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use the scores example from Try It Yourself 4.1. Give students 30 seconds to predict before revealing. Shape reports rows and columns only. The index labels rows but is not a data column, so the answer is (3, 3).&#10;&#10;Time: 14-17 minutes.">
+      <div class="brand">CIS215 · Predict first</div>
+      <div class="content">
+        <div class="eyebrow">Shape check</div>
+        <h2>Does the index count as a column?</h2>
+        <div class="split shape-challenge">
+          <table class="mini-table">
+            <caption class="sr-only">Three student rows with Student, Math, and English columns</caption>
+            <thead><tr><th></th><th>Student</th><th>Math</th><th>English</th></tr></thead>
+            <tbody><tr><th>0</th><td>Sofia</td><td>92</td><td>88</td></tr><tr><th>1</th><td>Leo</td><td>85</td><td>90</td></tr><tr><th>2</th><td>Lucia</td><td>78</td><td>95</td></tr></tbody>
+          </table>
+          <div>
+            <pre class="code"><span class="function">print</span>(df_scores.shape)</pre>
+            <div class="prompt"><p><strong>Commit:</strong> <code>(3, 3)</code> or <code>(3, 4)</code>?</p></div>
+            <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+            <div class="answer"><strong>(3, 3)</strong>. The index labels the rows. It is not one of the three data columns.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Show why one pair of brackets and two pairs return different objects. A Series is one-dimensional. A one-column DataFrame keeps two dimensions. Ask which form a later method might expect.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · 4.2</div>
+      <div class="content">
+        <div class="eyebrow">Column selection</div>
+        <h2>Bracket count controls the result’s shape.</h2>
+        <div class="bracket-compare">
+          <article>
+            <code>df_cities['City']</code>
+            <div class="series-strip"><span>New York</span><span>Los Angeles</span><span>Chicago</span></div>
+            <strong>Series</strong>
+            <p>One dimension</p>
+          </article>
+          <article>
+            <code>df_cities[['City']]</code>
+            <div class="frame-strip"><b>City</b><span>New York</span><span>Los Angeles</span><span>Chicago</span></div>
+            <strong>DataFrame</strong>
+            <p>Rows and columns remain</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Frame head and tail as inspection tools, not analysis. They confirm the file opened and show how records are formatted. They can also expose a stray footer row. Ask which method checks the end of a file.&#10;&#10;Time: 20-22 minutes.">
+      <div class="brand">CIS215 · 4.2</div>
+      <div class="content">
+        <div class="eyebrow">Safe previews</div>
+        <h2>Sample the edges before printing everything.</h2>
+        <div class="edge-preview" role="img" aria-label="A long 60-row table with head at the first three rows, hidden middle rows, and tail at the last three rows.">
+          <div class="edge top"><code>.head(3)</code><span>rows 0, 1, 2</span></div>
+          <div class="hidden-rows"><span>⋮</span><strong>54 rows stay off screen</strong><span>⋮</span></div>
+          <div class="edge bottom"><code>.tail(3)</code><span>rows 57, 58, 59</span></div>
+        </div>
+        <p class="field-note">Preview for structure. Filter for evidence.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="This is the key selection contrast. loc reads labels and includes both ends. iloc reads positions and excludes the stop, just like Python list slicing. Trace each highlighted set and have students count the rows.&#10;&#10;Time: 22-26 minutes.">
+      <div class="brand">CIS215 · Labels or positions</div>
+      <div class="content">
+        <div class="eyebrow navy-text">One colon, two rules</div>
+        <h2><code>.loc[0:2]</code> keeps three. <code>.iloc[0:2]</code> keeps two.</h2>
+        <div class="slice-rulers" role="img" aria-label="Two index rulers compare loc and iloc. loc highlights labels 0, 1, and 2. iloc highlights positions 0 and 1 and stops before 2.">
+          <div class="slice-row">
+            <code>.loc[0:2]</code>
+            <div class="cells"><span class="on">0</span><span class="on">1</span><span class="on end">2</span><span>3</span><span>4</span></div>
+            <strong>inclusive</strong>
+          </div>
+          <div class="slice-row">
+            <code>.iloc[0:2]</code>
+            <div class="cells"><span class="on">0</span><span class="on">1</span><span class="stop">2</span><span>3</span><span>4</span></div>
+            <strong>stop excluded</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use the selection decision rule. Most analyst code is clearer with labels. Positions help when rank or order matters. Ask students to choose the method for each prompt before the reveal.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · Selection decision</div>
+      <div class="content">
+        <div class="eyebrow">Choose the coordinate system</div>
+        <h2>What do you know: the name or the position?</h2>
+        <div class="decision-rail">
+          <article><span>Know labels</span><code>.loc[rows, columns]</code><p>“Rows 0-4, City and Population”</p></article>
+          <article><span>Know positions</span><code>.iloc[row_pos, col_pos]</code><p>“First five rows, first two columns”</p></article>
+        </div>
+        <div class="prompt"><p><strong>Rule:</strong> Prefer labels when they state your intent.</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Build the mental model for boolean indexing. The comparison does not return cities. It returns a True or False for every row. The DataFrame then keeps the True rows. Trace Los Angeles, Chicago, and Phoenix through the mask.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS215 · 4.3</div>
+      <div class="content">
+        <div class="eyebrow">Boolean indexing</div>
+        <h2>The condition builds a row-by-row mask.</h2>
+        <div class="mask-flow" role="img" aria-label="A comparison tests three city populations. Los Angeles and Chicago evaluate true and pass through the mask. Phoenix evaluates false and is excluded.">
+          <div class="mask-source"><span>Los Angeles · 3.88M</span><span>Chicago · 2.72M</span><span>Phoenix · 1.51M</span></div>
+          <code>Population &gt; 2_000_000</code>
+          <div class="mask-values"><span class="true">True</span><span class="true">True</span><span class="false">False</span></div>
+          <div class="mask-result"><span>Los Angeles</span><span>Chicago</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach the parentheses rule for combined boolean conditions. Ampersand means both conditions. A vertical bar means either condition. The course dataset has two Western cities above 1.5 million: Los Angeles and Phoenix.&#10;&#10;Time: 32-35 minutes.&#10;&#10;Source: CIS215 Chapter 4 city population dataset.">
+      <div class="brand">CIS215 · Combine conditions</div>
+      <div class="content">
+        <div class="eyebrow">Both tests must pass</div>
+        <h2>Parentheses protect each condition.</h2>
+        <pre class="code"><span class="comment"># Western cities above 1.5 million</span>
+west_large = df_cities[
+    (df_cities[<span class="string">'Region'</span>] == <span class="string">'West'</span>)
+    &amp; (df_cities[<span class="string">'Population'</span>] &gt; 1_500_000)
+]</pre>
+        <div class="result-chips" aria-label="The filter returns Los Angeles and Phoenix."><span>Los Angeles</span><span>Phoenix</span></div>
+        <p class="field-note"><code>&amp;</code> means AND. <code>|</code> means OR. Wrap every condition.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Contrast the same filter in query syntax. query uses a string, drops repeated DataFrame names, and uses the words and or or. It often reads better once filters have several conditions. Remind students to pair outer and inner quote styles.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · Readable filters</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Same question, less repetition</div>
+        <h2><code>.query()</code> reads like the condition.</h2>
+        <div class="query-compare">
+          <div>
+            <span>Boolean indexing</span>
+            <code>(df['Age'] &gt; 30) &amp;<br>(df['City'] == 'New York')</code>
+          </div>
+          <i aria-hidden="true">→</i>
+          <div>
+            <span>Query</span>
+            <code>df.query(<br>'Age &gt; 30 and City == "New York"'<br>)</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Show isin as a membership test. It is clearer than chaining many OR comparisons. Ask students what values would be in the list if the question named Arizona, California, and Texas.&#10;&#10;Time: 38-40 minutes.">
+      <div class="brand">CIS215 · Membership filters</div>
+      <div class="content">
+        <div class="eyebrow">Several allowed values</div>
+        <h2>Use <code>.isin()</code> when the answer may match a list.</h2>
+        <div class="membership" role="img" aria-label="A list containing California and Texas is used to keep city rows with CA or TX state abbreviations.">
+          <div class="allowed"><span>CA</span><span>TX</span></div>
+          <code>df_cities['State'].isin(['CA', 'TX'])</code>
+          <div class="matched"><span>Los Angeles</span><span>Houston</span><span>San Antonio</span><span>Dallas</span><span>Austin</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Run the product filtering prediction from the chapter. Let pairs calculate row counts. Filter 1 keeps Laptop, Monitor, and Webcam. Filter 2 keeps Laptop and Monitor. Filter 3 keeps Mouse and Keyboard. Reveal after reasoning, not guessing.&#10;&#10;Time: 40-43 minutes.">
+      <div class="brand">CIS215 · Filter challenge</div>
+      <div class="content">
+        <div class="eyebrow">Predict the row counts</div>
+        <h2>AND narrows. OR widens.</h2>
+        <div class="filter-cards">
+          <article><code>Price &gt; 100</code><strong>?</strong><p>rows</p></article>
+          <article><code>Price &gt; 100<br>&amp; Stock &lt; 50</code><strong>?</strong><p>rows</p></article>
+          <article><code>Price &lt;= 100<br>or Stock &gt;= 100</code><strong>?</strong><p>rows</p></article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>3, 2, and 2 rows.</strong> AND keeps only overlap. OR keeps every row that passes either test.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Introduce calculated columns as stored results. Price times Quantity creates Total_Value. When Price changes later, pandas does not behave like a spreadsheet formula. The dependent column stays stale until students rerun its calculation.&#10;&#10;Time: 43-46 minutes.">
+      <div class="brand">CIS215 · 4.4</div>
+      <div class="content">
+        <div class="eyebrow">Calculated columns</div>
+        <h2>A new column stores values, not a live formula.</h2>
+        <div class="dependency" role="img" aria-label="Price and Quantity feed a Total Value calculation. After Price changes, Total Value is marked stale until the calculation is run again.">
+          <div><span>Price</span><strong>$999</strong></div>
+          <b>×</b>
+          <div><span>Quantity</span><strong>5</strong></div>
+          <b>=</b>
+          <div class="total"><span>Total_Value</span><strong>$4,995</strong></div>
+          <div class="change">Price becomes <strong>$899.10</strong></div>
+          <div class="stale">Total_Value stays <strong>$4,995</strong><small>Rerun the calculation.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Group four common operations by purpose. Add creates information, rename clarifies it, drop removes what is no longer needed, and inspect checks the resulting structure. Ask which operation changes values versus labels.&#10;&#10;Time: 46-49 minutes.">
+      <div class="brand">CIS215 · Transform with intent</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Four moves</div>
+        <h2>Change the table, then check what changed.</h2>
+        <div class="operation-line">
+          <article><code>df['Total'] = ...</code><strong>Add</strong></article>
+          <article><code>.rename(columns={...})</code><strong>Clarify</strong></article>
+          <article><code>.drop(..., axis=1)</code><strong>Remove</strong></article>
+          <article><code>.shape · .dtypes</code><strong>Verify</strong></article>
+        </div>
+        <div class="prompt"><p><strong>Safety habit:</strong> Assign the result, then inspect the result.</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Handoff to Skills Lab 4A. The file has 60 cities and six columns. Students load, inspect, select, filter, then create a relocation brief. Emphasize that the brief must warn against treating population as quality of life.&#10;&#10;Time: 49-52 minutes.&#10;&#10;Source: CIS215 Skills Lab 4A and course data pack.">
+      <div class="brand">CIS215 · Skills Lab 4A</div>
+      <div class="content">
+        <div class="eyebrow">City Population Analysis</div>
+        <h2>Make a 60-row dataset answer a client question.</h2>
+        <div class="lab-arc">
+          <article><span>1</span><strong>Inspect</strong><p>Shape, columns, types, head, tail</p></article>
+          <article><span>2</span><strong>Select</strong><p>Labels, positions, focused columns</p></article>
+          <article><span>3</span><strong>Filter</strong><p>Population, state, region, combinations</p></article>
+          <article><span>4</span><strong>Brief</strong><p>100-150 words for a client</p></article>
+        </div>
+        <p class="submission-note">Estimated lab time: 4-5 hours · Submit <code>skills_lab_4a.ipynb</code>.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Use this retrieval map without notes. Ask four students to supply one sentence each. Keep syntax secondary to the decision: source, coordinate system, condition, and verification.&#10;&#10;Time: 52-54 minutes.">
+      <div class="brand">CIS215 · Retrieval map</div>
+      <div class="content">
+        <div class="eyebrow">Four decisions</div>
+        <h2>Can you choose the right move without a recipe?</h2>
+        <ol class="retrieval-chain">
+          <li><span>Source</span><strong>CSV, dictionary, or records?</strong></li>
+          <li><span>Coordinates</span><strong>Labels with <code>.loc[]</code> or positions with <code>.iloc[]</code>?</strong></li>
+          <li><span>Condition</span><strong>One test, combined tests, or a membership list?</strong></li>
+          <li><span>Check</span><strong>What shape and columns should remain?</strong></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. Students no longer need to move rows one at a time. They can state the question, choose the selection method, build a condition, and verify the result. Collect one answer to the exit ticket.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>State the question before you write the filter.</h2>
+        <div class="exit-grid">
+          <p><strong>Question:</strong> Which Arizona or California cities have more than one million residents?</p>
+          <p><strong>Your task:</strong> Name the best filtering approach and explain why.</p>
+        </div>
+        <p class="field-note">A precise subset is the start of a defensible answer.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

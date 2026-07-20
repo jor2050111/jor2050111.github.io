@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 5 classroom presentation: Data Exploration and Summary Statistics.">
+  <meta name="theme-color" content="#001A36">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Cpath d='M9 49h46' stroke='%23FFD573' stroke-width='4'/%3E%3Ccircle cx='16' cy='40' r='5' fill='%2386A8D1'/%3E%3Ccircle cx='27' cy='35' r='5' fill='%2386A8D1'/%3E%3Ccircle cx='37' cy='31' r='5' fill='%23FFD573'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%23FFD573'/%3E%3C/svg%3E">
+  <title>CIS215: Data Exploration and Summary Statistics</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Data Exploration and Summary Statistics" data-course="cis215"
+  data-chapter="ch05" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the two verified price statistics. Ask which number a sales manager should call typical. Do not resolve it yet. The gap between $307.84 and $119.99 creates the need for the full lesson.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset, fixed-seed synthetic data.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="price-ruler" role="img" aria-label="A price ruler marks the median at 119 dollars and 99 cents and the mean at 307 dollars and 84 cents, with the mean much farther to the right.">
+        <div class="ruler-line"><span class="median-pin"></span><span class="mean-pin"></span></div>
+        <div class="pin-label median"><small>median</small><strong>$119.99</strong></div>
+        <div class="pin-label mean"><small>mean</small><strong>$307.84</strong></div>
+      </div>
+      <div class="content">
+        <div class="eyebrow">Chapter 5</div>
+        <div class="rule"></div>
+        <h1>One average. Two different stories.</h1>
+        <p class="lede">Explore distributions before you summarize them.</p>
+        <div class="prompt"><p><strong>Opening question:</strong> Which number describes a typical order?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Connect the three targets to the chapter objectives. Students inspect the structure, summarize a distribution, then compare groups. Stress that the goal is interpretation, not a list of method names.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Data Exploration</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Describe the data without hiding its shape.</h2>
+        <div class="measure-path" role="img" aria-label="Three steps: inspect a dataset, summarize its center and spread, and compare categories with grouped statistics.">
+          <article><span>01</span><strong>Inspect</strong><p>Check structure, types, missing values, and sample rows.</p></article>
+          <article><span>02</span><strong>Summarize</strong><p>Choose measures of center and spread that fit the distribution.</p></article>
+          <article><span>03</span><strong>Compare</strong><p>Group records and explain differences across categories.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Teach a repeatable opening sequence. info checks structure, head and tail check contents, describe summarizes numeric columns, and value_counts checks categories. Ask students which step would expose an odd spelling in Region.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow">First-look protocol</div>
+        <h2>Inspect before you calculate.</h2>
+        <ol class="inspection-stack">
+          <li><code>.info()</code><span>Structure, types, non-null counts</span></li>
+          <li><code>.head() · .tail()</code><span>Examples from both ends</span></li>
+          <li><code>.describe()</code><span>Numeric center, spread, and limits</span></li>
+          <li><code>.value_counts()</code><span>Category frequencies and odd labels</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Read the info output as an audit. The file has 200 rows. Order_Date has 197 non-null values, so three dates are missing. Price has 198, so two prices are missing. Ask why Price became float64. Missing numeric values force room for NaN.&#10;&#10;Time: 8-11 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · Read the audit</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Non-null means present</div>
+        <h2><code>.info()</code> exposes the gaps before they change the math.</h2>
+        <div class="info-audit" role="img" aria-label="A DataFrame audit shows 200 rows. Order Date has 197 values and is missing 3. Price has 198 values and is missing 2. Other columns have all 200 values.">
+          <div><span>Column</span><span>Non-null</span><span>Missing</span><span>Type</span></div>
+          <div><strong>Order_Date</strong><span>197</span><mark>3</mark><code>str</code></div>
+          <div><strong>Price</strong><span>198</span><mark>2</mark><code>float64</code></div>
+          <div><strong>Quantity</strong><span>200</span><span>0</span><code>int64</code></div>
+          <div><strong>Region</strong><span>200</span><span>0</span><code>str</code></div>
+        </div>
+        <p class="source-line">200 orders · 7 source columns · 5 missing cells</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Compare the jobs of three views. head shows examples, tail checks the file ending, and describe summarizes all numeric columns. Point out that describe also summarizes Order_ID even though its average has no business meaning. Methods calculate. Analysts decide whether the result matters.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS215 · Choose the view</div>
+      <div class="content">
+        <div class="eyebrow">Three windows</div>
+        <h2>Each method answers a different question.</h2>
+        <div class="view-windows">
+          <article><code>.head(3)</code><strong>Did it load as expected?</strong><p>See names, formats, and early records.</p></article>
+          <article><code>.tail(3)</code><strong>Does the file end cleanly?</strong><p>Catch footer text or summary rows.</p></article>
+          <article><code>.describe()</code><strong>What shape do the numbers have?</strong><p>Read count, quartiles, center, spread, and limits.</p></article>
+        </div>
+        <div class="prompt"><p><strong>Analyst check:</strong> A valid calculation can still be meaningless.</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use value_counts for categorical composition. West has 68 orders and North has 30. When normalized, West is 34%. Ask whether the largest order count also proves the largest revenue. It does not. That question creates the need for grouped analysis later.&#10;&#10;Time: 14-17 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · Category frequencies</div>
+      <div class="content">
+        <div class="eyebrow">Count the labels</div>
+        <h2>West holds 34% of the orders.</h2>
+        <div class="frequency-bars" role="img" aria-label="Horizontal bars show order counts by region: West 68, South 53, East 49, and North 30. West is highlighted.">
+          <div class="focus"><span>West</span><i style="--bar:100%"></i><strong>68 · 34%</strong></div>
+          <div><span>South</span><i style="--bar:78%"></i><strong>53 · 26.5%</strong></div>
+          <div><span>East</span><i style="--bar:72%"></i><strong>49 · 24.5%</strong></div>
+          <div><span>North</span><i style="--bar:44%"></i><strong>30 · 15%</strong></div>
+        </div>
+        <pre class="code">df_orders[<span class="string">'Region'</span>].<span class="function">value_counts</span>(normalize=<span class="keyword">True</span>)</pre>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Have students choose the best method for each question before reveal. info answers missingness and dtypes. describe answers numeric quartiles. value_counts answers category frequency. head checks examples, not the full distribution.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · Quick check</div>
+      <div class="content">
+        <div class="eyebrow">Choose the instrument</div>
+        <h2>Match the question to the method.</h2>
+        <div class="method-match">
+          <article><p>Which columns have missing values?</p><code>?</code></article>
+          <article><p>What is the 75th percentile of Price?</p><code>?</code></article>
+          <article><p>Which product appears most often?</p><code>?</code></article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong><code>.info()</code>, <code>.describe()</code>, and <code>.value_counts()</code>.</strong> Each method reveals a different part of the dataset.</div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Introduce mean, median, and mode as choices, not competitors. Mean uses every value and moves toward outliers. Median ranks values and takes the middle. Mode finds the most frequent value and also works for text.&#10;&#10;Time: 20-23 minutes.">
+      <div class="brand">CIS215 · 5.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Three centers</div>
+        <h2>“Typical” depends on what the distribution is doing.</h2>
+        <div class="center-tools">
+          <article><span>Σ ÷ n</span><strong>Mean</strong><p>Uses every value. Outliers can pull it.</p></article>
+          <article><span>⇤ ● ⇥</span><strong>Median</strong><p>Uses rank. Extreme values cannot drag it.</p></article>
+          <article><span>● ● ●</span><strong>Mode</strong><p>Finds the most common numeric or text value.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Resolve the opening numbers with the actual price distribution. The mode is $24.99, median $119.99, and mean $307.84. High-priced laptops stretch the right tail and pull the mean upward. The median better describes a typical order price here.&#10;&#10;Time: 23-27 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · Read the skew</div>
+      <div class="content">
+        <div class="eyebrow">The right tail pulls</div>
+        <h2>High laptop prices lift the mean above the middle.</h2>
+        <div class="skew-plot" role="img" aria-label="A right-skewed price distribution has many low-price points, fewer middle-price points, and a long tail of high prices. Markers show mode 24 dollars and 99 cents, median 119 dollars and 99 cents, and mean 307 dollars and 84 cents.">
+          <div class="dot-row low"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="dot-row middle"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="dot-row high"><i></i><i></i><i></i></div>
+          <div class="stat-pin mode"><span>mode</span><strong>$24.99</strong></div>
+          <div class="stat-pin median"><span>median</span><strong>$119.99</strong></div>
+          <div class="stat-pin mean"><span>mean</span><strong>$307.84</strong></div>
+          <div class="axis"><span>$0</span><span>$1,200</span></div>
+        </div>
+        <p class="field-note">For this skewed column, the median tells the clearer “typical” story.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach spread as a second dimension of description. Range uses only the minimum and maximum. Variance uses squared distance and is hard to interpret in dollars. Standard deviation returns to dollars and describes typical distance from the mean.&#10;&#10;Time: 27-30 minutes.">
+      <div class="brand">CIS215 · Spread</div>
+      <div class="content">
+        <div class="eyebrow">Center is not enough</div>
+        <h2>Spread tells you how tightly values cluster.</h2>
+        <div class="spread-compare">
+          <article><span class="range-glyph">|←────────→|</span><strong>Range</strong><p>Maximum minus minimum. Uses two values.</p><code>$1,175.00</code></article>
+          <article><span class="variance-glyph">(x − μ)²</span><strong>Variance</strong><p>Average squared distance. Units are dollars squared.</p><code>140,394.48</code></article>
+          <article><span class="std-glyph">√variance</span><strong>Standard deviation</strong><p>Typical distance from the mean in dollars.</p><code>$374.69</code></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Use the impossible negative price to teach assumptions. Mean minus one standard deviation equals negative $66.85. The 68% rule assumes a roughly bell-shaped distribution. This price data is right-skewed, so the rule does not fit. Ask what the nonsense result is telling the analyst.&#10;&#10;Time: 30-33 minutes.">
+      <div class="brand">CIS215 · Assumption check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">A nonsense result is evidence</div>
+        <h2>The rule predicts a negative price. The rule does not fit.</h2>
+        <div class="assumption-check">
+          <div><span>mean − 1 std</span><strong>$307.84 − $374.69</strong></div>
+          <b aria-hidden="true">=</b>
+          <div class="impossible"><span>lower boundary</span><strong>−$66.85</strong><small>Prices cannot be negative.</small></div>
+        </div>
+        <div class="prompt"><p><strong>Reason:</strong> The 68% rule assumes a roughly bell-shaped distribution. These prices are right-skewed.</p></div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Introduce groupby through split, apply, combine. Use Region as the split, mean Price as the calculation, and one result per region as the combination. Emphasize that groupby is a comparison engine.&#10;&#10;Time: 33-36 minutes.">
+      <div class="brand">CIS215 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow">Split, apply, combine</div>
+        <h2><code>.groupby()</code> turns one table into comparable groups.</h2>
+        <div class="groupby-flow" role="img" aria-label="Orders split into East, North, South, and West groups. Mean price is calculated for each group, then the four results combine into one summary.">
+          <div class="orders-stack"><span>200 orders</span><small>one DataFrame</small></div>
+          <b aria-hidden="true">→</b>
+          <div class="region-stack"><span>East</span><span>North</span><span>South</span><span>West</span></div>
+          <b aria-hidden="true">→</b>
+          <div class="apply-stamp"><code>.mean()</code><small>apply within each group</small></div>
+          <b aria-hidden="true">→</b>
+          <div class="summary-stack"><span>four results</span><small>one comparison</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the verified regional means. North has the highest mean price at $442.23. East has the lowest at $260.62. Do not call North best. It has fewer orders and a different product mix. Ask what other statistic would test whether one expensive order dominates.&#10;&#10;Time: 36-40 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · Compare regions</div>
+      <div class="content">
+        <div class="eyebrow">One grouped measure</div>
+        <h2>North has the highest mean price, not the most orders.</h2>
+        <div class="region-bars" role="img" aria-label="Bars compare mean order price by region. North is highest at 442 dollars and 23 cents. South is 302 dollars and 25 cents. West is 288 dollars and 23 cents. East is 260 dollars and 62 cents.">
+          <div class="focus"><span>North</span><i style="--bar:100%"></i><strong>$442.23</strong></div>
+          <div><span>South</span><i style="--bar:68.3%"></i><strong>$302.25</strong></div>
+          <div><span>West</span><i style="--bar:65.2%"></i><strong>$288.23</strong></div>
+          <div><span>East</span><i style="--bar:58.9%"></i><strong>$260.62</strong></div>
+        </div>
+        <pre class="code">df_orders.<span class="function">groupby</span>(<span class="string">'Region'</span>)[<span class="string">'Price'</span>].<span class="function">mean</span>()</pre>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Show why agg adds context. Count reveals sample size, mean and median reveal skew, and standard deviation reveals spread. Point out that every region has a median below its mean. North's mean is $442.23 while its median is $329.99. West's mean is $288.23 while its median is $74.99.&#10;&#10;Time: 40-43 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · More than one statistic</div>
+      <div class="content">
+        <div class="eyebrow">Context changes the conclusion</div>
+        <h2><code>.agg()</code> shows center, spread, and sample size together.</h2>
+        <table class="stat-table">
+          <caption class="sr-only">Regional price statistics from the e-commerce order dataset</caption>
+          <thead><tr><th>Region</th><th>Priced orders</th><th>Mean</th><th>Median</th><th>Std dev</th></tr></thead>
+          <tbody>
+            <tr><th>East</th><td>48</td><td>$260.62</td><td>$119.99</td><td>$312.45</td></tr>
+            <tr class="focus"><th>North</th><td>29</td><td>$442.23</td><td>$329.99</td><td>$427.42</td></tr>
+            <tr><th>South</th><td>53</td><td>$302.25</td><td>$119.99</td><td>$384.19</td></tr>
+            <tr><th>West</th><td>68</td><td>$288.23</td><td>$74.99</td><td>$378.93</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Clarify size versus count. groupby.size counts rows, including rows with missing values. groupby.count counts non-null values in each column. East has 49 orders but only 48 prices. Ask which count belongs in a price summary.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS215 · Count carefully</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Rows and values differ</div>
+        <h2>East has 49 orders but only 48 recorded prices.</h2>
+        <div class="count-compare">
+          <article><code>groupby(...).size()</code><strong>49</strong><p>Counts every East row.</p></article>
+          <article><code>groupby(...).count()['Price']</code><strong>48</strong><p>Counts non-null East prices.</p></article>
+        </div>
+        <p class="field-note">Name what you counted.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach sorting as a way to expose rank. sort_values can rank rows or grouped summaries. For more than one column, pandas breaks ties with the next column. Ask how to sort Region A-Z but Price high to low.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS215 · 5.4</div>
+      <div class="content">
+        <div class="eyebrow">Put the answer first</div>
+        <h2>Sort after grouping to reveal the leader.</h2>
+        <div class="sort-ladder">
+          <code>region_avg = df_orders.groupby('Region')['Price'].mean()</code>
+          <b aria-hidden="true">↓</b>
+          <code>region_avg.sort_values(ascending=False)</code>
+          <b aria-hidden="true">↓</b>
+          <div><span>1</span><strong>North</strong><em>$442.23</em></div>
+          <div><span>2</span><strong>South</strong><em>$302.25</em></div>
+          <div><span>3</span><strong>West</strong><em>$288.23</em></div>
+          <div><span>4</span><strong>East</strong><em>$260.62</em></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Use nlargest and nsmallest when the question asks for a short ranked list. These methods combine ordering and selection. They express the analyst's intent more clearly than sorting the full table and calling head.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS215 · Top and bottom</div>
+      <div class="content">
+        <div class="eyebrow">Ask for only what you need</div>
+        <h2><code>.nlargest()</code> turns a rank question into one line.</h2>
+        <div class="top-n">
+          <pre class="code"><span class="comment"># Five highest-revenue orders</span>
+top_5 = df_orders.<span class="function">nlargest</span>(
+    5, <span class="string">'Revenue'</span>
+)</pre>
+          <div class="rank-cards" aria-label="A ranked top five list represented by five descending bars."><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+        <p class="field-note"><code>.nsmallest()</code> answers the opposite question.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Handoff to Skills Lab 5A. Students add Revenue, audit the file, compare mean and median, group revenue, chart regional mean revenue, then write a manager brief. The chart is evidence, but the brief must explain what the skew changes.&#10;&#10;Time: 50-53 minutes.">
+      <div class="brand">CIS215 · Skills Lab 5A</div>
+      <div class="content">
+        <div class="eyebrow">Sales Performance Analysis</div>
+        <h2>Find the pattern a manager can act on.</h2>
+        <div class="lab-sequence">
+          <article><span>1</span><strong>Audit</strong><p>Types, missing values, categories</p></article>
+          <article><span>2</span><strong>Describe</strong><p>Center, spread, skew</p></article>
+          <article><span>3</span><strong>Compare</strong><p>Region, product, revenue</p></article>
+          <article><span>4</span><strong>Recommend</strong><p>100-150 word manager brief</p></article>
+        </div>
+        <p class="submission-note">Estimated lab time: 4-5 hours · Submit <code>skills_lab_5a.ipynb</code>.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Preview the evidence chain the manager brief should follow. The West has the most orders and the highest total revenue at $90,621.98. West-Laptop is the highest Region-Product revenue combination at $59,949.41. These are lab outputs, not answers students should copy without their own analysis.&#10;&#10;Time: 53-54 minutes.&#10;&#10;Source: CIS215 Chapter 5 e-commerce dataset.">
+      <div class="brand">CIS215 · Evidence chain</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Numbers need meaning</div>
+        <h2>A useful brief connects result, explanation, and action.</h2>
+        <div class="brief-chain">
+          <article><span>Result</span><strong>West revenue: $90,621.98</strong></article>
+          <i aria-hidden="true">→</i>
+          <article><span>Explanation</span><strong>West combines order volume with laptop revenue.</strong></article>
+          <i aria-hidden="true">→</i>
+          <article><span>Action</span><strong>Test whether the pattern repeats next month.</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening question. Median is the better single description of a typical price in this skewed distribution, but no single number carries the whole story. Ask students to name one additional statistic they would report and why.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>The median answers “typical.” The spread explains the risk.</h2>
+        <div class="exit-question">
+          <p><strong>Exit ticket:</strong> A column has mean $308, median $120, and standard deviation $375. Write two sentences that explain its shape to a manager.</p>
+        </div>
+        <p class="field-note">Report the distribution, not only the average.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

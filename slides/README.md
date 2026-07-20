@@ -15,6 +15,8 @@ contract. This README explains the repository workflow.
 - CIS133 Chapter 3: `https://jor2050111.github.io/slides/cis133/ch03/`
 - CIS215 presentations: `https://jor2050111.github.io/slides/cis215/`
 - CIS215 Chapter 1: `https://jor2050111.github.io/slides/cis215/ch01/`
+- CIS215 Chapter 2: `https://jor2050111.github.io/slides/cis215/ch02/`
+- CIS215 Chapter 3: `https://jor2050111.github.io/slides/cis215/ch03/`
 
 ## Directory pattern
 

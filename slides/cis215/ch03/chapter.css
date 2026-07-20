@@ -1,0 +1,407 @@
+/* CIS215 Chapter 3: midnight bracket blueprint */
+
+/* The bracket corner motif is painted as a background layer, never as a
+   positioned box, so it can bleed off the slide edge without creating
+   scrollable overflow inside the slide. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 340 340'%3E%3Cg fill='none' stroke='rgba(29,94,163,0.13)' stroke-width='5' transform='rotate(9 170 170)'%3E%3Cpath d='M148 30H58v280h90'/%3E%3Cpath d='M192 30h90v280h-90'/%3E%3C/g%3E%3C/svg%3E") right -3.5rem bottom -5rem / 21rem 21rem no-repeat,
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .2), transparent 22rem),
+        linear-gradient(150deg, #f2f7fd, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 340 340'%3E%3Cg fill='none' stroke='rgba(255,213,115,0.14)' stroke-width='5' transform='rotate(9 170 170)'%3E%3Cpath d='M148 30H58v280h90'/%3E%3Cpath d='M192 30h90v280h-90'/%3E%3C/g%3E%3C/svg%3E") right -3.5rem bottom -5rem / 21rem 21rem no-repeat,
+        radial-gradient(circle at 88% 8%, rgba(255, 213, 115, .13), transparent 24rem),
+        linear-gradient(150deg, #000f20, #001a36 55%, #032a52);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 340 340'%3E%3Cg fill='none' stroke='rgba(0,26,54,0.12)' stroke-width='5' transform='rotate(9 170 170)'%3E%3Cpath d='M148 30H58v280h90'/%3E%3Cpath d='M192 30h90v280h-90'/%3E%3C/g%3E%3C/svg%3E") right -3.5rem bottom -5rem / 21rem 21rem no-repeat,
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .42), transparent 24rem),
+        linear-gradient(150deg, #ffe3a3, var(--gold));
+}
+
+.panel {
+    border-radius: .8rem;
+}
+
+.three-up .panel,
+.four-up .panel,
+.split .panel {
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .09);
+}
+
+.dark .panel {
+    box-shadow: none;
+}
+
+.workflow .phase {
+    border-radius: .65rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .12);
+}
+
+.code {
+    border-radius: .7rem;
+}
+
+.code .error {
+    color: #ff9d8f;
+    font-weight: 700;
+}
+
+/* Let checklist items hold inline code without the shared grid treating
+   each child as its own row. */
+.checklist li {
+    display: block;
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.checklist li::before {
+    position: absolute;
+    left: 0;
+    top: .12rem;
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+/* Title bracket cluster */
+.title-slide .content {
+    position: relative;
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(30vw, 30rem);
+}
+
+.title-brackets {
+    position: absolute;
+    top: 50%;
+    right: clamp(2rem, 7vw, 9rem);
+    transform: translateY(-50%) rotate(-6deg);
+    display: grid;
+    gap: .4rem;
+    justify-items: center;
+    font-family: var(--code);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.title-brackets span {
+    font-size: clamp(3.4rem, 7vw, 6.6rem);
+}
+
+.title-brackets .b1 {
+    color: var(--gold);
+}
+
+.title-brackets .b2 {
+    color: rgba(255, 255, 255, .5);
+}
+
+.title-brackets .b3 {
+    color: #4d80ba;
+}
+
+/* Container headline glyphs */
+.glyph {
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1;
+    color: var(--blue);
+}
+
+.gold .glyph {
+    color: #7c3626;
+}
+
+.panel .glyph + h3 {
+    margin-top: .5rem;
+}
+
+.mono {
+    font-family: var(--code);
+    font-size: .95em;
+}
+
+/* Index ruler figure */
+.ruler {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+}
+
+.ruler .rcell {
+    display: grid;
+    justify-items: center;
+    gap: .3rem;
+    min-width: clamp(3.2rem, 6vw, 5.4rem);
+}
+
+.ruler .rval {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: clamp(.6rem, 1.2vw, 1rem) 0;
+    background: var(--white);
+    border: .14rem solid var(--navy);
+    border-radius: .5rem;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(1rem, 1.6vw, 1.5rem);
+    color: #001a36;
+}
+
+.ruler .rcell.win .rval {
+    background: var(--gold);
+    border-color: #b8860b;
+}
+
+.ruler .rpos,
+.ruler .rneg {
+    font-family: var(--code);
+    font-size: clamp(.74rem, 1.05vw, .98rem);
+    font-weight: 700;
+}
+
+.ruler .rpos {
+    color: var(--blue);
+}
+
+.ruler .rneg {
+    color: #7c3626;
+}
+
+.dark .ruler .rneg {
+    color: var(--gold);
+}
+
+.ruler-caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+    font-weight: 700;
+}
+
+.ruler-caption .swatch {
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: .25rem;
+    margin-right: .45rem;
+    vertical-align: -.15rem;
+}
+
+/* Example chips row */
+.ex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+}
+
+.ex-row .chip {
+    border-radius: .45rem;
+}
+
+.ex-row .chip b {
+    color: #7c3626;
+}
+
+.dark .ex-row .chip b {
+    color: #7c3626;
+}
+
+/* Key-value map figure */
+.kv {
+    display: grid;
+    gap: .55rem;
+    max-width: 34rem;
+}
+
+.kv .pair {
+    display: grid;
+    grid-template-columns: minmax(8rem, .8fr) auto 1fr;
+    align-items: center;
+    gap: .7rem;
+}
+
+.kv .k {
+    padding: .55rem .8rem;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.82rem, 1.2vw, 1.1rem);
+    text-align: right;
+}
+
+.kv .arrow {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.kv .v {
+    padding: .55rem .8rem;
+    background: var(--white);
+    border: .13rem solid var(--mist);
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-size: clamp(.82rem, 1.2vw, 1.1rem);
+    color: #001a36;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .08);
+}
+
+/* Decision ladder figure */
+.ladder {
+    display: grid;
+    gap: .45rem;
+    max-width: 46rem;
+}
+
+.ladder .step {
+    display: grid;
+    grid-template-columns: minmax(9.5rem, auto) auto 1fr;
+    align-items: center;
+    gap: .8rem;
+}
+
+.ladder .q {
+    padding: .6rem 1rem;
+    background: var(--white);
+    border: .14rem solid var(--navy);
+    border-radius: 2rem;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.85rem, 1.25vw, 1.15rem);
+    color: #001a36;
+    text-align: center;
+}
+
+.ladder .verdict {
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.1vw, 1rem);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.ladder .verdict.no {
+    color: #7c3626;
+}
+
+.ladder .verdict.yes {
+    color: #2f7d54;
+}
+
+.ladder .result {
+    justify-self: start;
+    padding: .6rem 1.1rem;
+    background: var(--gold);
+    border-radius: .5rem;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.3vw, 1.2rem);
+    color: #001a36;
+}
+
+.ladder .step.skipped .q {
+    opacity: .38;
+    border-style: dashed;
+}
+
+.ladder .skip-note {
+    font-size: clamp(.85rem, 1.15vw, 1.05rem);
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* Side-by-side code comparison */
+.code-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: stretch;
+}
+
+.code-pair .code {
+    max-width: none;
+    height: 100%;
+}
+
+.code-pair h3 {
+    margin-bottom: .6rem;
+}
+
+/* Warning panel */
+.panel.warn {
+    border-left: .5rem solid var(--warning);
+}
+
+.panel.warn .signal::before {
+    background: var(--warning);
+}
+
+/* Patient mini table spacing */
+.dataframe {
+    border-radius: .7rem;
+    overflow: hidden;
+    box-shadow: 0 .75rem 1.7rem rgba(0, 26, 54, .12);
+}
+
+@media (max-width: 760px) {
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-brackets {
+        top: auto;
+        bottom: 6.5rem;
+        right: 1.2rem;
+        transform: rotate(-6deg);
+        opacity: .2;
+    }
+
+    .title-brackets span {
+        font-size: 2.4rem;
+    }
+
+    .code-pair {
+        grid-template-columns: 1fr;
+    }
+
+    .kv .pair {
+        grid-template-columns: minmax(6.5rem, auto) auto 1fr;
+    }
+
+    .ladder .step {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+        justify-items: start;
+    }
+}

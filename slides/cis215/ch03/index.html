@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 3 classroom presentation: Data Structures and Control Flow.">
+  <meta name="theme-color" content="#001A36">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Cpath d='M22 12h-8v40h8v-6h-4V18h4z' fill='%23FFD573'/%3E%3Cpath d='M42 12h8v40h-8v-6h4V18h-4z' fill='%23FFD573'/%3E%3Ccircle cx='32' cy='26' r='4' fill='%234D80BA'/%3E%3Ccircle cx='32' cy='40' r='4' fill='%23fff0cf'/%3E%3C/svg%3E">
+  <title>CIS215: Data Structures and Control Flow</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS215: Data Structures and Control Flow" data-course="cis215"
+  data-chapter="ch03" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the magic-spell problem from the chapter intro. Students have run pandas code that works, but they cannot yet say why it works. Take one or two honest answers to the starter prompt. Promise the payoff: after today they read and write the grammar underneath every pandas line, so examples become tools instead of incantations.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="title-brackets" aria-hidden="true">
+        <span class="b1">[&nbsp;]</span>
+        <span class="b2">(&nbsp;)</span>
+        <span class="b3">{&nbsp;}</span>
+      </div>
+      <div class="content">
+        <div class="eyebrow">Chapter 3</div>
+        <div class="rule"></div>
+        <h1>Stop copying spells. <span class="accent">Learn the grammar.</span></h1>
+        <p class="lede">Data structures and control flow: lists, tuples, dictionaries, decisions, and loops.</p>
+        <div class="prompt">
+          <p><strong>Start here:</strong> Which line of code have you run this semester that worked, though you could not say why?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three panels as the arc of the class. Objective 3.1 (Apply): create and manipulate lists, tuples, and dictionaries. Objective 3.2 (Apply): conditionals with if, elif, and else. Objective 3.3 (Apply): for and while loops, plus list comprehensions. This chapter serves CLO VII. Everything lands in Skills Lab 3A, a grade analysis tool.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Data Structures and Control Flow</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Store it. Decide on it. Repeat it.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">01</div>
+            <h3>Store</h3>
+            <p>Choose lists, tuples, or dictionaries to match the shape of your data.</p>
+          </article>
+          <article class="panel">
+            <div class="number">02</div>
+            <h3>Decide</h3>
+            <p>Branch with if, elif, and else so code responds to what it sees.</p>
+          </article>
+          <article class="panel">
+            <div class="number">03</div>
+            <h3>Repeat</h3>
+            <p>Loop with for and while, then fold a loop into a comprehension.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The bracket shape is the fastest reading cue in Python. Square brackets: a list, ordered and changeable, the everyday workhorse. Parentheses: a tuple, ordered and locked. Curly braces with colons: a dictionary, labeled data you look up by key. Students will meet all three inside pandas soon, so reading the shape at a glance pays off for the rest of the course.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Three containers</div>
+        <h2>Match the container to the job.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="glyph" aria-hidden="true">[ ]</div>
+            <h3>List</h3>
+            <p class="mono">[72, 75, 68]</p>
+            <p>Ordered and changeable. The everyday workhorse.</p>
+          </article>
+          <article class="panel">
+            <div class="glyph" aria-hidden="true">( )</div>
+            <h3>Tuple</h3>
+            <p class="mono">(33.45, -112.07)</p>
+            <p>Ordered and locked. For values that must not change.</p>
+          </article>
+          <article class="panel">
+            <div class="glyph" aria-hidden="true">{ }</div>
+            <h3>Dictionary</h3>
+            <p class="mono">{'name': 'Imani'}</p>
+            <p>Labeled. You look values up by key, not by position.</p>
+          </article>
+        </div>
+        <p class="lede">The bracket shape tells you what you are reading before you read a single value.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Zero-based indexing is the first surprise for every beginner. Walk the ruler: position 0 holds 72, position 2 holds 68. Then the bottom row: negative indexing counts from the end, so -1 is the last element with no length math. Ask the class for temperatures[3] and temperatures[-2] before moving on.&#10;&#10;Answers: temperatures[3] is 71 and temperatures[-2] is 69.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Indexing</div>
+        <h2>Python counts from zero.</h2>
+        <figure role="img" aria-label="The list holds 72, 75, 68, 71, 74, 69, and 70. Position numbers 0 through 6 run above the values. Negative positions -7 through -1 run below them." style="margin:0; display:grid; gap:1rem;">
+          <div class="ruler">
+            <div class="rcell"><span class="rpos">0</span><span class="rval">72</span><span class="rneg">-7</span></div>
+            <div class="rcell"><span class="rpos">1</span><span class="rval">75</span><span class="rneg">-6</span></div>
+            <div class="rcell"><span class="rpos">2</span><span class="rval">68</span><span class="rneg">-5</span></div>
+            <div class="rcell"><span class="rpos">3</span><span class="rval">71</span><span class="rneg">-4</span></div>
+            <div class="rcell"><span class="rpos">4</span><span class="rval">74</span><span class="rneg">-3</span></div>
+            <div class="rcell"><span class="rpos">5</span><span class="rval">69</span><span class="rneg">-2</span></div>
+            <div class="rcell"><span class="rpos">6</span><span class="rval">70</span><span class="rneg">-1</span></div>
+          </div>
+          <div class="ruler-caption">
+            <span><span class="swatch" style="background:#1d5ea3;"></span>Count forward from 0</span>
+            <span><span class="swatch" style="background:#7c3626;"></span>Count backward from -1</span>
+          </div>
+        </figure>
+        <div class="ex-row">
+          <span class="chip">temperatures[0] <b>→ 72</b></span>
+          <span class="chip">temperatures[2] <b>→ 68</b></span>
+          <span class="chip">temperatures[-1] <b>→ 70</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Mutable means the list itself changes in place, with no copy made. Walk the three edits in order: replace by index, append to the end, remove the first matching value. Then point at the method chips as the toolkit to explore with Tab completion from Chapter 2. No memorizing: type the dot and look.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Lists change</div>
+        <h2>Built to be edited.</h2>
+        <div class="split">
+          <pre class="code">temperatures[2] = 70     <span class="comment"># replace by index</span>
+temperatures.append(73)  <span class="comment"># add to the end</span>
+temperatures.remove(75)  <span class="comment"># drop the first 75</span></pre>
+          <div class="panel">
+            <h3>The list toolkit</h3>
+            <div class="chip-list">
+              <span class="chip">.append()</span>
+              <span class="chip">.remove()</span>
+              <span class="chip">.pop()</span>
+              <span class="chip">.insert()</span>
+              <span class="chip">.sort()</span>
+              <span class="chip">.reverse()</span>
+            </div>
+            <p>Mutable means the list itself changes. No copy is made. Tab completion after the dot shows the full set.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Slicing trips students on one rule: the stop index is excluded. The gold window on the ruler shows [1:4] keeping positions 1, 2, and 3, never 4. Leave out the start and the slice begins at the front. Leave out the stop and it runs to the end. Negative start counts from the back. This exact rule returns with range() later today.&#10;&#10;Time: 13-16 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Slicing</div>
+        <h2>The stop is not included.</h2>
+        <figure role="img" aria-label="The slice from 1 to 4 keeps positions 1, 2, and 3, holding 75, 68, and 71. Position 4 stays outside the slice." style="margin:0; display:grid; gap:1rem;">
+          <div class="ruler">
+            <div class="rcell"><span class="rpos">0</span><span class="rval">72</span></div>
+            <div class="rcell win"><span class="rpos">1</span><span class="rval">75</span></div>
+            <div class="rcell win"><span class="rpos">2</span><span class="rval">68</span></div>
+            <div class="rcell win"><span class="rpos">3</span><span class="rval">71</span></div>
+            <div class="rcell"><span class="rpos">4</span><span class="rval">74</span></div>
+            <div class="rcell"><span class="rpos">5</span><span class="rval">69</span></div>
+            <div class="rcell"><span class="rpos">6</span><span class="rval">70</span></div>
+          </div>
+          <div class="ruler-caption">
+            <span><span class="swatch" style="background:#ffd573; border:.12rem solid #b8860b;"></span>temperatures[1:4] keeps positions 1, 2, and 3</span>
+          </div>
+        </figure>
+        <div class="ex-row">
+          <span class="chip">[1:4] <b>→ [75, 68, 71]</b></span>
+          <span class="chip">[:3] <b>→ first three</b></span>
+          <span class="chip">[-2:] <b>→ last two</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Try It Yourself 3.1. Students write a prediction before the reveal. Trace it together afterward: append puts 95 at the end, the index assignment turns 92 into 93, and the slice keeps positions 2, 3, and 4. Common wrong answer: four elements, from forgetting that the stop index 5 is excluded.&#10;&#10;Answer: [78, 90, 88].&#10;&#10;Time: 16-19 minutes.">
+      <div class="brand">CIS215 · Predict first</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict first</div>
+        <h2>Three edits, one slice.</h2>
+        <div class="split">
+          <pre class="code">scores = [85, 92, 78, 90, 88]
+scores.append(95)
+scores[1] = 93
+print(scores[2:5])</pre>
+          <div>
+            <div class="prompt">
+              <p><strong>Commit:</strong> Write down exactly what prints before you see the answer.</p>
+            </div>
+            <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+            <div class="answer"><strong><code>[78, 90, 88]</code></strong>. The list becomes <code>[85, 93, 78, 90, 88, 95]</code>, and the slice keeps positions 2, 3, and 4. The stop index 5 is excluded.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A tuple reads like a list but writes like stone. Trying to assign into one raises TypeError: tuple object does not support item assignment. That error is a feature. Coordinates, RGB colors, and record IDs should never drift mid-analysis, and a tuple enforces it. Reading uses the same square-bracket indexing students already know.&#10;&#10;Time: 19-21 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Tuples</div>
+        <h2>Lock the values that must hold still.</h2>
+        <div class="split">
+          <pre class="code">red_color = (255, 0, 0)
+red_color[0] = 200
+
+<span class="error">TypeError</span>: 'tuple' object does not
+support item assignment</pre>
+          <div class="panel">
+            <h3>Reach for a tuple when</h3>
+            <ul class="checklist">
+              <li>GPS coordinates must stay fixed.</li>
+              <li>An RGB color is a set trio.</li>
+              <li>A record ID must never drift.</li>
+            </ul>
+            <p>Reading works like a list. Writing raises the error, on purpose.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Dictionaries flip the lookup model: by name instead of by position. Walk the key-to-value map, then the two access patterns. Square brackets raise a KeyError when the key is missing, which students met in Chapter 2. The .get() method returns a fallback instead, which keeps an analysis running when a field is absent.&#10;&#10;Time: 21-24 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Dictionaries</div>
+        <h2>Look it up by name, not position.</h2>
+        <div class="split">
+          <figure class="kv" role="img" aria-label="A patient dictionary maps the key name to Imani Johnson, age to 34, blood_type to Type A, and temperature to 98.6." style="margin:0;">
+            <div class="pair"><span class="k">'name'</span><span class="arrow">→</span><span class="v">'Imani Johnson'</span></div>
+            <div class="pair"><span class="k">'age'</span><span class="arrow">→</span><span class="v">34</span></div>
+            <div class="pair"><span class="k">'blood_type'</span><span class="arrow">→</span><span class="v">'Type A'</span></div>
+            <div class="pair"><span class="k">'temperature'</span><span class="arrow">→</span><span class="v">98.6</span></div>
+          </figure>
+          <div>
+            <pre class="code">patient['name']
+<span class="comment"># 'Imani Johnson'</span>
+
+patient.get('blood_pressure',
+            'Not recorded')
+<span class="comment"># 'Not recorded'</span></pre>
+            <p class="field-note">.get() returns a fallback, not an error.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Dictionaries are mutable like lists. Assigning to a new key adds it, assigning to an existing key updates it, and del removes the pair. The membership check with in prevents the KeyError before it happens. The three view methods matter most for loops, which arrive in a few minutes: .items() especially.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS215 · 3.1</div>
+      <div class="content">
+        <div class="eyebrow">Dictionaries change too</div>
+        <h2>Add, update, remove, check.</h2>
+        <div class="split">
+          <pre class="code">patient['blood_type'] = 'Type A'  <span class="comment"># add</span>
+patient['age'] = 35               <span class="comment"># update</span>
+<span class="keyword">del</span> patient['blood_type']         <span class="comment"># remove</span>
+
+<span class="keyword">if</span> 'age' <span class="keyword">in</span> patient:
+    print(patient['age'])</pre>
+          <div class="panel">
+            <h3>The three views</h3>
+            <div class="chip-list">
+              <span class="chip">.keys()</span>
+              <span class="chip">.values()</span>
+              <span class="chip">.items()</span>
+            </div>
+            <p>Check membership with <code>in</code> before you read. The views feed the loops coming up next.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Container triage before control flow. Pairs pick a container for each scenario, then defend the choice.&#10;&#10;Answers: 1: a list, it stays ordered and grows every morning. 2: a tuple, a fixed location should be locked. 3: a dictionary, every value carries a label you look up by name.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS215 · Quick check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick check</div>
+        <h2>Pick the container.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">1</div>
+            <p>Daily temperature readings, with one more added every morning.</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <p>The fixed latitude and longitude of a weather sensor.</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <p>One customer’s name, email, and plan level.</p>
+          </article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answers</button>
+        <div class="answer"><strong>1:</strong> a list. It grows and stays ordered. <strong>2:</strong> a tuple. The location never changes. <strong>3:</strong> a dictionary. Each value has a label you look up by name.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Shift from storing data to acting on it. Real analysis code flags abnormal values, sorts records into groups, and treats missing data differently from valid data. Walk the anatomy: the condition ends with a colon, the indented block runs only when the condition is true, and code back at the left margin runs either way. Indentation is grammar in Python, not decoration.&#10;&#10;Time: 28-30 minutes.">
+      <div class="brand">CIS215 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">Conditionals</div>
+        <h2>Code that responds to what it sees.</h2>
+        <pre class="code"><span class="keyword">if</span> temperature &gt; 100.4:
+    print(<span class="string">"Fever detected"</span>)</pre>
+        <div class="three-up">
+          <article class="panel">
+            <h3>The condition</h3>
+            <p>A test that is true or false, ending with a colon.</p>
+          </article>
+          <article class="panel">
+            <h3>The indented block</h3>
+            <p>Runs only when the test is true. Indentation is the grammar.</p>
+          </article>
+          <article class="panel">
+            <h3>After the block</h3>
+            <p>Unindented code runs either way.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The ladder shows a score of 85 falling through the grade chain. The 90 check fails, the 80 check succeeds, grade becomes B, and every later branch is skipped without being looked at. Order from strict to loose. Ask: what happens if the 60 check came first? Every passing score would grade as D, because the first true branch wins.&#10;&#10;Time: 30-33 minutes.">
+      <div class="brand">CIS215 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">if, elif, else</div>
+        <h2>The first true branch wins.</h2>
+        <figure class="ladder" role="img" aria-label="A score of 85 fails the check for 90 or more, passes the check for 80 or more, and earns the grade B. The remaining checks for 70 and else are never looked at." style="margin:0;">
+          <div class="step"><span class="q">score &gt;= 90</span><span class="verdict no">No ↓</span><span></span></div>
+          <div class="step"><span class="q">score &gt;= 80</span><span class="verdict yes">Yes →</span><span class="result">grade = "B"</span></div>
+          <div class="step skipped"><span class="q">score &gt;= 70</span><span class="skip-note">Never checked</span><span></span></div>
+          <div class="step skipped"><span class="q">else</span><span class="skip-note">Never checked</span><span></span></div>
+        </figure>
+        <p class="lede">With <code>score = 85</code>, Python runs one block and skips the rest. Order your checks from strict to loose.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two operator families. Comparison operators produce the true or false that conditionals need. The classic bug: one equals sign assigns, two compare. Logical operators combine tests: and needs both, or needs at least one, not flips the result. The example reads as a sentence: age above 40 and blood pressure above 140 flags a high-risk patient.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS215 · 3.2</div>
+      <div class="content">
+        <div class="eyebrow">The operators</div>
+        <h2>Compare, then combine.</h2>
+        <div class="split">
+          <article class="panel">
+            <h3>Compare</h3>
+            <div class="chip-list">
+              <span class="chip">==</span>
+              <span class="chip">!=</span>
+              <span class="chip">&gt;</span>
+              <span class="chip">&lt;</span>
+              <span class="chip">&gt;=</span>
+              <span class="chip">&lt;=</span>
+            </div>
+            <p><code>==</code> compares. <code>=</code> assigns. Mixing them up is the classic beginner bug.</p>
+          </article>
+          <article class="panel">
+            <h3>Combine</h3>
+            <div class="chip-list">
+              <span class="chip">and</span>
+              <span class="chip">or</span>
+              <span class="chip">not</span>
+            </div>
+            <p><code>age &gt; 40 and bp &gt; 140</code> needs both to be true. <code>or</code> needs one. <code>not</code> flips the answer.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The for loop is the analyst’s daily loop. Walk the mechanism: Python takes the next item, names it temp, runs the block, and repeats until the collection is empty. The loop variable name is yours to choose, and a readable name makes the block read like a sentence. Every column statistic and cleaning pass in later chapters rides on this pattern.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">for loops</div>
+        <h2>Once for every item.</h2>
+        <div class="split">
+          <pre class="code"><span class="keyword">for</span> temp <span class="keyword">in</span> temperatures:
+    print(<span class="string">f"{temp}°F"</span>)
+
+<span class="comment"># 98.6°F, 99.1°F, 100.2°F, ...</span></pre>
+          <div>
+            <ul class="checklist">
+              <li>Take the next item from the collection.</li>
+              <li>Name it <code>temp</code> for this pass.</li>
+              <li>Run the indented block with that value.</li>
+              <li>Repeat until the collection runs out.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two partners for the for loop. range() makes number sequences for repeating a set number of times, and its stop value is excluded, the same rule as slicing. Three forms: stop only, start and stop, then start, stop, and step. For dictionaries, .items() hands the loop both the key and the value together, the pattern students will reach for constantly.&#10;&#10;Time: 38-40 minutes.">
+      <div class="brand">CIS215 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">Two loop partners</div>
+        <h2>Count with range. Unpack with items.</h2>
+        <div class="split">
+          <article class="panel">
+            <h3><code>range(start, stop, step)</code></h3>
+            <div class="ex-row">
+              <span class="chip">range(5) <b>→ 0 1 2 3 4</b></span>
+              <span class="chip">range(1, 6) <b>→ 1 2 3 4 5</b></span>
+              <span class="chip">range(0, 11, 2) <b>→ 0 2 4 6 8 10</b></span>
+            </div>
+            <p>The stop is excluded. Slicing taught you this rule already.</p>
+          </article>
+          <article class="panel">
+            <h3><code>.items()</code></h3>
+            <pre class="code"><span class="keyword">for</span> key, value <span class="keyword">in</span> patient.items():
+    print(<span class="string">f"{key}: {value}"</span>)</pre>
+            <p>The loop receives each key and its value together.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The while loop fits when the number of repeats is unknown ahead of time. The cooling example runs until the temperature drops to normal. Then the warning: the body must move the condition toward false. Forget the update line and the loop never ends. If a student hits one in JupyterLab, the square stop button interrupts the kernel.&#10;&#10;Time: 40-43 minutes.">
+      <div class="brand">CIS215 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">while loops</div>
+        <h2>Repeat until the condition fails.</h2>
+        <div class="split">
+          <pre class="code"><span class="keyword">while</span> temperature &gt; 100.4:
+    print(<span class="string">"cooling..."</span>)
+    temperature -= 0.5
+
+<span class="comment"># stops at 100.0°F</span></pre>
+          <article class="panel warn">
+            <div class="signal">Warning</div>
+            <h3>The exit must be reachable.</h3>
+            <p>The body has to push the condition toward false. Drop the <code>temperature -= 0.5</code> line and the loop runs forever.</p>
+            <p><code>for</code> fits a known collection. <code>while</code> fits an unknown count.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two control words for mid-loop decisions. break ends the whole loop the moment the job is done, like stopping at the first critical reading. continue skips the current item and moves on, like passing over invalid readings while processing the rest. Both belong inside an if. Used well they keep loops short and honest.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS215 · 3.3</div>
+      <div class="content">
+        <div class="eyebrow">Loop control</div>
+        <h2>Exit early or skip one.</h2>
+        <div class="split">
+          <article class="panel">
+            <h3><code>break</code> ends the loop</h3>
+            <pre class="code"><span class="keyword">if</span> temp &gt; 100.4:
+    print(<span class="string">"Critical found"</span>)
+    <span class="keyword">break</span></pre>
+            <p>Stop scanning the moment you find what you came for.</p>
+          </article>
+          <article class="panel">
+            <h3><code>continue</code> skips one item</h3>
+            <pre class="code"><span class="keyword">if</span> temp &gt; 100.4:
+    <span class="keyword">continue</span>
+print(<span class="string">f"Valid: {temp}"</span>)</pre>
+            <p>Pass over this item and keep the loop moving.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Try It Yourself 3.2, placed here so it can combine a loop over dictionaries with a compound condition. Students predict all three lines of output.&#10;&#10;Answers: Imani is standard, neither condition is true. Mei is priority, both are true and one would be enough. Malik is standard, he misses both. Ask why or fits this screening: one risk factor alone should trigger the priority path.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS215 · Put it together</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Put it together</div>
+        <h2>Who gets priority?</h2>
+        <div class="split">
+          <div>
+            <pre class="code"><span class="keyword">for</span> p <span class="keyword">in</span> patients:
+    <span class="keyword">if</span> p[<span class="string">'age'</span>] &gt;= 65 <span class="keyword">or</span> p[<span class="string">'temp'</span>] &gt; 100.4:
+        print(<span class="string">f"{p['name']}: priority"</span>)
+    <span class="keyword">else</span>:
+        print(<span class="string">f"{p['name']}: standard"</span>)</pre>
+            <table class="dataframe" style="margin-top:1rem;">
+              <caption class="sr-only">Three patients with their ages and temperatures</caption>
+              <thead>
+                <tr><th>name</th><th>age</th><th>temp</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Imani</td><td>25</td><td>98.6</td></tr>
+                <tr><td>Mei</td><td>67</td><td>103.2</td></tr>
+                <tr><td>Malik</td><td>45</td><td>97.8</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="prompt">
+              <p><strong>Commit:</strong> Predict the printed line for each of the three patients.</p>
+            </div>
+            <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+            <div class="answer"><strong>Imani: standard.</strong> Neither test is true. <strong>Mei: priority.</strong> Both tests are true, and <code>or</code> needs only one. <strong>Malik: standard.</strong> He misses both.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A comprehension is the same loop folded into one line: the expression, the loop, then the optional filter. Read the pattern left to right with the class. The two versions produce identical lists, and the short one is often faster on large data. Then the honesty rule: when the logic stops fitting on one readable line, go back to the loop.&#10;&#10;Time: 48-51 minutes.">
+      <div class="brand">CIS215 · 3.4</div>
+      <div class="content">
+        <div class="eyebrow">List comprehensions</div>
+        <h2>The loop, folded into a line.</h2>
+        <div class="code-pair">
+          <div>
+            <h3>The loop you know</h3>
+            <pre class="code">high_temps = []
+<span class="keyword">for</span> temp <span class="keyword">in</span> temperatures:
+    <span class="keyword">if</span> temp &gt; 100.0:
+        high_temps.append(temp)</pre>
+          </div>
+          <div>
+            <h3>The same work, one line</h3>
+            <pre class="code">high_temps = [temp
+    <span class="keyword">for</span> temp <span class="keyword">in</span> temperatures
+    <span class="keyword">if</span> temp &gt; 100.0]</pre>
+          </div>
+        </div>
+        <div class="ex-row">
+          <span class="chip">expression</span>
+          <span class="chip">for item in collection</span>
+          <span class="chip">if condition</span>
+        </div>
+        <p class="lede">When the logic stops fitting on one readable line, return to the loop.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 3A, the grade analysis tool. Part 1 builds the roster by hand: lists and a dictionary for six students. Part 2 loads all 55 students from the course data pack with read_csv and .tolist(), then runs the class average, letter grades, and the distribution. Part 3 adds comprehensions, max and min, a bar chart, and the 100-150 word instructor briefing. The headline: Part 1 code never asked how long the list was, so it scales untouched.&#10;&#10;Time: 51-53 minutes.">
+      <div class="brand">CIS215 · Skills Lab 3A</div>
+      <div class="content">
+        <div class="eyebrow">Your build</div>
+        <h2>Grade the whole class with one loop.</h2>
+        <div class="workflow" role="img" aria-label="Skills Lab 3A steps: build, scale, analyze, extend, and brief.">
+          <article class="phase"><strong>Build</strong>
+            <p>Hand-make lists and a dictionary for six students.</p>
+          </article>
+          <article class="phase"><strong>Scale</strong>
+            <p>Load all 55 students with <code>read_csv</code> and <code>.tolist()</code>.</p>
+          </article>
+          <article class="phase"><strong>Analyze</strong>
+            <p>Class average, letter grades, and the distribution.</p>
+          </article>
+          <article class="phase"><strong>Extend</strong>
+            <p>Comprehensions, <code>max()</code> and <code>min()</code>, and a bar chart.</p>
+          </article>
+          <article class="phase"><strong>Brief</strong>
+            <p>A 100-150 word summary for your instructor.</p>
+          </article>
+        </div>
+        <p class="lede">Your Part 1 code never asks how long the list is. That is why it grades 6 students or 55, <strong class="accent">untouched</strong>.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Close the loop on the grammar promise. One quiet minute, then compare answers.&#10;&#10;Answers: 1: a tuple, the location must not change. 2: because the first true branch wins. Checking 80 first would grade a 95 as B. 3: it keeps the even numbers and doubles each one.&#10;&#10;Point ahead: Chapter 4 introduces DataFrames, which build directly on the lists and dictionaries from today.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>Three answers out the door.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">1</div>
+            <p>Which container fits a fixed GPS point, and why?</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <p>Why must <code>score &gt;= 90</code> come before <code>score &gt;= 80</code> in the ladder?</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <p>What does <code>[n * 2 for n in nums if n % 2 == 0]</code> keep, and what does it change?</p>
+          </article>
+        </div>
+        <div class="prompt">
+          <p><strong>Next step:</strong> Open Skills Lab 3A. In Chapter 4, DataFrames build on the lists and dictionaries you now own.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>

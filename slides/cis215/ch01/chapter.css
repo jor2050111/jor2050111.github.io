@@ -1,38 +1,28 @@
 /* CIS215 Chapter 1: sunlit data field journal */
 
+/* The ringed-circle corner motif is painted as a background layer, never
+   as a positioned box, so it can bleed off the slide edge without creating
+   scrollable overflow inside the slide. */
+
 .slide {
     background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(3,116,181,0.035)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(3,116,181,0.05)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(3,116,181,0.16)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
         radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
         linear-gradient(135deg, #f8fcff, var(--canvas));
 }
 
 .slide.dark {
     background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(255,255,255,0.025)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(255,255,255,0.045)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(255,255,255,0.18)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
         radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
         linear-gradient(135deg, #002e5d, #03488f);
 }
 
 .slide.gold {
     background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 580'%3E%3Cg fill='none'%3E%3Ccircle cx='290' cy='290' r='248' stroke='rgba(3,116,181,0.035)' stroke-width='80'/%3E%3Ccircle cx='290' cy='290' r='228' stroke='rgba(3,116,181,0.05)' stroke-width='40'/%3E%3Ccircle cx='290' cy='290' r='208' stroke='rgba(3,116,181,0.16)' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") right -17.1rem bottom -19.1rem / 36.25rem 36.25rem no-repeat,
         radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
         linear-gradient(135deg, #ffe6a1, var(--gold));
-}
-
-.slide::before {
-    content: "";
-    position: absolute;
-    width: 26rem;
-    height: 26rem;
-    right: -12rem;
-    bottom: -14rem;
-    border: .13rem solid rgba(3, 116, 181, .16);
-    border-radius: 50%;
-    box-shadow: 0 0 0 2.5rem rgba(3, 116, 181, .05), 0 0 0 5rem rgba(3, 116, 181, .035);
-}
-
-.slide.dark::before {
-    border-color: rgba(255, 255, 255, .18);
-    box-shadow: 0 0 0 2.5rem rgba(255, 255, 255, .045), 0 0 0 5rem rgba(255, 255, 255, .025);
 }
 
 .title-slide .content,
@@ -165,8 +155,25 @@
 }
 
 @media (max-width: 720px) {
-    .slide::before {
-        display: none;
+
+    /* Phones keep the plain gradient backgrounds, matching the old
+       display: none on the motif. */
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+            linear-gradient(135deg, #f8fcff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
     }
 
     .title-slide .content {

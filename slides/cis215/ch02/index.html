@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 2 classroom presentation: Working with JupyterLab.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Crect x='10' y='14' width='44' height='36' rx='6' fill='%23fff0cf'/%3E%3Crect x='16' y='22' width='20' height='6' rx='2' fill='%23002E5D'/%3E%3Crect x='16' y='32' width='32' height='6' rx='2' fill='%23FFC845'/%3E%3Crect x='16' y='42' width='26' height='6' rx='2' fill='%23002E5D'/%3E%3C/svg%3E">
+  <title>CIS215: Working with JupyterLab</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS215: Working with JupyterLab" data-course="cis215"
+  data-chapter="ch02" data-palette="golden-hour">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the driving analogy from the chapter. In Chapter 1 students moved the car: they typed code and pressed Shift+Enter. Today they learn mirrors, signals, and muscle memory. Take two quick answers to the starter prompt, then promise the payoff: by the end of the chapter the tool stops being the obstacle.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="title-keys" aria-hidden="true">
+        <span class="keycap">Esc</span>
+        <span class="key-combo"><span class="keycap">Shift</span><span class="plus">+</span><span class="keycap">Enter</span></span>
+        <span class="keycap">Tab</span>
+      </div>
+      <div class="content">
+        <div class="eyebrow">Chapter 2</div>
+        <div class="rule"></div>
+        <h1>You can move the car. <span class="accent">Now learn to drive.</span></h1>
+        <p class="lede">Working with JupyterLab: shortcuts, Tab completion, error reading, and clean documentation.</p>
+        <div class="prompt">
+          <p><strong>Start here:</strong> Name a tool you use without thinking about the tool itself. How did it get that way?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three panels as actions students will perform today. Objective 2.1 (Apply): launch JupyterLab and create working notebooks. Objective 2.2 (Apply): shortcuts, Tab completion, and tooltips. Objective 2.3 (Analyze): interpret error messages and fix the problem. This chapter serves CLO VII, working in an IDE.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Working with JupyterLab</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Fluency has three parts.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">01</div>
+            <h3>Build</h3>
+            <p>Launch JupyterLab and create notebooks that mix code and Markdown.</p>
+          </article>
+          <article class="panel">
+            <div class="number">02</div>
+            <h3>Accelerate</h3>
+            <p>Move through cells with shortcuts, Tab completion, and tooltips.</p>
+          </article>
+          <article class="panel">
+            <div class="number">03</div>
+            <h3>Debug</h3>
+            <p>Read an error message and fix the exact problem it names.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Demystify the browser tab. JupyterLab shows up in the browser, but the address bar reads localhost: the code runs on the student’s own machine, not on the internet. Walk the three launch steps. Installation help lives in Appendix A for Windows and Appendix B for macOS. Do not troubleshoot installs here.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Your workspace</div>
+        <div class="split">
+          <div>
+            <h2>The browser is a window. The work stays on your machine.</h2>
+            <ul class="checklist">
+              <li>Open Anaconda Navigator.</li>
+              <li>Keep the default base (root) environment.</li>
+              <li>Click Launch under JupyterLab.</li>
+            </ul>
+            <p class="field-note">localhost means your computer.</p>
+          </div>
+          <figure class="window" role="img" aria-label="A browser window whose address bar reads localhost, showing JupyterLab runs on your own computer." style="margin:0;">
+            <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"><strong>localhost</strong>:8888/lab</span></div>
+            <div class="jl-menu"><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span></div>
+            <div class="jl-flex">
+              <div class="jl-side">
+                <div class="jl-file">📁 cis215</div>
+                <div class="jl-file sel">skills-lab-2a.ipynb</div>
+                <div class="jl-file">cafe_sales.csv</div>
+              </div>
+              <div class="jl-main">
+                <span class="jl-tab">skills-lab-2a.ipynb</span>
+                <div class="jl-canvas">
+                  <div class="cellrow"><span class="gut">[1]:</span><span class="cbody">import pandas as pd</span></div>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Give the room a shared map before the hands-on work. Point at each numbered region on the mockup: the menu bar holds every command, the File Browser opens with the folder icon, and notebooks live as tabs in the main work area. The File Browser is the tool students touch most at the start of every session.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">The interface</div>
+        <h2>Three regions do the daily work.</h2>
+        <figure class="window" role="img" aria-label="A JupyterLab window with three labeled regions: the menu bar on top, the File Browser on the left, and the main work area with notebook tabs." style="margin:0;">
+          <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"><strong>localhost</strong>:8888/lab</span></div>
+          <div class="jl-menu"><span class="region-tag"><b>1</b> Menu bar</span><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span></div>
+          <div class="jl-flex">
+            <div class="jl-side">
+              <p class="region-tag"><b>2</b> File Browser</p>
+              <div class="jl-file">📁 cis215</div>
+              <div class="jl-file sel">skills-lab-2a.ipynb</div>
+              <div class="jl-file">cafe_sales.csv</div>
+              <div class="jl-file">notes.md</div>
+            </div>
+            <div class="jl-main">
+              <span class="jl-tab">skills-lab-2a.ipynb</span>
+              <div class="jl-canvas">
+                <p class="region-tag" style="margin:0;"><b>3</b> Main work area</p>
+                <div class="cellrow"><span class="gut">[1]:</span><span class="cbody">import pandas as pd</span></div>
+                <div class="cellrow"><span class="gut">[&nbsp;]:</span><span class="cbody">&nbsp;</span></div>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="lede">Open the File Browser with the folder icon. It is the region you will touch most.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Walk the notebook file basics. Create: File, New Launcher, then the Python 3 icon under Notebook. Open: double-click any .ipynb in the File Browser, and several notebooks can sit in tabs at once. Save: autosave runs sometimes, but the habit is yours. The first save asks for a name. Ask the room which name they could still decode in December.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS215 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Notebook files</div>
+        <h2>Create, save, and name with intent.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <h3>Create</h3>
+            <p>File &gt; New Launcher, then click the Python 3 icon. A fresh notebook opens with one empty cell.</p>
+          </article>
+          <article class="panel">
+            <h3>Save</h3>
+            <p>Press <span class="key-combo"><span class="keycap">Ctrl</span><span class="keycap">S</span></span> on Windows or <span class="key-combo"><span class="keycap">Cmd</span><span class="keycap">S</span></span> on macOS. Autosave helps. Saving is still your habit.</p>
+          </article>
+          <article class="panel">
+            <h3>Name</h3>
+            <p><code>cafe_sales_analysis.ipynb</code> tells you what is inside. <code>Untitled7.ipynb</code> never will.</p>
+          </article>
+        </div>
+        <p class="field-note">A notebook is a file ending in .ipynb.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Define the two ideas that explain almost every notebook surprise. The kernel is a Python interpreter running behind the notebook. State is everything it remembers: variables, imports, functions. Run a cell and the kernel updates its memory, so any later cell can use it. The number in the brackets records run order. Restarting the kernel wipes the memory and gives a clean start.&#10;&#10;Time: 14-17 minutes.">
+      <div class="brand">CIS215 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Cells and the kernel</div>
+        <h2>The kernel remembers what you run.</h2>
+        <div class="kernel-fig">
+          <div class="kernel-cells">
+            <div class="cellrow"><span class="gut">[1]:</span><span class="cbody">x = 10</span></div>
+            <div class="cellrow"><span class="gut">[2]:</span><span class="cbody">print(x + 5)</span></div>
+            <div class="cellrow"><span class="gut"></span><span class="out">15</span></div>
+          </div>
+          <div class="kfig-arrow" aria-hidden="true">→</div>
+          <div class="kernel-box" role="img" aria-label="The kernel’s memory holds x equals 10 and the imported pandas module.">
+            <h3>Kernel memory</h3>
+            <span class="memchip">x = 10</span>
+            <span class="memchip">pandas as pd</span>
+          </div>
+        </div>
+        <p class="lede">Every run updates that memory. Every later cell can read it. Restarting the kernel clears it all.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Try It Yourself 2.1. Have students commit to a prediction before the reveal. The top cell sits first on the page but carries [2], so it ran second. It prints 30 because the kernel already holds x and y. Then flip it: restart the kernel, run the top cell first, and NameError appears. If a live machine is available, demonstrate after the reveal.&#10;&#10;Answer: it prints 30. Run order beats page order.&#10;&#10;Time: 17-21 minutes.">
+      <div class="brand">CIS215 · Predict first</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict first</div>
+        <h2>Page order or run order?</h2>
+        <div class="split">
+          <div class="kernel-cells">
+            <div class="cellrow"><span class="gut">[2]:</span><span class="cbody">print(x + y)</span></div>
+            <div><span class="run-badge">Ran second</span></div>
+            <div class="cellrow"><span class="gut">[1]:</span><span class="cbody">x = 10
+y = 20</span></div>
+            <div><span class="run-badge">Ran first</span></div>
+          </div>
+          <div>
+            <div class="prompt">
+              <p><strong>Commit:</strong> The top cell sits first on the page but ran second. Does it print 30, or does it fail?</p>
+            </div>
+            <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+            <div class="answer">It prints <strong>30</strong>. The kernel follows run order, not page position. Restart the kernel and run the top cell first, and you get <code>NameError: name 'x' is not defined</code>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The two modes explain the moments when the notebook seems to ignore typing. Command mode: the border is blue or grey, no cursor, and keys act on the cell itself. Edit mode: the border is green, a cursor blinks, and keys type characters. Warn the room: if cells start jumping or vanishing while you type, you are in Command mode, and D D deletes.&#10;&#10;Time: 21-24 minutes.">
+      <div class="brand">CIS215 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Two modes</div>
+        <h2>Esc selects the cell. Enter goes inside.</h2>
+        <div class="split">
+          <article class="panel">
+            <h3>Command mode</h3>
+            <div class="cellrow command"><span class="gut">[&nbsp;]:</span><span class="cbody">df_sales.head()</span></div>
+            <p>Blue or grey border, no cursor. Keys act on the cell: add, delete, convert, move.</p>
+            <p><span class="key-combo"><span class="keycap">Esc</span></span> brings you here.</p>
+          </article>
+          <article class="panel">
+            <h3>Edit mode</h3>
+            <div class="cellrow edit"><span class="gut">[&nbsp;]:</span><span class="cbody">df_sales.head()<span class="caret"></span></span></div>
+            <p>Green border, cursor inside. Keys type characters into the cell.</p>
+            <p><span class="key-combo"><span class="keycap">Enter</span></span> brings you here.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Demonstrate each key on the projector if a machine is available. All five work from Command mode, and Shift+Enter works from either mode. D D means pressing D twice quickly. Tell students the goal is muscle memory by the end of the lab, not memorization tonight. These five cover most cell work without touching the mouse.&#10;&#10;Time: 24-27 minutes.">
+      <div class="brand">CIS215 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Command-mode keys</div>
+        <h2>Five keys carry the workflow.</h2>
+        <div class="shortcuts">
+          <article class="panel">
+            <span class="keycap">B</span>
+            <h3>Below</h3>
+            <p>Add a new cell below the current one.</p>
+          </article>
+          <article class="panel">
+            <span class="key-combo"><span class="keycap">D</span><span class="keycap">D</span></span>
+            <h3>Delete</h3>
+            <p>Remove the cell. Press D twice quickly.</p>
+          </article>
+          <article class="panel">
+            <span class="keycap">M</span>
+            <h3>Markdown</h3>
+            <p>Turn the cell into formatted text.</p>
+          </article>
+          <article class="panel">
+            <span class="keycap">Y</span>
+            <h3>Code</h3>
+            <p>Turn the cell back into Python.</p>
+          </article>
+          <article class="panel">
+            <span class="key-combo"><span class="keycap">Shift</span><span class="keycap">Enter</span></span>
+            <h3>Run</h3>
+            <p>Run the cell and select the next one.</p>
+          </article>
+        </div>
+        <p class="field-note">Practice until your hands know them.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Tab completion removes the memorization burden. Type the object name, the dot, then Tab: the dropdown lists every method the object offers. Type a prefix first to narrow the list. The df_ naming habit from Chapter 1 pays off here: type df_ and Tab to list every DataFrame in the notebook. Completion also prevents typos, which previews the KeyError discussion.&#10;&#10;Time: 27-30 minutes.">
+      <div class="brand">CIS215 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Tab completion</div>
+        <h2>Type the dot. Press Tab. Choose.</h2>
+        <div class="split">
+          <figure role="img" aria-label="A code cell with df_inventory followed by a dot, showing a completion dropdown that lists describe, head, sort_values, and tail." style="margin:0;">
+            <div class="cellrow edit"><span class="gut">[&nbsp;]:</span><span class="cbody">df_inventory.<span class="caret"></span></span></div>
+            <div class="dropdown">
+              <div>describe()</div>
+              <div>head()</div>
+              <div class="sel">sort_values()</div>
+              <div>tail()</div>
+            </div>
+          </figure>
+          <div>
+            <ul class="checklist">
+              <li>After the dot, <span class="keycap">Tab</span> lists every method the object offers.</li>
+              <li>Type a prefix first: <code>.so</code> narrows the list to <code>sort_values()</code>.</li>
+              <li>Name DataFrames <code>df_</code> and Tab after <code>df_</code> lists them all.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Completion finds the method. The tooltip shows how to call it. Put the cursor on or after the method name and press Shift+Tab. In the signature, by has no default value: it is positional and required. The keyword parameters show their defaults, so they are optional. Scrolling the tooltip reveals the full documentation with examples.&#10;&#10;Time: 30-33 minutes.">
+      <div class="brand">CIS215 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Tooltips</div>
+        <h2>Shift+Tab reveals the signature.</h2>
+        <div class="sig" role="img" aria-label="The sort_values signature. The parameter named by is required. The keyword parameters axis, ascending, and inplace show default values, so they are optional.">sort_values(<span class="req">by</span>, *, <span class="opt">axis=0</span>, <span class="opt">ascending=True</span>, <span class="opt">inplace=False</span>, ...)</div>
+        <div class="sig-legend">
+          <span><span class="swatch"></span>Required. You supply it.</span>
+          <span><span class="swatch dotted"></span>Optional. The default is shown.</span>
+        </div>
+        <p class="lede">Place the cursor on the method name, press <strong>Shift+Tab</strong>, and read what it needs before you guess.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick retrieval before the error section. Let students answer all three in pairs, then reveal.&#10;&#10;Answers: 1: Command mode, press M. 2: Edit mode, the cursor only blinks there. 3: Shift+Tab with the cursor on the method name.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS215 · Quick check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick check</div>
+        <h2>Prove the reflexes.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">1</div>
+            <p>A cell should become Markdown. Which mode, which key?</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <p>A cursor is blinking inside the cell. Which mode are you in?</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <p>You forget what <code>sort_values()</code> accepts. Which keys tell you?</p>
+          </article>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answers</button>
+        <div class="answer"><strong>1:</strong> Command mode, press M. <strong>2:</strong> Edit mode. <strong>3:</strong> Shift+Tab with the cursor on the method name.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Reset the emotional frame before the technical one. Beginners read an error as a verdict. Professionals read it as information and spend real time doing exactly that. Two families: syntax errors break Python’s grammar, so the code never starts. Runtime errors pass the grammar check but fail while running, like asking for a column that is not there.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS215 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Errors</div>
+        <h2>An error is information, not a verdict.</h2>
+        <div class="split">
+          <article class="panel">
+            <div class="signal">Syntax error</div>
+            <h3>The code never starts.</h3>
+            <p>The grammar is broken: a missing bracket, quote, or colon. Python cannot tell what you are asking.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">Runtime error</div>
+            <h3>The code fails midway.</h3>
+            <p>The grammar is fine, but a step cannot finish: a variable or column that does not exist.</p>
+          </article>
+        </div>
+        <p class="lede">Skilled analysts read error messages for a living. The message tells you where to look.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Walk the traceback from the bottom up. The last line carries the type and the message, and the arrow marks the line that failed. Here the analyst asked for populaton, a misspelling of population, so the lookup failed. Reading the quoted name letter by letter finds it. This beats staring at the code and guessing.&#10;&#10;Time: 37-40 minutes.">
+      <div class="brand">CIS215 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Read the traceback</div>
+        <h2>Three answers hide in every error.</h2>
+        <pre class="code tb"><span class="hl-type">KeyError</span>                 Traceback (most recent call last)
+<span class="hl-loc">Cell In[3], line 8</span>
+<span class="hl-arrow">----&gt; 8</span> df_cities['populaton']
+
+<span class="hl-type">KeyError</span>: 'populaton'</pre>
+        <div class="three-up">
+          <article class="panel">
+            <h3>What kind?</h3>
+            <p><code>KeyError</code>. A lookup by name failed.</p>
+          </article>
+          <article class="panel">
+            <h3>Where?</h3>
+            <p><code>line 8</code>. The arrow points at the code that failed.</p>
+          </article>
+          <article class="panel">
+            <h3>What exactly?</h3>
+            <p><code>'populaton'</code>. Read it letter by letter.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Four names cover most beginner sessions. SyntaxError: something never closed. NameError: the variable does not exist yet, often a typo or a cell that never ran. KeyError: no column or key by that name, usually spelling or capitalization. TypeError: the operation does not fit the types, like adding text to a number. Knowing the names turns a wall of red into a category.&#10;&#10;Time: 40-43 minutes.">
+      <div class="brand">CIS215 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">The usual suspects</div>
+        <h2>Four names cover most days.</h2>
+        <div class="four-up">
+          <article class="panel">
+            <div class="signal">SyntaxError</div>
+            <p><code>print("Hello"</code></p>
+            <p>A bracket or quote never closed.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">NameError</div>
+            <p><code>print(total)</code></p>
+            <p>That variable does not exist yet.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">KeyError</div>
+            <p><code>df['populaton']</code></p>
+            <p>No column or key by that name.</p>
+          </article>
+          <article class="panel">
+            <div class="signal">TypeError</div>
+            <p><code>'5' + 10</code></p>
+            <p>Those two types do not mix.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Normalize the loop. Python reports one error at a time, so fixing one and rerunning is the professional rhythm, not a sign of failure. Read the message, identify the type, follow the line number, change one thing, run again. Even experienced developers cycle through this loop many times a day.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS215 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">The debugging loop</div>
+        <h2>Fix one error at a time.</h2>
+        <div class="workflow" role="img" aria-label="Five-step debugging loop: read, identify, locate, fix, and rerun.">
+          <article class="phase"><strong>Read</strong>
+            <p>The message names the problem. Start at the last line.</p>
+          </article>
+          <article class="phase"><strong>Identify</strong>
+            <p>Which error type is it? That sets the strategy.</p>
+          </article>
+          <article class="phase"><strong>Locate</strong>
+            <p>Follow the line number and the arrow.</p>
+          </article>
+          <article class="phase"><strong>Fix</strong>
+            <p>Change one thing. Resist rewriting everything.</p>
+          </article>
+          <article class="phase"><strong>Rerun</strong>
+            <p>Shift+Enter. Repeat until the cell runs clean.</p>
+          </article>
+        </div>
+        <p class="lede">One error at a time is how everyone works, including professionals.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Try It Yourself 2.3. Give the room a minute to commit. The dictionary’s closing brace never arrives, so this is a SyntaxError: Python reports that the brace was never closed and points near the opening line. Fix: add the closing brace after the list. Reinforce the skill: name the type first, then hunt.&#10;&#10;Answer: SyntaxError, the brace on line 1 was never closed.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS215 · Predict the error</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict the error</div>
+        <h2>Name it before you run it.</h2>
+        <pre class="code">people_data = {'name': ['Amara', 'Kai']
+df_people = pd.DataFrame(people_data)</pre>
+        <div class="prompt">
+          <p><strong>Commit:</strong> One character is missing. Which error type appears, and where will Python point?</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>SyntaxError.</strong> The dictionary’s closing brace never arrives. Python reports that the <code>{</code> was never closed. The fix: end line 1 with <code>]}</code>.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Documentation turns a pile of cells into an analysis someone can follow. Press M for Markdown, type the formatting, Shift+Enter to render. One hash for the notebook title, two for each section, bold for key numbers, backticks for code names. The structure to model: a title cell, then a heading before each phase of the analysis. The standard: a colleague could read and build on this work.&#10;&#10;Time: 48-51 minutes.">
+      <div class="brand">CIS215 · 2.4</div>
+      <div class="content">
+        <div class="eyebrow">Document as you go</div>
+        <h2>Notebooks are read more than they run.</h2>
+        <div class="md-pair">
+          <article class="panel">
+            <h3>You type</h3>
+            <p class="md-raw"># Cafe Sales Analysis
+
+## Data Cleaning Results
+
+- **Missing:** 23 rows
+- Fix the `price` column</p>
+          </article>
+          <div class="md-arrow" aria-hidden="true">→</div>
+          <article class="panel md-rendered">
+            <h3>Readers see</h3>
+            <p class="r-h1">Cafe Sales Analysis</p>
+            <p class="r-h2">Data Cleaning Results</p>
+            <ul>
+              <li><strong>Missing:</strong> 23 rows</li>
+              <li>Fix the <code>price</code> column</li>
+            </ul>
+          </article>
+        </div>
+        <p class="field-note">Press M for Markdown, then Shift+Enter to render.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 2A. The dataset: five years of campus cafe financials, 60 months of revenue, expenses, and customers. Students break the notebook on purpose with a KeyError, document it, then fix it by creating the profit column. The finish line is the reproducibility test: Kernel, Restart Kernel and Run All Cells, no errors top to bottom. The two analysis questions carry real rubric weight.&#10;&#10;Time: 51-53 minutes.">
+      <div class="brand">CIS215 · Skills Lab 2A</div>
+      <div class="content">
+        <div class="eyebrow">Your proving ground</div>
+        <h2>Five years of cafe data. Show your fluency.</h2>
+        <div class="workflow" role="img" aria-label="Skills Lab 2A steps: set up, explore, break, fix, and report.">
+          <article class="phase"><strong>Set up</strong>
+            <p>New notebook, a Markdown title, load <code>cafe_sales.csv</code>.</p>
+          </article>
+          <article class="phase"><strong>Explore</strong>
+            <p>Inspect with <code>.info()</code> and <code>.describe()</code>.</p>
+          </article>
+          <article class="phase"><strong>Break</strong>
+            <p>Ask for the <code>profit</code> column before it exists.</p>
+          </article>
+          <article class="phase"><strong>Fix</strong>
+            <p>Create <code>profit</code> from revenue minus expenses.</p>
+          </article>
+          <article class="phase"><strong>Report</strong>
+            <p>A Markdown summary, then Restart Kernel and Run All.</p>
+          </article>
+        </div>
+        <p class="lede">The final test: your notebook runs top to bottom after a kernel restart, <strong class="accent">with no errors</strong>.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Close the loop on the driving promise. Have students write answers alone for one minute, then compare.&#10;&#10;Answers: 1: Command mode, press B. 2: The spelling and capitalization of the name, then the column list. 3: Because run order can hide missing steps. A restart proves the notebook stands on its own.&#10;&#10;Collect one answer as an exit ticket if time allows, then point students to Skills Lab 2A.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>Answer before you leave.</h2>
+        <div class="three-up">
+          <article class="panel">
+            <div class="number">1</div>
+            <p>Which mode and key add a cell below the current one?</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <p>A KeyError names a column you can see in the file. What do you check first?</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <p>Why must your notebook survive Restart Kernel and Run All Cells?</p>
+          </article>
+        </div>
+        <div class="prompt">
+          <p><strong>Next step:</strong> Open Skills Lab 2A and make the cafe data yours.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
