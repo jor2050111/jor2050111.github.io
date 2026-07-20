@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS215 Chapter 10 classroom presentation: Functions and Code Reusability.">
+  <meta name="theme-color" content="#07305C">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2307305C'/%3E%3Cpath d='M10 18h15v12H10zm29 16h15v12H39z' fill='%23F4C95D'/%3E%3Cpath d='M25 24h9v16h5' fill='none' stroke='%238DD1C5' stroke-width='4'/%3E%3C/svg%3E">
+  <title>CIS215: Functions and Code Reusability</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS215: Functions and Code Reusability" data-course="cis215"
+  data-chapter="ch10" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the maintenance problem. Twelve pasted formulas create twelve places to repair when a rule changes. One named function creates one source of truth and many calls. Ask students which part of their recent notebooks they would most want to update in one place.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">Phoenix College · CIS215</div>
+      <div class="blueprint-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="content"><div class="eyebrow">Chapter 10</div><div class="rule"></div><h1>Write the rule once. Reuse the decision.</h1><p class="lede">Build functions with clear contracts, documentation, and workflow roles.</p><div class="prompt"><p><strong>Opening question:</strong> Which repeated notebook step should become one tested function?</p></div></div>
+    </section>
+
+    <section class="slide" data-notes="Preview three outcomes. Students will build contracts with parameters and returns, document those contracts with docstrings, and compose small functions into a full analysis workflow. The center principle is one function, one purpose.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS215 · Functions</div><div class="content"><div class="eyebrow">Today's target</div><h2>Reusable analysis begins with small, explicit contracts.</h2><div class="target-circuit" role="img" aria-label="Three connected outcomes: build a function contract, document it with a docstring, and compose functions into a workflow."><article><span>01</span><strong>Contract</strong><p>parameters → return</p></article><b>→</b><article><span>02</span><strong>Document</strong><p>purpose · types · result</p></article><b>→</b><article><span>03</span><strong>Compose</strong><p>load → clean → analyze</p></article></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Enact the copy-paste risk with three percentage-change copies. One stale denominator makes the third result wrong even though the lines look similar. The function view moves the formula into one named block. Every call then uses the same repaired rule.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS215 · 10.1</div><div class="content"><div class="eyebrow navy-text">Duplication creates drift</div><h2>Three copies create three chances for one rule to split.</h2><div class="copy-function" role="img" aria-label="Three copied percentage-change formulas include one stale denominator. A single calculate_percentage_change function supplies one source of truth to three calls."><article class="copies"><span>Copy-paste</span><code>(55-50) / 50</code><code>(48-55) / 55</code><code class="stale">(61-48) / 55</code><b>stale denominator</b></article><div class="repair">→</div><article class="one-source"><span>One source</span><pre><code>def pct_change(old, new):
+    return (new-old) / old</code></pre><div><i>call 1</i><i>call 2</i><i>call 3</i></div></article></div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Bind each visible syntax part to its role. def begins the definition. The name states intent. Parameters create input slots. The indented body performs the work. Return sends the result to the caller. The separate call supplies arguments and receives a value.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS215 · 10.2</div><div class="content"><div class="eyebrow">Function anatomy</div><h2>A definition names the contract. A call uses it.</h2><div class="function-anatomy" role="img" aria-label="A calculate_profit_margin function is labeled by def keyword, function name, revenue and cost parameters, indented body, and return value. A call with 10000 and 6000 returns 40.0."><pre><mark class="def-key">def</mark> <mark class="name-key">calculate_profit_margin</mark>(<mark class="param-key">revenue, cost</mark>):
+    profit = revenue - cost
+    margin = (profit / revenue) * 100
+    <mark class="return-key">return margin</mark></pre><div class="anatomy-legend"><span class="def-key">definition</span><span class="name-key">name</span><span class="param-key">parameters</span><span class="return-key">return</span></div><div class="call-strip"><code>calculate_profit_margin(10000, 6000)</code><b>→</b><strong>40.0</strong></div></div></div>
+    </section>
+
+    <section class="slide" data-notes="Separate parameters from arguments. Revenue and cost are placeholders inside the definition. Ten thousand and six thousand are the arguments supplied by one call. Keyword arguments name their destinations and can arrive in either order. Values still bind to the same parameter slots.&#10;&#10;Time: 11-14 minutes.">
+      <div class="brand">CIS215 · Parameters and arguments</div><div class="content"><div class="eyebrow">Slots in the definition, values in the call</div><h2>Parameters receive. Arguments supply.</h2><div class="binding-board" role="img" aria-label="The revenue parameter receives argument 10000 and the cost parameter receives argument 6000. A positional call binds by order. A keyword call binds by name."><div class="slots"><article><span>parameter</span><strong>revenue</strong><i>10000</i></article><article><span>parameter</span><strong>cost</strong><i>6000</i></article></div><div class="call-types"><p><span>positional</span><code>calculate_profit(10000, 6000)</code></p><p><span>keyword</span><code>calculate_profit(cost=6000, revenue=10000)</code></p></div></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Compare print with return by showing what the caller can do next. Print creates a message for a person. Return gives the value back to the program. The returned margin can feed formatting, a comparison, a chart, or a report. Use return in reusable analysis functions and let the caller choose presentation.&#10;&#10;Time: 14-17 minutes.">
+      <div class="brand">CIS215 · Return values</div><div class="content"><div class="eyebrow navy-text">Results should keep moving</div><h2><code>return</code> gives the caller a value it can reuse.</h2><div class="return-fanout" role="img" aria-label="A function returns margin 40.0. The returned value fans out to a formatted sentence, comparison, chart, and report. A print-only branch stops at the screen."><article class="print-stop"><span>print</span><strong>Margin: 40.0%</strong><b>screen only</b></article><article class="returned"><span>return</span><strong>40.0</strong></article><div class="fanout"><i>format</i><i>compare</i><i>chart</i><i>report</i></div></div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Trace multiple return values. The function returns mean, minimum, and maximum separated by commas. Python packs them into one tuple. Tuple unpacking assigns each position to a name. For 10, 20, 30, 40, 50, the outputs are 30.0, 10, and 50.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS215 · Multiple returns</div><div class="content"><div class="eyebrow">One call can return a structured result</div><h2>Comma-separated returns become a tuple the caller can unpack.</h2><div class="tuple-trace" role="img" aria-label="Values 10, 20, 30, 40, and 50 enter calculate_stats. The function returns tuple 30.0, 10, 50. Unpacking assigns mean 30.0, minimum 10, and maximum 50."><div class="input-values"><i>10</i><i>20</i><i>30</i><i>40</i><i>50</i></div><b>→</b><article><code>calculate_stats(values)</code><strong>(30.0, 10, 50)</strong></article><b>→</b><div class="unpacked"><span>mean <strong>30.0</strong></span><span>minimum <strong>10</strong></span><span>maximum <strong>50</strong></span></div></div></div>
+    </section>
+
+    <section class="slide" data-notes="Use load_dataset to show default behavior. filepath is required. nrows defaults to None and reads all 60 rows. Passing nrows equals 12 limits the result to one year. Required parameters must appear before defaulted parameters in the definition.&#10;&#10;Time: 20-23 minutes.&#10;&#10;Source: Chapter 10 monthly_sales.csv.">
+      <div class="brand">CIS215 · Default parameters</div><div class="content"><div class="eyebrow">Optional inputs need declared behavior</div><h2><code>nrows=None</code> makes the full dataset the default.</h2><div class="default-switch" role="img" aria-label="load_dataset requires filepath and defaults nrows to None. Calling with only the file returns shape 60 by 5. Calling with nrows 12 returns shape 12 by 5."><pre>def load_dataset(filepath, nrows=None):
+    return pd.read_csv(filepath, nrows=nrows)</pre><div><article><span>default</span><code>load_dataset(file)</code><strong>(60, 5)</strong></article><article><span>override</span><code>load_dataset(file, nrows=12)</code><strong>(12, 5)</strong></article></div></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Pause for prediction. Fifty times twenty makes a one-thousand-dollar subtotal. An eight-percent tax adds eighty dollars, so the first result is 1,080. Without tax_rate, the default zero applies and the result is 1,000. Reveal after students name both calculations.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS215 · Quick check</div><div class="content"><div class="eyebrow navy-text">Trace the default</div><h2>What does each call return?</h2><div class="call-questions"><article><code>calculate_total(50, 20, 0.08)</code></article><article><code>calculate_total(50, 20)</code></article></div><button class="reveal" type="button" aria-expanded="false">Reveal answer</button><div class="answer"><strong>$1,080 and $1,000.</strong> Both start with a $1,000 subtotal. The second call uses the default tax rate of zero.</div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Separate documentation roles. A docstring is the first statement inside the function and explains the public contract: purpose, inputs, and output. Comments explain why an internal implementation choice exists. Readers can use the function from its docstring without studying the body.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS215 · 10.3</div><div class="content"><div class="eyebrow">Contract versus implementation note</div><h2>Docstrings explain use. Comments explain a choice inside.</h2><div class="docs-compare"><article><span>Docstring</span><pre>"""Calculate growth from
+initial to final value."""</pre><p>Purpose · parameters · return</p></article><article><span>Comment</span><pre># Work on a copy so the
+# caller's DataFrame stays intact.</pre><p>Reason for an internal choice</p></article></div></div>
+    </section>
+
+    <section class="slide" data-notes="Bind the NumPy-style docstring sections to a function contract. The summary begins with a verb. Parameters names df and its expected type. Returns names the output type and meaning. Examples show a complete use case. A colleague should be able to call the function from this information alone.&#10;&#10;Time: 29-32 minutes.">
+      <div class="brand">CIS215 · NumPy-style docstrings</div><div class="content"><div class="eyebrow">Documentation has an addressable structure</div><h2>Each section answers one teammate question.</h2><div class="docstring-map" role="img" aria-label="A NumPy-style docstring has a summary that answers what the function does, Parameters that answer what it needs, Returns that answer what comes back, and Examples that answer how to use it."><pre><mark class="summary-key">Clean DataFrame column names.</mark>
+
+<mark class="param-key">Parameters
+----------
+df : pandas.DataFrame</mark>
+
+<mark class="return-key">Returns
+-------
+pandas.DataFrame</mark>
+
+<mark class="example-key">Examples
+--------
+>>> clean_column_names(df)</mark></pre><div class="doc-questions"><span class="summary-key">What does it do?</span><span class="param-key">What does it need?</span><span class="return-key">What comes back?</span><span class="example-key">How do I call it?</span></div></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Show why docstrings are executable documentation. Python stores the first string literal on the function. help calculates no result and reads no source body. It displays that stored contract. Documentation tools use the same access point. Stale docstrings are dangerous because tools faithfully display outdated promises.&#10;&#10;Time: 32-35 minutes.">
+      <div class="brand">CIS215 · Help system</div><div class="content"><div class="eyebrow navy-text">Tools read the contract</div><h2><code>help(function)</code> turns a docstring into a usable interface.</h2><div class="help-trace" role="img" aria-label="A function docstring flows through the function __doc__ attribute into help output and generated documentation."><article><span>Function</span><code>clean_column_names.__doc__</code></article><b>→</b><article><span>Python help</span><strong>purpose · parameters · returns</strong></article><b>→</b><article><span>Teammate</span><strong>uses function without opening body</strong></article></div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Contrast one oversized function with four purpose-built functions. Loading, cleaning, metric calculation, and summary change for different reasons. Splitting them creates smaller test boundaries and clearer names. Composition reconnects them without mixing their responsibilities.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS215 · 10.4</div><div class="content"><div class="eyebrow">One function, one purpose</div><h2>Separate jobs create separate places to test and change.</h2><div class="module-split" role="img" aria-label="A large do_everything function is split into load_sales_data, clean_sales_data, add_profit_column, and analyze_yearly_profit. Each smaller function has one responsibility."><article class="monolith"><span>Before</span><strong>do_everything()</strong><p>load + clean + calculate + summarize</p></article><b>→</b><div class="modules"><i>load_sales_data</i><i>clean_sales_data</i><i>add_profit_column</i><i>analyze_yearly_profit</i></div></div></div>
+    </section>
+
+    <section class="slide" data-notes="Enact the side-effect boundary. Without copy, adding profit changes the caller's original DataFrame. With df equals df.copy, the input remains unchanged and the returned DataFrame gains profit. That localizes state and prevents later cells from seeing an unexpected schema.&#10;&#10;Time: 38-41 minutes.">
+      <div class="brand">CIS215 · Side effects</div><div class="content"><div class="eyebrow">Protect the caller's state</div><h2><code>df.copy()</code> gives the function a safe work surface.</h2><div class="copy-boundary" role="img" aria-label="Without copy, the input DataFrame unexpectedly gains a profit column. With copy, the original keeps revenue and expenses, while the returned DataFrame adds profit."><article class="mutates"><span>No copy</span><div class="schema"><i>revenue</i><i>expenses</i><i class="added">profit</i></div><b>original changed</b></article><article class="safe"><span>With copy</span><div class="split-schema"><p>input<br><i>revenue</i><i>expenses</i></p><p>returned<br><i>revenue</i><i>expenses</i><i class="added">profit</i></p></div><b>original protected</b></article></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Trace the functional workflow. Each arrow carries a returned DataFrame or summary into the next function. Because the stages have stable contracts, the load source or summary metric can change without rewriting every stage. Verification can inspect the output shape after each call.&#10;&#10;Time: 41-44 minutes.">
+      <div class="brand">CIS215 · Function composition</div><div class="content"><div class="eyebrow navy-text">Outputs become inputs</div><h2>A workflow is a chain of small contracts with visible handoffs.</h2><div class="workflow-chain" role="img" aria-label="Filepath enters load_sales_data, which returns a raw DataFrame. It enters clean_sales_data, which returns a clean DataFrame. It enters add_profit_column, which returns a metrics DataFrame. It enters summarize_by_quarter, which returns a summary."><article><span>filepath</span><strong>load</strong><code>raw df</code></article><b>→</b><article><span>raw df</span><strong>clean</strong><code>clean df</code></article><b>→</b><article><span>clean df</span><strong>metrics</strong><code>metrics df</code></article><b>→</b><article><span>metrics df</span><strong>summarize</strong><code>Series</code></article></div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Return to Chapter 5 to demonstrate reuse. The same cleaning function lowercases columns and drops missing rows in ecommerce_orders. The shape falls from 200 by 7 to 195 by 7. No function edit is needed because the new DataFrame shares the problems the function was designed to solve.&#10;&#10;Time: 44-47 minutes.&#10;&#10;Source: Chapter 5 ecommerce_orders.csv and Chapter 10 Section 10.4.">
+      <div class="brand">CIS215 · Reuse on new data</div><div class="content"><div class="eyebrow">A second dataset proves the design</div><h2>The Chapter 10 cleaner works on Chapter 5 orders without an edit.</h2><div class="reuse-trace" role="img" aria-label="Chapter 5 ecommerce_orders enters clean_sales_data. The input shape is 200 by 7. Five incomplete rows are dropped. The output shape is 195 by 7."><article><span>Input</span><strong>ecommerce_orders.csv</strong><code>(200, 7)</code></article><b>→</b><article class="function-box"><code>clean_sales_data(df)</code><p>lowercase · dropna</p></article><b>→</b><article><span>Output</span><strong>same schema, complete rows</strong><code>(195, 7)</code></article></div></div>
+    </section>
+
+    <section class="slide" data-notes="Add validation as the first workflow stage. The contract requires month, revenue, and expenses. Compare the required set with the DataFrame columns. If expenses is missing, return or raise a message that names it. This converts a late KeyError into an early, readable boundary failure.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS215 · Fail early</div><div class="content"><div class="eyebrow">Validate the contract before work begins</div><h2>A readable missing-column message beats a late traceback.</h2><div class="validation-gate" role="img" aria-label="Required columns month, revenue, and expenses reach a validation gate. A DataFrame missing expenses stops with message Missing required column: expenses. A valid schema continues to cleaning."><div class="required"><i>month</i><i>revenue</i><i>expenses</i></div><article><span>validate_sales_data</span><strong>required ⊆ columns?</strong></article><div class="gate-results"><p class="stop">Missing required column: expenses</p><p class="go">Schema valid → continue</p></div></div></div>
+    </section>
+
+    <section class="slide gold" data-notes="Ask students to split the customer workflow before revealing. A strong design separates loading, date conversion, adult filtering, account-age calculation, and regional summary. Some steps could be combined, but each proposed function should have one reason to change and one output that can be tested.&#10;&#10;Time: 50-52 minutes.">
+      <div class="brand">CIS215 · Refactor check</div><div class="content"><div class="eyebrow navy-text">Find the responsibility boundaries</div><h2>Where would you cut this customer workflow?</h2><div class="refactor-strip"><code>read_csv</code><code>to_datetime</code><code>age ≥ 18</code><code>account_age_days</code><code>groupby region</code></div><button class="reveal" type="button" aria-expanded="false">Reveal answer</button><div class="answer"><strong>Five small functions is one defensible design.</strong> Each stage has one purpose, one testable output, and one reason to change.</div></div>
+    </section>
+
+    <section class="slide dark" data-notes="Handoff Skills Lab 10A with verified course-data checkpoints. The raw file is 60 by 5. Missing Expenses at 2022-03 and 2024-07 drop the cleaned rows to 58. Total revenue is 3,843,057 dollars, total profit is 1,227,463 dollars, average margin is 31.98 percent, and Q4 has the highest mean profit at 23,129.80 dollars. Students should generate these results through their function chain, not pasted calculations.&#10;&#10;Time: 52-54 minutes.&#10;&#10;Source: Chapter 10 monthly_sales.csv.">
+      <div class="brand">CIS215 · Skills Lab 10A</div><div class="content"><div class="eyebrow">Reusable sales library</div><h2>The report should prove every function handoff.</h2><div class="lab-output"><article><span>Clean</span><strong>60 → 58 rows</strong><p>2022-03 and 2024-07 lack Expenses</p></article><article><span>Total revenue</span><strong>$3,843,057</strong></article><article><span>Total profit</span><strong>$1,227,463</strong></article><article><span>Average margin</span><strong>31.98%</strong></article><article><span>Top quarter</span><strong>Q4 · $23,129.80</strong><p>mean profit</p></article></div></div>
+    </section>
+
+    <section class="slide gold closing-slide" data-notes="Close with the teammate test. A reusable function should make its purpose, inputs, output, and failure conditions clear enough that a colleague can call it without reading the body. Ask students to name one contract in their Skills Lab that still needs a clearer name, return value, or docstring.&#10;&#10;Time: 54-55 minutes.">
+      <div class="brand">CIS215 · Exit ticket</div><div class="content"><div class="eyebrow navy-text">Close the loop</div><h2>Reusable code lets a colleague build on the result without reopening the machinery.</h2><div class="exit-card"><p><strong>Exit ticket:</strong> Name one function's purpose, parameters, return value, and earliest useful validation check.</p></div><p class="field-note">One purpose. One contract. One tested source of truth.</p></div>
+    </section>
+  </main>
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes"><h2>Presenter notes</h2><p id="notes-content"></p></div>
+  <nav class="nav" aria-label="Presentation controls"><button type="button" id="previous" aria-label="Previous slide">←</button><button type="button" id="toggle-notes" aria-label="Show presenter notes" aria-controls="notes" aria-pressed="false">N</button><button type="button" id="next" aria-label="Next slide">→</button></nav>
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
