@@ -1,0 +1,1044 @@
+/* BPC170 Chapter 2: the circuit board under everything */
+
+/* The PCB motif is painted as background layers only: a rotated board
+   corner with a CPU square, elbow traces with pads, and standoff
+   holes, over a faint graph grid. Positioned boxes would create a
+   focus scroll trap. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='8' stroke='rgba(0,46,93,0.07)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='8' stroke='rgba(0,46,93,0.18)' stroke-width='2.4'/%3E%3Crect x='140' y='116' width='64' height='64' rx='4' stroke='rgba(0,46,93,0.2)' stroke-width='2.4'/%3E%3Crect x='156' y='132' width='32' height='32' rx='2' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Cpath d='M204 132h96v44h56' stroke='rgba(29,94,163,0.16)' stroke-width='2.4'/%3E%3Cpath d='M204 164h64v72h116' stroke='rgba(29,94,163,0.16)' stroke-width='2.4'/%3E%3Cpath d='M172 180v76h96' stroke='rgba(255,200,69,0.45)' stroke-width='3'/%3E%3Ccircle cx='356' cy='176' r='5' stroke='rgba(29,94,163,0.25)' stroke-width='2.4'/%3E%3Ccircle cx='376' cy='236' r='5' stroke='rgba(29,94,163,0.25)' stroke-width='2.4'/%3E%3Ccircle cx='268' cy='256' r='5' stroke='rgba(255,200,69,0.5)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='88' r='7' stroke='rgba(0,46,93,0.25)' stroke-width='2.4'/%3E%3Ccircle cx='400' cy='88' r='7' stroke='rgba(0,46,93,0.25)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='286' r='7' stroke='rgba(0,46,93,0.25)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 3.6rem, rgba(29, 94, 163, .04) 3.6rem calc(3.6rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(29, 94, 163, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .2), transparent 20rem),
+        linear-gradient(135deg, #f4f8fc, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='8' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='8' stroke='rgba(255,255,255,0.14)' stroke-width='2.4'/%3E%3Crect x='140' y='116' width='64' height='64' rx='4' stroke='rgba(255,255,255,0.16)' stroke-width='2.4'/%3E%3Crect x='156' y='132' width='32' height='32' rx='2' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3Cpath d='M204 132h96v44h56' stroke='rgba(255,255,255,0.11)' stroke-width='2.4'/%3E%3Cpath d='M204 164h64v72h116' stroke='rgba(255,255,255,0.11)' stroke-width='2.4'/%3E%3Cpath d='M172 180v76h96' stroke='rgba(255,213,115,0.4)' stroke-width='3'/%3E%3Ccircle cx='356' cy='176' r='5' stroke='rgba(255,255,255,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='376' cy='236' r='5' stroke='rgba(255,255,255,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='268' cy='256' r='5' stroke='rgba(255,213,115,0.45)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='88' r='7' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='400' cy='88' r='7' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='286' r='7' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 3.6rem, rgba(255, 255, 255, .035) 3.6rem calc(3.6rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .035) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #001a36, #033a72);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='8' stroke='rgba(0,26,54,0.05)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='8' stroke='rgba(0,26,54,0.17)' stroke-width='2.4'/%3E%3Crect x='140' y='116' width='64' height='64' rx='4' stroke='rgba(0,26,54,0.19)' stroke-width='2.4'/%3E%3Crect x='156' y='132' width='32' height='32' rx='2' stroke='rgba(0,26,54,0.12)' stroke-width='2'/%3E%3Cpath d='M204 132h96v44h56' stroke='rgba(0,26,54,0.13)' stroke-width='2.4'/%3E%3Cpath d='M204 164h64v72h116' stroke='rgba(0,26,54,0.13)' stroke-width='2.4'/%3E%3Cpath d='M172 180v76h96' stroke='rgba(3,116,181,0.4)' stroke-width='3'/%3E%3Ccircle cx='356' cy='176' r='5' stroke='rgba(0,26,54,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='376' cy='236' r='5' stroke='rgba(0,26,54,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='268' cy='256' r='5' stroke='rgba(3,116,181,0.45)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='88' r='7' stroke='rgba(0,26,54,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='400' cy='88' r='7' stroke='rgba(0,26,54,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='112' cy='286' r='7' stroke='rgba(0,26,54,0.2)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 3.6rem, rgba(0, 26, 54, .05) 3.6rem calc(3.6rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 26, 54, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small chip with a die. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .14rem;
+    background: linear-gradient(currentColor, currentColor) center / .38rem .38rem no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the midnight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 26, 54, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The system case, two faces. */
+
+.case-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.4rem);
+    max-width: 62rem;
+}
+
+.case-panel {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .09);
+}
+
+.case-panel::before {
+    content: "";
+    display: block;
+    height: 2.6rem;
+    margin-bottom: .9rem;
+    border: .12rem solid var(--mist);
+    border-radius: .35rem;
+    background:
+        radial-gradient(circle at 88% 50%, var(--gold) 0 .22rem, transparent .23rem),
+        linear-gradient(var(--mist), var(--mist)) 8% 32% / 40% .3rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 8% 68% / 40% .3rem no-repeat;
+}
+
+.case-panel:last-child::before {
+    background:
+        repeating-linear-gradient(to right, var(--mist) 0 .3rem, transparent .3rem .65rem) 8% 50% / 34% 1.3rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 62% 50% / 22% 1.3rem no-repeat;
+}
+
+.case-panel h3 {
+    color: var(--navy);
+    margin-bottom: .5rem;
+}
+
+.case-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .45rem;
+}
+
+.case-panel li {
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    padding-left: 1.1rem;
+    background: radial-gradient(circle at .3rem 50%, var(--blue) 0 .18rem, transparent .19rem) left center no-repeat;
+}
+
+.case-panel li.vent {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+/* Bits and bytes. */
+
+.unit-b {
+    color: var(--blue);
+}
+
+.unit-bit {
+    color: var(--gold-700, #b8860b);
+}
+
+.dark .unit-bit {
+    color: var(--gold);
+}
+
+.convert-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .9rem;
+}
+
+.convert-chip {
+    padding: .55rem .9rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .45rem;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.5vw, 1.45rem);
+}
+
+.convert-chip.file-chip {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.convert-op {
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.3rem, 2vw, 2rem);
+}
+
+.unit-ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+}
+
+.unit-step {
+    display: inline-grid;
+    place-items: center;
+    min-width: 3.2rem;
+    padding: .5rem .6rem;
+    background: var(--navy);
+    color: #fff;
+    border-radius: .4rem;
+    font-weight: 900;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.unit-x {
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+/* USB connector family: canonical shapes, one line weight. */
+
+.usb-family {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.plug-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.plug-item .plug {
+    display: grid;
+    place-items: center;
+    height: 4.6rem;
+    width: 100%;
+    border-bottom: .3rem solid var(--navy);
+    padding-bottom: .55rem;
+    margin-bottom: .55rem;
+    position: relative;
+}
+
+.plug::before {
+    content: "";
+    display: block;
+}
+
+.plug-a::before {
+    width: 4.4rem;
+    height: 1.5rem;
+    border: .16rem solid var(--navy);
+    border-radius: .12rem;
+    background: linear-gradient(var(--mist), var(--mist)) 50% 78% / 78% .3rem no-repeat, #fff;
+}
+
+.plug-b::before {
+    width: 2.6rem;
+    height: 2.3rem;
+    border: .16rem solid var(--navy);
+    background: #fff;
+    clip-path: polygon(18% 0, 82% 0, 100% 28%, 100% 100%, 0 100%, 0 28%);
+}
+
+.plug-micro::before {
+    width: 3rem;
+    height: 1.1rem;
+    border: .16rem solid var(--navy);
+    background: #fff;
+    clip-path: polygon(0 100%, 100% 100%, 88% 0, 12% 0);
+}
+
+.plug-c::before {
+    width: 3.6rem;
+    height: 1.25rem;
+    border: .16rem solid var(--navy);
+    border-radius: .5rem;
+    background: linear-gradient(var(--mist), var(--mist)) center / 60% .22rem no-repeat, #fff;
+}
+
+.plug-item strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.plug-item p {
+    margin-top: .3rem;
+    font-size: clamp(.8rem, 1vw, .98rem);
+}
+
+/* USB speed ladder: wait-time bars for the traced file. */
+
+.speed-wait {
+    display: grid;
+    gap: .8rem;
+    max-width: 62rem;
+}
+
+.wait-row {
+    display: grid;
+    grid-template-columns: clamp(11rem, 20vw, 15rem) 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wait-label {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.wait-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 4.5rem;
+    height: 2.4rem;
+    padding: 0 .7rem;
+    background: var(--navy-500, #1d5ea3);
+    border-radius: .3rem;
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.wait-bar.gold-bar {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+/* Storage and legacy connector rows. */
+
+.sata-kit,
+.legacy-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.conn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.conn-item .conn {
+    display: grid;
+    place-items: center;
+    height: 4.6rem;
+    width: 100%;
+    border-bottom: .3rem solid var(--navy);
+    padding-bottom: .55rem;
+    margin-bottom: .55rem;
+}
+
+.conn::before {
+    content: "";
+    display: block;
+}
+
+.conn-sata-data::before {
+    width: 4.8rem;
+    height: 1.5rem;
+    background: var(--navy);
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 74% 55%, 74% 100%, 0 100%);
+}
+
+.conn-sata-power::before {
+    width: 6rem;
+    height: 1.5rem;
+    background: var(--navy);
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 80% 55%, 80% 100%, 0 100%);
+}
+
+.conn-molex::before {
+    width: 4.6rem;
+    height: 1.8rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem .2rem .45rem .45rem;
+    background:
+        radial-gradient(circle at 15% 50%, #e0a92e 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 38% 50%, var(--navy) 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 62% 50%, var(--navy) 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 85% 50%, #a6321f 0 .27rem, transparent .28rem),
+        #fff;
+}
+
+.conn-dvi::before {
+    width: 5.2rem;
+    height: 1.9rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 93% 50% / .3rem 1.1rem no-repeat,
+        radial-gradient(circle, var(--navy) 0 .09rem, transparent .1rem) 8% 50% / .44rem .44rem repeat local,
+        #fff;
+    background-clip: padding-box, padding-box, padding-box;
+}
+
+.conn-vga::before {
+    width: 4.4rem;
+    height: 1.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: .35rem;
+    background:
+        radial-gradient(circle, var(--navy) 0 .09rem, transparent .1rem) center / .5rem .45rem repeat,
+        #fff;
+    clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+}
+
+.conn-db9::before {
+    width: 3.8rem;
+    height: 1.5rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        radial-gradient(circle, var(--navy) 0 .1rem, transparent .11rem) center / .6rem .55rem repeat,
+        #fff;
+    clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+}
+
+.conn-item strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.conn-item p {
+    margin-top: .3rem;
+    font-size: clamp(.8rem, 1.02vw, 1rem);
+}
+
+.wire-red {
+    color: #a6321f;
+    font-weight: 800;
+}
+
+.wire-gold {
+    color: #8a6508;
+    font-weight: 800;
+}
+
+/* Check slides. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+}
+
+/* The build sheet reuses the work-order card language from ch01. */
+
+.work-order {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.work-order header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy-900, #001a36);
+}
+
+.wo-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.work-order dl {
+    margin: 0;
+}
+
+.work-order dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.work-order dl div:last-child {
+    border-bottom: 0;
+}
+
+.work-order dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.work-order dd {
+    margin: 0;
+    color: var(--navy-900, #001a36);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+/* ESD checklist. */
+
+.esd-list li::before {
+    background: var(--status-warning);
+    color: #fff;
+    content: "!";
+}
+
+.esd-list li {
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+/* The motherboard map. Zones are positioned inside an in-flow board,
+   so nothing overflows the slide. */
+
+.mobo-map {
+    max-width: 58rem;
+}
+
+.mobo-board {
+    position: relative;
+    aspect-ratio: 16 / 8.2;
+    border: .18rem solid var(--navy);
+    border-radius: .6rem;
+    background:
+        radial-gradient(circle at 3% 5%, transparent 0 .3rem, rgba(0, 26, 54, .18) .3rem .42rem, transparent .43rem),
+        radial-gradient(circle at 97% 5%, transparent 0 .3rem, rgba(0, 26, 54, .18) .3rem .42rem, transparent .43rem),
+        radial-gradient(circle at 3% 95%, transparent 0 .3rem, rgba(0, 26, 54, .18) .3rem .42rem, transparent .43rem),
+        linear-gradient(135deg, #f2f7fd, #e6eef7);
+    box-shadow: 0 .8rem 2rem rgba(0, 26, 54, .12);
+}
+
+.zone {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border: .14rem solid var(--blue);
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .78);
+    padding: .2rem;
+}
+
+.zone span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.62rem, .95vw, .95rem);
+    text-align: center;
+    line-height: 1.15;
+}
+
+.zone-cpu {
+    left: 6%;
+    top: 9%;
+    width: 22%;
+    height: 36%;
+}
+
+.zone-dimm {
+    left: 33%;
+    top: 7%;
+    width: 26%;
+    height: 40%;
+    background:
+        repeating-linear-gradient(to right, rgba(29, 94, 163, .16) 0 .45rem, transparent .45rem 1.15rem) content-box,
+        rgba(255, 255, 255, .78);
+}
+
+.zone-power {
+    right: 3%;
+    top: 9%;
+    width: 10%;
+    height: 38%;
+}
+
+.zone-m2 {
+    left: 6%;
+    top: 55%;
+    width: 30%;
+    height: 12%;
+}
+
+.zone-pcie16 {
+    left: 6%;
+    top: 74%;
+    width: 48%;
+    height: 11%;
+    border-color: var(--gold-600, #e0a92e);
+    background: rgba(255, 213, 115, .3);
+}
+
+.zone-pcie1 {
+    left: 6%;
+    bottom: 3%;
+    width: 18%;
+    height: 8%;
+}
+
+.zone-sata {
+    right: 5%;
+    top: 55%;
+    width: 20%;
+    height: 16%;
+    background:
+        repeating-linear-gradient(to right, rgba(29, 94, 163, .2) 0 .55rem, transparent .55rem 1rem) content-box,
+        rgba(255, 255, 255, .78);
+}
+
+.zone-headers {
+    right: 5%;
+    bottom: 3%;
+    width: 34%;
+    height: 13%;
+    background:
+        radial-gradient(circle, rgba(0, 26, 54, .3) 0 .08rem, transparent .09rem) center / .4rem .4rem repeat content-box,
+        rgba(255, 255, 255, .78);
+}
+
+/* PCIe lanes drawn to length. */
+
+.lane-set {
+    display: grid;
+    gap: .75rem;
+    max-width: 58rem;
+}
+
+.lane-row {
+    display: grid;
+    grid-template-columns: 3.4rem 1fr;
+    align-items: center;
+    gap: .9rem;
+}
+
+.lane-label {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    text-align: right;
+}
+
+.lane-slot {
+    height: 1.5rem;
+    border-radius: .25rem;
+    background: var(--navy-500, #1d5ea3);
+    position: relative;
+}
+
+.lane-slot::before {
+    content: "";
+    position: absolute;
+    left: .55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .3rem;
+    height: .55rem;
+    border-radius: .1rem;
+    background: rgba(255, 255, 255, .55);
+}
+
+.lane-slot.gold-slot {
+    background: var(--gold);
+}
+
+.lane-slot.gold-slot::before {
+    background: rgba(0, 26, 54, .45);
+}
+
+/* Nested form factors, to scale. */
+
+.fit-nest {
+    max-width: 46rem;
+}
+
+.nest {
+    position: relative;
+    border: .16rem solid var(--navy);
+    border-radius: .35rem;
+    background: rgba(255, 255, 255, .55);
+}
+
+.nest > span {
+    position: absolute;
+    top: .35rem;
+    right: .6rem;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, 1vw, .98rem);
+}
+
+.nest-atx {
+    aspect-ratio: 12 / 8;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .1);
+}
+
+.nest-matx {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 76%;
+    height: 88%;
+    border-radius: 0 .35rem 0 .35rem;
+    background: rgba(29, 94, 163, .07);
+}
+
+.nest-itx {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 58%;
+    height: 62%;
+    border-radius: 0 .35rem 0 .35rem;
+    background: rgba(255, 213, 115, .22);
+}
+
+/* Seven-step build rail, from the ch01 method-rail language. */
+
+.method-rail {
+    display: grid;
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.build-rail {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.rail-step {
+    position: relative;
+    background: #fff;
+    color: var(--navy-900, #001a36);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .1);
+    padding: clamp(.8rem, 1.3vw, 1.15rem) clamp(.55rem, .9vw, .8rem);
+    min-height: 9.5rem;
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: .95rem;
+    margin-bottom: .45rem;
+}
+
+.rail-step strong {
+    display: block;
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+    margin-bottom: .35rem;
+}
+
+.rail-step p {
+    font-size: clamp(.72rem, .92vw, .88rem);
+    line-height: 1.28;
+}
+
+.rail-step::after {
+    content: "→";
+    position: absolute;
+    right: -.62rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.rail-step:last-child::after {
+    content: none;
+}
+
+/* Sound-jack color keys: literal jack colors, each with its label. */
+
+.jack {
+    display: inline-block;
+    padding-left: 1rem;
+    margin-right: .3rem;
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    background: radial-gradient(circle at .32rem 55%, currentColor 0 .28rem, transparent .3rem) left center no-repeat;
+}
+
+.jack-green {
+    color: #2b6e4c;
+}
+
+.jack-blue {
+    color: #0d5c8c;
+}
+
+.jack-pink {
+    color: #a84a78;
+}
+
+.jack-orange {
+    color: #9a6112;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 16, 34, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .68);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .2), transparent 20rem),
+            linear-gradient(135deg, #f4f8fc, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #001a36, #033a72);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 26, 54, .5);
+    }
+
+    .case-duo,
+    .sata-kit,
+    .legacy-row {
+        grid-template-columns: 1fr;
+    }
+
+    .usb-family {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem;
+    }
+
+    .wait-row,
+    .lane-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .lane-label {
+        text-align: left;
+    }
+
+    .mobo-board {
+        aspect-ratio: auto;
+        display: grid;
+        gap: .5rem;
+        padding: .8rem;
+    }
+
+    .zone {
+        position: static;
+        width: auto;
+        height: auto;
+        min-height: 2.6rem;
+        justify-items: start;
+        padding: .45rem .7rem;
+    }
+
+    .build-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-step {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .rail-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .rail-step:last-child::after {
+        content: none;
+    }
+
+    .visual-split,
+    .visual-split.reverse {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .work-order,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .work-order {
+        width: 100%;
+    }
+}
