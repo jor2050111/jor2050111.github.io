@@ -1,0 +1,1688 @@
+/* BPC170 Chapter 9: the pocket office */
+
+/* The motif is painted as background layers only: a tablet behind a
+   phone, gesture arcs rippling from a fingertip, and a charging cable
+   sweeping to its plug. Positioned boxes would create a focus scroll
+   trap, so everything lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='224' y='104' width='240' height='170' rx='14' stroke='rgba(0,46,93,0.06)' stroke-width='18'/%3E%3Crect x='200' y='80' width='240' height='170' rx='14' stroke='rgba(0,46,93,0.16)' stroke-width='2.4'/%3E%3Ccircle cx='320' cy='94' r='3' stroke='rgba(0,46,93,0.16)' stroke-width='2'/%3E%3Crect x='120' y='150' width='112' height='200' rx='18' stroke='rgba(0,46,93,0.22)' stroke-width='2.6'/%3E%3Cpath d='M158 172h36M156 322h40' stroke='rgba(0,46,93,0.16)' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='310' cy='300' r='7' fill='rgba(255,200,69,0.55)'/%3E%3Cpath d='M332 278a26 26 0 0 1 0 44M344 268a40 40 0 0 1 0 64M356 258a54 54 0 0 1 0 84' stroke='rgba(255,200,69,0.5)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M176 352c10 40 82 48 124 24s72-54 118-46' stroke='rgba(124,54,38,0.3)' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='418' y='318' width='30' height='22' rx='5' stroke='rgba(124,54,38,0.3)' stroke-width='2.6'/%3E%3Cpath d='M448 324h12M448 336h12' stroke='rgba(124,54,38,0.3)' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(0, 46, 93, .05) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+        linear-gradient(135deg, #fffaf0, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='224' y='104' width='240' height='170' rx='14' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='200' y='80' width='240' height='170' rx='14' stroke='rgba(255,255,255,0.14)' stroke-width='2.4'/%3E%3Ccircle cx='320' cy='94' r='3' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Crect x='120' y='150' width='112' height='200' rx='18' stroke='rgba(255,255,255,0.2)' stroke-width='2.6'/%3E%3Cpath d='M158 172h36M156 322h40' stroke='rgba(255,255,255,0.14)' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='310' cy='300' r='7' fill='rgba(255,200,69,0.5)'/%3E%3Cpath d='M332 278a26 26 0 0 1 0 44M344 268a40 40 0 0 1 0 64M356 258a54 54 0 0 1 0 84' stroke='rgba(255,200,69,0.45)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M176 352c10 40 82 48 124 24s72-54 118-46' stroke='rgba(255,255,255,0.2)' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='418' y='318' width='30' height='22' rx='5' stroke='rgba(255,255,255,0.2)' stroke-width='2.6'/%3E%3Cpath d='M448 324h12M448 336h12' stroke='rgba(255,255,255,0.2)' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(255, 255, 255, .05) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='224' y='104' width='240' height='170' rx='14' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='200' y='80' width='240' height='170' rx='14' stroke='rgba(0,46,93,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='320' cy='94' r='3' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Crect x='120' y='150' width='112' height='200' rx='18' stroke='rgba(0,46,93,0.2)' stroke-width='2.6'/%3E%3Cpath d='M158 172h36M156 322h40' stroke='rgba(0,46,93,0.15)' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='310' cy='300' r='7' fill='rgba(124,54,38,0.5)'/%3E%3Cpath d='M332 278a26 26 0 0 1 0 44M344 268a40 40 0 0 1 0 64M356 258a54 54 0 0 1 0 84' stroke='rgba(124,54,38,0.45)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M176 352c10 40 82 48 124 24s72-54 118-46' stroke='rgba(0,46,93,0.28)' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='418' y='318' width='30' height='22' rx='5' stroke='rgba(0,46,93,0.28)' stroke-width='2.6'/%3E%3Cpath d='M448 324h12M448 336h12' stroke='rgba(0,46,93,0.28)' stroke-width='2.6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(0, 46, 93, .06) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small phone outline with its home dot. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: .8rem;
+    height: 1.15rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .24rem;
+    background: radial-gradient(circle at 50% 84%, currentColor 0 .07rem, transparent .08rem);
+    vertical-align: -.24rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #002e5d 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The provisioning card: the chapter's central object. Gold binds the
+   traced phone, success green marks only completed legs. */
+
+.prov-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 46, 93, .15);
+}
+
+.dark .prov-card {
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.prov-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--midnight-navy);
+}
+
+.asset-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.prov-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.prov-card dl {
+    margin: 0;
+}
+
+.prov-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .5rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.prov-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.prov-card dd {
+    margin: 0;
+    color: var(--midnight-navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.prov-legs {
+    list-style: none;
+    margin: 0;
+    padding: .55rem 1rem .85rem;
+    display: grid;
+    gap: .45rem;
+}
+
+.prov-legs li {
+    display: grid;
+    grid-template-columns: 1.35rem auto 1fr;
+    gap: .6rem;
+    align-items: center;
+}
+
+.leg-box {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: .14rem solid var(--navy);
+    border-radius: .25rem;
+    background: #fff;
+}
+
+.prov-legs strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+}
+
+.prov-legs span:not(.leg-box):not(.sr-only) {
+    color: var(--midnight-navy);
+    font-size: clamp(.8rem, 1.05vw, .98rem);
+}
+
+.leg-done .leg-box {
+    display: grid;
+    place-items: center;
+    background: var(--status-success);
+    border-color: var(--status-success);
+}
+
+.leg-done .leg-box::after {
+    content: "✓";
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* The traced phone's leg verdicts. Gold binds the asset chip, green
+   carries only its completed meaning. */
+
+.prov-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+    margin-top: clamp(.9rem, 1.8vw, 1.5rem);
+}
+
+.stack-verdict {
+    margin-top: 1rem;
+}
+
+.asset-chip {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+}
+
+.result {
+    font-weight: 900;
+    white-space: nowrap;
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.result.pass {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.result.pass::before {
+    content: "✓ ";
+}
+
+.verdict-text {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+    color: var(--midnight-navy);
+}
+
+/* The touchscreen stack. Gold marks the digitizer, the layer the
+   whole claim hangs on. */
+
+.touch-stack {
+    position: relative;
+    display: grid;
+    gap: .6rem;
+    align-content: center;
+    max-width: 34rem;
+    padding-top: 1.9rem;
+}
+
+.tap-dot {
+    position: absolute;
+    top: .35rem;
+    left: 16%;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: var(--phoenix-gold);
+    border: .14rem solid var(--midnight-navy);
+    box-shadow: 0 0 0 .35rem rgba(255, 200, 69, .3), 0 0 0 .75rem rgba(255, 200, 69, .14);
+}
+
+.stack-slab {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 8vw, 7rem) 1fr;
+    gap: .8rem;
+    align-items: center;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-left: .5rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .7rem 1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .07);
+}
+
+.slab-digitizer {
+    margin-left: 1.4rem;
+    border-left-color: var(--phoenix-gold);
+    background: #fff7e0;
+}
+
+.slab-display {
+    margin-left: 2.8rem;
+}
+
+.stack-slab strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.stack-slab span {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(10rem, 16vw, 13rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.tight-rows li {
+    padding: .5rem .9rem;
+    grid-template-columns: clamp(8.5rem, 13vw, 11rem) 1fr;
+}
+
+.chip-panel {
+    margin-top: clamp(.9rem, 1.8vw, 1.4rem);
+}
+
+.chip-lead {
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: .45rem;
+    font-size: clamp(.9rem, 1.15vw, 1.1rem);
+}
+
+/* The dock scene: laptop, one cable, docking station. */
+
+.dock-scene {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: clamp(.7rem, 1.8vw, 1.5rem);
+    max-width: 56rem;
+    margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.lap-glyph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lap-glyph::before {
+    content: "";
+    width: 6rem;
+    height: 3.6rem;
+    border: .16rem solid var(--navy);
+    border-radius: .35rem .35rem 0 0;
+    background:
+        linear-gradient(rgba(124, 54, 38, .12), rgba(124, 54, 38, .12)) center / 4.6rem 2.3rem no-repeat,
+        #fff;
+}
+
+.lap-glyph::after {
+    content: "";
+    width: 7.4rem;
+    height: .55rem;
+    background: var(--navy);
+    border-radius: 0 0 .45rem .45rem;
+}
+
+.dock-cable {
+    position: relative;
+    width: clamp(2.4rem, 5vw, 4.6rem);
+    height: .3rem;
+    border-radius: .15rem;
+    background: var(--blue);
+}
+
+.dock-cable::after {
+    content: "";
+    position: absolute;
+    right: -.15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .8rem;
+    height: .9rem;
+    border-radius: .18rem;
+    background: var(--navy);
+}
+
+.dock-box {
+    background: #fff;
+    border: .15rem solid var(--navy);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem) clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .09);
+    display: grid;
+    gap: .55rem;
+    justify-content: start;
+}
+
+.dock-slots,
+.dock-labels {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(3.4rem, 5.5rem));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+    justify-items: center;
+}
+
+.dock-slots i {
+    width: 2.7rem;
+    height: 1.15rem;
+    border: .14rem solid var(--navy);
+    border-radius: .25rem;
+    background: linear-gradient(var(--mist), var(--mist)) center / 60% .32rem no-repeat, #fff;
+}
+
+.dock-labels span {
+    font-size: clamp(.7rem, .95vw, .9rem);
+    font-weight: 800;
+    color: var(--navy);
+    text-align: center;
+}
+
+/* The radio switchboard. Gold marks the master switch, and every
+   toggle state carries a text label. */
+
+.radio-board {
+    max-width: 56rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    padding: .35rem .9rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .09);
+    display: grid;
+}
+
+.radio-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) 1fr auto 2.4rem;
+    gap: .8rem;
+    align-items: center;
+    padding: .48rem .5rem .48rem 2.5rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.radio-row:last-child {
+    border-bottom: 0;
+}
+
+.radio-row strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.row-note {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    color: var(--midnight-navy);
+}
+
+.radio-row.master {
+    grid-template-columns: 1.7rem minmax(9rem, 12.5rem) 1fr auto 2.4rem;
+    padding-left: .5rem;
+    background: #fff7e0;
+    border-left: .45rem solid var(--phoenix-gold);
+    border-radius: .4rem;
+}
+
+.plane-glyph {
+    width: 1.35rem;
+    height: 1.35rem;
+    background: var(--navy);
+    clip-path: polygon(0 62%, 100% 8%, 58% 100%, 40% 66%);
+}
+
+.tog {
+    position: relative;
+    display: inline-block;
+    width: 2.7rem;
+    height: 1.35rem;
+    border-radius: .7rem;
+}
+
+.tog::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .95rem;
+    height: .95rem;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.tog.on {
+    background: var(--midnight-navy);
+}
+
+.tog.on::after {
+    right: .2rem;
+}
+
+.tog.off {
+    background: #b3a98f;
+}
+
+.tog.off::after {
+    left: .2rem;
+}
+
+.tog-label {
+    font-size: clamp(.72rem, .95vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--midnight-navy);
+}
+
+/* SIM and eSIM shapes beside the generation bars. */
+
+.sim-panel {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+}
+
+.sim-shapes {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    padding: .3rem 0;
+}
+
+.sim {
+    width: 5.4rem;
+    height: 6.8rem;
+    border: .18rem solid var(--navy);
+    border-radius: .5rem 2rem .5rem .5rem;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .1);
+}
+
+.sim::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 56%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    height: 2.3rem;
+    border-radius: .35rem;
+    background-color: var(--gold-600);
+    background-image:
+        linear-gradient(var(--navy), var(--navy)),
+        linear-gradient(var(--navy), var(--navy)),
+        linear-gradient(var(--navy), var(--navy));
+    background-size: .12rem 100%, 100% .12rem, 100% .12rem;
+    background-position: 50% 0, 0 33%, 0 66%;
+    background-repeat: no-repeat;
+}
+
+.esim {
+    width: 2.7rem;
+    height: 2.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--gold-600), var(--gold-600)) center / 1.15rem 1.15rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 .32rem, var(--navy) .32rem .46rem) 50% 8% / 70% .26rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 .32rem, var(--navy) .32rem .46rem) 50% 92% / 70% .26rem no-repeat,
+        #fff;
+}
+
+.sim-rows {
+    max-width: 32rem;
+}
+
+/* Cellular generation bars, drawn to one scale. Gold marks 5G, the
+   claim's focus bar. */
+
+.gen-card {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    padding: clamp(1.1rem, 2vw, 1.7rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .09);
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+}
+
+.gen-bars {
+    display: grid;
+    gap: .85rem;
+}
+
+.gen-row {
+    display: grid;
+    grid-template-columns: clamp(3.8rem, 6vw, 5.2rem) 1fr auto;
+    gap: .7rem;
+    align-items: center;
+}
+
+.gen-label {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.gen-track {
+    height: 1.15rem;
+    border-radius: .3rem;
+    background: #ece6d6;
+}
+
+.gen-fill {
+    height: 100%;
+    min-width: .3rem;
+    border-radius: .3rem 0 0 .3rem;
+    background: var(--blue);
+}
+
+.gen-fill.focus {
+    background: var(--phoenix-gold);
+    border-radius: .3rem;
+}
+
+.gen-value {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+    white-space: nowrap;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.gen-caption {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.88rem, 1.1vw, 1.05rem);
+    border-top: .08rem solid var(--mist);
+    padding-top: .7rem;
+}
+
+/* Check slides. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+}
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Bluetooth pairing flow. */
+
+.pair-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: clamp(.5rem, 1vw, .9rem);
+    align-items: stretch;
+    max-width: 62rem;
+}
+
+.pair-stage {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.8rem, 1.2vw, 1.1rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.pair-art {
+    min-height: 3.3rem;
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin-bottom: .55rem;
+}
+
+.stage-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .4rem;
+}
+
+.pair-stage strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    margin-bottom: .3rem;
+}
+
+.pair-stage p {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.g-phone {
+    flex: 0 0 auto;
+    width: 1.7rem;
+    height: 2.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: .35rem;
+    background: linear-gradient(var(--navy), var(--navy)) 50% 88% / .55rem .12rem no-repeat, #fff;
+}
+
+.g-buds {
+    flex: 0 0 auto;
+    position: relative;
+    width: 2.2rem;
+    height: 1.8rem;
+    border-top: .3rem solid var(--navy);
+    border-radius: 1.1rem 1.1rem 0 0;
+}
+
+.g-buds::before,
+.g-buds::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: .55rem;
+    height: 1rem;
+    border-radius: .2rem;
+    background: var(--navy);
+}
+
+.g-buds::before {
+    left: -.18rem;
+}
+
+.g-buds::after {
+    right: -.18rem;
+}
+
+.wave {
+    width: .85rem;
+    height: 1.7rem;
+    border: .16rem solid transparent;
+    border-right-color: var(--blue);
+    border-radius: 50%;
+}
+
+.wave.w2 {
+    width: 1.15rem;
+    height: 2.3rem;
+    margin-left: -.5rem;
+}
+
+.confirm-chip {
+    padding: .5rem .9rem;
+    border: .14rem solid var(--navy);
+    border-radius: .4rem;
+    background: #fff;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.link-line {
+    flex: 0 0 auto;
+    width: 1.9rem;
+    height: .28rem;
+    border-radius: .14rem;
+    background: var(--status-success);
+}
+
+.flow-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+/* The NFC tap scene. */
+
+.nfc-split {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+}
+
+.nfc-scene {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: .8rem 0 2rem;
+    justify-content: center;
+}
+
+.nfc-phone {
+    width: 3rem;
+    height: 5rem;
+    border: .18rem solid var(--navy);
+    border-radius: .5rem;
+    background: linear-gradient(var(--navy), var(--navy)) 50% 90% / .8rem .14rem no-repeat, #fff;
+    transform: rotate(14deg);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .12);
+}
+
+.nfc-waves {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+.nw {
+    border: .16rem solid transparent;
+    border-right-color: var(--blue);
+    border-radius: 50%;
+}
+
+.nw.n1 {
+    width: .7rem;
+    height: 1.4rem;
+}
+
+.nw.n2 {
+    width: .95rem;
+    height: 1.9rem;
+}
+
+.nw.n3 {
+    width: 1.2rem;
+    height: 2.4rem;
+}
+
+.nfc-terminal {
+    width: 4.6rem;
+    height: 5.4rem;
+    border: .18rem solid var(--navy);
+    border-radius: .5rem;
+    background:
+        linear-gradient(var(--mist), var(--mist)) 50% 16% / 68% 1rem no-repeat,
+        radial-gradient(circle at 50% 60%, var(--gold-600) 0 .5rem, transparent .55rem),
+        radial-gradient(circle at 50% 60%, transparent 0 .68rem, var(--navy) .68rem .82rem, transparent .83rem),
+        #fff;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .12);
+}
+
+.range-tag {
+    position: absolute;
+    left: 50%;
+    bottom: .2rem;
+    transform: translateX(-50%);
+    font-size: clamp(.72rem, .95vw, .9rem);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+}
+
+/* App store cards. */
+
+.store-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 2rem);
+    max-width: 62rem;
+}
+
+.store-card {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .65rem;
+    overflow: hidden;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .08);
+}
+
+.store-card header {
+    background: var(--midnight-navy);
+    color: #fff;
+    font-weight: 800;
+    padding: .55rem 1rem;
+    letter-spacing: .03em;
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.store-card ul {
+    list-style: none;
+    margin: 0;
+    padding: .7rem 1.1rem .95rem;
+    display: grid;
+    gap: .5rem;
+}
+
+.store-card li {
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    padding-left: 1.05rem;
+    background: radial-gradient(circle at .28rem .62em, var(--blue) 0 .17rem, transparent .18rem) left top no-repeat;
+}
+
+.store-card strong {
+    color: var(--navy);
+}
+
+/* The sync hub: data types through the signed-in phone to its
+   destinations. Gold binds the traced phone and its PC backup. */
+
+.sync-hub {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) auto auto auto minmax(0, 1.2fr);
+    gap: clamp(.5rem, 1.2vw, 1.1rem);
+    align-items: center;
+    max-width: 70rem;
+}
+
+.sync-data {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-content: center;
+}
+
+.sync-data .chip {
+    background: #fff;
+    border: .1rem solid var(--mist);
+}
+
+.hub-phone {
+    position: relative;
+    width: clamp(7.5rem, 10vw, 9rem);
+    height: clamp(10rem, 13vw, 12rem);
+    border: .2rem solid var(--navy);
+    border-radius: .9rem;
+    background: linear-gradient(var(--navy), var(--navy)) 50% 92% / 1.4rem .16rem no-repeat, #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 .7rem 1.6rem rgba(0, 46, 93, .12);
+}
+
+.account-badge {
+    position: absolute;
+    top: -.85rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: .24rem .6rem;
+    border-radius: .3rem;
+    border: .12rem solid var(--midnight-navy);
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-weight: 900;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    white-space: nowrap;
+}
+
+.hub-asset {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+}
+
+.sync-dests {
+    display: grid;
+    gap: .55rem;
+}
+
+.dest {
+    display: grid;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .55rem .9rem;
+}
+
+.dest:nth-child(2) {
+    border-left-color: var(--phoenix-gold);
+    background: #fff7e0;
+}
+
+.dest strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.18rem);
+}
+
+.dest span {
+    font-size: clamp(.8rem, 1.05vw, .98rem);
+}
+
+/* The add-account mail form. */
+
+.mail-card {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .65rem;
+    overflow: hidden;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .09);
+    width: min(100%, 34rem);
+    justify-self: center;
+}
+
+.mail-card header {
+    background: var(--midnight-navy);
+    color: #fff;
+    font-weight: 800;
+    padding: .55rem 1rem;
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.mail-row {
+    display: grid;
+    grid-template-columns: clamp(8.5rem, 13vw, 11rem) 1fr;
+    gap: .8rem;
+    padding: .65rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: center;
+}
+
+.mail-label {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.mail-value {
+    justify-self: start;
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+    background: #f7f4ec;
+    padding: .3rem .6rem;
+    border-radius: .3rem;
+    font-size: clamp(.9rem, 1.2vw, 1.12rem);
+}
+
+.mail-routes {
+    display: grid;
+    gap: .4rem;
+    padding: .65rem 1rem .85rem;
+}
+
+.route {
+    font-size: clamp(.88rem, 1.1vw, 1.05rem);
+    color: var(--midnight-navy);
+}
+
+.route strong {
+    color: var(--navy);
+}
+
+/* The EMM tree. */
+
+.emm-split {
+    align-items: start;
+}
+
+.emm-tree {
+    display: grid;
+    justify-items: center;
+    max-width: 40rem;
+}
+
+.emm-node {
+    background: var(--midnight-navy);
+    color: #fff;
+    border-radius: .6rem;
+    padding: .65rem 1.5rem;
+    text-align: center;
+}
+
+.emm-node strong {
+    display: block;
+    font-size: clamp(1.15rem, 1.6vw, 1.55rem);
+}
+
+.emm-node span {
+    display: block;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    opacity: .88;
+}
+
+.tree-links {
+    position: relative;
+    width: 58%;
+    height: 1.05rem;
+    margin-top: .9rem;
+    border: .16rem solid var(--blue);
+    border-bottom: 0;
+    border-radius: .45rem .45rem 0 0;
+}
+
+.tree-links::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -1.06rem;
+    height: .95rem;
+    border-left: .16rem solid var(--blue);
+}
+
+.emm-branches {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.3rem);
+    width: 100%;
+}
+
+.emm-leaf {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .45rem solid var(--blue);
+    border-radius: .6rem;
+    padding: .8rem 1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.emm-leaf strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.emm-leaf span {
+    display: block;
+    margin-top: .25rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.portal-chips {
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+/* The laptop map. Zones sit inside an in-flow board, nothing
+   overflows the slide. */
+
+.nobr {
+    white-space: nowrap;
+}
+
+.laptop-map {
+    position: relative;
+    max-width: 54rem;
+    aspect-ratio: 16 / 7;
+    border: .18rem solid var(--navy);
+    border-radius: .7rem;
+    background: linear-gradient(135deg, #fffdf6, #f6ecd8);
+    box-shadow: 0 .8rem 2rem rgba(0, 46, 93, .1);
+}
+
+.lz {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border: .13rem solid var(--blue);
+    border-radius: .35rem;
+    background: rgba(255, 255, 255, .86);
+    padding: .25rem .45rem;
+    text-align: center;
+}
+
+.lz span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.6rem, .92vw, .92rem);
+    line-height: 1.15;
+}
+
+.lz-display {
+    left: 3%;
+    top: 5%;
+    width: 94%;
+    height: 21%;
+    border-color: var(--navy);
+    background: rgba(0, 46, 93, .06);
+}
+
+.lz-wifi {
+    left: 8%;
+    top: 37%;
+    width: 16%;
+    height: 21%;
+}
+
+.lz-m2 {
+    left: 28%;
+    top: 37%;
+    width: 30%;
+    height: 17%;
+}
+
+.lz-ram {
+    left: 32%;
+    top: 61%;
+    width: 30%;
+    height: 30%;
+}
+
+.lz-battery {
+    left: 4%;
+    bottom: 8%;
+    width: 24%;
+    height: 26%;
+}
+
+.lz-disk {
+    right: 4%;
+    top: 37%;
+    width: 26%;
+    height: 54%;
+}
+
+.antenna-line {
+    position: absolute;
+    left: 14%;
+    top: 27%;
+    height: 10%;
+    border-left: .18rem dashed var(--blue);
+}
+
+/* The power ladder and the swollen battery alert. */
+
+.power-ladder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    align-content: start;
+}
+
+.power-ladder li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .9rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .55rem;
+    padding: .75rem 1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .07);
+}
+
+.power-ladder strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.power-ladder span:not(.step-no) {
+    display: block;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.swell-alert {
+    align-self: center;
+    border: .14rem solid var(--status-danger);
+    border-left: .5rem solid var(--status-danger);
+    background: rgba(166, 50, 31, .07);
+    border-radius: .6rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .8rem;
+    justify-items: start;
+}
+
+.swollen-batt {
+    position: relative;
+    width: 4.4rem;
+    height: 2rem;
+    border: .18rem solid var(--status-danger);
+    border-radius: 1.1rem;
+    transform: rotate(-2deg);
+}
+
+.swollen-batt::after {
+    content: "";
+    position: absolute;
+    right: -.55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .4rem;
+    height: .85rem;
+    border-radius: 0 .2rem .2rem 0;
+    background: var(--status-danger);
+}
+
+.swell-alert strong {
+    color: var(--status-danger);
+}
+
+.swell-alert p {
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+/* Rotated stamp-style group headings for the damage board. */
+
+.group-tag {
+    display: inline-block;
+    padding: .3rem .7rem;
+    border: .14rem solid var(--blue);
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .75);
+    color: var(--blue);
+    font-weight: 900;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    font-size: clamp(.7rem, .9vw, .85rem);
+    transform: rotate(-1.6deg);
+    margin-bottom: .75rem;
+}
+
+.damage-split {
+    align-items: start;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows,
+.visual-split h2 + .checklist {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+            linear-gradient(135deg, #fffaf0, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .touch-stack {
+        max-width: none;
+    }
+
+    .slab-digitizer,
+    .slab-display {
+        margin-left: 0;
+    }
+
+    .stack-slab {
+        grid-template-columns: 1fr;
+        gap: .2rem;
+    }
+
+    .dock-scene {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .dock-cable {
+        width: .3rem;
+        height: 1.6rem;
+    }
+
+    .dock-cable::after {
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -.15rem;
+        transform: translateX(-50%);
+        width: .9rem;
+        height: .8rem;
+    }
+
+    .dock-slots,
+    .dock-labels {
+        grid-template-columns: repeat(2, minmax(3.2rem, 1fr));
+    }
+
+    .radio-row {
+        grid-template-columns: 1fr auto 2.4rem;
+        padding-left: .5rem;
+    }
+
+    .radio-row .row-note {
+        display: none;
+    }
+
+    .radio-row.master {
+        grid-template-columns: 1.7rem 1fr auto 2.4rem;
+    }
+
+    .sim-shapes {
+        justify-content: center;
+    }
+
+    .pair-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .pair-flow .flow-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .store-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .sync-hub {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .sync-hub .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .sync-dests,
+    .sync-data {
+        width: 100%;
+    }
+
+    .emm-branches {
+        grid-template-columns: 1fr;
+    }
+
+    .tree-links {
+        display: none;
+    }
+
+    .emm-tree {
+        gap: .8rem;
+    }
+
+    .laptop-map {
+        aspect-ratio: auto;
+        display: grid;
+        gap: .5rem;
+        padding: .8rem;
+    }
+
+    .lz {
+        position: static;
+        width: auto;
+        height: auto;
+        min-height: 2.6rem;
+        justify-items: start;
+        padding: .45rem .7rem;
+    }
+
+    .antenna-line {
+        display: none;
+    }
+
+    .fact-rows li,
+    .tight-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .mail-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .visual-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .visual-art,
+    .visual-split .prov-card {
+        order: 2;
+    }
+
+    .prov-card {
+        width: 100%;
+    }
+
+    .mail-card {
+        width: 100%;
+    }
+
+    .result {
+        white-space: normal;
+    }
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}

@@ -1,0 +1,1621 @@
+/* BPC170 Chapter 10: the paper path */
+
+/* The motif is painted as background layers only: an input ream, a
+   sheet curving through roller pairs, a fuser pair, and an output
+   tray, over a soft warm field. Positioned boxes would create a
+   focus scroll trap, so everything lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(94,42,29,0.06)' stroke-width='18'/%3E%3Cpath d='M330 96h130M336 84h118M342 72h106' stroke='rgba(3,72,143,0.2)' stroke-width='3'/%3E%3Cpath d='M395 108 C 395 160 380 190 330 208 C 280 226 240 232 170 232' stroke='rgba(224,169,46,0.55)' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='395' cy='140' r='14' stroke='rgba(94,42,29,0.22)' stroke-width='3'/%3E%3Ccircle cx='340' cy='198' r='12' stroke='rgba(94,42,29,0.18)' stroke-width='3'/%3E%3Ccircle cx='236' cy='218' r='11' stroke='rgba(3,72,143,0.26)' stroke-width='3'/%3E%3Ccircle cx='236' cy='246' r='11' stroke='rgba(3,72,143,0.26)' stroke-width='3'/%3E%3Cpath d='M130 268h190' stroke='rgba(94,42,29,0.22)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M150 256h120' stroke='rgba(224,169,46,0.5)' stroke-width='3'/%3E%3Cpath d='M130 268 L118 236' stroke='rgba(94,42,29,0.18)' stroke-width='4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .24), transparent 20rem),
+        linear-gradient(135deg, #fbf3ee, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Cpath d='M330 96h130M336 84h118M342 72h106' stroke='rgba(255,255,255,0.14)' stroke-width='3'/%3E%3Cpath d='M395 108 C 395 160 380 190 330 208 C 280 226 240 232 170 232' stroke='rgba(255,213,115,0.5)' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='395' cy='140' r='14' stroke='rgba(255,255,255,0.18)' stroke-width='3'/%3E%3Ccircle cx='340' cy='198' r='12' stroke='rgba(255,255,255,0.15)' stroke-width='3'/%3E%3Ccircle cx='236' cy='218' r='11' stroke='rgba(255,255,255,0.2)' stroke-width='3'/%3E%3Ccircle cx='236' cy='246' r='11' stroke='rgba(255,255,255,0.2)' stroke-width='3'/%3E%3Cpath d='M130 268h190' stroke='rgba(255,255,255,0.18)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M150 256h120' stroke='rgba(255,213,115,0.45)' stroke-width='3'/%3E%3Cpath d='M130 268 L118 236' stroke='rgba(255,255,255,0.15)' stroke-width='4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #5e2a1d, #8f4432);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(94,42,29,0.05)' stroke-width='18'/%3E%3Cpath d='M330 96h130M336 84h118M342 72h106' stroke='rgba(3,72,143,0.24)' stroke-width='3'/%3E%3Cpath d='M395 108 C 395 160 380 190 330 208 C 280 226 240 232 170 232' stroke='rgba(94,42,29,0.4)' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='395' cy='140' r='14' stroke='rgba(94,42,29,0.2)' stroke-width='3'/%3E%3Ccircle cx='340' cy='198' r='12' stroke='rgba(94,42,29,0.16)' stroke-width='3'/%3E%3Ccircle cx='236' cy='218' r='11' stroke='rgba(3,72,143,0.28)' stroke-width='3'/%3E%3Ccircle cx='236' cy='246' r='11' stroke='rgba(3,72,143,0.28)' stroke-width='3'/%3E%3Cpath d='M130 268h190' stroke='rgba(94,42,29,0.2)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M150 256h120' stroke='rgba(3,72,143,0.26)' stroke-width='3'/%3E%3Cpath d='M130 268 L118 236' stroke='rgba(94,42,29,0.16)' stroke-width='4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a sheet feeding between two rollers. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: .95rem;
+    margin-right: .5rem;
+    vertical-align: -.12rem;
+    background:
+        radial-gradient(circle at .35rem .38rem, currentColor 0 .22rem, transparent .23rem),
+        radial-gradient(circle at 1.15rem .38rem, currentColor 0 .22rem, transparent .23rem),
+        linear-gradient(currentColor, currentColor) 0 100% / 100% .16rem no-repeat;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the canyon field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #5e2a1d 0%, rgba(94, 42, 29, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The traced job's tag. Gold binds only job #218 wherever it rides. */
+
+.job-tag {
+    display: inline-block;
+    justify-self: start;
+    margin-top: .35rem;
+    padding: .22rem .5rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #4a1f14;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .85rem);
+    line-height: 1.2;
+}
+
+/* The job card: the chapter's traced object, in the course card
+   language. */
+
+.job-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.job-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: #4a1f14;
+}
+
+.jc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.jc-badge {
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: #4a1f14;
+    font-weight: 900;
+    font-size: clamp(.72rem, 1vw, .9rem);
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.job-card dl {
+    margin: 0;
+}
+
+.job-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.job-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.job-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.job-card dd {
+    margin: 0;
+    color: #4a1f14;
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.job-card dd.jc-queued {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+/* The route map: six stations from the click to the tray. */
+
+.route-map {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.route-node {
+    position: relative;
+    background: #fff;
+    color: #4a1f14;
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    min-height: 9.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+    flex: none;
+}
+
+.route-node strong {
+    display: block;
+    font-size: clamp(1rem, 1.45vw, 1.4rem);
+    margin-bottom: .4rem;
+    color: var(--navy);
+}
+
+.route-node p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+    line-height: 1.3;
+}
+
+.route-node::after {
+    content: "→";
+    position: absolute;
+    right: -.65rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.route-node:last-child::after {
+    content: none;
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 15vw, 13rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.fact-rows.wide-rows li {
+    grid-template-columns: clamp(11rem, 20vw, 16rem) 1fr;
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.safety {
+    margin-top: 1rem;
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .09);
+    padding: .8rem 1.2rem;
+    max-width: 62rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.safety strong {
+    color: #7c4f0e;
+}
+
+.safety p {
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+/* Connectivity: three lanes converge on one printer. */
+
+.lane-board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(1.2rem, 2.6vw, 2.6rem);
+    align-items: center;
+    max-width: 66rem;
+}
+
+.lanes {
+    display: grid;
+    gap: .6rem;
+}
+
+.lane {
+    display: grid;
+    grid-template-columns: 4.6rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.lane strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.28rem);
+}
+
+.lane p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    line-height: 1.25;
+}
+
+.lane .job-tag {
+    margin-top: 0;
+    align-self: center;
+}
+
+.lane.traced {
+    border-left-color: var(--gold);
+    background: rgba(255, 213, 115, .3);
+}
+
+.lane-obj {
+    display: grid;
+    place-items: center;
+    height: 3rem;
+}
+
+.lane-obj::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.lane-usb::before {
+    width: 3.4rem;
+    height: 1.15rem;
+    border: .15rem solid var(--navy);
+    border-radius: .18rem .5rem .5rem .18rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 0 50% / .7rem 100% no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 85% 50% / .35rem .5rem no-repeat,
+        #fff;
+}
+
+.lane-eth::before {
+    width: 2.4rem;
+    height: 2rem;
+    border: .15rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% 100% / 1.1rem .5rem no-repeat,
+        repeating-linear-gradient(to right, var(--navy) 0 .18rem, transparent .18rem .42rem) 50% .35rem / 1.4rem .5rem no-repeat,
+        #fff;
+}
+
+.lane-wifi::before {
+    width: 2.6rem;
+    height: 2.2rem;
+    background:
+        radial-gradient(circle at 50% 100%, var(--navy) 0 .24rem, transparent .25rem),
+        radial-gradient(circle at 50% 100%, transparent 0 .55rem, var(--navy) .55rem .72rem, transparent .73rem),
+        radial-gradient(circle at 50% 100%, transparent 0 1.05rem, var(--navy) 1.05rem 1.22rem, transparent 1.23rem),
+        radial-gradient(circle at 50% 100%, transparent 0 1.55rem, var(--navy) 1.55rem 1.72rem, transparent 1.73rem);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* The receiving printer: tray, body, and an emerging sheet. */
+
+.lane-printer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.lane-printer span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.printer-glyph {
+    position: relative;
+    width: clamp(7rem, 11vw, 9.5rem);
+    height: clamp(5rem, 8vw, 7rem);
+}
+
+.printer-glyph::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58%;
+    border: .16rem solid var(--navy);
+    border-radius: .5rem;
+    background:
+        linear-gradient(var(--gold), var(--gold)) 12% 28% / 18% .3rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 50% 82% / 72% 22% no-repeat,
+        #fff;
+}
+
+.printer-glyph::after {
+    content: "";
+    position: absolute;
+    left: 24%;
+    top: 0;
+    width: 52%;
+    height: 52%;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem .2rem 0 0;
+    background: linear-gradient(#fff, #fff) 50% .35rem / 70% .16rem no-repeat, #fdfaf6;
+}
+
+/* Driver and PDL translation flow. */
+
+.pdl-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.15fr) auto minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(.5rem, 1vw, .9rem);
+    max-width: 66rem;
+}
+
+.pf-node {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+    min-height: 11rem;
+}
+
+.pf-node.pf-driver {
+    border-color: var(--blue);
+}
+
+.pf-node strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.28rem);
+}
+
+.pf-node p {
+    margin-top: .3rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    line-height: 1.3;
+}
+
+.pf-glyph {
+    display: grid;
+    place-items: center;
+    height: 3.2rem;
+    margin-bottom: .5rem;
+}
+
+.pf-glyph::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.pf-doc::before {
+    width: 2.3rem;
+    height: 2.9rem;
+    border: .15rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% 28% / 1.2rem .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 48% / 1.2rem .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 35% 68% / .6rem .14rem no-repeat,
+        #fff;
+}
+
+.pf-gear::before {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, #fff 0 .4rem, var(--blue) .41rem 100%);
+    clip-path: polygon(50% 0, 62% 10%, 78% 4%, 82% 20%, 98% 24%, 92% 40%, 100% 50%, 92% 60%, 98% 76%, 82% 80%, 78% 96%, 62% 90%, 50% 100%, 38% 90%, 22% 96%, 18% 80%, 2% 76%, 8% 60%, 0 50%, 8% 40%, 2% 24%, 18% 20%, 22% 4%, 38% 10%);
+}
+
+.pf-page::before {
+    width: 2.3rem;
+    height: 2.9rem;
+    border: .15rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        radial-gradient(circle at 30% 30%, var(--blue) 0 .3rem, transparent .31rem),
+        radial-gradient(circle at 65% 32%, var(--gold) 0 .3rem, transparent .31rem),
+        linear-gradient(var(--navy), var(--navy)) 50% 62% / 1.2rem .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 80% / 1.2rem .14rem no-repeat,
+        #fff;
+}
+
+/* CMYK: the four process inks, each chip labeled. */
+
+.cmyk-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+    margin-top: 1rem;
+}
+
+.cmyk-label {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.cmyk {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    border: .1rem solid rgba(0, 0, 0, .18);
+}
+
+.cmyk.c {
+    background: #bde7f5;
+    color: #073a4e;
+}
+
+.cmyk.m {
+    background: #f5c2dd;
+    color: #59103a;
+}
+
+.cmyk.y {
+    background: #f7e8a8;
+    color: #574408;
+}
+
+.cmyk.k {
+    background: #232323;
+    color: #fff;
+}
+
+/* Properties vs Preferences dialog mockups. */
+
+.dlg-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    max-width: 62rem;
+}
+
+.dlg {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .55rem;
+    overflow: hidden;
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .1);
+    display: flex;
+    flex-direction: column;
+}
+
+.dlg header {
+    padding: .55rem 1rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    background-image: radial-gradient(circle at right 1rem top 50%, rgba(255, 255, 255, .85) 0 .3rem, transparent .31rem);
+}
+
+.dlg ul {
+    list-style: none;
+    margin: 0;
+    padding: .5rem 0;
+}
+
+.dlg li {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .42rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    color: #4a1f14;
+    font-size: clamp(.9rem, 1.15vw, 1.1rem);
+}
+
+.dlg li:last-child {
+    border-bottom: 0;
+}
+
+.dlg li::before {
+    content: "";
+    flex: none;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: var(--blue);
+}
+
+.dlg li.traced-row {
+    background: rgba(255, 213, 115, .3);
+    font-weight: 700;
+}
+
+.dlg li.traced-row::before {
+    background: var(--gold-600);
+}
+
+.dlg li.traced-row .job-tag {
+    margin-top: 0;
+}
+
+.dlg-tag {
+    margin-top: auto;
+    padding: .5rem 1rem .7rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* The sharing relay: workstations, print server, printer. */
+
+.share-relay {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1.2fr) auto auto;
+    align-items: center;
+    gap: clamp(.7rem, 1.6vw, 1.6rem);
+    max-width: 62rem;
+    margin-bottom: 1rem;
+}
+
+.ws-stack {
+    display: grid;
+    gap: .45rem;
+    justify-items: center;
+}
+
+.ws-stack span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1vw, .98rem);
+}
+
+.ws {
+    width: 3rem;
+    height: 1.9rem;
+    border: .14rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        linear-gradient(var(--blue), var(--blue)) 50% .3rem / 2rem .5rem no-repeat,
+        #fff;
+}
+
+.srv-node {
+    background: #fff;
+    border: .14rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.srv-node strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.28rem);
+}
+
+.srv-node p {
+    margin-top: .25rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.srv {
+    width: 3.6rem;
+    height: 2.6rem;
+    margin-bottom: .5rem;
+    border: .15rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        linear-gradient(var(--mist), var(--mist)) 50% .32rem / 2.7rem .38rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 50% .95rem / 2.7rem .38rem no-repeat,
+        radial-gradient(circle at 82% 78%, var(--gold) 0 .16rem, transparent .17rem),
+        #fff;
+}
+
+.flow-arrow {
+    color: var(--navy);
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+/* Scanner duo. */
+
+.scan-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    max-width: 62rem;
+}
+
+.scan-item {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.scan-item strong {
+    color: var(--navy);
+    font-size: clamp(1.02rem, 1.35vw, 1.3rem);
+}
+
+.scan-item p {
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+}
+
+.scan-glyph {
+    height: 4.2rem;
+    position: relative;
+}
+
+.scan-glyph::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(100%, 13rem);
+    box-sizing: border-box;
+}
+
+.scan-flatbed::before {
+    height: 2.2rem;
+    border: .15rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--gold-600), var(--gold-600)) 32% 50% / .22rem 55% no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 50% 50% / 86% 55% no-repeat,
+        #fff;
+}
+
+.scan-flatbed::after {
+    content: "→";
+    position: absolute;
+    left: 34%;
+    bottom: 2rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.scan-adf::before {
+    height: 2.2rem;
+    border: .15rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--gold-600), var(--gold-600)) 62% 50% / .22rem 55% no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 12% 50% / 30% 55% no-repeat,
+        #fff;
+}
+
+.scan-adf::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    bottom: 2.15rem;
+    width: 3.2rem;
+    height: 1.5rem;
+    border: .13rem solid var(--blue);
+    border-bottom: 0;
+    border-radius: .25rem .25rem 0 0;
+    background: repeating-linear-gradient(to bottom, rgba(3, 72, 143, .25) 0 .16rem, transparent .16rem .45rem) 50% 60% / 2.2rem 1rem no-repeat;
+}
+
+.dest-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+    margin-top: 1rem;
+}
+
+.dest-label {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+}
+
+/* Laser imaging rail, steps 1-4. */
+
+.image-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .6rem;
+    align-items: stretch;
+}
+
+.img-step {
+    position: relative;
+    background: #fff;
+    color: #4a1f14;
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.7rem, 1.1vw, 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.img-step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    margin-bottom: .35rem;
+}
+
+.img-step p {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    line-height: 1.3;
+}
+
+.img-step::after {
+    content: "→";
+    position: absolute;
+    right: -.68rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.img-step:last-child::after {
+    content: none;
+}
+
+.is-glyph {
+    display: grid;
+    place-items: center;
+    height: 3.4rem;
+    margin-bottom: .45rem;
+    align-self: center;
+}
+
+.is-glyph::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.is-bitmap::before {
+    width: 2.7rem;
+    height: 2.7rem;
+    border: .14rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        conic-gradient(from 0deg, var(--blue) 0 25%, transparent 25% 50%, var(--blue) 50% 75%, transparent 75%) 50% 50% / .9rem .9rem repeat,
+        #fff;
+}
+
+.is-charge::before {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    border: .16rem solid var(--navy);
+    background:
+        linear-gradient(var(--blue), var(--blue)) 50% 30% / .9rem .14rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 28% 55% / .7rem .14rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 72% 55% / .7rem .14rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 50% 78% / .9rem .14rem no-repeat,
+        #fff;
+}
+
+.is-laser::before {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    border: .16rem solid var(--navy);
+    background:
+        linear-gradient(35deg, transparent 42%, var(--gold-600) 43% 57%, transparent 58%),
+        #fff;
+}
+
+.is-toner::before {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    border: .16rem solid var(--navy);
+    background:
+        radial-gradient(circle at 34% 40%, var(--navy) 0 .17rem, transparent .18rem),
+        radial-gradient(circle at 56% 30%, var(--navy) 0 .17rem, transparent .18rem),
+        radial-gradient(circle at 68% 56%, var(--navy) 0 .17rem, transparent .18rem),
+        radial-gradient(circle at 44% 64%, var(--navy) 0 .17rem, transparent .18rem),
+        #fff;
+}
+
+/* The paper run: tray to output through transfer and fusing. */
+
+.paper-run {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: .5rem;
+    max-width: 70rem;
+}
+
+.pr-node {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.85rem, 1.4vw, 1.2rem) clamp(.6rem, 1vw, .9rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pr-node strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    margin-bottom: .3rem;
+}
+
+.pr-node p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+    line-height: 1.3;
+}
+
+.pr-node .step-no {
+    margin-bottom: .35rem;
+}
+
+.pr-link {
+    align-self: center;
+    width: clamp(1rem, 2.2vw, 2.2rem);
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--gold-600);
+}
+
+.pr-glyph {
+    display: grid;
+    place-items: center;
+    height: 3.1rem;
+    margin-bottom: .4rem;
+    align-self: center;
+}
+
+.pr-glyph::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.pr-tray::before {
+    width: 3.4rem;
+    height: 2.2rem;
+    border: .15rem solid var(--navy);
+    border-top: 0;
+    border-radius: 0 0 .3rem .3rem;
+    background:
+        linear-gradient(#fff, #fff) 50% .35rem / 2.5rem .16rem no-repeat,
+        linear-gradient(#fff, #fff) 50% .75rem / 2.5rem .16rem no-repeat,
+        radial-gradient(circle at 50% 20%, var(--navy) 0 .3rem, transparent .31rem),
+        var(--mist);
+}
+
+.pr-drum::before {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    border: .16rem solid var(--navy);
+    background:
+        linear-gradient(0deg, var(--blue) 0 .5rem, transparent .5rem),
+        radial-gradient(circle at 50% 50%, var(--navy) 0 .2rem, transparent .21rem),
+        #fff;
+}
+
+.pr-fuser::before {
+    width: 2.6rem;
+    height: 2.9rem;
+    background:
+        radial-gradient(circle at 50% 27%, var(--status-warning) 0 .62rem, transparent .63rem),
+        radial-gradient(circle at 50% 73%, var(--navy) 0 .62rem, transparent .63rem),
+        linear-gradient(var(--gold-600), var(--gold-600)) 50% 50% / 100% .16rem no-repeat;
+}
+
+.pr-out::before {
+    width: 3.4rem;
+    height: 2.2rem;
+    border: .15rem solid var(--navy);
+    border-top: 0;
+    border-radius: 0 0 .3rem .3rem;
+    background:
+        linear-gradient(var(--gold), var(--gold)) 50% .5rem / 2.4rem .8rem no-repeat,
+        #fff;
+}
+
+/* Troubleshooting: offline checks and feed problems. */
+
+.offline-list li {
+    font-size: clamp(.98rem, 1.35vw, 1.32rem);
+}
+
+.feed-panel {
+    align-self: start;
+}
+
+.feed-list {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+}
+
+.feed-list li {
+    display: grid;
+    gap: .2rem;
+}
+
+.feed-list strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.feed-list span {
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+    line-height: 1.3;
+}
+
+/* The symptom map: symptom, station, fix. Danger red marks only the
+   fault, process blue marks the station. */
+
+.symptom-map {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .45rem;
+    max-width: 66rem;
+}
+
+.symptom-map li {
+    display: grid;
+    grid-template-columns: clamp(9.5rem, 16vw, 13rem) clamp(6.5rem, 10vw, 8.5rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--status-danger);
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    box-shadow: 0 .35rem .9rem rgba(94, 42, 29, .06);
+}
+
+.symptom-map strong {
+    color: var(--status-danger);
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.symptom-map .station {
+    justify-self: start;
+    padding: .22rem .55rem;
+    border-radius: .3rem;
+    background: rgba(3, 72, 143, .1);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.symptom-map .fix {
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    line-height: 1.25;
+}
+
+/* Inkjet mechanisms: thermal bubble, piezoelectric nozzle, carriage. */
+
+.ink-duo {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    max-width: 62rem;
+}
+
+.ink-item {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.ink-item strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.28rem);
+}
+
+.ink-item p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    line-height: 1.3;
+}
+
+.ink-glyph {
+    position: relative;
+    height: 3.9rem;
+}
+
+.ink-glyph::before,
+.ink-glyph::after {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+}
+
+.ink-thermal::before {
+    left: .2rem;
+    top: 0;
+    width: 1.8rem;
+    height: 2.1rem;
+    border: .15rem solid var(--navy);
+    border-radius: .2rem .2rem .6rem .6rem;
+    background:
+        radial-gradient(circle at 50% 74%, var(--status-warning) 0 .3rem, transparent .31rem),
+        #fff;
+}
+
+.ink-thermal::after {
+    left: .75rem;
+    top: 2.35rem;
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    border: .14rem solid var(--gold-600);
+    box-shadow: 0 1rem 0 -.18rem var(--blue);
+}
+
+.ink-piezo::before {
+    left: .2rem;
+    top: 0;
+    width: 1.8rem;
+    height: 2.1rem;
+    border: .15rem solid var(--navy);
+    border-radius: .2rem .2rem .6rem .6rem;
+    background:
+        linear-gradient(var(--blue), var(--blue)) 50% 32% / .95rem .4rem no-repeat,
+        #fff;
+}
+
+.ink-piezo::after {
+    left: .88rem;
+    top: 2.4rem;
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 .75rem 0 var(--blue);
+}
+
+.ink-carriage::before {
+    left: 0;
+    right: 0;
+    top: 1.15rem;
+    height: .24rem;
+    border-radius: .12rem;
+    background: var(--navy);
+}
+
+.ink-carriage::after {
+    left: 32%;
+    top: .35rem;
+    width: 1.7rem;
+    height: 1.8rem;
+    border: .15rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        linear-gradient(var(--gold), var(--gold)) 50% 78% / .9rem .35rem no-repeat,
+        #fff;
+}
+
+/* Thermal and impact veterans. */
+
+.vet-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    max-width: 62rem;
+}
+
+.vet-panel {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.vet-panel h3 {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+    margin-bottom: .35rem;
+}
+
+.vet-panel p {
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+    line-height: 1.35;
+}
+
+.vet-care {
+    margin-top: .5rem;
+    border-top: .08rem solid var(--mist);
+    padding-top: .5rem;
+}
+
+.vet-care strong {
+    color: var(--blue);
+}
+
+.vet-glyph {
+    height: 4.6rem;
+    position: relative;
+    margin-bottom: .6rem;
+}
+
+.vet-glyph::before,
+.vet-glyph::after {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+}
+
+.vet-thermal::before {
+    left: 0;
+    bottom: 0;
+    width: 5.2rem;
+    height: 2.6rem;
+    border: .15rem solid var(--navy);
+    border-radius: .45rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% .35rem / 2.6rem .3rem no-repeat,
+        radial-gradient(circle at 82% 62%, var(--gold-600) 0 .17rem, transparent .18rem),
+        #fff;
+}
+
+.vet-thermal::after {
+    left: 1.3rem;
+    bottom: 2.45rem;
+    width: 2.6rem;
+    height: 1.9rem;
+    border: .13rem solid var(--navy);
+    border-bottom: 0;
+    background:
+        repeating-linear-gradient(to bottom, rgba(94, 42, 29, .35) 0 .14rem, transparent .14rem .42rem) 50% 55% / 1.7rem 1.1rem no-repeat,
+        #fdfaf6;
+    clip-path: polygon(0 22%, 14% 0, 100% 12%, 100% 100%, 0 100%);
+}
+
+.vet-impact::before {
+    left: 3.8rem;
+    bottom: 0;
+    width: 4.6rem;
+    height: 2.6rem;
+    border: .15rem solid var(--navy);
+    border-radius: .35rem;
+    background:
+        radial-gradient(circle at 50% 45%, var(--navy) 0 .12rem, transparent .13rem) 50% 50% / .4rem .4rem repeat content-box,
+        #fff;
+    padding: .55rem .8rem;
+}
+
+.vet-impact::after {
+    left: 0;
+    bottom: .6rem;
+    width: 3.4rem;
+    height: 3.4rem;
+    border: .13rem solid var(--navy);
+    background:
+        radial-gradient(circle at .35rem .45rem, #fff .1rem, var(--blue) .11rem .19rem, #fff .2rem) 0 0 / 100% .85rem repeat-y,
+        radial-gradient(circle at 2.98rem .45rem, #fff .1rem, var(--blue) .11rem .19rem, #fff .2rem) 0 0 / 100% .85rem repeat-y,
+        linear-gradient(var(--mist), var(--mist)) 50% 50% / .1rem 100% no-repeat,
+        #fff;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(56, 20, 10, .2);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(94, 42, 29, .14);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .68);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* Warm-up evidence chips on the gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .24), transparent 20rem),
+            linear-gradient(135deg, #fbf3ee, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #5e2a1d, #8f4432);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(74, 31, 20, .5);
+    }
+
+    .route-map,
+    .image-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .route-node,
+    .img-step {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .route-node::after,
+    .img-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .route-node:last-child::after,
+    .img-step:last-child::after {
+        content: none;
+    }
+
+    .lane-board {
+        grid-template-columns: 1fr;
+    }
+
+    .lane {
+        grid-template-columns: 3.6rem 1fr;
+    }
+
+    .lane .job-tag {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .lane-printer {
+        display: none;
+    }
+
+    .pdl-flow {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .pf-node {
+        min-height: auto;
+    }
+
+    .pdl-flow .flow-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .dlg-duo,
+    .scan-duo,
+    .vet-duo,
+    .ink-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .share-relay {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .srv-node {
+        align-items: center;
+    }
+
+    .share-relay .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .relay-printer {
+        display: flex;
+    }
+
+    .paper-run {
+        grid-template-columns: 1fr;
+    }
+
+    .pr-link {
+        width: .26rem;
+        height: 1.4rem;
+        justify-self: center;
+    }
+
+    .fact-rows li,
+    .fact-rows.wide-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .symptom-map li {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .visual-split {
+        grid-template-columns: 1fr;
+    }
+
+    .job-card {
+        width: 100%;
+    }
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+
+/* exit-split: give the recap panels most of the width so their
+   prompts stop wrapping into ragged one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+@media (max-width: 760px) {
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+}

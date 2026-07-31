@@ -1,0 +1,1656 @@
+/* BPC170 Chapter 7: the service counter */
+
+/* The motif is painted as background layers only: a counter with three
+   arched service windows, a numbered plate on each, a request slip on
+   the countertop, and a dashed route from slip to window, over a faint
+   queue-tile field. Positioned boxes would create a focus scroll trap,
+   so everything lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(3,58,114,0.06)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(3,58,114,0.24)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(3,58,114,0.15)' stroke-width='3'/%3E%3Cpath d='M124 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.3)' stroke-width='2.6'/%3E%3Crect x='142' y='124' width='32' height='14' rx='3' stroke='rgba(224,169,46,0.7)' stroke-width='2.4'/%3E%3Cpath d='M218 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.22)' stroke-width='2.6'/%3E%3Crect x='236' y='124' width='32' height='14' rx='3' stroke='rgba(29,94,163,0.24)' stroke-width='2.4'/%3E%3Cpath d='M312 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.22)' stroke-width='2.6'/%3E%3Crect x='330' y='124' width='32' height='14' rx='3' stroke='rgba(29,94,163,0.24)' stroke-width='2.4'/%3E%3Cg transform='rotate(6 434 240)'%3E%3Crect x='404' y='218' width='62' height='42' rx='4' stroke='rgba(224,169,46,0.65)' stroke-width='2.6'/%3E%3Cpath d='M412 232h44M412 242h30' stroke='rgba(224,169,46,0.5)' stroke-width='2'/%3E%3C/g%3E%3Cpath d='M404 236c-60 10-152 10-208-16' stroke='rgba(3,58,114,0.2)' stroke-width='2.4' stroke-dasharray='3 8' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(29, 94, 163, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+        linear-gradient(135deg, #f4f8fd, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(255,255,255,0.2)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(255,255,255,0.12)' stroke-width='3'/%3E%3Cpath d='M124 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(255,255,255,0.2)' stroke-width='2.6'/%3E%3Crect x='142' y='124' width='32' height='14' rx='3' stroke='rgba(255,213,115,0.6)' stroke-width='2.4'/%3E%3Cpath d='M218 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Crect x='236' y='124' width='32' height='14' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Cpath d='M312 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Crect x='330' y='124' width='32' height='14' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Cg transform='rotate(6 434 240)'%3E%3Crect x='404' y='218' width='62' height='42' rx='4' stroke='rgba(255,213,115,0.55)' stroke-width='2.6'/%3E%3Cpath d='M412 232h44M412 242h30' stroke='rgba(255,213,115,0.4)' stroke-width='2'/%3E%3C/g%3E%3Cpath d='M404 236c-60 10-152 10-208-16' stroke='rgba(255,255,255,0.18)' stroke-width='2.4' stroke-dasharray='3 8' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(255, 255, 255, .04) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #001a36, #033a72);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(0,26,54,0.05)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(0,26,54,0.22)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(0,26,54,0.14)' stroke-width='3'/%3E%3Cpath d='M124 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.36)' stroke-width='2.6'/%3E%3Crect x='142' y='124' width='32' height='14' rx='3' stroke='rgba(0,26,54,0.32)' stroke-width='2.4'/%3E%3Cpath d='M218 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.28)' stroke-width='2.6'/%3E%3Crect x='236' y='124' width='32' height='14' rx='3' stroke='rgba(29,94,163,0.3)' stroke-width='2.4'/%3E%3Cpath d='M312 264v-100a34 34 0 0 1 68 0v100' stroke='rgba(29,94,163,0.28)' stroke-width='2.6'/%3E%3Crect x='330' y='124' width='32' height='14' rx='3' stroke='rgba(29,94,163,0.3)' stroke-width='2.4'/%3E%3Cg transform='rotate(6 434 240)'%3E%3Crect x='404' y='218' width='62' height='42' rx='4' stroke='rgba(0,26,54,0.35)' stroke-width='2.6'/%3E%3Cpath d='M412 232h44M412 242h30' stroke='rgba(0,26,54,0.28)' stroke-width='2'/%3E%3C/g%3E%3Cpath d='M404 236c-60 10-152 10-208-16' stroke='rgba(0,26,54,0.22)' stroke-width='2.4' stroke-dasharray='3 8' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(0, 26, 54, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small arched service window with a sill. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .5rem .5rem .12rem .12rem;
+    background:
+        linear-gradient(currentColor, currentColor) center 82% / 100% .13rem no-repeat,
+        linear-gradient(currentColor, currentColor) center 32% / .38rem .13rem no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the midnight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #001a36 0%, rgba(0, 26, 54, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The request slip: the chapter's traced object, riding the ch01 work
+   order card language. Gold binds the slip wherever it reappears. */
+
+.req-slip {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.req-slip header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.rs-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.rs-proto {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+}
+
+.req-slip dl {
+    margin: 0;
+}
+
+.req-slip dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.req-slip dl div:last-child {
+    border-bottom: 0;
+}
+
+.req-slip dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.req-slip dd {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.req-slip dd.rs-url {
+    font-family: var(--code);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.req-slip dd.rs-ready {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+/* The gold slip chip binds the traced request across slides. */
+
+.slip-chip {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+    white-space: nowrap;
+}
+
+/* The URL parse: three tinted segments read left to right. Each color
+   pairs with its printed label directly beneath. */
+
+.url-parse {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: clamp(.7rem, 1.6vw, 1.4rem);
+    max-width: 66rem;
+}
+
+.seg {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+
+.seg-code {
+    align-self: stretch;
+    padding: clamp(.6rem, 1.2vw, 1rem) clamp(.8rem, 1.6vw, 1.4rem);
+    border-radius: .5rem;
+    border-top: .5rem solid var(--blue);
+    background: #fff;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(1.15rem, 2.2vw, 2.1rem);
+    color: var(--navy);
+    white-space: nowrap;
+}
+
+.seg-proto .seg-code {
+    border-top-color: var(--navy-500);
+}
+
+.seg-host .seg-code {
+    border-top-color: var(--navy-700);
+}
+
+.seg-path .seg-code {
+    border-top-color: var(--navy-300);
+}
+
+.seg-name {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--navy);
+}
+
+.seg-name::before {
+    content: "";
+    width: .8rem;
+    height: .5rem;
+    border-radius: .12rem;
+}
+
+.seg-proto .seg-name::before {
+    background: var(--navy-500);
+}
+
+.seg-host .seg-name::before {
+    background: var(--navy-700);
+}
+
+.seg-path .seg-name::before {
+    background: var(--navy-300);
+}
+
+.seg-role {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    color: var(--ink);
+    max-width: 18rem;
+}
+
+/* The service counter: six arched windows on one countertop. The
+   per-item counter edge reads as one continuous surface. */
+
+.counter-row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.3vw, 1.2rem);
+}
+
+.svc-window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.win {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    border-bottom: .34rem solid var(--navy);
+    padding-bottom: .55rem;
+    margin-bottom: .6rem;
+}
+
+.win-arch {
+    display: grid;
+    place-items: center;
+    width: clamp(4.2rem, 6.5vw, 5.6rem);
+    height: clamp(4rem, 6vw, 5.2rem);
+    border: .16rem solid var(--navy);
+    border-bottom: 0;
+    border-radius: 2.6rem 2.6rem 0 0;
+    background:
+        linear-gradient(var(--navy), var(--navy)) center .55rem / 1.5rem .3rem no-repeat,
+        #fff;
+}
+
+.win-port {
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(1.15rem, 1.9vw, 1.8rem);
+    color: var(--blue);
+}
+
+.svc-window strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.svc-window p {
+    margin-top: .3rem;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.svc-window .slip-tag {
+    margin-top: .5rem;
+    padding: .28rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .86rem);
+    line-height: 1.2;
+}
+
+/* Warm-up and check chips on the gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+}
+
+/* The certificate check at window 443. Green carries only "trusted",
+   amber only "warns". */
+
+.cert-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) auto minmax(0, 1fr) auto minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(.5rem, 1vw, .9rem);
+    max-width: 66rem;
+}
+
+.cert-card {
+    position: relative;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .1);
+}
+
+.cert-card strong,
+.gate-item strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.cert-card p,
+.gate-item p {
+    margin-top: .3rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.seal {
+    position: absolute;
+    top: -.7rem;
+    right: -.7rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--gold);
+    border: .14rem solid var(--navy);
+}
+
+.seal::after {
+    content: "✓";
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--navy);
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.gate-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.gate {
+    width: 2.4rem;
+    height: 2.9rem;
+    margin-bottom: .5rem;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+}
+
+.flow-arrow {
+    color: var(--navy);
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+.cert-out {
+    display: grid;
+    gap: .6rem;
+}
+
+.out {
+    display: grid;
+    gap: .1rem;
+    padding: .6rem .9rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.out strong {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.out span {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.out.ok {
+    border-left: .45rem solid var(--good);
+    background: var(--status-success-tint);
+}
+
+.out.ok strong {
+    color: var(--status-success);
+}
+
+.out.ok strong::before {
+    content: "✓ ";
+}
+
+.out.warn {
+    border-left: .45rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .12);
+}
+
+.out.warn strong {
+    color: #7c4f0e;
+}
+
+.out.warn strong::before {
+    content: "! ";
+}
+
+/* A small padlock glyph for locked ports and the lock icon. */
+
+.lockg {
+    position: relative;
+    display: inline-block;
+    width: .72rem;
+    height: .92rem;
+    margin-right: .4rem;
+    vertical-align: -.1rem;
+}
+
+.lockg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: .48rem;
+    height: .5rem;
+    border: .12rem solid currentColor;
+    border-bottom: 0;
+    border-radius: .3rem .3rem 0 0;
+}
+
+.lockg::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: .52rem;
+    border-radius: .09rem;
+    background: currentColor;
+}
+
+/* The mail relay: the protocol chip rides the wire it runs on. */
+
+.mail-relay {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: .5rem;
+    max-width: 72rem;
+}
+
+.relay-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.5rem, .9vw, .8rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.relay-node strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.relay-node p {
+    font-size: clamp(.76rem, .98vw, .94rem);
+}
+
+.relay-wire {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+}
+
+.wire-chip {
+    padding: .22rem .5rem;
+    border-radius: .28rem;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.66rem, .9vw, .88rem);
+    white-space: nowrap;
+}
+
+.wire-line {
+    width: clamp(1.6rem, 3.4vw, 3.4rem);
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--blue);
+}
+
+/* Relay glyphs: monitor and server rack in canonical shapes. */
+
+.g-obj {
+    display: grid;
+    place-items: center;
+    height: 3.2rem;
+}
+
+.g-obj::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.g-client::before {
+    width: 3.2rem;
+    height: 2.3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% 100% / 1.2rem .3rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 50% 30% / 2.1rem .8rem no-repeat,
+        #fff;
+    box-shadow: 0 .62rem 0 -.46rem var(--navy);
+}
+
+.g-server::before {
+    width: 2.7rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 18% 24% / 1.3rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 18% 50% / 1.3rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 18% 76% / 1.3rem .16rem no-repeat,
+        radial-gradient(circle at 82% 24%, var(--blue) 0 .11rem, transparent .12rem),
+        radial-gradient(circle at 82% 50%, var(--blue) 0 .11rem, transparent .12rem),
+        radial-gradient(circle at 82% 76%, var(--blue) 0 .11rem, transparent .12rem),
+        #fff;
+}
+
+/* The locked twins: plain port, arrow, TLS twin. One row per service. */
+
+.twin-grid {
+    display: grid;
+    gap: .55rem;
+    max-width: 62rem;
+}
+
+.twin-row {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 11vw, 9.5rem) 1fr auto 1.25fr;
+    gap: clamp(.6rem, 1.4vw, 1.2rem);
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .55rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.twin-svc {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.port-chip {
+    justify-self: stretch;
+    text-align: center;
+    padding: .38rem .6rem;
+    border-radius: .3rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.port-chip.locked {
+    background: var(--blue);
+    color: #fff;
+}
+
+.twin-arrow {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+}
+
+.legacy-tag {
+    display: inline-block;
+    margin-left: .5rem;
+    padding: .08rem .4rem;
+    border-radius: .22rem;
+    background: rgba(255, 255, 255, .25);
+    font-size: clamp(.62rem, .85vw, .8rem);
+    font-weight: 700;
+}
+
+/* The AAA admission flow. */
+
+.aaa-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1.15fr;
+    align-items: stretch;
+    gap: clamp(.5rem, 1.2vw, 1.1rem);
+    max-width: 66rem;
+}
+
+.aaa-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.aaa-node strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.aaa-node p {
+    font-size: clamp(.8rem, 1.02vw, .98rem);
+}
+
+.g-door::before {
+    width: 2.2rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .9rem .9rem .15rem .15rem;
+    background:
+        radial-gradient(circle at 74% 55%, var(--navy) 0 .14rem, transparent .15rem),
+        #fff;
+}
+
+.g-badge::before {
+    width: 2.4rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        radial-gradient(circle at 50% 30%, var(--blue) 0 .38rem, transparent .39rem),
+        linear-gradient(var(--navy), var(--navy)) 50% 68% / 1.3rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 84% / .9rem .16rem no-repeat,
+        #fff;
+}
+
+/* Remote windows: two wire captures side by side. */
+
+.term-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.2vw, 2rem);
+    max-width: 66rem;
+}
+
+.term-card {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+
+.term-screen {
+    background: #0a1626;
+    border: .16rem solid var(--navy);
+    border-radius: .55rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    font-family: var(--code);
+    font-size: clamp(.9rem, 1.25vw, 1.2rem);
+    line-height: 1.6;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 26, 54, .14);
+}
+
+.term-screen .t-head {
+    display: block;
+    color: rgba(255, 255, 255, .55);
+    font-size: clamp(.7rem, .95vw, .9rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+}
+
+.term-screen .t-line {
+    display: block;
+    color: #eaf4ff;
+}
+
+.term-screen .t-cipher {
+    color: #9fc3ec;
+    letter-spacing: .08em;
+}
+
+.term-tag {
+    align-self: start;
+    padding: .32rem .65rem;
+    border-radius: .3rem;
+    font-weight: 900;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.term-tag.exposed {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.term-tag.exposed::before {
+    content: "✕ ";
+}
+
+.term-tag.sealed {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.term-tag.sealed::before {
+    content: "✓ ";
+}
+
+.term-card strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 15vw, 12.5rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* Storage counters: the file cabinet and the database cylinder. */
+
+.store-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    align-items: stretch;
+}
+
+.store-panel {
+    background: rgba(255, 255, 255, .7);
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1.1rem, 2vw, 1.8rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.store-head {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-bottom: .8rem;
+}
+
+.store-head h3 {
+    color: var(--navy);
+}
+
+.g-cabinet {
+    position: relative;
+    width: 2.6rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% 31% / 100% .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 64% / 100% .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 15% / .8rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 48% / .8rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 50% 82% / .8rem .16rem no-repeat,
+        #fff;
+}
+
+.g-cyl {
+    position: relative;
+    width: 3.2rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50% / 22%;
+    background: #fff;
+}
+
+.g-cyl::before {
+    content: "";
+    position: absolute;
+    top: .16rem;
+    left: 0;
+    right: 0;
+    height: 1rem;
+    border-bottom: .14rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.store-panel .chip-list {
+    margin: .4rem 0 .85rem;
+}
+
+.store-panel > p {
+    margin-bottom: .35rem;
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.g-env {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 2.1rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background: #fff;
+}
+
+.g-env::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 14%, 50% 76%, 0 14%);
+    background: var(--navy);
+}
+
+.g-shield {
+    display: inline-block;
+    width: 2.4rem;
+    height: 2.9rem;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+}
+
+.store-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.store-rows li {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 9vw, 7.5rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+    border-bottom: .08rem solid var(--mist);
+    padding-bottom: .45rem;
+}
+
+.store-rows li:last-child {
+    border-bottom: 0;
+}
+
+.store-rows strong {
+    color: var(--blue);
+    font-family: var(--code);
+    font-size: clamp(.82rem, 1.08vw, 1.05rem);
+}
+
+/* The proxy relay: the slip detours through a middle desk. */
+
+.proxy-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1.3fr auto 1fr;
+    align-items: stretch;
+    gap: clamp(.5rem, 1.2vw, 1.1rem);
+    max-width: 66rem;
+}
+
+.proxy-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.proxy-node strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.proxy-node p {
+    font-size: clamp(.8rem, 1.02vw, .98rem);
+}
+
+.proxy-node.mid {
+    border-top: .5rem solid var(--blue);
+}
+
+.port-note {
+    margin-top: .2rem;
+    padding: .2rem .5rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .86rem);
+}
+
+.g-arch::before {
+    width: 2.4rem;
+    height: 2.8rem;
+    border: .16rem solid var(--navy);
+    border-radius: 1.2rem 1.2rem .15rem .15rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) center 88% / 100% .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) center 26% / .9rem .16rem no-repeat,
+        #fff;
+}
+
+.two-way {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .15rem;
+    align-self: center;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    line-height: 1;
+}
+
+/* The load balancer fan. Gold marks only the traced slip. */
+
+.balance-fan {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1.25fr);
+    align-items: center;
+    gap: clamp(.7rem, 1.8vw, 1.8rem);
+    max-width: 64rem;
+}
+
+.queue-stack {
+    display: grid;
+    gap: .45rem;
+    justify-items: start;
+}
+
+.queue-slip {
+    display: inline-block;
+    padding: .32rem .7rem;
+    border-radius: .3rem;
+    background: #fff;
+    border: .12rem solid var(--navy-300);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+}
+
+.queue-slip.traced {
+    background: var(--gold);
+    border-color: var(--navy);
+}
+
+.lb-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    text-align: center;
+}
+
+.lb-diamond {
+    width: 3.4rem;
+    height: 3.4rem;
+    background: var(--blue);
+    transform: rotate(45deg);
+    border-radius: .4rem;
+}
+
+.lb-node strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.server-stack {
+    display: grid;
+    gap: .5rem;
+}
+
+.server-line {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .7rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .5rem .8rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.server-line .g-obj {
+    height: 2.3rem;
+}
+
+.server-line .g-obj::before {
+    transform: scale(.78);
+}
+
+.server-line strong {
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.server-line .port-chip {
+    justify-self: end;
+    padding: .25rem .5rem;
+}
+
+/* The wired path on the dark 7.3 slide. */
+
+.wire-path {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: .5rem;
+    max-width: 72rem;
+}
+
+.wp-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    color: var(--navy);
+    border-radius: .7rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.5rem, .9vw, .8rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 0, 0, .3);
+}
+
+.wp-node strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.wp-node p {
+    font-size: clamp(.76rem, .98vw, .94rem);
+}
+
+.wp-wire {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+}
+
+.wp-line {
+    width: clamp(1.4rem, 3vw, 3rem);
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--gold);
+}
+
+.fault-tag {
+    padding: .2rem .5rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .9);
+    color: #2b1a04;
+    font-weight: 800;
+    font-size: clamp(.62rem, .85vw, .8rem);
+    white-space: nowrap;
+}
+
+.g-wallport::before {
+    width: 2.3rem;
+    height: 2.9rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 50% 38% / .9rem .7rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 50% 78% / .9rem .3rem no-repeat,
+        #fff;
+}
+
+.g-panel::before {
+    width: 3.6rem;
+    height: 2.4rem;
+    border: .16rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        repeating-linear-gradient(to right, var(--navy) 0 .34rem, transparent .34rem .72rem) 16% 30% / 2.6rem .4rem no-repeat,
+        repeating-linear-gradient(to right, var(--navy) 0 .34rem, transparent .34rem .72rem) 16% 72% / 2.6rem .4rem no-repeat,
+        #fff;
+}
+
+.g-switch::before {
+    width: 3.9rem;
+    height: 1.4rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        repeating-linear-gradient(to right, transparent 0 .3rem, var(--navy) .3rem .62rem) 46% 74% / 2.9rem .34rem no-repeat,
+        radial-gradient(circle at 88% 32%, var(--status-warning) 0 .13rem, transparent .14rem),
+        #fff;
+}
+
+.flap {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    margin-top: .2rem;
+    padding: .2rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    font-size: clamp(.66rem, .9vw, .86rem);
+}
+
+.flap i {
+    width: .6rem;
+    height: .6rem;
+    border-radius: 50%;
+    background: var(--status-warning);
+    animation: flap-blink 1.2s steps(1) infinite;
+}
+
+@keyframes flap-blink {
+    50% {
+        opacity: .15;
+    }
+}
+
+/* The traced slip's verdict line on the failure slide. */
+
+.ticket-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+}
+
+.result {
+    font-weight: 900;
+    white-space: nowrap;
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.result.fail {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.dark .result.fail {
+    background: rgba(255, 255, 255, .92);
+}
+
+.result.fail::before {
+    content: "✕ ";
+}
+
+.verdict-text {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.dark .verdict-text {
+    color: rgba(255, 255, 255, .92);
+}
+
+/* Wireless panel: the RSSI meter draws signal strength to length. */
+
+.wifi-card {
+    background: rgba(255, 255, 255, .7);
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1.1rem, 2vw, 1.8rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+    display: grid;
+    gap: .8rem;
+    align-content: start;
+}
+
+.wifi-card h3 {
+    color: var(--navy);
+}
+
+.rssi {
+    display: flex;
+    align-items: flex-end;
+    gap: .45rem;
+    height: 3.4rem;
+}
+
+.rssi i {
+    width: 1rem;
+    border-radius: .2rem .2rem 0 0;
+    background: var(--blue);
+}
+
+.rssi i:nth-child(1) {
+    height: 28%;
+}
+
+.rssi i:nth-child(2) {
+    height: 50%;
+}
+
+.rssi i:nth-child(3) {
+    height: 74%;
+}
+
+.rssi i:nth-child(4) {
+    height: 100%;
+    background: var(--navy-300);
+    opacity: .55;
+}
+
+.rssi-note {
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+}
+
+.wifi-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.wifi-rows li {
+    display: grid;
+    grid-template-columns: clamp(7rem, 11vw, 9rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: clamp(.88rem, 1.15vw, 1.12rem);
+    border-bottom: .08rem solid var(--mist);
+    padding-bottom: .45rem;
+}
+
+.wifi-rows li:last-child {
+    border-bottom: 0;
+}
+
+.wifi-rows strong {
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.limiter-list {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.limiter-list li {
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    padding-left: 1.1rem;
+    background: radial-gradient(circle at .3rem 50%, var(--blue) 0 .18rem, transparent .19rem) left center no-repeat;
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 12, 26, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+            linear-gradient(135deg, #f4f8fd, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #001a36, #033a72);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 26, 54, .48);
+    }
+
+    .url-parse {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .seg-code {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .counter-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.1rem;
+    }
+
+    .cert-flow,
+    .aaa-flow,
+    .proxy-flow {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .cert-flow .flow-arrow,
+    .aaa-flow .flow-arrow,
+    .proxy-flow .two-way {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .mail-relay,
+    .wire-path {
+        grid-template-columns: 1fr;
+    }
+
+    .relay-wire,
+    .wp-wire {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .wire-line,
+    .wp-line {
+        width: .26rem;
+        height: 1.4rem;
+    }
+
+    .twin-row {
+        grid-template-columns: 1fr;
+        gap: .4rem;
+        justify-items: start;
+    }
+
+    .twin-row .port-chip {
+        justify-self: stretch;
+    }
+
+    .twin-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+
+    .term-duo,
+    .store-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .balance-fan {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .balance-fan .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .server-stack {
+        justify-self: stretch;
+    }
+
+    .queue-stack {
+        justify-items: center;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .visual-split,
+    .visual-split.reverse {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .req-slip,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .req-slip {
+        width: 100%;
+    }
+}
+
+
+/* exit-split: give the recap panels most of the width so their
+   prompts stop wrapping into ragged one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+@media (max-width: 760px) {
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+}
