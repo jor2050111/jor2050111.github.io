@@ -1,0 +1,1654 @@
+/* BPC170 Chapter 5: structured cabling. Patch panel rows, RJ-45
+   keystones, and cable runs carry the chapter. */
+
+/* The motif is painted as background layers only: two rotated patch
+   panel strips with keystone ports, one gold port, and cable runs
+   dropping toward the rack, over faint rack-unit ruling. Positioned
+   boxes would create a focus scroll trap. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='118' y='118' width='340' height='58' rx='6' stroke='rgba(3,72,143,0.07)' stroke-width='18'/%3E%3Crect x='96' y='96' width='340' height='58' rx='6' stroke='rgba(3,72,143,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='125' r='5' stroke='rgba(3,72,143,0.18)' stroke-width='2'/%3E%3Ccircle cx='424' cy='125' r='5' stroke='rgba(3,72,143,0.18)' stroke-width='2'/%3E%3Crect x='126' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='168' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='210' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='252' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='294' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='336' y='111' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='96' y='186' width='340' height='58' rx='6' stroke='rgba(3,72,143,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='215' r='5' stroke='rgba(3,72,143,0.18)' stroke-width='2'/%3E%3Ccircle cx='424' cy='215' r='5' stroke='rgba(3,72,143,0.18)' stroke-width='2'/%3E%3Crect x='126' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='168' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='210' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='252' y='201' width='30' height='28' rx='3' stroke='rgba(255,200,69,0.55)' stroke-width='3'/%3E%3Crect x='294' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='336' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Cpath d='M267 231 C267 300 188 300 188 372' stroke='rgba(255,200,69,0.5)' stroke-width='3'/%3E%3Cpath d='M351 231 C351 296 416 300 416 372' stroke='rgba(3,116,181,0.16)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(3, 116, 181, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+        linear-gradient(135deg, #fbfcff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='118' y='118' width='340' height='58' rx='6' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='96' y='96' width='340' height='58' rx='6' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='125' r='5' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Ccircle cx='424' cy='125' r='5' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Crect x='126' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='168' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='210' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='252' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='294' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='336' y='111' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='96' y='186' width='340' height='58' rx='6' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='215' r='5' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Ccircle cx='424' cy='215' r='5' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Crect x='126' y='201' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='168' y='201' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='210' y='201' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='252' y='201' width='30' height='28' rx='3' stroke='rgba(255,200,69,0.5)' stroke-width='3'/%3E%3Crect x='294' y='201' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='336' y='201' width='30' height='28' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Cpath d='M267 231 C267 300 188 300 188 372' stroke='rgba(255,200,69,0.45)' stroke-width='3'/%3E%3Cpath d='M351 231 C351 296 416 300 416 372' stroke='rgba(255,255,255,0.12)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='118' y='118' width='340' height='58' rx='6' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='96' y='96' width='340' height='58' rx='6' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='125' r='5' stroke='rgba(0,46,93,0.17)' stroke-width='2'/%3E%3Ccircle cx='424' cy='125' r='5' stroke='rgba(0,46,93,0.17)' stroke-width='2'/%3E%3Crect x='126' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='168' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='210' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='252' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='294' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='336' y='111' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='96' y='186' width='340' height='58' rx='6' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='108' cy='215' r='5' stroke='rgba(0,46,93,0.17)' stroke-width='2'/%3E%3Ccircle cx='424' cy='215' r='5' stroke='rgba(0,46,93,0.17)' stroke-width='2'/%3E%3Crect x='126' y='201' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='168' y='201' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='210' y='201' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='252' y='201' width='30' height='28' rx='3' stroke='rgba(3,116,181,0.45)' stroke-width='3'/%3E%3Crect x='294' y='201' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='336' y='201' width='30' height='28' rx='3' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Cpath d='M267 231 C267 300 188 300 188 372' stroke='rgba(3,116,181,0.4)' stroke-width='3'/%3E%3Cpath d='M351 231 C351 296 416 300 416 372' stroke='rgba(0,46,93,0.13)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 46, 93, .06) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a keystone jack face with contacts and clip. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.1rem;
+    height: 1rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .16rem;
+    background:
+        repeating-linear-gradient(to right, currentColor 0 .08rem, transparent .08rem .2rem) 50% .14rem / .56rem .26rem no-repeat,
+        linear-gradient(currentColor, currentColor) 50% calc(100% - .1rem) / .32rem .15rem no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Reach rail: coverage bars drawn to length, smallest to largest. */
+
+.reach-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.reach-step {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.5vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.reach-step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.15rem, 1.7vw, 1.7rem);
+}
+
+.reach-bar {
+    height: .55rem;
+    min-width: 1.2rem;
+    margin: .5rem 0 .45rem;
+    border-radius: .28rem;
+    background: var(--blue);
+}
+
+.reach-scale {
+    display: block;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.75rem, .98vw, .92rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.reach-step p {
+    margin-top: .35rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+/* SOHO, enterprise, datacenter scenes. */
+
+.net-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.tier-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tier-item .scene {
+    margin: .9rem 0 .7rem;
+}
+
+.tier-item strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.tier-item p {
+    margin-top: .35rem;
+    font-size: clamp(.82rem, 1.02vw, 1rem);
+    max-width: 20rem;
+}
+
+.scene {
+    height: 6.2rem;
+    background: #fff;
+    border: .16rem solid var(--navy);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.scene i {
+    font-style: normal;
+}
+
+.scene-soho {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: .3rem .35rem;
+    align-content: center;
+    justify-content: center;
+    width: min(100%, 13rem);
+    border-radius: .55rem;
+}
+
+.scene-soho::before,
+.scene-soho::after {
+    content: "";
+    position: absolute;
+    top: -.85rem;
+    width: .16rem;
+    height: .85rem;
+    background: var(--navy);
+}
+
+.scene-soho::before {
+    left: 22%;
+}
+
+.scene-soho::after {
+    right: 22%;
+}
+
+.scene-soho i {
+    padding: .16rem .34rem;
+    border-radius: .24rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.66rem, .85vw, .8rem);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.scene-ent {
+    display: grid;
+    gap: .24rem;
+    align-content: center;
+    width: min(100%, 11rem);
+    border-radius: .4rem;
+    padding: .45rem;
+}
+
+.scene-ent i {
+    display: block;
+    padding: .1rem 0;
+    border-radius: .16rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.62rem, .82vw, .78rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.scene-ent i:nth-child(3),
+.scene-ent i:nth-child(4) {
+    background: var(--blue);
+}
+
+.scene-dc {
+    display: grid;
+    grid-template-columns: repeat(3, 1.5rem);
+    gap: .55rem;
+    align-content: end;
+    justify-content: center;
+    width: min(100%, 12rem);
+    border-radius: .3rem;
+    padding: .55rem;
+}
+
+.scene-dc i {
+    display: block;
+    height: 3.7rem;
+    border: .12rem solid var(--navy);
+    border-radius: .14rem;
+    background: repeating-linear-gradient(to bottom, var(--blue) 0 .3rem, transparent .3rem .58rem) 50% .25rem / 70% 3rem no-repeat;
+}
+
+/* The LAN path: the traced frame's route, left to right. Reused on the
+   patch panel slide. Glyphs draw with currentColor so they adapt to
+   dark and light slides. */
+
+.lan-path {
+    display: grid;
+    grid-template-columns: auto minmax(2rem, 1fr) auto minmax(2rem, 1fr) auto minmax(2rem, 1fr) auto minmax(2rem, 1fr) auto;
+    gap: .4rem;
+    align-items: start;
+    max-width: 82rem;
+}
+
+.path-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .45rem;
+    text-align: center;
+}
+
+.path-node strong {
+    font-size: clamp(.78rem, 1.05vw, 1.02rem);
+    line-height: 1.15;
+}
+
+.frame-chip {
+    display: inline-block;
+    padding: .22rem .5rem;
+    border-radius: .24rem;
+    background: var(--gold);
+    color: #002e5d;
+    font-weight: 900;
+    font-size: clamp(.66rem, .9vw, .84rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.glyph {
+    height: 3.4rem;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.glyph::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.glyph-pc::before {
+    width: 3rem;
+    height: 2rem;
+    border: .16rem solid currentColor;
+    border-radius: .25rem;
+}
+
+.glyph-pc::after {
+    content: "";
+    position: absolute;
+    bottom: .25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.5rem;
+    height: .16rem;
+    background: currentColor;
+}
+
+.glyph-jack::before {
+    width: 2rem;
+    height: 2rem;
+    border: .16rem solid currentColor;
+    border-radius: .22rem;
+    background:
+        repeating-linear-gradient(to right, currentColor 0 .09rem, transparent .09rem .23rem) 50% .38rem / .92rem .36rem no-repeat,
+        linear-gradient(currentColor, currentColor) 50% calc(100% - .3rem) / .52rem .2rem no-repeat;
+}
+
+.glyph-panel::before {
+    width: 3.7rem;
+    height: 1.7rem;
+    border: .16rem solid currentColor;
+    border-radius: .2rem;
+    background: repeating-linear-gradient(to right, currentColor 0 .3rem, transparent .3rem .62rem) 50% 50% / 2.75rem .6rem no-repeat;
+}
+
+.glyph-panel::after {
+    content: "";
+    position: absolute;
+    left: calc(50% + .33rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: .32rem;
+    height: .6rem;
+    background: var(--gold);
+}
+
+.glyph-switch::before {
+    width: 3.7rem;
+    height: 1.25rem;
+    border: .16rem solid currentColor;
+    border-radius: .2rem;
+    background:
+        repeating-linear-gradient(to right, currentColor 0 .3rem, transparent .3rem .62rem) .35rem 70% / 2.2rem .32rem no-repeat,
+        radial-gradient(circle at 87% 32%, var(--gold) 0 .12rem, transparent .13rem);
+}
+
+.glyph-server::before {
+    width: 2.1rem;
+    height: 2.7rem;
+    border: .16rem solid currentColor;
+    border-radius: .2rem;
+    background:
+        repeating-linear-gradient(to bottom, currentColor 0 .16rem, transparent .16rem .52rem) 50% .32rem / 1.2rem 1.62rem no-repeat,
+        radial-gradient(circle at 50% 86%, var(--gold) 0 .11rem, transparent .12rem);
+}
+
+.path-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    padding-top: 1.5rem;
+}
+
+.path-node .frame-chip + .glyph {
+    margin-top: .1rem;
+}
+
+.path-node:first-child ~ .path-link {
+    padding-top: 3.2rem;
+}
+
+.path-link i {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: .2rem;
+    border-radius: .1rem;
+    background: currentColor;
+    opacity: .75;
+}
+
+.path-link i::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: .5rem;
+    height: .5rem;
+    border-top: .18rem solid currentColor;
+    border-right: .18rem solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.path-link.dashed i {
+    background: repeating-linear-gradient(to right, currentColor 0 .45rem, transparent .45rem .85rem);
+}
+
+.path-link span {
+    font-size: clamp(.64rem, .88vw, .84rem);
+    font-weight: 700;
+    opacity: .85;
+    text-align: center;
+    line-height: 1.15;
+}
+
+/* The MAC address, split into its two halves. Gold binds the traced
+   card's own half. */
+
+.mac-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: clamp(.9rem, 2vw, 1.8rem);
+}
+
+.mac-half {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.octets {
+    display: flex;
+    gap: .45rem;
+}
+
+.oct {
+    display: grid;
+    place-items: center;
+    min-width: clamp(3.2rem, 5.4vw, 5rem);
+    padding: .5rem .45rem;
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 2.7vw, 2.7rem);
+}
+
+.oct.oui {
+    background: var(--blue);
+    color: #fff;
+}
+
+.oct.dev {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.mac-tag {
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    letter-spacing: .04em;
+}
+
+.tag-oui {
+    color: var(--blue);
+}
+
+.tag-dev {
+    color: #8a6508;
+}
+
+.scenario-note code {
+    padding: .08rem .38rem;
+    border-radius: .2rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 700;
+}
+
+/* The patch panel run: wall jack to panel to switch. */
+
+.panel-run {
+    display: grid;
+    grid-template-columns: auto minmax(3rem, 1fr) minmax(0, 2.4fr) minmax(3rem, 1fr) auto;
+    gap: .5rem;
+    align-items: start;
+    max-width: 78rem;
+}
+
+.pr-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .45rem;
+    text-align: center;
+    color: var(--navy);
+}
+
+.pr-node strong {
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+}
+
+.panel-run .path-link {
+    padding-top: 1.5rem;
+    color: var(--ink);
+}
+
+.pr-panel {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.pp-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .35rem;
+    padding: .55rem .8rem;
+    border: .18rem solid var(--navy);
+    border-radius: .5rem;
+    background: #fff;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .1);
+}
+
+.pp-strip::before,
+.pp-strip::after {
+    content: "";
+    flex: none;
+    width: .5rem;
+    height: .5rem;
+    border: .14rem solid var(--navy-300, #86a8d1);
+    border-radius: 50%;
+}
+
+.pp-strip i {
+    display: grid;
+    place-items: center;
+    width: clamp(1.7rem, 3vw, 2.6rem);
+    aspect-ratio: 1 / .9;
+    border: .16rem solid var(--blue);
+    border-radius: .2rem;
+    background: linear-gradient(currentColor, currentColor) 50% calc(100% - .18rem) / .5rem .14rem no-repeat;
+    color: var(--blue);
+    font-style: normal;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.7rem, 1vw, .95rem);
+}
+
+.pp-strip i.hot {
+    border-color: var(--gold-600, #e0a92e);
+    background: linear-gradient(currentColor, currentColor) 50% calc(100% - .18rem) / .5rem .14rem no-repeat, var(--gold);
+    color: #001a36;
+}
+
+.pp-caption {
+    text-align: center;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.label-note {
+    max-width: 62rem;
+    padding: .8rem 1.2rem;
+    border-left: .5rem solid var(--status-warning);
+    border-radius: 0 .4rem .4rem 0;
+    background: rgba(201, 130, 31, .09);
+}
+
+.label-note strong {
+    color: var(--status-warning);
+}
+
+.label-note p {
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+/* The switch scene: frame in, CAM table beside it. */
+
+.switch-scene {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(17rem, .9fr);
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    align-items: center;
+    max-width: 74rem;
+}
+
+.sw-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .55rem;
+}
+
+.arrive {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.arrive-arrow {
+    display: inline-block;
+    color: var(--gold-600, #e0a92e);
+    font-weight: 900;
+    font-size: 1.5rem;
+    transform: rotate(55deg);
+}
+
+.sw-box {
+    display: flex;
+    gap: .4rem;
+    padding: .6rem .8rem;
+    border: .18rem solid var(--navy);
+    border-radius: .5rem;
+    background: #fff;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .1);
+}
+
+.sw-box i {
+    width: clamp(1.5rem, 2.4vw, 2.2rem);
+    aspect-ratio: 1 / .8;
+    border: .16rem solid var(--blue);
+    border-radius: .18rem;
+}
+
+.sw-box i.hot {
+    border-color: var(--gold-600, #e0a92e);
+    background: var(--gold);
+}
+
+.sw-caption {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.cam-card {
+    width: 100%;
+    overflow: hidden;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    background: #fff;
+    box-shadow: .7rem .8rem 0 rgba(0, 46, 93, .15);
+}
+
+.cam-card header {
+    padding: .6rem 1rem;
+    background: #001a36;
+}
+
+.cam-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+    letter-spacing: .05em;
+}
+
+.cam-card dl {
+    margin: 0;
+}
+
+.cam-card dl div {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 8vw, 7.5rem) 1fr;
+    gap: .7rem;
+    align-items: center;
+    padding: .6rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.cam-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.cam-card dt {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .82rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.cam-card dd {
+    margin: 0;
+    color: #001a36;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.cam-card .learned {
+    background: rgba(255, 200, 69, .18);
+}
+
+.cam-card .pending dd {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 600;
+    color: #5f7288;
+}
+
+.flow-steps {
+    counter-reset: fs;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .6rem;
+    max-width: 74rem;
+}
+
+.flow-steps li {
+    counter-increment: fs;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .6rem .9rem;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .45rem;
+    background: #fff;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+    font-size: clamp(.88rem, 1.15vw, 1.12rem);
+}
+
+.flow-steps li::before {
+    content: counter(fs);
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+}
+
+.flow-steps strong {
+    color: var(--navy);
+}
+
+/* PoE ladder chips. The exam-focus standard carries the gold mark. */
+
+.poe-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+    margin-top: clamp(.7rem, 1.4vw, 1.2rem);
+}
+
+.poe-chip {
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    padding: .55rem .85rem;
+    border: .14rem solid var(--mist);
+    border-radius: .45rem;
+    background: #fff;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .05);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.poe-chip b {
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: clamp(.9rem, 1.2vw, 1.12rem);
+}
+
+.poe-chip.focus {
+    border-color: var(--gold-600, #e0a92e);
+    background: rgba(255, 200, 69, .14);
+}
+
+/* Term rows: tinted term, short definition. */
+
+.term-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+    max-width: 60rem;
+}
+
+.term-list li {
+    display: grid;
+    grid-template-columns: clamp(8rem, 13vw, 11rem) 1fr;
+    gap: .9rem;
+    align-items: baseline;
+    padding: .6rem 1rem;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .45rem;
+    background: #fff;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.term-list .term {
+    color: var(--blue);
+    font-size: clamp(.95rem, 1.3vw, 1.28rem);
+}
+
+.term-list span {
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+}
+
+.gold .term-list li {
+    background: rgba(255, 255, 255, .85);
+    border-color: rgba(255, 255, 255, .5);
+    border-left-color: var(--navy);
+}
+
+.gold .term-list .term {
+    color: var(--navy);
+}
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Twisted pair cross sections. Pair colors are the literal wire
+   colors, each named in the caption and aria narration. */
+
+.cable-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    max-width: 66rem;
+}
+
+.cable-fig {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.cable-x {
+    position: relative;
+    flex: none;
+    width: clamp(8rem, 11vw, 10.5rem);
+    aspect-ratio: 1;
+    border: .45rem solid var(--navy);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .08);
+}
+
+.cable-x.stp::before {
+    content: "";
+    position: absolute;
+    inset: .3rem;
+    border: .2rem dashed #8a8064;
+    border-radius: 50%;
+}
+
+.pair {
+    position: absolute;
+    width: 42%;
+    height: 24%;
+}
+
+.pair:nth-child(1) {
+    left: 9%;
+    top: 16%;
+    transform: rotate(-16deg);
+}
+
+.pair:nth-child(2) {
+    right: 9%;
+    top: 16%;
+    transform: rotate(16deg);
+}
+
+.pair:nth-child(3) {
+    left: 9%;
+    bottom: 16%;
+    transform: rotate(14deg);
+}
+
+.pair:nth-child(4) {
+    right: 9%;
+    bottom: 16%;
+    transform: rotate(-14deg);
+}
+
+.pair::before,
+.pair::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.pair::before {
+    left: 4%;
+    background: var(--pc);
+}
+
+.pair::after {
+    right: 4%;
+    background: #fff;
+    border: .24rem solid var(--pc);
+}
+
+.cable-x.stp .pair {
+    outline: .13rem dashed #8a8064;
+    outline-offset: .16rem;
+    border-radius: 1rem;
+}
+
+.p-o {
+    --pc: #c2620e;
+}
+
+.p-g {
+    --pc: #2b6e4c;
+}
+
+.p-b {
+    --pc: #0d5c8c;
+}
+
+.p-br {
+    --pc: #7a4a21;
+}
+
+.cable-fig figcaption strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.1rem, 1.6vw, 1.55rem);
+}
+
+.cable-fig figcaption p {
+    margin-top: .3rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+/* Cat standards: distance drawn to length, gold on the traced run. */
+
+.cat-chart {
+    display: grid;
+    gap: .8rem;
+    max-width: 62rem;
+}
+
+.cat-row {
+    display: grid;
+    grid-template-columns: clamp(11rem, 20vw, 15rem) 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cat-label {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.cat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 4.2rem;
+    height: 2.3rem;
+    padding: 0 .7rem;
+    border-radius: .3rem;
+    background: var(--navy-500, #1d5ea3);
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.cat-bar.gold-bar {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+/* T568B wire order. Chip colors are the literal conductor colors. */
+
+.wire-order {
+    display: flex;
+    gap: clamp(.4rem, 1vw, .9rem);
+    max-width: 56rem;
+}
+
+.wire {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+}
+
+.pin {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.wire-chip {
+    width: 100%;
+    max-width: 3.4rem;
+    height: 2.7rem;
+    border: .1rem solid rgba(0, 46, 93, .3);
+    border-radius: .3rem .3rem .18rem .18rem;
+}
+
+.wire-chip.solid {
+    background: var(--wc);
+}
+
+.wire-chip.stripe {
+    background: repeating-linear-gradient(-45deg, #fff 0 .32rem, var(--wc) .32rem .64rem);
+}
+
+.w-o {
+    --wc: #c2620e;
+}
+
+.w-g {
+    --wc: #2b6e4c;
+}
+
+.w-b {
+    --wc: #0d5c8c;
+}
+
+.w-br {
+    --wc: #7a4a21;
+}
+
+.wname {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.66rem, .9vw, .85rem);
+}
+
+.wdata {
+    padding: .08rem .32rem;
+    border-radius: .2rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.58rem, .78vw, .72rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* Termination tool rail. */
+
+.tool-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .6rem;
+    max-width: 62rem;
+    margin-top: clamp(.5rem, 1vw, .9rem);
+}
+
+.tool-step {
+    position: relative;
+    padding: .55rem .8rem;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .45rem;
+    background: #fff;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.tool-step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.tool-step p {
+    margin-top: .15rem;
+    font-size: clamp(.75rem, .98vw, .92rem);
+}
+
+.tool-step::after {
+    content: "→";
+    position: absolute;
+    right: -.68rem;
+    top: 34%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.tool-step:last-child::after {
+    content: none;
+}
+
+/* Fiber and coax cutaways. */
+
+.fiber-coax {
+    align-items: stretch;
+    gap: clamp(1.4rem, 3vw, 3rem);
+}
+
+.fiber-coax .panel {
+    background: rgba(255, 255, 255, .88);
+    border-radius: .65rem;
+}
+
+.fiber-cut,
+.coax-cut {
+    position: relative;
+    height: 3rem;
+    margin: .8rem 0 .7rem;
+}
+
+.f-jacket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 62%;
+    height: 100%;
+    border: .16rem solid var(--navy);
+    border-radius: 1.4rem;
+    background: #e8eff7;
+}
+
+.f-strength {
+    position: absolute;
+    left: 56%;
+    top: 20%;
+    width: 26%;
+    height: 60%;
+    border: .12rem solid #b3a98f;
+    border-radius: .8rem;
+    background: repeating-linear-gradient(90deg, #cbbf9b 0 .2rem, #efe8d2 .2rem .4rem);
+}
+
+.f-core {
+    position: absolute;
+    left: 80%;
+    top: calc(50% - .17rem);
+    width: 19%;
+    height: .34rem;
+    border-radius: .17rem;
+    background: var(--blue);
+}
+
+.fc-row {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: .7rem;
+}
+
+.fc-item {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.fc {
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.fc-st {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--blue) 0 .14rem, transparent .15rem);
+}
+
+.fc-sc {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: .16rem solid var(--navy);
+    border-radius: .12rem;
+    background: radial-gradient(circle, var(--blue) 0 .14rem, transparent .15rem);
+}
+
+.fc-lc {
+    width: .82rem;
+    height: .82rem;
+    border: .16rem solid var(--navy);
+    border-radius: .1rem;
+    background: radial-gradient(circle, var(--blue) 0 .09rem, transparent .1rem);
+}
+
+.c-sheath {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 42%;
+    height: 100%;
+    border-radius: 1.4rem 0 0 1.4rem;
+    background: var(--navy);
+}
+
+.c-braid {
+    position: absolute;
+    left: 41%;
+    top: 12%;
+    width: 21%;
+    height: 76%;
+    border-radius: .2rem;
+    background: repeating-linear-gradient(45deg, #b3a98f 0 .18rem, #e6e0cf .18rem .36rem);
+}
+
+.c-foil {
+    position: absolute;
+    left: 61%;
+    top: 24%;
+    width: 14%;
+    height: 52%;
+    border: .1rem solid #9fb0c4;
+    border-radius: .15rem;
+    background: #d7dee8;
+}
+
+.c-core {
+    position: absolute;
+    left: 74.5%;
+    top: calc(50% - .2rem);
+    width: 14%;
+    height: .4rem;
+    border-radius: .2rem;
+    background: #b06f2a;
+}
+
+.c-ftype {
+    position: absolute;
+    right: 0;
+    top: 14%;
+    width: .95rem;
+    height: 72%;
+    border: .14rem solid var(--navy);
+    border-radius: .14rem;
+    background: repeating-linear-gradient(to bottom, var(--navy) 0 .12rem, transparent .12rem .3rem);
+}
+
+/* Wireless: bands and the 2.4 GHz channel strip. */
+
+.band-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+}
+
+.band-chip {
+    padding: .5rem .9rem;
+    border-radius: .4rem;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.channel-wrap {
+    max-width: 58rem;
+}
+
+.channel-strip {
+    display: flex;
+    align-items: flex-end;
+    border-bottom: .28rem solid var(--navy);
+}
+
+.channel-strip i {
+    flex: 1;
+    height: 2.3rem;
+    margin-left: -.55rem;
+    display: grid;
+    place-items: center;
+    border: .09rem solid rgba(3, 72, 143, .3);
+    border-radius: .55rem .55rem 0 0;
+    background: rgba(3, 116, 181, .13);
+    color: var(--ink);
+    font-style: normal;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.channel-strip i:first-child {
+    margin-left: 0;
+}
+
+.channel-strip i.clear {
+    z-index: 1;
+    height: 2.9rem;
+    border-color: var(--blue);
+    background: var(--blue);
+    color: #fff;
+}
+
+.channel-caption {
+    margin-top: .5rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+/* The Wi-Fi generation rail, oldest to newest. */
+
+.gen-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.gen-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .28rem;
+    min-height: 10rem;
+    padding: clamp(.8rem, 1.3vw, 1.1rem) clamp(.55rem, .9vw, .8rem);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    background: #fff;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .1);
+}
+
+.gen-step strong {
+    color: #001a36;
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+.gen-tag {
+    padding: .1rem .35rem;
+    border-radius: .2rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(.6rem, .82vw, .76rem);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.gen-band {
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.66rem, .9vw, .86rem);
+}
+
+.gen-step b {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+}
+
+.gen-step p {
+    font-size: clamp(.7rem, .92vw, .88rem);
+    line-height: 1.3;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split h2 + .term-list {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+            linear-gradient(135deg, #fbfcff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .reach-rail,
+    .net-tiers,
+    .cable-duo,
+    .gen-rail,
+    .tool-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .net-tiers {
+        gap: 1.4rem;
+    }
+
+    .tier-item p {
+        max-width: none;
+    }
+
+    .lan-path {
+        grid-template-columns: 1fr;
+        max-width: 24rem;
+        margin: 0 auto;
+    }
+
+    .path-link,
+    .panel-run .path-link,
+    .path-node:first-child ~ .path-link {
+        flex-direction: row;
+        justify-content: center;
+        padding: 0;
+        gap: .6rem;
+    }
+
+    .path-link i {
+        width: .2rem;
+        height: 1.9rem;
+        flex: none;
+    }
+
+    .path-link i::after {
+        right: auto;
+        top: auto;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) rotate(135deg);
+    }
+
+    .path-link.dashed i {
+        background: repeating-linear-gradient(to bottom, currentColor 0 .4rem, transparent .4rem .75rem);
+    }
+
+    .panel-run {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .pp-strip {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .switch-scene {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .wire-order {
+        flex-wrap: wrap;
+        gap: .7rem .4rem;
+    }
+
+    .wire {
+        flex: 1 0 21%;
+    }
+
+    .tool-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1.15rem;
+    }
+
+    .tool-step:last-child::after {
+        content: none;
+    }
+
+    .cat-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .cable-fig {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .channel-strip i {
+        margin-left: -.3rem;
+        font-size: .62rem;
+    }
+
+    .mac-line {
+        gap: 1rem;
+    }
+
+    .oct {
+        min-width: 2.6rem;
+        font-size: 1.3rem;
+    }
+
+    .visual-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}

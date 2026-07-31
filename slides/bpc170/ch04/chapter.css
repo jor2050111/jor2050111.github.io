@@ -1,0 +1,1712 @@
+/* BPC170 Chapter 4: the diagnostic bench */
+
+/* The motif is painted as background layers only: a bench holding a
+   tower with a status LED, a POST indicator card, a status LED strip,
+   and a beep pattern, over a faint pegboard dot field. Positioned
+   boxes would create a focus scroll trap, so everything lives in the
+   slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(94,42,29,0.06)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(94,42,29,0.22)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(94,42,29,0.16)' stroke-width='3'/%3E%3Crect x='118' y='152' width='68' height='112' rx='6' stroke='rgba(94,42,29,0.2)' stroke-width='2.6'/%3E%3Ccircle cx='134' cy='170' r='4' stroke='rgba(224,169,46,0.6)' stroke-width='2.6'/%3E%3Cpath d='M128 236h48M128 246h48' stroke='rgba(94,42,29,0.14)' stroke-width='2'/%3E%3Crect x='214' y='186' width='112' height='78' rx='6' stroke='rgba(3,72,143,0.28)' stroke-width='2.6'/%3E%3Crect x='230' y='202' width='26' height='40' rx='3' stroke='rgba(3,72,143,0.22)' stroke-width='2'/%3E%3Crect x='266' y='202' width='26' height='40' rx='3' stroke='rgba(3,72,143,0.22)' stroke-width='2'/%3E%3Ccircle cx='308' cy='206' r='5' stroke='rgba(224,169,46,0.55)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='224' r='5' stroke='rgba(3,72,143,0.24)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='242' r='5' stroke='rgba(3,72,143,0.24)' stroke-width='2.4'/%3E%3Cpath d='M348 160h40' stroke='rgba(224,169,46,0.6)' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M400 160h14M426 160h14' stroke='rgba(3,72,143,0.3)' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='360' cy='214' r='6' stroke='rgba(3,72,143,0.26)' stroke-width='2.4'/%3E%3Ccircle cx='384' cy='214' r='6' stroke='rgba(224,169,46,0.55)' stroke-width='2.4'/%3E%3Ccircle cx='408' cy='214' r='6' stroke='rgba(3,72,143,0.26)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(124, 54, 38, .07) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .24), transparent 20rem),
+        linear-gradient(135deg, #fbf3ee, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(255,255,255,0.18)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(255,255,255,0.12)' stroke-width='3'/%3E%3Crect x='118' y='152' width='68' height='112' rx='6' stroke='rgba(255,255,255,0.16)' stroke-width='2.6'/%3E%3Ccircle cx='134' cy='170' r='4' stroke='rgba(255,213,115,0.55)' stroke-width='2.6'/%3E%3Cpath d='M128 236h48M128 246h48' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3Crect x='214' y='186' width='112' height='78' rx='6' stroke='rgba(255,255,255,0.2)' stroke-width='2.6'/%3E%3Crect x='230' y='202' width='26' height='40' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Crect x='266' y='202' width='26' height='40' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Ccircle cx='308' cy='206' r='5' stroke='rgba(255,213,115,0.5)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='224' r='5' stroke='rgba(255,255,255,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='242' r='5' stroke='rgba(255,255,255,0.18)' stroke-width='2.4'/%3E%3Cpath d='M348 160h40' stroke='rgba(255,213,115,0.55)' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M400 160h14M426 160h14' stroke='rgba(255,255,255,0.22)' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='360' cy='214' r='6' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='384' cy='214' r='6' stroke='rgba(255,213,115,0.5)' stroke-width='2.4'/%3E%3Ccircle cx='408' cy='214' r='6' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(255, 255, 255, .05) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #5e2a1d, #8f4432);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(94,42,29,0.05)' stroke-width='18'/%3E%3Cpath d='M84 268h352' stroke='rgba(94,42,29,0.2)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M110 272v66M410 272v66M110 306h300' stroke='rgba(94,42,29,0.14)' stroke-width='3'/%3E%3Crect x='118' y='152' width='68' height='112' rx='6' stroke='rgba(94,42,29,0.18)' stroke-width='2.6'/%3E%3Ccircle cx='134' cy='170' r='4' stroke='rgba(3,72,143,0.4)' stroke-width='2.6'/%3E%3Cpath d='M128 236h48M128 246h48' stroke='rgba(94,42,29,0.12)' stroke-width='2'/%3E%3Crect x='214' y='186' width='112' height='78' rx='6' stroke='rgba(3,72,143,0.32)' stroke-width='2.6'/%3E%3Crect x='230' y='202' width='26' height='40' rx='3' stroke='rgba(3,72,143,0.24)' stroke-width='2'/%3E%3Crect x='266' y='202' width='26' height='40' rx='3' stroke='rgba(3,72,143,0.24)' stroke-width='2'/%3E%3Ccircle cx='308' cy='206' r='5' stroke='rgba(94,42,29,0.35)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='224' r='5' stroke='rgba(3,72,143,0.26)' stroke-width='2.4'/%3E%3Ccircle cx='308' cy='242' r='5' stroke='rgba(3,72,143,0.26)' stroke-width='2.4'/%3E%3Cpath d='M348 160h40' stroke='rgba(94,42,29,0.4)' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M400 160h14M426 160h14' stroke='rgba(3,72,143,0.32)' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='360' cy='214' r='6' stroke='rgba(3,72,143,0.28)' stroke-width='2.4'/%3E%3Ccircle cx='384' cy='214' r='6' stroke='rgba(94,42,29,0.38)' stroke-width='2.4'/%3E%3Ccircle cx='408' cy='214' r='6' stroke='rgba(3,72,143,0.28)' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        radial-gradient(circle at .5rem .5rem, rgba(94, 42, 29, .06) 0 .1rem, transparent .16rem) 0 0 / 3.6rem 3.6rem,
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small power-button glyph. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: .95rem;
+    height: .95rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: 50%;
+    background: linear-gradient(currentColor, currentColor) top center / .12rem .34rem no-repeat;
+    vertical-align: -.14rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the canyon field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #5e2a1d 0%, rgba(94, 42, 29, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The work order: the traced ticket rides the ch01 card language. */
+
+.work-order {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.work-order header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: #4a1f14;
+}
+
+.wo-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.prio {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+}
+
+.prio.p2 {
+    background: var(--gold);
+    color: #4a1f14;
+}
+
+.work-order dl {
+    margin: 0;
+}
+
+.work-order dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.work-order dl div:last-child {
+    border-bottom: 0;
+}
+
+.work-order dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.work-order dd {
+    margin: 0;
+    color: #4a1f14;
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.work-order dd.wo-open {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+/* Warm-up evidence chips on the gold slide. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* The boot chain: four checkpoints with pass and fail signals. */
+
+.boot-chain {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .6rem;
+    align-items: stretch;
+}
+
+.check-node {
+    position: relative;
+    background: #fff;
+    color: #4a1f14;
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.7rem, 1.1vw, 1rem);
+    min-height: 10.5rem;
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.check-node strong {
+    display: block;
+    font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+    margin-bottom: .45rem;
+    color: var(--navy);
+}
+
+.check-node::after {
+    content: "→";
+    position: absolute;
+    right: -.68rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.check-node:last-child::after {
+    content: none;
+}
+
+.sig {
+    display: grid;
+    grid-template-columns: 2.9rem 1fr;
+    gap: .45rem;
+    align-items: baseline;
+    margin-top: .3rem;
+    font-size: clamp(.78rem, 1vw, .96rem);
+    line-height: 1.25;
+}
+
+.sig b {
+    font-size: clamp(.62rem, .82vw, .78rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.sig.pass b {
+    color: var(--good);
+}
+
+.sig.fail b {
+    color: var(--danger);
+}
+
+/* Checkpoint 1: the power path, wall to board. */
+
+.power-path {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: .55rem;
+    max-width: 70rem;
+}
+
+.pp-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.5rem, .9vw, .8rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.pp-node strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.pp-node p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.pp-wire {
+    align-self: center;
+    width: clamp(1.1rem, 2.4vw, 2.4rem);
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--blue);
+}
+
+.pp-obj {
+    display: grid;
+    place-items: center;
+    height: 3.4rem;
+}
+
+.pp-obj::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.pp-outlet::before {
+    width: 2.5rem;
+    height: 3.1rem;
+    border: .16rem solid var(--navy);
+    border-radius: .4rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 32% 42% / .3rem 1rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 68% 42% / .3rem 1rem no-repeat,
+        radial-gradient(circle at 50% 78%, var(--navy) 0 .18rem, transparent .19rem),
+        #fff;
+}
+
+.pp-cable::before {
+    width: 4.2rem;
+    height: 1.3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem .55rem .55rem .2rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 0 50% / .8rem 100% no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 88% 50% / .35rem .55rem no-repeat,
+        #fff;
+}
+
+.pp-psu::before {
+    width: 3.6rem;
+    height: 2.5rem;
+    border: .16rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        radial-gradient(circle at 32% 50%, transparent 0 .3rem, var(--navy) .3rem .44rem, transparent .45rem),
+        radial-gradient(circle at 32% 50%, var(--navy) 0 .1rem, transparent .11rem),
+        linear-gradient(var(--mist), var(--mist)) 82% 26% / .55rem .22rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 82% 50% / .55rem .22rem no-repeat,
+        linear-gradient(var(--mist), var(--mist)) 82% 74% / .55rem .22rem no-repeat,
+        #fff;
+}
+
+.pp-board::before {
+    width: 3rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        linear-gradient(var(--gold), var(--gold)) 58% 26% / 1rem 1rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 18% 26% / .18rem 1rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 24% 78% / 1.4rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 82% 78% / .5rem .16rem no-repeat,
+        #fff;
+}
+
+/* The traced ticket's verdict line. Gold binds the ticket, green and
+   red carry only their pass and fail meanings. */
+
+.ticket-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+}
+
+.ticket-chip {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: #4a1f14;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+}
+
+.result {
+    font-weight: 900;
+    white-space: nowrap;
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.result.pass {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.result.pass::before {
+    content: "✓ ";
+}
+
+.result.fail {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.dark .result.fail {
+    background: rgba(255, 255, 255, .9);
+}
+
+.result.fail::before {
+    content: "✕ ";
+}
+
+.result.note {
+    background: var(--mist);
+    color: #4a1f14;
+}
+
+.verdict-text {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.dark .verdict-text {
+    color: rgba(255, 255, 255, .92);
+}
+
+/* Checkpoint 2: the beep card. */
+
+.beep-card {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    padding: clamp(1.1rem, 2vw, 1.8rem);
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .09);
+    display: grid;
+    gap: .9rem;
+    align-content: center;
+}
+
+.beep-row {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    min-height: 2.6rem;
+}
+
+.speaker {
+    display: inline-block;
+    width: 2.2rem;
+    height: 2rem;
+    margin-right: .5rem;
+    background: var(--navy);
+    clip-path: polygon(0 32%, 38% 32%, 100% 0, 100% 100%, 38% 68%, 0 68%);
+}
+
+.beep {
+    height: 1.05rem;
+    border-radius: .55rem;
+    background: var(--blue);
+}
+
+.beep.long {
+    width: clamp(3.6rem, 6vw, 5.2rem);
+}
+
+.beep.short {
+    width: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+.beep-caption {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.post-list {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .45rem;
+}
+
+.post-list li {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+    padding-left: 1.1rem;
+    background: radial-gradient(circle at .3rem 50%, var(--blue) 0 .18rem, transparent .19rem) left center no-repeat;
+}
+
+/* Checkpoint 3: the boot screen mockup. */
+
+.boot-screen {
+    width: min(100%, 46rem);
+    background: #14100d;
+    border: .3rem solid rgba(255, 255, 255, .3);
+    border-radius: .8rem;
+    padding: clamp(1.4rem, 2.6vw, 2.4rem);
+    font-family: var(--code);
+    box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, .35);
+}
+
+.bs-logo {
+    width: 2.6rem;
+    height: 2.6rem;
+    margin: 0 0 1.4rem .3rem;
+    border: .34rem solid rgba(255, 255, 255, .72);
+    transform: rotate(45deg);
+    border-radius: .3rem;
+}
+
+.bs-msg {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.9vw, 1.8rem);
+    letter-spacing: .02em;
+}
+
+.bs-prompt {
+    margin-top: .7rem;
+    color: rgba(255, 255, 255, .62);
+    font-size: clamp(.9rem, 1.3vw, 1.2rem);
+}
+
+.caret {
+    display: inline-block;
+    width: .58rem;
+    height: 1.05rem;
+    margin-left: .45rem;
+    vertical-align: -.14rem;
+    background: rgba(255, 255, 255, .7);
+    animation: caret-blink 1.1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* BIOS and UEFI screen mockups. */
+
+.fw-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    max-width: 66rem;
+}
+
+.fw-item {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+
+.fw-item strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.fw-item p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.fw-screen {
+    height: clamp(8.5rem, 15vw, 12rem);
+    border: .16rem solid var(--navy);
+    border-radius: .55rem;
+    box-shadow: 0 .6rem 1.5rem rgba(94, 42, 29, .12);
+}
+
+.fw-bios {
+    background:
+        linear-gradient(rgba(237, 229, 214, .92), rgba(237, 229, 214, .92)) 0 0 / 100% 1.3rem no-repeat,
+        linear-gradient(var(--gold), var(--gold)) 8% 42% / 34% .55rem no-repeat,
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, .55) 0 .5rem, transparent .5rem 1.2rem) 8% 78% / 34% 52% no-repeat,
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, .3) 0 .5rem, transparent .5rem 1.2rem) 88% 72% / 40% 44% no-repeat,
+        linear-gradient(rgba(255, 255, 255, .35), rgba(255, 255, 255, .35)) 0 100% / 100% 1rem no-repeat,
+        #0b2f6b;
+}
+
+.fw-uefi {
+    position: relative;
+    background:
+        linear-gradient(rgba(3, 72, 143, .8), rgba(3, 72, 143, .8)) 0 0 / 100% 1.5rem no-repeat,
+        linear-gradient(rgba(3, 72, 143, .16), rgba(3, 72, 143, .16)) 7% 46% / 24% 34% no-repeat,
+        linear-gradient(rgba(3, 72, 143, .16), rgba(3, 72, 143, .16)) 40% 46% / 24% 34% no-repeat,
+        linear-gradient(rgba(255, 213, 115, .5), rgba(255, 213, 115, .5)) 73% 46% / 24% 34% no-repeat,
+        repeating-linear-gradient(to right, rgba(3, 72, 143, .22) 0 .8rem, transparent .8rem 1.3rem) 8% 88% / 55% .55rem no-repeat,
+        #f8f3ec;
+}
+
+.fw-uefi::after {
+    content: "";
+    position: absolute;
+    right: 18%;
+    bottom: 14%;
+    width: 1.15rem;
+    height: 1.55rem;
+    background: var(--navy);
+    clip-path: polygon(0 0, 82% 60%, 48% 64%, 66% 96%, 52% 100%, 36% 68%, 0 90%);
+}
+
+/* The ranked boot order. Gold binds the culprit row to the ticket. */
+
+.scan-hint {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.boot-order {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+    max-width: 62rem;
+}
+
+.bo-row {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.bo-rank {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+}
+
+.bo-row strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.bo-note {
+    display: block;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    color: #4a1f14;
+}
+
+.bo-tag {
+    padding: .3rem .6rem;
+    border-radius: .3rem;
+    background: var(--mist);
+    color: #4a1f14;
+    font-weight: 800;
+    font-size: clamp(.75rem, .95vw, .92rem);
+    white-space: nowrap;
+}
+
+.bo-row.culprit {
+    border-left-color: var(--gold);
+    background: rgba(255, 213, 115, .3);
+}
+
+.bo-row.culprit .bo-rank {
+    background: #7a5410;
+}
+
+.bo-tag.gold-tag {
+    background: var(--gold);
+    color: #4a1f14;
+    font-family: var(--code);
+}
+
+/* Check slides. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+}
+
+/* The six-step recap rail, from the ch01 method language. Gold marks
+   only the traced ticket's annotations. */
+
+.method-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.rail-step {
+    position: relative;
+    background: #fff;
+    color: #4a1f14;
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    min-height: 8.6rem;
+}
+
+.rail-step strong {
+    display: block;
+    font-size: clamp(1rem, 1.45vw, 1.4rem);
+    margin-bottom: .4rem;
+    color: var(--navy);
+}
+
+.rail-step::after {
+    content: "→";
+    position: absolute;
+    right: -.65rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.rail-step:last-child::after {
+    content: none;
+}
+
+.rail-note {
+    display: inline-block;
+    margin-top: .15rem;
+    padding: .3rem .5rem;
+    border-radius: .22rem;
+    background: var(--gold);
+    color: #4a1f14;
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    line-height: 1.25;
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(10rem, 18vw, 14rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+/* Secure Boot signature flow. */
+
+.sig-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) auto minmax(0, 1fr) auto minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(.5rem, 1vw, .9rem);
+    max-width: 66rem;
+}
+
+.loader-card {
+    position: relative;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+}
+
+.loader-card strong,
+.gate-item strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.loader-card p,
+.gate-item p {
+    margin-top: .3rem;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.seal {
+    position: absolute;
+    top: -.7rem;
+    right: -.7rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--gold);
+    border: .14rem solid #4a1f14;
+}
+
+.seal::after {
+    content: "✓";
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: #4a1f14;
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.gate-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.gate {
+    width: 2.4rem;
+    height: 2.9rem;
+    margin-bottom: .5rem;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+    position: relative;
+}
+
+.flow-arrow {
+    color: var(--navy);
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+.sig-out {
+    display: grid;
+    gap: .6rem;
+}
+
+.out {
+    display: grid;
+    gap: .1rem;
+    padding: .6rem .9rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.out strong {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.out span {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.out.ok {
+    border-left: .45rem solid var(--good);
+    background: var(--status-success-tint);
+}
+
+.out.ok strong {
+    color: var(--status-success);
+}
+
+.out.ok strong::before {
+    content: "✓ ";
+}
+
+.out.block {
+    border-left: .45rem solid var(--danger);
+    background: rgba(166, 50, 31, .1);
+}
+
+.out.block strong {
+    color: var(--status-danger);
+}
+
+.out.block strong::before {
+    content: "✕ ";
+}
+
+.key-rows {
+    margin-top: .4rem;
+}
+
+.key-rows li {
+    grid-template-columns: clamp(4.5rem, 7vw, 6rem) 1fr;
+}
+
+/* The S.M.A.R.T. drive health card. */
+
+.smart-card {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    padding: clamp(1.1rem, 2vw, 1.6rem);
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .1);
+    display: grid;
+    gap: .8rem;
+    align-content: center;
+    width: min(100%, 32rem);
+    justify-self: center;
+}
+
+.smart-head {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+}
+
+.smart-head strong {
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.drive-glyph {
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.9rem;
+    border: .15rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        radial-gradient(circle at 38% 50%, transparent 0 .22rem, var(--navy) .22rem .36rem, transparent .37rem),
+        radial-gradient(circle at 38% 50%, var(--navy) 0 .08rem, transparent .09rem),
+        linear-gradient(var(--gold), var(--gold)) 82% 22% / .3rem .3rem no-repeat,
+        #fff;
+}
+
+.gauge {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 9vw, 7.5rem) 1fr auto;
+    gap: .7rem;
+    align-items: center;
+}
+
+.g-label {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.g-track {
+    height: 1.05rem;
+    border-radius: .5rem;
+    background: var(--mist);
+    overflow: hidden;
+}
+
+.g-fill {
+    height: 100%;
+    border-radius: .5rem 0 0 .5rem;
+    background: var(--blue);
+}
+
+.g-fill.warn {
+    background: var(--status-warning);
+}
+
+.g-fill.bad {
+    background: var(--status-danger);
+}
+
+.g-tag {
+    font-weight: 800;
+    font-size: clamp(.72rem, .92vw, .9rem);
+    color: var(--blue);
+    white-space: nowrap;
+}
+
+.g-tag.warn-tag {
+    color: #7c4f0e;
+}
+
+.g-tag.bad-tag {
+    color: var(--status-danger);
+}
+
+.smart-verdict {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.15vw, 1.1rem);
+    border-top: .08rem solid var(--mist);
+    padding-top: .6rem;
+}
+
+/* The RAID shelf. Green and red LEDs carry only their meanings. */
+
+.raid-shelf {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.bay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    text-align: center;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .9rem .5rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .07);
+}
+
+.bay strong {
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.bay p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.bled {
+    width: .95rem;
+    height: .95rem;
+    border-radius: 50%;
+    background: var(--status-success);
+    box-shadow: 0 0 0 .2rem var(--status-success-tint);
+}
+
+.bay.failed {
+    border-color: var(--status-danger);
+    background: rgba(166, 50, 31, .05);
+}
+
+.bay.failed .bled {
+    background: var(--status-danger);
+    box-shadow: 0 0 0 .2rem rgba(166, 50, 31, .16);
+}
+
+.swap-tag {
+    color: var(--status-danger);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.raid-note {
+    margin-top: .9rem;
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .1);
+    padding: .7rem 1.1rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.raid-note strong {
+    color: #7c4f0e;
+}
+
+.raid-note p {
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+}
+
+.raid-steps {
+    margin: .6rem 0 0;
+    padding: 0 0 0 1.3rem;
+    display: grid;
+    gap: .5rem;
+}
+
+.raid-steps li {
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+/* Crash screens: three operating systems, three accents. */
+
+.crash-trio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    max-width: 62rem;
+}
+
+.crash-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .45rem;
+}
+
+.crash-item strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.crash-item p {
+    font-size: clamp(.8rem, 1vw, .98rem);
+}
+
+.crash-screen {
+    position: relative;
+    width: 100%;
+    height: clamp(6.5rem, 11vw, 9rem);
+    border: .14rem solid var(--navy);
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.crash-win {
+    background:
+        linear-gradient(rgba(255, 255, 255, .85), rgba(255, 255, 255, .85)) 12% 62% / 55% .4rem no-repeat,
+        linear-gradient(rgba(255, 255, 255, .65), rgba(255, 255, 255, .65)) 12% 76% / 40% .4rem no-repeat,
+        #0067b8;
+}
+
+.crash-win::before {
+    content: ":(";
+    position: absolute;
+    top: .5rem;
+    left: 12%;
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+    line-height: 1;
+}
+
+.crash-win .qr {
+    position: absolute;
+    right: 10%;
+    bottom: 14%;
+    width: 1.7rem;
+    height: 1.7rem;
+    background:
+        radial-gradient(circle, #0067b8 0 .1rem, transparent .12rem) center / .34rem .34rem repeat,
+        #fff;
+}
+
+.crash-mac {
+    background: #e9e5dd;
+}
+
+.crash-mac::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    background: conic-gradient(#3b82d0, #79c4ec, #9fd38a, #f2d160, #eda45b, #d0668b, #3b82d0);
+}
+
+.crash-mac::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: #e9e5dd;
+}
+
+.crash-linux {
+    background:
+        linear-gradient(rgba(232, 226, 214, .75), rgba(232, 226, 214, .75)) 8% 18% / 62% .32rem no-repeat,
+        linear-gradient(rgba(232, 226, 214, .55), rgba(232, 226, 214, .55)) 8% 36% / 78% .32rem no-repeat,
+        linear-gradient(rgba(232, 226, 214, .55), rgba(232, 226, 214, .55)) 8% 54% / 48% .32rem no-repeat,
+        linear-gradient(rgba(232, 226, 214, .4), rgba(232, 226, 214, .4)) 8% 72% / 68% .32rem no-repeat,
+        linear-gradient(rgba(232, 226, 214, .8), rgba(232, 226, 214, .8)) 8% 88% / .5rem .8rem no-repeat,
+        #171310;
+}
+
+/* The airflow case. Zones sit inside an in-flow board, nothing
+   overflows the slide. */
+
+.airflow-case {
+    position: relative;
+    max-width: 56rem;
+    aspect-ratio: 16 / 5.6;
+    border: .18rem solid var(--navy);
+    border-radius: .7rem;
+    background: linear-gradient(135deg, #fdf9f6, #f4ebe3);
+    box-shadow: 0 .8rem 2rem rgba(94, 42, 29, .12);
+}
+
+.af-zone {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border: .13rem solid var(--blue);
+    border-radius: .35rem;
+    background: rgba(255, 255, 255, .82);
+    padding: .25rem .45rem;
+    text-align: center;
+}
+
+.af-zone span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.6rem, .92vw, .92rem);
+    line-height: 1.15;
+}
+
+.af-intake span,
+.af-cooler span,
+.af-exhaust span {
+    background: rgba(255, 255, 255, .88);
+    border-radius: .25rem;
+    padding: .15rem .4rem;
+}
+
+.af-intake {
+    left: 2.5%;
+    top: 16%;
+    width: 13%;
+    height: 68%;
+    background:
+        repeating-linear-gradient(to bottom, rgba(3, 72, 143, .18) 0 .32rem, transparent .32rem .85rem) content-box,
+        rgba(255, 255, 255, .82);
+}
+
+.af-dust {
+    left: 17.5%;
+    bottom: 8%;
+    width: 15%;
+    height: 34%;
+    border-color: var(--status-warning);
+    background: rgba(201, 130, 31, .16);
+}
+
+.af-dust span {
+    color: #7c4f0e;
+}
+
+.af-cooler {
+    left: 39%;
+    top: 14%;
+    width: 22%;
+    height: 54%;
+    background:
+        repeating-linear-gradient(to right, rgba(94, 42, 29, .22) 0 .22rem, transparent .22rem .6rem) content-box,
+        rgba(255, 255, 255, .82);
+}
+
+.af-gap {
+    left: 66%;
+    bottom: 8%;
+    width: 17%;
+    height: 30%;
+    border-style: dashed;
+    border-color: var(--status-warning);
+    background: rgba(201, 130, 31, .08);
+}
+
+.af-gap span {
+    color: #7c4f0e;
+}
+
+.af-exhaust {
+    right: 2.5%;
+    top: 16%;
+    width: 13%;
+    height: 68%;
+    background:
+        repeating-linear-gradient(to bottom, rgba(3, 72, 143, .18) 0 .32rem, transparent .32rem .85rem) content-box,
+        rgba(255, 255, 255, .82);
+}
+
+.af-flow {
+    position: absolute;
+    top: 30%;
+    color: var(--blue);
+    font-size: clamp(1.2rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+.af-flow.f1 {
+    left: 18%;
+}
+
+.af-flow.f2 {
+    left: 32.5%;
+}
+
+.af-flow.f3 {
+    left: 70%;
+}
+
+.airflow-note {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.98rem, 1.3vw, 1.3rem);
+}
+
+.heat-note {
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .09);
+    padding: .7rem 1.1rem;
+    max-width: 56rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.heat-note strong {
+    color: #7c4f0e;
+}
+
+.heat-note p {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+/* The RTC coin cell. */
+
+.rtc-spot {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+}
+
+.rtc-board {
+    display: grid;
+    place-items: center;
+    width: min(100%, 17rem);
+    padding: 1.6rem;
+    border: .14rem solid var(--blue);
+    border-radius: .7rem;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(3, 72, 143, .25) 0 .16rem, transparent .17rem),
+        radial-gradient(circle at 88% 18%, rgba(3, 72, 143, .25) 0 .16rem, transparent .17rem),
+        rgba(3, 72, 143, .07);
+}
+
+.coin {
+    display: grid;
+    place-items: center;
+    width: 6.4rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: .18rem solid var(--navy);
+    background: radial-gradient(circle at 32% 30%, #fff, #ded5c2 62%, #b8ad92);
+    color: #4a1f14;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: .95rem;
+    letter-spacing: .04em;
+}
+
+.rtc-text strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.rtc-text p {
+    margin-top: .35rem;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+    max-width: 26rem;
+}
+
+/* The known-good isolation ladder. */
+
+.test-log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+}
+
+.test-log li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    padding: .8rem 1.1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.test-name {
+    font-size: clamp(.98rem, 1.3vw, 1.28rem);
+    color: #4a1f14;
+}
+
+.test-name b {
+    display: inline-block;
+    margin-right: .6rem;
+    color: var(--blue);
+    font-size: clamp(.72rem, .95vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(56, 20, 10, .2);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(94, 42, 29, .14);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .68);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .24), transparent 20rem),
+            linear-gradient(135deg, #fbf3ee, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #5e2a1d, #8f4432);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(74, 31, 20, .5);
+    }
+
+    .boot-chain {
+        grid-template-columns: 1fr;
+    }
+
+    .check-node {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .check-node::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .check-node:last-child::after {
+        content: none;
+    }
+
+    .power-path {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .pp-wire {
+        width: .26rem;
+        height: 1.4rem;
+        justify-self: center;
+    }
+
+    .fw-duo,
+    .crash-trio {
+        grid-template-columns: 1fr;
+    }
+
+    .raid-shelf {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bo-row {
+        grid-template-columns: 2.2rem 1fr;
+    }
+
+    .bo-tag {
+        grid-column: 2;
+        justify-self: start;
+        white-space: normal;
+    }
+
+    .method-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-step {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .rail-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .rail-step:last-child::after {
+        content: none;
+    }
+
+    .sig-flow {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .loader-card,
+    .sig-out {
+        width: 100%;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .airflow-case {
+        aspect-ratio: auto;
+        display: grid;
+        gap: .5rem;
+        padding: .8rem;
+    }
+
+    .af-zone {
+        position: static;
+        width: auto;
+        height: auto;
+        min-height: 2.6rem;
+        justify-items: start;
+        padding: .45rem .7rem;
+    }
+
+    .af-flow {
+        display: none;
+    }
+
+    .test-log li {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .result {
+        white-space: normal;
+        justify-self: start;
+    }
+
+    .visual-split {
+        grid-template-columns: 1fr;
+    }
+
+    .work-order {
+        width: 100%;
+    }
+
+    .smart-card {
+        width: 100%;
+    }
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}

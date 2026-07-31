@@ -1,0 +1,1639 @@
+/* BPC170 Chapter 3: heat and airflow */
+
+/* The motif is painted as background layers only: a fan with blades,
+   a finned heat sink, and rising airflow arrows over faint diagonal
+   streamlines. Positioned boxes would create a focus scroll trap. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='210' r='62' stroke='rgba(3,72,143,0.18)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='210' r='11' stroke='rgba(3,72,143,0.2)' stroke-width='2.6'/%3E%3Cpath d='M170 199c-4-16 2-30 12-38M181 210c16-4 30 2 38 12M170 221c4 16-2 30-12 38M159 210c-16 4-30-2-38-12' stroke='rgba(2,90,140,0.18)' stroke-width='2.6'/%3E%3Cpath d='M262 236h132M270 250v-64M290 250v-78M310 250v-88M330 250v-88M350 250v-78M370 250v-64' stroke='rgba(3,72,143,0.16)' stroke-width='2.6'/%3E%3Cpath d='M282 132q10-22-2-44M318 126q10-22-2-44M354 132q10-22-2-44' stroke='rgba(255,200,69,0.5)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M276 92l4-10 8 6M312 86l4-10 8 6M348 92l4-10 8 6' stroke='rgba(255,200,69,0.5)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(105deg, transparent 0 3.6rem, rgba(2, 90, 140, .045) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #f6fafd, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='210' r='62' stroke='rgba(255,255,255,0.14)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='210' r='11' stroke='rgba(255,255,255,0.16)' stroke-width='2.6'/%3E%3Cpath d='M170 199c-4-16 2-30 12-38M181 210c16-4 30 2 38 12M170 221c4 16-2 30-12 38M159 210c-16 4-30-2-38-12' stroke='rgba(255,255,255,0.12)' stroke-width='2.6'/%3E%3Cpath d='M262 236h132M270 250v-64M290 250v-78M310 250v-88M330 250v-88M350 250v-78M370 250v-64' stroke='rgba(255,255,255,0.12)' stroke-width='2.6'/%3E%3Cpath d='M282 132q10-22-2-44M318 126q10-22-2-44M354 132q10-22-2-44' stroke='rgba(255,213,115,0.45)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M276 92l4-10 8 6M312 86l4-10 8 6M348 92l4-10 8 6' stroke='rgba(255,213,115,0.45)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(105deg, transparent 0 3.6rem, rgba(255, 255, 255, .035) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+        linear-gradient(135deg, #033a72, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='210' r='62' stroke='rgba(0,26,54,0.16)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='210' r='11' stroke='rgba(0,26,54,0.18)' stroke-width='2.6'/%3E%3Cpath d='M170 199c-4-16 2-30 12-38M181 210c16-4 30 2 38 12M170 221c4 16-2 30-12 38M159 210c-16 4-30-2-38-12' stroke='rgba(0,26,54,0.12)' stroke-width='2.6'/%3E%3Cpath d='M262 236h132M270 250v-64M290 250v-78M310 250v-88M330 250v-88M350 250v-78M370 250v-64' stroke='rgba(0,26,54,0.13)' stroke-width='2.6'/%3E%3Cpath d='M282 132q10-22-2-44M318 126q10-22-2-44M354 132q10-22-2-44' stroke='rgba(3,116,181,0.4)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M276 92l4-10 8 6M312 86l4-10 8 6M348 92l4-10 8 6' stroke='rgba(3,116,181,0.4)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(105deg, transparent 0 3.6rem, rgba(0, 26, 54, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small fan, hub plus crossed blades. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at center, currentColor 0 .13rem, transparent .14rem),
+        repeating-conic-gradient(from 12deg, currentColor 0 38deg, transparent 38deg 90deg);
+    background-clip: padding-box;
+    vertical-align: -.18rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the twilight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #033a72 0%, rgba(3, 58, 114, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The build sheet reuses the work-order card language from ch01/ch02. */
+
+.work-order {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.work-order header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: #001a36;
+}
+
+.wo-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.wo-open-tag {
+    display: inline-block;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .28);
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.work-order dl {
+    margin: 0;
+}
+
+.work-order dl div {
+    display: grid;
+    grid-template-columns: clamp(7.5rem, 11vw, 9.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.work-order dl div:last-child {
+    border-bottom: 0;
+}
+
+.work-order dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.work-order dd {
+    margin: 0;
+    color: #001a36;
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* PSU conversion flow: wall AC into the box, DC rails out. */
+
+.psu-flow {
+    display: flex;
+    align-items: center;
+    gap: clamp(.9rem, 2vw, 2rem);
+    flex-wrap: wrap;
+    max-width: 62rem;
+}
+
+.flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .4rem;
+}
+
+.flow-tag {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.flow-node p {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.ac-wave {
+    display: grid;
+    place-items: center;
+    width: 5.2rem;
+    height: 5.2rem;
+    border: .16rem dashed var(--navy);
+    border-radius: 50%;
+    color: var(--navy);
+    font-size: 2.6rem;
+    font-weight: 800;
+}
+
+.psu-box {
+    display: grid;
+    place-items: center;
+    width: 7.2rem;
+    height: 5.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .4rem;
+    background: #fff;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .1);
+}
+
+.fan-glyph {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border: .18rem solid var(--navy);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at center, var(--navy) 0 .3rem, #fff .31rem .44rem, transparent .45rem),
+        repeating-conic-gradient(from 12deg, var(--navy) 0 38deg, transparent 38deg 90deg);
+}
+
+.flow-arrow {
+    color: var(--blue);
+    font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+    font-weight: 800;
+}
+
+.rails-out {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+.rails-out ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .45rem;
+}
+
+.rails-out li {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 700;
+    color: #001a36;
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.wire {
+    display: inline-block;
+    width: 3rem;
+    height: .34rem;
+    border-radius: .17rem;
+}
+
+.wire-orange { background: #d97a1a; }
+.wire-red { background: #a6321f; }
+.wire-yellow { background: #e0a92e; }
+.wire-black { background: #22262b; }
+
+/* Wattage rating bars, drawn to length. Gold marks the workhorse rail. */
+
+.rail-chart,
+.ddr-bars {
+    display: grid;
+    gap: .7rem;
+    max-width: 62rem;
+}
+
+.rail-row {
+    display: grid;
+    grid-template-columns: clamp(9.5rem, 16vw, 12.5rem) 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rail-label,
+.ddr-label {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.rail-bar,
+.ddr-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 5.2rem;
+    height: 2.3rem;
+    padding: 0 .7rem;
+    background: var(--blue);
+    border-radius: .3rem;
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.rail-bar.gold-bar,
+.ddr-bar.gold-bar {
+    background: var(--gold);
+    color: #001a36;
+}
+
+/* Wattage check: two candidate supplies. */
+
+.supply-picks {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: .4rem;
+}
+
+.supply-chip {
+    padding: .6rem 1.1rem;
+    background: rgba(255, 255, 255, .85);
+    border: .14rem solid var(--navy);
+    border-radius: .45rem;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.5vw, 1.45rem);
+}
+
+/* Power connector row: canonical shapes, one line weight. */
+
+.conn-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.conn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.conn-item .conn {
+    display: grid;
+    place-items: center;
+    height: 4.6rem;
+    width: 100%;
+    border-bottom: .3rem solid var(--navy);
+    padding-bottom: .55rem;
+    margin-bottom: .55rem;
+}
+
+.conn::before {
+    content: "";
+    display: block;
+}
+
+.conn-p1::before {
+    width: 2.1rem;
+    height: 3.6rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        radial-gradient(circle, var(--navy) 0 .1rem, transparent .11rem) center / .62rem .48rem repeat,
+        #fff;
+}
+
+.conn-sata-power::before {
+    width: 6rem;
+    height: 1.5rem;
+    background: var(--navy);
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 80% 55%, 80% 100%, 0 100%);
+}
+
+.conn-molex::before {
+    width: 4.6rem;
+    height: 1.8rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem .2rem .45rem .45rem;
+    background:
+        radial-gradient(circle at 15% 50%, #e0a92e 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 38% 50%, var(--navy) 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 62% 50%, var(--navy) 0 .27rem, transparent .28rem),
+        radial-gradient(circle at 85% 50%, #a6321f 0 .27rem, transparent .28rem),
+        #fff;
+}
+
+.conn-multi::before {
+    width: 3.2rem;
+    height: 1.9rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        radial-gradient(circle, var(--navy) 0 .11rem, transparent .12rem) center / .78rem .74rem repeat,
+        #fff;
+}
+
+.conn-item strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.conn-item p {
+    margin-top: .3rem;
+    font-size: clamp(.8rem, 1.02vw, 1rem);
+}
+
+/* The airflow case: an in-flow board with positioned zones, like the
+   ch02 motherboard map, so nothing overflows the slide. */
+
+.case-air {
+    max-width: 56rem;
+    padding-top: 1.6rem;
+}
+
+.case-shell {
+    position: relative;
+    aspect-ratio: 16 / 7.6;
+    border: .18rem solid var(--navy);
+    border-radius: .6rem;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 300' preserveAspectRatio='none'%3E%3Cpath d='M60 240 C200 230 300 180 420 120 S560 70 590 55' fill='none' stroke='rgba(2,90,140,0.5)' stroke-width='5' stroke-dasharray='4 12' stroke-linecap='round'/%3E%3Cpath d='M576 68l14-13 4 19' fill='none' stroke='rgba(2,90,140,0.55)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat,
+        linear-gradient(135deg, #f2f7fd, #e6eef7);
+    box-shadow: 0 .8rem 2rem rgba(0, 26, 54, .12);
+}
+
+.air-fan {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+}
+
+.air-fan .fan-glyph {
+    width: clamp(2rem, 3.4vw, 3rem);
+    height: clamp(2rem, 3.4vw, 3rem);
+}
+
+.fan-glyph.cool {
+    border-color: var(--blue);
+    background:
+        radial-gradient(circle at center, var(--blue) 0 .3rem, #fff .31rem .44rem, transparent .45rem),
+        repeating-conic-gradient(from 12deg, var(--blue) 0 38deg, transparent 38deg 90deg);
+}
+
+.fan-glyph.warm {
+    border-color: #7c3626;
+    background:
+        radial-gradient(circle at center, #7c3626 0 .3rem, #fff .31rem .44rem, transparent .45rem),
+        repeating-conic-gradient(from 12deg, #7c3626 0 38deg, transparent 38deg 90deg);
+}
+
+.fan-in {
+    left: 3%;
+    bottom: 8%;
+}
+
+.fan-out {
+    right: 26%;
+    top: 5%;
+}
+
+.fan-rear {
+    right: 3%;
+    top: 26%;
+}
+
+.fan-tag {
+    font-weight: 800;
+    font-size: clamp(.66rem, .95vw, .92rem);
+    padding: .14rem .5rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .85);
+    white-space: nowrap;
+}
+
+.tag-cool { color: #02506f; }
+.tag-warm { color: #7c3626; }
+
+.case-part {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border: .14rem solid var(--navy);
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .8);
+    padding: .3rem .6rem;
+}
+
+.case-part span {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.66rem, .95vw, .92rem);
+    white-space: nowrap;
+}
+
+.part-bays {
+    left: 3%;
+    top: 24%;
+}
+
+.part-cpu {
+    left: 38%;
+    top: 34%;
+}
+
+.part-psu {
+    right: 6%;
+    bottom: 8%;
+}
+
+.edge-tag {
+    position: absolute;
+    top: -1.5rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.62rem, .85vw, .82rem);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.edge-front {
+    left: 0;
+}
+
+.edge-rear {
+    right: 0;
+}
+
+/* CPU cooling: air stack rows and the liquid loop ring. */
+
+.cool-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.4rem);
+}
+
+.cool-panel {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .08);
+}
+
+.cool-panel h3 {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    flex-wrap: wrap;
+    color: var(--navy);
+    margin-bottom: .8rem;
+}
+
+.chosen-tag {
+    display: inline-block;
+    padding: .16rem .55rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #001a36;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .85rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    font-style: normal;
+}
+
+.cool-stack {
+    display: grid;
+    gap: .45rem;
+}
+
+.stack-row {
+    display: grid;
+    grid-template-columns: 4.2rem minmax(7rem, auto) 1fr;
+    align-items: center;
+    gap: .8rem;
+    padding: .35rem .5rem;
+    border-radius: .4rem;
+    background: #f4f9fd;
+}
+
+.stack-glyph {
+    display: block;
+    justify-self: center;
+}
+
+.glyph-fan {
+    width: 2.2rem;
+    height: 2.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at center, var(--navy) 0 .24rem, #f4f9fd .25rem .36rem, transparent .37rem),
+        repeating-conic-gradient(from 12deg, var(--navy) 0 38deg, transparent 38deg 90deg);
+}
+
+.glyph-sink {
+    width: 3.4rem;
+    height: 1.9rem;
+    background:
+        repeating-linear-gradient(to right, var(--navy) 0 .3rem, transparent .3rem .74rem) top left / 100% 1.5rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) bottom left / 100% .34rem no-repeat;
+}
+
+.glyph-paste {
+    width: 2.8rem;
+    height: .5rem;
+    border-radius: .25rem;
+    background: #b3a98f;
+}
+
+.glyph-cpu {
+    width: 1.9rem;
+    height: 1.9rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem;
+    background: linear-gradient(var(--navy), var(--navy)) center / .7rem .7rem no-repeat, #fff;
+}
+
+.stack-name {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.stack-def {
+    font-size: clamp(.8rem, 1vw, .98rem);
+}
+
+.liquid-loop {
+    position: relative;
+    height: clamp(11rem, 17vw, 14.5rem);
+}
+
+.loop-ring {
+    position: absolute;
+    inset: 12% 6% 10% 6%;
+    border: .3rem solid var(--blue);
+    border-radius: 1.4rem;
+}
+
+.loop-ring::before,
+.loop-ring::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.loop-ring::before {
+    top: -.62rem;
+    left: 46%;
+    border-left: .55rem solid var(--blue);
+    border-top: .45rem solid transparent;
+    border-bottom: .45rem solid transparent;
+}
+
+.loop-ring::after {
+    bottom: -.62rem;
+    left: 46%;
+    border-right: .55rem solid var(--blue);
+    border-top: .45rem solid transparent;
+    border-bottom: .45rem solid transparent;
+}
+
+.loop-center {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+    color: var(--blue);
+    font-weight: 700;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    text-align: center;
+    max-width: 11rem;
+}
+
+.loop-stop {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: .35rem .7rem;
+    border: .12rem solid var(--navy);
+    border-radius: .4rem;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    line-height: 1.2;
+    box-shadow: 0 .3rem .8rem rgba(0, 26, 54, .1);
+}
+
+.loop-stop i {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .85rem);
+}
+
+.stop-block {
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.stop-rad {
+    left: 0;
+    top: 4%;
+}
+
+.stop-pump {
+    right: 0;
+    top: 4%;
+}
+
+.loop-warn {
+    margin-top: .7rem;
+    padding: .5rem .8rem;
+    border-left: .4rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .1);
+    font-size: clamp(.8rem, 1vw, .98rem);
+    font-weight: 700;
+    color: #001a36;
+    border-radius: 0 .3rem .3rem 0;
+}
+
+/* HDD and SSD, drawn in their canonical shapes. */
+
+.drive-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.4rem);
+    max-width: 62rem;
+}
+
+.drive-card {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .08);
+}
+
+.hdd-draw,
+.ssd-draw {
+    position: relative;
+    width: min(100%, 14rem);
+    height: 6rem;
+    margin: 0 auto .8rem;
+    border: .16rem solid var(--navy);
+    border-radius: .4rem;
+    background: #f4f9fd;
+}
+
+.hdd-draw .platter {
+    position: absolute;
+    left: .6rem;
+    top: .55rem;
+    width: 4.6rem;
+    height: 4.6rem;
+    border: .16rem solid var(--blue);
+    border-radius: 50%;
+    background: radial-gradient(circle at center, transparent 0 1.2rem, rgba(2, 90, 140, .18) 1.2rem 1.38rem, transparent 1.39rem);
+}
+
+.hdd-draw .spindle {
+    position: absolute;
+    left: 2.68rem;
+    top: 2.62rem;
+    width: .6rem;
+    height: .6rem;
+    border-radius: 50%;
+    background: var(--navy);
+}
+
+.hdd-draw .arm {
+    position: absolute;
+    right: 1rem;
+    top: 2.75rem;
+    width: 7.2rem;
+    height: .4rem;
+    border-radius: .2rem;
+    background: var(--navy);
+    transform: rotate(-20deg);
+    transform-origin: right center;
+}
+
+.hdd-draw .pivot {
+    position: absolute;
+    right: .6rem;
+    top: 2.45rem;
+    width: .9rem;
+    height: .9rem;
+    border-radius: 50%;
+    border: .16rem solid var(--navy);
+    background: #fff;
+}
+
+.ssd-draw .ssd-chip {
+    position: absolute;
+    top: 1.1rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: .14rem solid var(--navy);
+    border-radius: .16rem;
+    background: #fff;
+}
+
+.ssd-draw .ssd-chip:nth-child(1) { left: 1rem; }
+.ssd-draw .ssd-chip:nth-child(2) { left: 3.6rem; }
+.ssd-draw .ssd-chip:nth-child(3) { left: 6.2rem; }
+.ssd-draw .ssd-chip:nth-child(4) { left: 9.3rem; top: 1.5rem; width: 3.2rem; height: 1.3rem; }
+
+.ssd-draw .ssd-edge {
+    position: absolute;
+    left: 1rem;
+    bottom: .55rem;
+    width: 9.6rem;
+    height: .6rem;
+    background: repeating-linear-gradient(to right, var(--blue) 0 .32rem, transparent .32rem .6rem);
+}
+
+.drive-card strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.drive-facts {
+    list-style: none;
+    margin: .55rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .4rem;
+}
+
+.drive-facts li {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    line-height: 1.3;
+}
+
+.drive-facts b {
+    color: var(--blue);
+    margin-right: .25rem;
+}
+
+/* The M.2 bus choice. Gold marks the build's pick. */
+
+.m2-choice {
+    display: grid;
+    gap: clamp(.9rem, 1.8vw, 1.5rem);
+    max-width: 58rem;
+}
+
+.m2-stick {
+    position: relative;
+    width: min(100%, 19rem);
+    height: 3.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem .55rem .55rem .3rem;
+    background: #fff;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .1);
+}
+
+.m2-chip {
+    position: absolute;
+    top: .55rem;
+    width: 4.4rem;
+    height: 2rem;
+    border: .14rem solid var(--navy);
+    border-radius: .16rem;
+    background: #f4f9fd;
+}
+
+.m2-chip:nth-child(1) { left: 3.3rem; }
+.m2-chip:nth-child(2) { left: 8.7rem; }
+
+.m2-notch {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2.2rem;
+    background:
+        repeating-linear-gradient(to bottom, var(--blue) 0 .28rem, transparent .28rem .55rem) left .35rem center / .7rem 70% no-repeat;
+    border-right: .14rem solid var(--navy);
+}
+
+.m2-notch::after {
+    content: "";
+    position: absolute;
+    left: -.16rem;
+    top: 32%;
+    width: .55rem;
+    height: 36%;
+    background: var(--canvas);
+    border-right: .14rem solid var(--navy);
+}
+
+.bus-paths {
+    display: grid;
+    gap: .7rem;
+}
+
+.bus-path {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    flex-wrap: wrap;
+}
+
+.bus-chip {
+    padding: .5rem .9rem;
+    background: #fff;
+    border: .14rem solid var(--blue);
+    border-radius: .45rem;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+    white-space: nowrap;
+}
+
+.bus-chip.gold-chip {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #001a36;
+}
+
+.bus-arrow {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+}
+
+.bus-desc {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+    font-weight: 600;
+    color: #001a36;
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    flex-wrap: wrap;
+}
+
+.bus-desc .chosen-tag {
+    font-size: clamp(.66rem, .85vw, .8rem);
+}
+
+/* RAID 0 and 1: two drives, two philosophies. */
+
+.raid-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.4rem);
+    max-width: 62rem;
+}
+
+.raid-card {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .08);
+}
+
+.raid-card h3 {
+    color: var(--navy);
+    margin-bottom: .7rem;
+}
+
+.disk-pair {
+    display: flex;
+    gap: 1rem;
+}
+
+.disk {
+    flex: 1;
+    display: flex;
+    gap: .35rem;
+    padding: .5rem;
+    border: .16rem solid var(--navy);
+    border-radius: .45rem .45rem .8rem .8rem;
+    background: #f4f9fd;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.blk {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: .25rem;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1vw, .95rem);
+}
+
+.raid-fact {
+    margin-top: .7rem;
+    font-size: clamp(.88rem, 1.1vw, 1.08rem);
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.raid-verdict {
+    margin-top: .4rem;
+    font-weight: 900;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.verdict-danger { color: var(--status-danger); }
+.verdict-safe { color: var(--status-success); }
+
+/* RAID 5, 6, 10 rows. Data solid, parity outlined. */
+
+.raid-rows {
+    display: grid;
+    gap: .65rem;
+    max-width: 66rem;
+}
+
+.raid-line {
+    display: grid;
+    grid-template-columns: clamp(5rem, 8vw, 6.5rem) auto 1fr auto;
+    align-items: center;
+    gap: clamp(.7rem, 1.4vw, 1.2rem);
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    padding: .6rem .9rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.raid-tag {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.mini-disks {
+    display: flex;
+    gap: .4rem;
+}
+
+.mini-disk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.9rem;
+    padding: .34rem .4rem;
+    border: .14rem solid var(--navy);
+    border-radius: .3rem .3rem .55rem .55rem;
+    background: #f4f9fd;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.74rem, .95vw, .92rem);
+    white-space: nowrap;
+}
+
+.mini-disk b {
+    color: #7c3626;
+    font-weight: 900;
+}
+
+.mini-disk.pair-a {
+    background: rgba(2, 90, 140, .12);
+}
+
+.mini-disk.pair-b {
+    background: rgba(188, 208, 230, .45);
+}
+
+.raid-line p {
+    font-size: clamp(.82rem, 1.05vw, 1.02rem);
+    line-height: 1.3;
+}
+
+.survive-chip {
+    padding: .3rem .6rem;
+    border-radius: .3rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    white-space: nowrap;
+}
+
+/* Storage that travels: tinted term rows. */
+
+.travel-list {
+    list-style: none;
+    margin: clamp(.9rem, 1.6vw, 1.4rem) 0 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+}
+
+.travel-list li {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+    line-height: 1.35;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.travel-list b {
+    color: var(--navy);
+    margin-right: .35rem;
+}
+
+/* DDR generation bars. */
+
+.ddr-row {
+    display: grid;
+    grid-template-columns: clamp(4.2rem, 7vw, 5.5rem) 1fr clamp(8.5rem, 14vw, 11rem);
+    align-items: center;
+    gap: 1rem;
+}
+
+.ddr-cap {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+/* The DIMM channel map. Gold sticks mark the build's matched pair. */
+
+.dimm-map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    max-width: 56rem;
+}
+
+.chan-group {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.chan-name {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: .3rem;
+    border-bottom: .18rem solid var(--blue);
+}
+
+.dimm-slots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .8rem;
+}
+
+.dimm-slot {
+    position: relative;
+    height: clamp(6.5rem, 10vw, 8.5rem);
+    border: .16rem dashed var(--navy-300, #86a8d1);
+    border-radius: .4rem;
+    background: #f7fafd;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: .4rem;
+}
+
+.dimm-slot.filled {
+    border-style: solid;
+    border-color: var(--navy);
+}
+
+.dimm-stick {
+    position: absolute;
+    inset: .45rem .55rem 2rem .55rem;
+    border-radius: .25rem;
+    background:
+        repeating-linear-gradient(to right, rgba(0, 26, 54, .28) 0 .35rem, transparent .35rem .8rem) bottom left / 100% .5rem no-repeat,
+        linear-gradient(180deg, var(--gold), #e0a92e);
+}
+
+.slot-name {
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.dimm-note {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: .8rem;
+    flex-wrap: wrap;
+}
+
+.pair-chip {
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: #001a36;
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.warn-chip {
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    background: rgba(201, 130, 31, .14);
+    color: #7c4f0e;
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+/* The instruction cycle and architecture row. */
+
+.cycle-rail {
+    display: flex;
+    align-items: center;
+    gap: clamp(.5rem, 1.2vw, 1rem);
+    flex-wrap: wrap;
+    margin-bottom: clamp(1rem, 2vw, 1.8rem);
+}
+
+.cycle-chip {
+    padding: .5rem 1rem;
+    background: var(--navy);
+    color: #fff;
+    border-radius: .45rem;
+    font-weight: 900;
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+.cycle-arrow {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+}
+
+.arch-row {
+    margin-bottom: clamp(.9rem, 1.8vw, 1.5rem);
+}
+
+.feature-chips .chip {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    color: var(--navy);
+    font-weight: 700;
+}
+
+/* PGA vs LGA: where the pins live. */
+
+.socket-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.4rem);
+    max-width: 58rem;
+}
+
+.socket-card {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .08);
+    text-align: center;
+}
+
+.socket-card h3 {
+    color: var(--navy);
+    margin-bottom: .6rem;
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.socket-draw {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .25rem;
+}
+
+.chip-draw,
+.socket-base {
+    display: block;
+    width: clamp(5rem, 8vw, 6.5rem);
+    border-radius: .3rem;
+}
+
+.chip-draw {
+    height: clamp(2rem, 3.2vw, 2.6rem);
+    border: .16rem solid var(--navy);
+}
+
+.pga-chip {
+    background:
+        radial-gradient(circle, var(--navy) 0 .09rem, transparent .1rem) center bottom / .5rem .42rem repeat-x,
+        radial-gradient(circle, var(--navy) 0 .09rem, transparent .1rem) center calc(100% - .4rem) / .5rem .42rem repeat-x,
+        #fff;
+}
+
+.lga-chip {
+    background: linear-gradient(#fff, #fff);
+}
+
+.lga-chip::after {
+    content: "";
+}
+
+.drop-arrow {
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+    line-height: 1;
+}
+
+.socket-base {
+    height: clamp(2.6rem, 4vw, 3.2rem);
+    border: .16rem solid var(--navy);
+    background: #f4f9fd;
+}
+
+.pga-base {
+    background:
+        radial-gradient(circle, transparent 0 .06rem, rgba(0, 26, 54, .5) .06rem .11rem, transparent .12rem) center / .5rem .5rem repeat,
+        #f4f9fd;
+}
+
+.lga-base {
+    background:
+        radial-gradient(circle, var(--navy) 0 .09rem, transparent .1rem) center / .5rem .5rem repeat,
+        #f4f9fd;
+}
+
+.socket-fact {
+    margin-top: .6rem;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.socket-fact b {
+    color: var(--blue);
+    margin-right: .3rem;
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 20, 42, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #f6fafd, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+            linear-gradient(135deg, #033a72, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(3, 58, 114, .5);
+    }
+
+    .psu-flow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+        margin-left: 2.4rem;
+    }
+
+    .rail-row,
+    .ddr-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .conn-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem;
+    }
+
+    .case-shell {
+        aspect-ratio: auto;
+        display: grid;
+        gap: .7rem;
+        padding: .9rem;
+        background: linear-gradient(135deg, #f2f7fd, #e6eef7);
+    }
+
+    .air-fan,
+    .case-part,
+    .edge-tag {
+        position: static;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: .7rem;
+    }
+
+    .case-air {
+        padding-top: 0;
+    }
+
+    .loop-center {
+        position: static;
+        transform: none;
+        max-width: none;
+        text-align: left;
+    }
+
+    .cool-duo,
+    .drive-duo,
+    .raid-duo,
+    .socket-duo,
+    .dimm-map {
+        grid-template-columns: 1fr;
+    }
+
+    .dimm-note {
+        grid-column: auto;
+    }
+
+    .raid-line {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .mini-disks {
+        flex-wrap: wrap;
+    }
+
+    .stack-row {
+        grid-template-columns: 3.6rem 1fr;
+    }
+
+    .stack-def {
+        grid-column: 2;
+    }
+
+    .liquid-loop {
+        height: auto;
+        display: grid;
+        gap: .6rem;
+    }
+
+    .loop-ring {
+        display: none;
+    }
+
+    .loop-stop {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        gap: .5rem;
+        justify-content: flex-start;
+    }
+
+    .visual-split,
+    .visual-split.reverse {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .work-order,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .work-order {
+        width: 100%;
+    }
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}

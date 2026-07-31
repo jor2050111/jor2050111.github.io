@@ -1042,3 +1042,9 @@
         width: 100%;
     }
 }
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
