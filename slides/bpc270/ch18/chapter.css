@@ -1,0 +1,1734 @@
+/* BPC270 Chapter 18: the guarded doorway */
+
+/* The motif is painted as background layers only: a small-office door
+   with a peephole, a gold lock plate, and a firewall brick pattern on
+   the wall either side, over a soft ruled field. Positioned boxes would
+   create a focus scroll trap, so everything lives in the background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='236' y='104' width='118' height='218' rx='10' stroke='rgba(3,72,143,0.07)' stroke-width='16'/%3E%3Cg stroke='rgba(3,116,181,0.12)' stroke-width='2'%3E%3Cpath d='M96 122h118M96 156h118M96 190h118M96 224h118M96 258h118M96 292h118'/%3E%3Cpath d='M134 122v34M174 122v34M114 156v34M154 156v34M194 156v34M134 190v34M174 190v34M114 224v34M154 224v34M194 224v34M134 258v34M174 258v34'/%3E%3Cpath d='M350 122h110M350 156h110M350 190h110M350 224h110M350 258h110M350 292h110'/%3E%3Cpath d='M386 122v34M424 122v34M368 156v34M406 156v34M444 156v34M386 190v34M424 190v34M368 224v34M406 224v34M444 224v34M386 258v34M424 258v34'/%3E%3C/g%3E%3Crect x='222' y='90' width='120' height='220' rx='8' stroke='rgba(3,72,143,0.18)' stroke-width='2.6'/%3E%3Crect x='234' y='102' width='96' height='196' rx='5' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='248' y='118' width='68' height='70' rx='4' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='248' y='210' width='68' height='72' rx='4' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Ccircle cx='282' cy='142' r='7' stroke='rgba(255,200,69,0.55)' stroke-width='2.6'/%3E%3Ccircle cx='282' cy='142' r='2.2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='316' y='196' width='16' height='36' rx='3' stroke='rgba(255,200,69,0.55)' stroke-width='2.6'/%3E%3Ccircle cx='324' cy='208' r='3.4' stroke='rgba(255,200,69,0.55)' stroke-width='2'/%3E%3Cpath d='M324 213v9' stroke='rgba(255,200,69,0.55)' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M212 318h140' stroke='rgba(3,72,143,0.18)' stroke-width='2.6'/%3E%3Crect x='250' y='330' width='64' height='12' rx='3' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(3, 116, 181, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+        linear-gradient(135deg, #fbfcff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='236' y='104' width='118' height='218' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='16'/%3E%3Cg stroke='rgba(255,255,255,0.08)' stroke-width='2'%3E%3Cpath d='M96 122h118M96 156h118M96 190h118M96 224h118M96 258h118M96 292h118'/%3E%3Cpath d='M134 122v34M174 122v34M114 156v34M154 156v34M194 156v34M134 190v34M174 190v34M114 224v34M154 224v34M194 224v34M134 258v34M174 258v34'/%3E%3Cpath d='M350 122h110M350 156h110M350 190h110M350 224h110M350 258h110M350 292h110'/%3E%3Cpath d='M386 122v34M424 122v34M368 156v34M406 156v34M444 156v34M386 190v34M424 190v34M368 224v34M406 224v34M444 224v34M386 258v34M424 258v34'/%3E%3C/g%3E%3Crect x='222' y='90' width='120' height='220' rx='8' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Crect x='234' y='102' width='96' height='196' rx='5' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='248' y='118' width='68' height='70' rx='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='248' y='210' width='68' height='72' rx='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Ccircle cx='282' cy='142' r='7' stroke='rgba(255,200,69,0.5)' stroke-width='2.6'/%3E%3Ccircle cx='282' cy='142' r='2.2' fill='rgba(255,200,69,0.5)'/%3E%3Crect x='316' y='196' width='16' height='36' rx='3' stroke='rgba(255,200,69,0.5)' stroke-width='2.6'/%3E%3Ccircle cx='324' cy='208' r='3.4' stroke='rgba(255,200,69,0.5)' stroke-width='2'/%3E%3Cpath d='M324 213v9' stroke='rgba(255,200,69,0.5)' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M212 318h140' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Crect x='250' y='330' width='64' height='12' rx='3' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='236' y='104' width='118' height='218' rx='10' stroke='rgba(0,46,93,0.05)' stroke-width='16'/%3E%3Cg stroke='rgba(0,46,93,0.1)' stroke-width='2'%3E%3Cpath d='M96 122h118M96 156h118M96 190h118M96 224h118M96 258h118M96 292h118'/%3E%3Cpath d='M134 122v34M174 122v34M114 156v34M154 156v34M194 156v34M134 190v34M174 190v34M114 224v34M154 224v34M194 224v34M134 258v34M174 258v34'/%3E%3Cpath d='M350 122h110M350 156h110M350 190h110M350 224h110M350 258h110M350 292h110'/%3E%3Cpath d='M386 122v34M424 122v34M368 156v34M406 156v34M444 156v34M386 190v34M424 190v34M368 224v34M406 224v34M444 224v34M386 258v34M424 258v34'/%3E%3C/g%3E%3Crect x='222' y='90' width='120' height='220' rx='8' stroke='rgba(0,46,93,0.17)' stroke-width='2.6'/%3E%3Crect x='234' y='102' width='96' height='196' rx='5' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Crect x='248' y='118' width='68' height='70' rx='4' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Crect x='248' y='210' width='68' height='72' rx='4' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Ccircle cx='282' cy='142' r='7' stroke='rgba(3,116,181,0.45)' stroke-width='2.6'/%3E%3Ccircle cx='282' cy='142' r='2.2' fill='rgba(3,116,181,0.45)'/%3E%3Crect x='316' y='196' width='16' height='36' rx='3' stroke='rgba(3,116,181,0.45)' stroke-width='2.6'/%3E%3Ccircle cx='324' cy='208' r='3.4' stroke='rgba(3,116,181,0.45)' stroke-width='2'/%3E%3Cpath d='M324 213v9' stroke='rgba(3,116,181,0.45)' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M212 318h140' stroke='rgba(0,46,93,0.17)' stroke-width='2.6'/%3E%3Crect x='250' y='330' width='64' height='12' rx='3' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 46, 93, .06) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small door with a peephole and a handle. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: .92rem;
+    height: 1.18rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .4rem .4rem .14rem .14rem;
+    background-image:
+        radial-gradient(circle, currentColor 0 .08rem, transparent .09rem),
+        radial-gradient(circle, currentColor 0 .07rem, transparent .08rem);
+    background-size: .26rem .26rem, .22rem .22rem;
+    background-position: 50% 24%, 74% 58%;
+    background-repeat: no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 15ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The router card: the chapter's traced object. Amber marks defaults
+   awaiting a decision, green marks decisions made. */
+
+.router-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.router-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--midnight-navy);
+}
+
+.rc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.rc-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.router-card dl {
+    margin: 0;
+}
+
+.router-card dl div {
+    display: grid;
+    grid-template-columns: clamp(8rem, 12vw, 10.5rem) 1fr;
+    gap: .8rem;
+    padding: .48rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: center;
+}
+
+.router-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.router-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.router-card dd {
+    margin: 0;
+    color: var(--midnight-navy);
+    font-size: clamp(.88rem, 1.15vw, 1.08rem);
+    line-height: 1.3;
+}
+
+.state {
+    display: inline-block;
+    padding: .16rem .55rem;
+    border-radius: .25rem;
+    font-weight: 800;
+    font-size: clamp(.74rem, .98vw, .92rem);
+    letter-spacing: .04em;
+}
+
+.state.warn {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.state.warn::before {
+    content: "! ";
+}
+
+.state.ok {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.state.ok::before {
+    content: "✓ ";
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* Vulnerability rows: each a door standing ajar. */
+
+.vuln-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+    max-width: 64rem;
+}
+
+.vuln-rows li {
+    display: grid;
+    grid-template-columns: auto clamp(9.5rem, 15vw, 13rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .5rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.vuln-rows li::before {
+    content: "";
+    width: 1.05rem;
+    height: 1.4rem;
+    border: .13rem solid var(--navy);
+    border-radius: .3rem .3rem .1rem .1rem;
+    background:
+        linear-gradient(var(--phoenix-gold), var(--phoenix-gold)) 100% 50% / .26rem 100% no-repeat,
+        radial-gradient(circle at 62% 52%, var(--navy) 0 .07rem, transparent .08rem);
+}
+
+.vuln-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.vuln-rows span {
+    font-size: clamp(.88rem, 1.15vw, 1.12rem);
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(8.5rem, 13vw, 11.5rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+/* The rebuilt Wi-Fi network list: our SSID and its evil twin. */
+
+.wifi-list,
+.cap-pane {
+    align-self: start;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.wl-chrome {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem .9rem;
+    background: var(--midnight-navy);
+}
+
+.wl-chrome i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.wl-chrome span {
+    margin-left: .4rem;
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.75rem, 1vw, .95rem);
+    letter-spacing: .05em;
+}
+
+.wl-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    gap: .9rem;
+    align-items: center;
+    padding: .7rem 1rem;
+    border-top: .08rem solid var(--mist);
+}
+
+.wl-row strong {
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    letter-spacing: .02em;
+}
+
+.wl-row.legit {
+    background: var(--gold-200);
+    border-left: .45rem solid var(--phoenix-gold);
+}
+
+.wl-row.twin {
+    background: rgba(166, 50, 31, .06);
+    border-left: .45rem solid var(--status-danger);
+}
+
+.wl-signal {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: .16rem;
+    height: 1.1rem;
+}
+
+.wl-signal i {
+    width: .3rem;
+    background: var(--blue);
+    border-radius: .08rem;
+}
+
+.wl-signal i:nth-child(1) {
+    height: .45rem;
+}
+
+.wl-signal i:nth-child(2) {
+    height: .75rem;
+}
+
+.wl-signal i:nth-child(3) {
+    height: 1.05rem;
+}
+
+.wl-sec {
+    padding: .16rem .5rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.7rem, .92vw, .86rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.wl-sec.open {
+    background: transparent;
+    border: .1rem dashed var(--status-danger);
+    color: var(--status-danger);
+}
+
+.wl-tag {
+    font-style: normal;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .84rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.wl-tag.mine {
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+}
+
+.wl-tag.evil {
+    background: var(--status-danger);
+    color: #fff;
+}
+
+.wl-cap,
+.cap-note {
+    margin: 0;
+    padding: .6rem 1rem .7rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+/* The botnet relay: one actor, many hands, one victim. */
+
+.threat-split {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    align-items: center;
+}
+
+.bot-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto auto auto 1fr;
+    gap: .5rem;
+    align-items: center;
+}
+
+.bf-node {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.1rem) .6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .4rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.bf-node strong {
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.18vw, 1.12rem);
+}
+
+.bf-node.actor {
+    border-top-color: var(--navy);
+}
+
+.bf-node.victim {
+    border-top-color: var(--status-danger);
+}
+
+.bf-node.victim em {
+    font-style: normal;
+    color: var(--status-danger);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .85rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.bf-glyph {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+.g-actor {
+    border-radius: 50%;
+    border: .13rem solid var(--navy);
+    background:
+        radial-gradient(circle at 50% 34%, var(--navy) 0 .38rem, transparent .39rem),
+        radial-gradient(circle at 50% 110%, var(--navy) 0 .9rem, transparent .91rem),
+        var(--mist);
+}
+
+.g-cnc {
+    border: .14rem solid var(--navy);
+    border-radius: .25rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 22% 28% / 1rem .13rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 22% 52% / 1rem .13rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 22% 76% / 1rem .13rem no-repeat,
+        radial-gradient(circle at 80% 28%, var(--blue) 0 .1rem, transparent .11rem),
+        radial-gradient(circle at 80% 52%, var(--blue) 0 .1rem, transparent .11rem),
+        radial-gradient(circle at 80% 76%, var(--blue) 0 .1rem, transparent .11rem),
+        #fff;
+}
+
+.g-victim {
+    border-radius: 50%;
+    border: .14rem solid var(--status-danger);
+    background:
+        radial-gradient(circle, var(--status-danger) 0 .18rem, transparent .19rem),
+        radial-gradient(circle, transparent 0 .5rem, var(--status-danger) .5rem .62rem, transparent .63rem);
+}
+
+.bf-bots {
+    display: grid;
+    gap: .35rem;
+}
+
+.bf-bot {
+    padding: .28rem .7rem;
+    border-radius: .3rem;
+    border: .12rem solid var(--blue);
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    text-align: center;
+}
+
+.bf-arrow {
+    color: var(--navy);
+    font-size: clamp(1.2rem, 1.9vw, 1.8rem);
+    font-weight: 800;
+    text-align: center;
+}
+
+.bf-arrow.flood {
+    color: var(--status-danger);
+}
+
+/* The intercepted Telnet session and the dictionary scale. */
+
+.pw-split {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    align-items: center;
+}
+
+.cap-row {
+    display: grid;
+    grid-template-columns: clamp(5.2rem, 8vw, 7rem) auto 1fr;
+    gap: .8rem;
+    align-items: center;
+    padding: .55rem 1rem;
+    border-top: .08rem solid var(--mist);
+}
+
+.cap-key {
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.cap-val {
+    color: var(--midnight-navy);
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.85rem, 1.12vw, 1.08rem);
+}
+
+.cap-flag {
+    justify-self: start;
+    font-style: normal;
+    padding: .16rem .5rem;
+    border-radius: .25rem;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .84rem);
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.cap-flag.warnflag {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.cap-flag.fail {
+    background: var(--status-danger);
+    color: #fff;
+}
+
+.cap-row.hot {
+    background: rgba(166, 50, 31, .07);
+    border-left: .45rem solid var(--status-danger);
+}
+
+.pw-side {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+}
+
+.dict-board {
+    display: grid;
+    gap: .6rem;
+}
+
+.dict-row {
+    display: grid;
+    grid-template-columns: clamp(7.5rem, 11vw, 9.5rem) minmax(0, 1fr);
+    grid-template-areas: "name track" "name out";
+    column-gap: 1rem;
+    row-gap: .3rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.dict-name {
+    grid-area: name;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.12vw, 1.1rem);
+}
+
+.dict-track {
+    grid-area: track;
+    display: block;
+    height: 1rem;
+    border-radius: .5rem;
+    background: var(--mist);
+    overflow: hidden;
+}
+
+.dict-fill {
+    display: block;
+    height: 100%;
+    min-width: .35rem;
+    border-radius: .5rem;
+    background: var(--blue);
+}
+
+.dict-out {
+    grid-area: out;
+    color: var(--midnight-navy);
+    font-weight: 700;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+/* Injection: the browser that trusts too much, the database verbs. */
+
+.inj-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    max-width: 72rem;
+    align-items: stretch;
+}
+
+.inj-panel {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.inj-panel h3 {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.inj-panel > p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.mini-browser {
+    border: .13rem solid var(--navy);
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.mb-bar {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem .8rem;
+    background: var(--midnight-navy);
+}
+
+.mb-bar i {
+    width: .55rem;
+    height: .55rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.mb-addr {
+    margin-left: .4rem;
+    flex: 1;
+    padding: .22rem .7rem;
+    border-radius: .8rem;
+    background: rgba(255, 255, 255, .16);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.mb-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    background: #fbfcff;
+}
+
+.script-chip {
+    padding: .4rem .8rem;
+    border-radius: .35rem;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+}
+
+.script-chip.site {
+    background: var(--mist);
+    color: var(--navy);
+    border: .12rem solid var(--blue);
+}
+
+.script-chip.evil {
+    background: rgba(166, 50, 31, .1);
+    color: var(--status-danger);
+    border: .12rem dashed var(--status-danger);
+}
+
+.sqli-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sqli-head .code {
+    flex: 1;
+    padding: clamp(.8rem, 1.4vw, 1.1rem) clamp(.9rem, 1.6vw, 1.3rem);
+    font-size: clamp(.9rem, 1.2vw, 1.3rem);
+}
+
+.g-cyl {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 2.9rem;
+    height: 2.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50% / 22%;
+    background: #fff;
+}
+
+.g-cyl::before {
+    content: "";
+    position: absolute;
+    top: .16rem;
+    left: 0;
+    right: 0;
+    height: .9rem;
+    border-bottom: .14rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.g-cyl.small {
+    width: 2.1rem;
+    height: 2rem;
+}
+
+.g-cyl.small::before {
+    height: .65rem;
+}
+
+/* The WPA generation rail. Retired ciphers are struck and dimmed. */
+
+.gen-rail {
+    display: grid;
+    grid-template-columns: minmax(0, .82fr) auto minmax(0, 1fr) auto minmax(0, 1.12fr);
+    gap: .55rem;
+    align-items: stretch;
+    max-width: 74rem;
+}
+
+.gen-card {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .7rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem) clamp(.8rem, 1.4vw, 1.2rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.gen-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    margin-bottom: .6rem;
+    padding-bottom: .5rem;
+    border-bottom: .1rem solid var(--mist);
+}
+
+.gen-card h3 {
+    color: var(--navy);
+    font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+}
+
+.gen-tag {
+    font-style: normal;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.64rem, .86vw, .8rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.gen-tag.retired {
+    background: var(--status-danger);
+    color: #fff;
+}
+
+.gen-tag.gold-tag {
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+}
+
+.gen-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .4rem;
+}
+
+.gen-card li {
+    font-size: clamp(.82rem, 1.08vw, 1.05rem);
+    color: var(--midnight-navy);
+    line-height: 1.3;
+}
+
+.gen-card li strong {
+    color: var(--blue);
+    font-family: var(--code);
+}
+
+.gen-card s {
+    color: var(--ink);
+    opacity: .55;
+    text-decoration-thickness: .12rem;
+}
+
+.gen-card.pick {
+    border: .16rem solid var(--phoenix-gold);
+    border-top-width: .5rem;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.gen-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+/* Enterprise authentication: the flow and the port rows. */
+
+.ent-split {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    align-items: center;
+}
+
+.aaa-flow {
+    display: grid;
+    justify-items: center;
+    gap: 0;
+}
+
+.aaa-node {
+    width: min(100%, 26rem);
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-left: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: .65rem 1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.aaa-node strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.28vw, 1.22rem);
+}
+
+.aaa-node p {
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+}
+
+.aaa-node.server {
+    border-left-color: var(--navy);
+    background: var(--mist);
+}
+
+.aaa-wire {
+    width: .26rem;
+    height: clamp(.9rem, 1.6vw, 1.5rem);
+    background: var(--blue);
+    border-radius: .13rem;
+}
+
+.proto-side {
+    display: grid;
+    gap: .9rem;
+    align-content: center;
+}
+
+.proto-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+}
+
+.proto-rows li {
+    display: grid;
+    grid-template-columns: clamp(6.8rem, 10vw, 8.8rem) auto 1fr;
+    gap: .9rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.proto-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.port-chip {
+    justify-self: start;
+    padding: .2rem .55rem;
+    border-radius: .25rem;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.74rem, .98vw, .94rem);
+    white-space: nowrap;
+}
+
+.proto-def {
+    font-size: clamp(.82rem, 1.08vw, 1.05rem);
+}
+
+/* Router setup steps beside the traced card. */
+
+.visual-split.setup-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(19rem, .85fr);
+    align-items: center;
+}
+
+.setup-steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+}
+
+.setup-steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.1rem 1fr;
+    gap: .8rem;
+    align-items: start;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .7rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.setup-steps li::before {
+    content: counter(step);
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+}
+
+.setup-steps strong {
+    color: var(--navy);
+}
+
+.router-card.compact {
+    width: min(100%, 30rem);
+}
+
+.router-card.compact dl div {
+    padding: .4rem 1rem;
+}
+
+/* The rebuilt wireless settings pane. Gold binds the decisions. */
+
+.rt-pane {
+    width: min(100%, 64rem);
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 2rem rgba(0, 46, 93, .14);
+}
+
+.rt-pane header {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    background: var(--navy);
+}
+
+.sp-dots {
+    display: inline-flex;
+    gap: .3rem;
+}
+
+.sp-dots i {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .55);
+}
+
+.sp-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    letter-spacing: .04em;
+}
+
+.sp-row {
+    display: grid;
+    grid-template-columns: clamp(8.5rem, 13vw, 11.5rem) 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: .5rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.sp-row:last-child {
+    border-bottom: 0;
+}
+
+.sp-row strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.sp-row > span {
+    font-size: clamp(.82rem, 1.08vw, 1.02rem);
+}
+
+.rt-val {
+    font-style: normal;
+    padding: .22rem .6rem;
+    border-radius: .28rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    white-space: nowrap;
+}
+
+.rt-val.gold-val {
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+}
+
+.sp-row.picked {
+    border-left: .45rem solid var(--phoenix-gold);
+    background: var(--gold-200);
+}
+
+/* The amber caution strip. */
+
+.safety {
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .09);
+    padding: .7rem 1.2rem;
+    max-width: 64rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.safety strong {
+    color: var(--status-warning);
+}
+
+.safety p {
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+/* The firewall wall: three doors between the internet and the LAN. */
+
+.fw-wall {
+    display: grid;
+    gap: .55rem;
+    max-width: 70rem;
+    justify-items: center;
+}
+
+.fw-side {
+    display: flex;
+    justify-content: center;
+}
+
+.fw-zone {
+    padding: .3rem 1.1rem;
+    border-radius: .3rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.fw-zone.lan {
+    background: var(--blue);
+}
+
+.fw-doors {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+    padding: clamp(.8rem, 1.4vw, 1.2rem);
+    border-radius: .7rem;
+    border: .13rem solid var(--navy-300);
+    background:
+        repeating-linear-gradient(to bottom, transparent 0 1.35rem, rgba(3, 72, 143, .09) 1.35rem calc(1.35rem + 2px)),
+        repeating-linear-gradient(to right, transparent 0 2.7rem, rgba(3, 72, 143, .07) 2.7rem calc(2.7rem + 2px)),
+        #f2f6fb;
+}
+
+.fw-door {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .45rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.fw-door strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.28vw, 1.22rem);
+}
+
+.fw-door p {
+    font-size: clamp(.76rem, 1vw, .96rem);
+}
+
+.fw-door.opendoor {
+    border-top-color: var(--phoenix-gold);
+}
+
+.fw-door.upnp {
+    border-top-color: var(--status-warning);
+}
+
+.fw-leaf {
+    position: relative;
+    width: 1.5rem;
+    height: 2rem;
+    border: .14rem solid var(--navy);
+    border-radius: .35rem .35rem .12rem .12rem;
+}
+
+.fw-leaf.gold-leaf {
+    background:
+        linear-gradient(var(--phoenix-gold), var(--phoenix-gold)) 100% 50% / .45rem 100% no-repeat,
+        radial-gradient(circle at 60% 52%, var(--navy) 0 .09rem, transparent .1rem);
+}
+
+.fw-leaf.brick-leaf {
+    background:
+        repeating-linear-gradient(to bottom, transparent 0 .4rem, rgba(0, 46, 93, .35) .4rem calc(.4rem + 1.5px)),
+        repeating-linear-gradient(to right, transparent 0 .55rem, rgba(0, 46, 93, .3) .55rem calc(.55rem + 1.5px)),
+        var(--mist);
+}
+
+.fw-leaf.ajar-leaf {
+    border-color: var(--status-warning);
+    background:
+        linear-gradient(rgba(201, 130, 31, .8), rgba(201, 130, 31, .8)) 100% 50% / .3rem 100% no-repeat,
+        radial-gradient(circle at 60% 52%, #7c4f0e 0 .09rem, transparent .1rem);
+}
+
+/* The screened subnet chain, top to bottom like the source diagram. */
+
+.zone-split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: center;
+}
+
+.zone-map {
+    display: grid;
+    justify-items: center;
+    gap: 0;
+}
+
+.zm-node {
+    width: min(100%, 24rem);
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-left: .5rem solid var(--blue);
+    border-radius: .55rem;
+    padding: .5rem 1rem;
+    text-align: center;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .07);
+}
+
+.zm-node strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.zm-node span {
+    display: block;
+    font-size: clamp(.74rem, .98vw, .92rem);
+}
+
+.zm-node.router {
+    border-left-color: var(--navy);
+    background: var(--mist);
+}
+
+.zm-wire {
+    width: .26rem;
+    height: clamp(.7rem, 1.2vw, 1.1rem);
+    background: var(--blue);
+    border-radius: .13rem;
+}
+
+.zm-zone {
+    width: min(100%, 28rem);
+    border-radius: .6rem;
+    padding: .6rem .9rem;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: .4rem;
+}
+
+.zm-zone.screened {
+    border: .16rem dashed var(--blue);
+    background: rgba(3, 116, 181, .06);
+}
+
+.zm-zone.lanzone {
+    border: .14rem solid var(--navy);
+    background: #fff;
+}
+
+.zm-zone-label {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.68rem, .92vw, .86rem);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.zm-zone.lanzone .zm-zone-label {
+    color: var(--navy);
+}
+
+.zm-zone.lanzone span:not(.zm-zone-label) {
+    font-size: clamp(.78rem, 1.02vw, .96rem);
+}
+
+.zm-host {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+}
+
+.zm-host strong {
+    color: var(--navy);
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+.zone-facts {
+    align-self: center;
+}
+
+/* The access control vestibule: two doors, one open at a time. */
+
+.phys-split {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    align-items: start;
+}
+
+.phys-left,
+.phys-right {
+    display: grid;
+    gap: .9rem;
+    align-content: start;
+}
+
+.vest {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.vest-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(.6rem, 1.2vw, 1rem);
+    align-items: stretch;
+}
+
+.vest-door {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    border-radius: .55rem;
+    padding: .7rem .5rem;
+    border: .13rem solid var(--mist);
+}
+
+.vest-door.open {
+    border-color: var(--phoenix-gold);
+    background: var(--gold-200);
+}
+
+.vest-door.locked {
+    background: var(--mist);
+}
+
+.vest-door strong {
+    color: var(--navy);
+    font-size: clamp(.82rem, 1.08vw, 1.02rem);
+}
+
+.vest-leaf {
+    width: 1.3rem;
+    height: 1.8rem;
+    border: .14rem solid var(--navy);
+    border-radius: .32rem .32rem .1rem .1rem;
+    background:
+        linear-gradient(var(--phoenix-gold), var(--phoenix-gold)) 100% 50% / .4rem 100% no-repeat,
+        radial-gradient(circle at 58% 52%, var(--navy) 0 .08rem, transparent .09rem);
+}
+
+.vest-leaf.shut {
+    background:
+        radial-gradient(circle at 70% 52%, #fff 0 .09rem, transparent .1rem),
+        var(--navy);
+}
+
+.vest-state {
+    font-style: normal;
+    padding: .14rem .5rem;
+    border-radius: .25rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-weight: 800;
+    font-size: clamp(.62rem, .84vw, .78rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.vest-state.lock {
+    background: var(--navy);
+    color: #fff;
+}
+
+.vest-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    text-align: center;
+}
+
+.vest-person {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    border: .13rem solid var(--navy);
+    background:
+        radial-gradient(circle at 50% 34%, var(--navy) 0 .3rem, transparent .31rem),
+        radial-gradient(circle at 50% 108%, var(--navy) 0 .7rem, transparent .71rem),
+        var(--gold-200);
+}
+
+.vest-cap {
+    margin-top: .7rem;
+    padding-top: .55rem;
+    border-top: .1rem dashed var(--navy-300);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .96rem);
+}
+
+.lock-rows li {
+    grid-template-columns: clamp(7.5rem, 11vw, 9.8rem) 1fr;
+}
+
+/* Check chips on gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* The exit slide gives the recap panels most of the width so their
+   prompts do not wrap into one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+            linear-gradient(135deg, #fbfcff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .vuln-rows li {
+        grid-template-columns: auto 1fr;
+    }
+
+    .vuln-rows li span {
+        grid-column: 2;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .wl-row {
+        grid-template-columns: auto 1fr;
+        row-gap: .4rem;
+    }
+
+    .wl-row .wl-sec,
+    .wl-row .wl-tag {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .bot-flow {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .bf-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+
+    .bf-bots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: .4rem;
+    }
+
+    .cap-row {
+        grid-template-columns: auto 1fr;
+        row-gap: .35rem;
+    }
+
+    .cap-row .cap-flag {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .dict-row {
+        grid-template-columns: 1fr;
+        grid-template-areas: "name" "track" "out";
+    }
+
+    .inj-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .sqli-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gen-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .gen-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+
+    .proto-rows li {
+        grid-template-columns: auto auto;
+        row-gap: .35rem;
+    }
+
+    .proto-rows .proto-def {
+        grid-column: 1 / -1;
+    }
+
+    .visual-split,
+    .visual-split.reverse,
+    .visual-split.setup-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .router-card,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .sp-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+        justify-items: start;
+    }
+
+    .fw-doors {
+        grid-template-columns: 1fr;
+    }
+
+    .vest-row {
+        grid-template-columns: 1fr;
+    }
+
+    .router-card,
+    .router-card.compact,
+    .rt-pane {
+        width: 100%;
+    }
+}

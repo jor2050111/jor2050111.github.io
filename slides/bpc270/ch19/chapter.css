@@ -1,0 +1,1500 @@
+/* BPC270 Chapter 19: shields and quarantine */
+
+/* The motif is painted as background layers only: three nested shield
+   outlines (defense in depth), a gold check inside the innermost, a
+   dashed quarantine box holding a crossed-out square, and a badge
+   check, over a faint scanline field. Positioned boxes would create a
+   focus scroll trap, so everything lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(3,58,114,0.06)' stroke-width='18'/%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(3,58,114,0.22)' stroke-width='3'/%3E%3Cpath d='M235 92 L310 116 V172 C310 224 268 254 235 268 C202 254 160 224 160 172 V116 Z' stroke='rgba(29,94,163,0.26)' stroke-width='2.6'/%3E%3Cpath d='M235 124 L285 140 V174 C285 208 258 228 235 238 C212 228 185 208 185 174 V140 Z' stroke='rgba(29,94,163,0.3)' stroke-width='2.6'/%3E%3Cpath d='M215 180l14 14 26-30' stroke='rgba(224,169,46,0.65)' stroke-width='6'/%3E%3Crect x='360' y='268' width='104' height='84' rx='6' stroke='rgba(29,94,163,0.3)' stroke-width='2.8' stroke-dasharray='10 8'/%3E%3Crect x='396' y='296' width='30' height='26' rx='4' stroke='rgba(3,58,114,0.28)' stroke-width='2.6'/%3E%3Cpath d='M400 300l22 18M422 300l-22 18' stroke='rgba(3,58,114,0.24)' stroke-width='2.2'/%3E%3Ccircle cx='420' cy='118' r='26' stroke='rgba(224,169,46,0.6)' stroke-width='5'/%3E%3Cpath d='M408 118l9 9 16-18' stroke='rgba(224,169,46,0.6)' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 4.2rem, rgba(29, 94, 163, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+        linear-gradient(135deg, #f4f8fd, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(255,255,255,0.18)' stroke-width='3'/%3E%3Cpath d='M235 92 L310 116 V172 C310 224 268 254 235 268 C202 254 160 224 160 172 V116 Z' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Cpath d='M235 124 L285 140 V174 C285 208 258 228 235 238 C212 228 185 208 185 174 V140 Z' stroke='rgba(255,255,255,0.16)' stroke-width='2.6'/%3E%3Cpath d='M215 180l14 14 26-30' stroke='rgba(255,213,115,0.55)' stroke-width='6'/%3E%3Crect x='360' y='268' width='104' height='84' rx='6' stroke='rgba(255,255,255,0.16)' stroke-width='2.8' stroke-dasharray='10 8'/%3E%3Crect x='396' y='296' width='30' height='26' rx='4' stroke='rgba(255,255,255,0.16)' stroke-width='2.6'/%3E%3Cpath d='M400 300l22 18M422 300l-22 18' stroke='rgba(255,255,255,0.14)' stroke-width='2.2'/%3E%3Ccircle cx='420' cy='118' r='26' stroke='rgba(255,213,115,0.5)' stroke-width='5'/%3E%3Cpath d='M408 118l9 9 16-18' stroke='rgba(255,213,115,0.5)' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 4.2rem, rgba(255, 255, 255, .04) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #001a36, #033a72);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(0,26,54,0.05)' stroke-width='18'/%3E%3Cpath d='M235 60 L335 92 V170 C335 238 280 276 235 294 C190 276 135 238 135 170 V92 Z' stroke='rgba(0,26,54,0.26)' stroke-width='3'/%3E%3Cpath d='M235 92 L310 116 V172 C310 224 268 254 235 268 C202 254 160 224 160 172 V116 Z' stroke='rgba(29,94,163,0.34)' stroke-width='2.6'/%3E%3Cpath d='M235 124 L285 140 V174 C285 208 258 228 235 238 C212 228 185 208 185 174 V140 Z' stroke='rgba(29,94,163,0.38)' stroke-width='2.6'/%3E%3Cpath d='M215 180l14 14 26-30' stroke='rgba(0,26,54,0.4)' stroke-width='6'/%3E%3Crect x='360' y='268' width='104' height='84' rx='6' stroke='rgba(0,26,54,0.3)' stroke-width='2.8' stroke-dasharray='10 8'/%3E%3Crect x='396' y='296' width='30' height='26' rx='4' stroke='rgba(0,26,54,0.28)' stroke-width='2.6'/%3E%3Cpath d='M400 300l22 18M422 300l-22 18' stroke='rgba(0,26,54,0.24)' stroke-width='2.2'/%3E%3Ccircle cx='420' cy='118' r='26' stroke='rgba(0,26,54,0.35)' stroke-width='5'/%3E%3Cpath d='M408 118l9 9 16-18' stroke='rgba(0,26,54,0.35)' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 4.2rem, rgba(0, 26, 54, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small outlined shield with a check inside. */
+
+.brand::before {
+    content: "✓";
+    display: inline-grid;
+    place-items: center;
+    width: 1.05rem;
+    height: 1.2rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .26rem .26rem 50% 50% / .26rem .26rem 62% 62%;
+    font-size: .6rem;
+    font-weight: 900;
+    line-height: 1;
+    vertical-align: -.24rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the midnight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #001a36 0%, rgba(0, 26, 54, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The incident card: the chapter's traced object. The flag chip is
+   danger red while the intruder is loose, the closing stamp success
+   green once the scan comes back clean. */
+
+.incident-card {
+    width: min(100%, 36rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.incident-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy-900);
+}
+
+.ic-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.12rem);
+    letter-spacing: .04em;
+}
+
+.ic-flag {
+    display: inline-flex;
+    align-items: center;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    background: var(--status-danger);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.incident-card dl {
+    margin: 0;
+}
+
+.incident-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.8rem, 10vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.incident-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.incident-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.incident-card dd {
+    margin: 0;
+    color: var(--navy-900);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.incident-card dd.ic-loose {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    border: .12rem dashed var(--status-danger);
+    color: var(--status-danger);
+    font-weight: 700;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* The gold chip binds the traced infection across slides. */
+
+.traced-chip {
+    display: inline-block;
+    align-self: center;
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--phoenix-gold);
+    color: var(--navy-900);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    white-space: nowrap;
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.88rem, 1.15vw, 1.12rem);
+}
+
+/* Rebuilt Windows surfaces share one window chrome in deck colors. */
+
+.win-chrome {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem .9rem;
+    background: var(--navy-900);
+    border-radius: .55rem .55rem 0 0;
+}
+
+.win-chrome i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+    flex: none;
+}
+
+.win-chrome span {
+    margin-left: .4rem;
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.72rem, .98vw, .92rem);
+    letter-spacing: .04em;
+    min-width: 0;
+}
+
+/* The Local Group Policy Editor pane. */
+
+.gp-pane {
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 26, 54, .12);
+}
+
+.gp-rows {
+    display: grid;
+    padding: .5rem 0;
+}
+
+.gp-row {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .6rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.gp-row:last-child {
+    border-bottom: 0;
+}
+
+.gp-doc {
+    width: 1.05rem;
+    height: 1.3rem;
+    flex: none;
+    border: .12rem solid var(--blue);
+    border-radius: .12rem;
+    background:
+        linear-gradient(var(--blue), var(--blue)) 50% 32% / 55% .1rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 50% 58% / 55% .1rem no-repeat;
+}
+
+.gp-row.picked {
+    background: var(--gold-200);
+    border-left: .45rem solid var(--phoenix-gold);
+    font-weight: 800;
+}
+
+.gp-cap {
+    padding: .6rem 1.1rem .8rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.76rem, 1vw, .95rem);
+}
+
+/* Daily habits panel and the lock keycaps. */
+
+.habit-panel h3 {
+    color: var(--navy);
+    margin-bottom: .6rem;
+}
+
+.habit-panel .checklist li {
+    font-size: clamp(.95rem, 1.28vw, 1.24rem);
+}
+
+.keycap {
+    display: inline-block;
+    margin: 0 .15rem;
+    padding: .08rem .5rem;
+    border: .12rem solid var(--navy);
+    border-radius: .3rem;
+    background: #fff;
+    box-shadow: 0 .22rem 0 var(--navy);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    white-space: nowrap;
+}
+
+/* The user properties dialog. */
+
+.acct-dialog {
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 26, 54, .12);
+}
+
+.ad-rows {
+    display: grid;
+    padding: .4rem 0;
+}
+
+.ad-row {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .52rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+.ad-row:last-child {
+    border-bottom: 0;
+}
+
+.ad-tick {
+    display: inline-grid;
+    place-items: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+    border: .12rem solid var(--blue);
+    border-radius: .2rem;
+    color: var(--blue);
+    font-size: .72rem;
+    font-weight: 900;
+}
+
+.ad-cap {
+    padding: .55rem 1.1rem .75rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.76rem, 1vw, .95rem);
+}
+
+/* Execution control: the context menu and the AutoPlay toggle. */
+
+.exec-stack {
+    display: grid;
+    gap: clamp(.9rem, 1.6vw, 1.4rem);
+    align-content: center;
+    justify-items: stretch;
+}
+
+.ctx-menu {
+    background: #fff;
+    border: .13rem solid var(--navy);
+    border-radius: .5rem;
+    overflow: hidden;
+    box-shadow: .6rem .7rem 0 rgba(0, 26, 54, .13);
+}
+
+.cm-row {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .5rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+.cm-row:last-child {
+    border-bottom: 0;
+}
+
+.cm-row.picked {
+    background: var(--gold-200);
+    border-left: .45rem solid var(--phoenix-gold);
+    font-weight: 800;
+}
+
+.cm-shield {
+    width: .95rem;
+    height: 1.1rem;
+    flex: none;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 18%, 100% 55%, 50% 100%, 0 55%, 0 18%);
+}
+
+.ap-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.ap-row > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.ap-row strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.ap-row p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.ap-toggle {
+    position: relative;
+    width: 2.6rem;
+    height: 1.35rem;
+    flex: none;
+    border-radius: .7rem;
+    border: .12rem solid var(--navy-300);
+    background: var(--mist);
+}
+
+.ap-toggle i {
+    position: absolute;
+    top: 50%;
+    left: .12rem;
+    width: .95rem;
+    height: .95rem;
+    border-radius: 50%;
+    background: var(--navy-300);
+    transform: translateY(-50%);
+}
+
+.ap-toggle.on {
+    border-color: var(--phoenix-gold);
+    background: var(--gold-200);
+}
+
+.ap-toggle.on i {
+    left: auto;
+    right: .12rem;
+    background: var(--phoenix-gold);
+}
+
+.ap-state {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* The download gate flow: trusted lane over the untrusted lane. */
+
+.gate-flow {
+    display: grid;
+    gap: clamp(1rem, 1.8vw, 1.6rem);
+    max-width: 74rem;
+}
+
+.gate-lane {
+    display: flex;
+    align-items: center;
+    gap: clamp(.5rem, 1vw, .9rem);
+    flex-wrap: wrap;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.9rem, 1.6vw, 1.4rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .07);
+}
+
+.gate-lane.bad {
+    border-left-color: var(--status-danger);
+    background: rgba(166, 50, 31, .05);
+}
+
+.lane-tag {
+    flex: none;
+    padding: .22rem .6rem;
+    border-radius: .28rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.7rem, .92vw, .86rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.lane-tag.trusted {
+    background: var(--blue);
+}
+
+.gate {
+    padding: .45rem .8rem;
+    border: .13rem solid var(--blue);
+    border-radius: .4rem;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.gate.skipped {
+    border-style: dashed;
+    border-color: var(--status-danger);
+    color: var(--status-danger);
+    background: transparent;
+}
+
+.gate-wire {
+    flex: 1 1 1.2rem;
+    min-width: 1rem;
+    height: .16rem;
+    background: var(--navy-300);
+}
+
+.gate-wire.dashed {
+    background: repeating-linear-gradient(90deg, var(--status-danger) 0 .45rem, transparent .45rem .9rem);
+    opacity: .55;
+}
+
+.gate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .85rem;
+    border-radius: 2rem;
+    background: var(--phoenix-gold);
+    color: var(--navy-900);
+    font-weight: 900;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.badge-check {
+    display: inline-grid;
+    place-items: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    border: .14rem solid var(--navy-900);
+    font-style: normal;
+}
+
+.badge-check::before {
+    content: "✓";
+    font-size: .66rem;
+    font-weight: 900;
+}
+
+.gate-fail {
+    color: var(--status-danger);
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.12vw, 1.08rem);
+    white-space: nowrap;
+}
+
+/* The Windows Security pane. Gold toggles mark the chosen on-state. */
+
+.defender-pane {
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 26, 54, .12);
+}
+
+.dp-section {
+    padding: .5rem 1.1rem .3rem;
+    color: var(--blue);
+    font-size: clamp(.66rem, .88vw, .8rem);
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.dp-threat {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    flex-wrap: wrap;
+    margin: 0 .8rem;
+    padding: .6rem .9rem;
+    border: .12rem solid var(--phoenix-gold);
+    border-left-width: .45rem;
+    border-radius: .5rem;
+    background: var(--gold-200);
+}
+
+.dp-act {
+    padding: .28rem .7rem;
+    border: .12rem solid var(--navy);
+    border-radius: .35rem;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.76rem, 1vw, .95rem);
+    white-space: nowrap;
+}
+
+.dp-row {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: .55rem 1.1rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-weight: 700;
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+.dp-row > span:first-child {
+    flex: 1;
+}
+
+.dp-row:first-of-type {
+    border-top: 0;
+}
+
+.defender-pane .dp-section + .dp-row {
+    border-top: 0;
+}
+
+.ap-state.on {
+    color: var(--navy);
+}
+
+/* The firewall inbound rules window. */
+
+.fw-window {
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 26, 54, .12);
+}
+
+.fw-rows {
+    display: grid;
+    padding: .4rem 0;
+}
+
+.fw-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .55rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+}
+
+.fw-row:last-child {
+    border-bottom: 0;
+}
+
+.fw-chip {
+    padding: .18rem .6rem;
+    border-radius: .25rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: clamp(.7rem, .92vw, .86rem);
+}
+
+.fw-cap {
+    padding: .55rem 1.1rem .75rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.76rem, 1vw, .95rem);
+}
+
+/* Encryption at rest: EFS beside BitLocker. */
+
+.crypt-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.4rem, 3vw, 3rem);
+    max-width: 66rem;
+}
+
+.crypt-panel {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1.1rem, 2vw, 1.7rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.cp-art {
+    display: flex;
+    align-items: flex-end;
+    gap: .5rem;
+    margin-bottom: .8rem;
+}
+
+.crypt-panel h3 {
+    color: var(--navy);
+    margin-bottom: .55rem;
+}
+
+.mini-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .45rem;
+}
+
+.mini-rows li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    line-height: 1.32;
+}
+
+.mini-rows li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .5em;
+    width: .55rem;
+    height: .16rem;
+    background: var(--blue);
+}
+
+/* Small object glyphs drawn in deck colors. */
+
+.g-folder {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 2.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .25rem;
+    background: #fff;
+}
+
+.g-folder::before {
+    content: "";
+    position: absolute;
+    top: -.62rem;
+    left: -.16rem;
+    width: 1.3rem;
+    height: .5rem;
+    border: .16rem solid var(--navy);
+    border-bottom: 0;
+    border-radius: .25rem .25rem 0 0;
+    background: #fff;
+}
+
+.g-cyl {
+    position: relative;
+    display: inline-block;
+    width: 2.9rem;
+    height: 2.6rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50% / 22%;
+    background: #fff;
+}
+
+.g-cyl::before {
+    content: "";
+    position: absolute;
+    top: .16rem;
+    left: 0;
+    right: 0;
+    height: .9rem;
+    border-bottom: .14rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.g-lock {
+    position: relative;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.15rem;
+    margin-top: .8rem;
+    border-radius: .2rem;
+    background: var(--phoenix-gold);
+}
+
+.g-lock::before {
+    content: "";
+    position: absolute;
+    top: -.62rem;
+    left: 50%;
+    width: .8rem;
+    height: .8rem;
+    border: .16rem solid var(--phoenix-gold);
+    border-bottom: 0;
+    border-radius: .5rem .5rem 0 0;
+    transform: translateX(-50%);
+}
+
+.g-lock.small {
+    width: 1.2rem;
+    height: .95rem;
+}
+
+.g-lock.small::before {
+    width: .65rem;
+    height: .65rem;
+    top: -.52rem;
+}
+
+.g-lock.tiny {
+    width: .85rem;
+    height: .68rem;
+    margin: 0 .45rem 0 0;
+    border-radius: .14rem;
+    vertical-align: -.05rem;
+}
+
+.g-lock.tiny::before {
+    width: .48rem;
+    height: .45rem;
+    top: -.38rem;
+    border-width: .12rem;
+}
+
+.g-file {
+    position: relative;
+    display: inline-block;
+    width: 2.1rem;
+    height: 2.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: .2rem .6rem .2rem .2rem;
+    background:
+        linear-gradient(var(--blue), var(--blue)) 50% 38% / 55% .12rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 50% 58% / 55% .12rem no-repeat,
+        linear-gradient(var(--blue), var(--blue)) 50% 78% / 55% .12rem no-repeat,
+        #fff;
+}
+
+/* The hash check flow. */
+
+.hash-flow {
+    display: flex;
+    align-items: center;
+    gap: clamp(.5rem, 1vw, 1rem);
+    flex-wrap: wrap;
+    max-width: 76rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1.1rem, 2vw, 1.8rem);
+    box-shadow: 0 .6rem 1.5rem rgba(0, 26, 54, .07);
+}
+
+.hash-node {
+    display: grid;
+    justify-items: center;
+    gap: .3rem;
+    text-align: center;
+}
+
+.hash-node strong {
+    color: var(--navy);
+    font-size: clamp(.82rem, 1.08vw, 1.02rem);
+}
+
+.hash-node p {
+    font-size: clamp(.72rem, .95vw, .9rem);
+    line-height: 1.2;
+}
+
+.hash-funnel {
+    position: relative;
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.5rem;
+}
+
+.hash-funnel i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5rem;
+    background: var(--blue);
+    clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
+}
+
+.hash-funnel b {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: .6rem;
+    height: 1rem;
+    background: var(--blue);
+    transform: translateX(-50%);
+}
+
+.digest-chip {
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    background: var(--navy-900);
+    color: var(--gold);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+.hash-eq {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+}
+
+.flow-arrow {
+    color: var(--navy-300);
+    font-weight: 900;
+    font-size: clamp(1.1rem, 1.8vw, 1.7rem);
+}
+
+.hash-warn {
+    color: var(--status-danger);
+    font-weight: 900;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.pua-decode {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 66rem;
+    border-left: .45rem solid var(--phoenix-gold);
+    background: rgba(255, 255, 255, .75);
+    border-radius: 0 .5rem .5rem 0;
+    padding: .7rem 1.1rem;
+}
+
+.pua-decode p {
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+.tint-blue {
+    color: var(--blue);
+}
+
+/* Certificates and privacy. */
+
+.cert-view {
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 26, 54, .12);
+}
+
+.cv-bar {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, .16);
+    border-radius: 1rem;
+    padding: .2rem .8rem;
+}
+
+.cert-card {
+    margin: .9rem 1rem .6rem;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.cert-card div {
+    display: grid;
+    grid-template-columns: clamp(6.2rem, 9vw, 8rem) 1fr;
+    gap: .8rem;
+    padding: .48rem .9rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.cert-card div:last-child {
+    border-bottom: 0;
+}
+
+.cert-card dt {
+    color: var(--blue);
+    font-size: clamp(.66rem, .88vw, .8rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.cert-card dd {
+    margin: 0;
+    color: var(--navy-900);
+    font-size: clamp(.88rem, 1.15vw, 1.08rem);
+}
+
+.cert-view .code {
+    margin: 0 1rem 1rem;
+}
+
+.priv-side {
+    display: grid;
+    gap: clamp(.8rem, 1.4vw, 1.2rem);
+    align-content: center;
+}
+
+.safety {
+    border-left: .45rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .12);
+    border-radius: 0 .5rem .5rem 0;
+    padding: .7rem 1rem;
+}
+
+.safety p {
+    color: #7c4f0e;
+    font-weight: 700;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.safety strong {
+    color: #7c4f0e;
+}
+
+/* Vectors and payloads. */
+
+.mal-map {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    align-items: center;
+    max-width: 70rem;
+}
+
+.mal-col {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .4rem solid var(--blue);
+    border-radius: .7rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .07);
+}
+
+.mal-col h3 {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    margin-bottom: .6rem;
+}
+
+.mal-arrow {
+    color: var(--navy-300);
+    font-weight: 900;
+    font-size: clamp(1.6rem, 2.6vw, 2.6rem);
+}
+
+.mal-band {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    max-width: 70rem;
+}
+
+.mal-wide {
+    background: rgba(255, 255, 255, .8);
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.mal-wide strong {
+    color: var(--navy);
+}
+
+/* The seven-step removal ladder with the quarantine box. */
+
+.removal-split {
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, .65fr);
+    align-items: start;
+}
+
+.removal-ladder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+    counter-reset: rl;
+}
+
+.removal-ladder li {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .5rem .9rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+    font-size: clamp(.92rem, 1.22vw, 1.18rem);
+    color: var(--navy-900);
+}
+
+.rl-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    flex: none;
+    border-radius: .4rem;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.02rem);
+}
+
+.removal-ladder li.q-top,
+.removal-ladder li.q-bottom {
+    position: relative;
+    border-color: var(--status-danger);
+    border-style: dashed;
+    background: rgba(166, 50, 31, .05);
+}
+
+.removal-ladder li.q-top {
+    border-bottom-style: none;
+    border-radius: .55rem .55rem 0 0;
+    margin-bottom: -.5rem;
+    padding-bottom: .75rem;
+}
+
+.removal-ladder li.q-bottom {
+    border-top-style: none;
+    border-radius: 0 0 .55rem .55rem;
+    padding-top: .75rem;
+}
+
+.q-label {
+    position: absolute;
+    top: -.72rem;
+    right: 1rem;
+    padding: .1rem .55rem;
+    border-radius: .25rem;
+    background: var(--status-danger);
+    color: #fff;
+    font-style: normal;
+    font-weight: 800;
+    font-size: clamp(.66rem, .88vw, .8rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.q-panel h3 {
+    color: var(--navy);
+    margin-bottom: .6rem;
+}
+
+/* Check slides. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.02rem, 1.45vw, 1.45rem);
+    font-weight: 700;
+}
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 16, 34, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* The exit slide gives the recap panels most of the width so their
+   prompts do not wrap into one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+            linear-gradient(135deg, #f4f8fd, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #001a36, #033a72);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 26, 54, .48);
+    }
+
+    .incident-card {
+        width: 100%;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .gate-lane {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .gate-wire {
+        width: .16rem;
+        min-width: 0;
+        flex: none;
+        height: 1rem;
+        margin-left: 1.2rem;
+    }
+
+    .gate-wire.dashed {
+        background: repeating-linear-gradient(180deg, var(--status-danger) 0 .45rem, transparent .45rem .9rem);
+    }
+
+    .gate,
+    .gate-badge,
+    .gate-fail,
+    .digest-chip {
+        white-space: normal;
+    }
+
+    .crypt-duo,
+    .mal-band {
+        grid-template-columns: 1fr;
+    }
+
+    .mal-map {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .mal-arrow {
+        transform: rotate(90deg);
+    }
+
+    .hash-flow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hash-node {
+        justify-items: start;
+        text-align: left;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+        width: 1.7rem;
+    }
+
+    .removal-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split,
+    .visual-split.reverse,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .incident-card,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .cert-view,
+    .gp-pane,
+    .acct-dialog,
+    .defender-pane,
+    .fw-window {
+        width: 100%;
+    }
+}

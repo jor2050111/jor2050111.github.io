@@ -1,0 +1,1400 @@
+/* BPC270 Chapter 21: the vault and the chain */
+
+/* The motif is painted as background layers only: a vault door with a
+   spoked wheel, a chain of linked backup cartridges (one gold), and a
+   dashed offsite arrow, over a soft ruled field. Positioned boxes
+   would create a focus scroll trap, so everything lives in the slide
+   background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='168' r='88' stroke='rgba(3,72,143,0.06)' stroke-width='16'/%3E%3Ccircle cx='170' cy='168' r='64' stroke='rgba(3,72,143,0.18)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='168' r='46' stroke='rgba(3,72,143,0.13)' stroke-width='2'/%3E%3Ccircle cx='170' cy='168' r='14' stroke='rgba(255,200,69,0.55)' stroke-width='2.6'/%3E%3Cpath d='M170 124v30M170 212v-30M126 168h30M214 168h-30' stroke='rgba(2,90,140,0.2)' stroke-width='2.6'/%3E%3Ccircle cx='131' cy='129' r='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Ccircle cx='209' cy='129' r='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Ccircle cx='131' cy='207' r='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Ccircle cx='209' cy='207' r='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Crect x='300' y='268' width='56' height='38' rx='6' stroke='rgba(2,90,140,0.2)' stroke-width='2.6'/%3E%3Cpath d='M308 280h40M308 290h24' stroke='rgba(2,90,140,0.14)' stroke-width='2'/%3E%3Ccircle cx='362' cy='287' r='4.5' stroke='rgba(3,72,143,0.2)' stroke-width='2'/%3E%3Ccircle cx='372' cy='287' r='4.5' stroke='rgba(3,72,143,0.2)' stroke-width='2'/%3E%3Crect x='378' y='268' width='56' height='38' rx='6' stroke='rgba(255,200,69,0.55)' stroke-width='2.6'/%3E%3Cpath d='M386 280h40M386 290h24' stroke='rgba(255,200,69,0.4)' stroke-width='2'/%3E%3Ccircle cx='440' cy='287' r='4.5' stroke='rgba(3,72,143,0.2)' stroke-width='2'/%3E%3Ccircle cx='450' cy='287' r='4.5' stroke='rgba(3,72,143,0.2)' stroke-width='2'/%3E%3Crect x='456' y='268' width='52' height='38' rx='6' stroke='rgba(2,90,140,0.2)' stroke-width='2.6'/%3E%3Cpath d='M312 246q64-54 148-40' stroke='rgba(3,116,181,0.26)' stroke-width='2.6' stroke-dasharray='7 7'/%3E%3Cpath d='M446 202l17 4-11 13' stroke='rgba(3,116,181,0.26)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(2, 90, 140, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #fbfdff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='168' r='88' stroke='rgba(255,255,255,0.04)' stroke-width='16'/%3E%3Ccircle cx='170' cy='168' r='64' stroke='rgba(255,255,255,0.16)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='168' r='46' stroke='rgba(255,255,255,0.11)' stroke-width='2'/%3E%3Ccircle cx='170' cy='168' r='14' stroke='rgba(255,200,69,0.5)' stroke-width='2.6'/%3E%3Cpath d='M170 124v30M170 212v-30M126 168h30M214 168h-30' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Ccircle cx='131' cy='129' r='3' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Ccircle cx='209' cy='129' r='3' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Ccircle cx='131' cy='207' r='3' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Ccircle cx='209' cy='207' r='3' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Crect x='300' y='268' width='56' height='38' rx='6' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Cpath d='M308 280h40M308 290h24' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3Ccircle cx='362' cy='287' r='4.5' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Ccircle cx='372' cy='287' r='4.5' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Crect x='378' y='268' width='56' height='38' rx='6' stroke='rgba(255,200,69,0.5)' stroke-width='2.6'/%3E%3Cpath d='M386 280h40M386 290h24' stroke='rgba(255,200,69,0.34)' stroke-width='2'/%3E%3Ccircle cx='440' cy='287' r='4.5' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Ccircle cx='450' cy='287' r='4.5' stroke='rgba(255,255,255,0.14)' stroke-width='2'/%3E%3Crect x='456' y='268' width='52' height='38' rx='6' stroke='rgba(255,255,255,0.15)' stroke-width='2.6'/%3E%3Cpath d='M312 246q64-54 148-40' stroke='rgba(255,255,255,0.18)' stroke-width='2.6' stroke-dasharray='7 7'/%3E%3Cpath d='M446 202l17 4-11 13' stroke='rgba(255,255,255,0.18)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+        linear-gradient(135deg, #033a72, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='170' cy='168' r='88' stroke='rgba(0,46,93,0.05)' stroke-width='16'/%3E%3Ccircle cx='170' cy='168' r='64' stroke='rgba(0,46,93,0.17)' stroke-width='2.6'/%3E%3Ccircle cx='170' cy='168' r='46' stroke='rgba(0,46,93,0.12)' stroke-width='2'/%3E%3Ccircle cx='170' cy='168' r='14' stroke='rgba(3,116,181,0.45)' stroke-width='2.6'/%3E%3Cpath d='M170 124v30M170 212v-30M126 168h30M214 168h-30' stroke='rgba(0,46,93,0.15)' stroke-width='2.6'/%3E%3Ccircle cx='131' cy='129' r='3' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Ccircle cx='209' cy='129' r='3' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Ccircle cx='131' cy='207' r='3' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Ccircle cx='209' cy='207' r='3' stroke='rgba(0,46,93,0.14)' stroke-width='2'/%3E%3Crect x='300' y='268' width='56' height='38' rx='6' stroke='rgba(0,46,93,0.16)' stroke-width='2.6'/%3E%3Cpath d='M308 280h40M308 290h24' stroke='rgba(0,46,93,0.11)' stroke-width='2'/%3E%3Ccircle cx='362' cy='287' r='4.5' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Ccircle cx='372' cy='287' r='4.5' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Crect x='378' y='268' width='56' height='38' rx='6' stroke='rgba(3,116,181,0.45)' stroke-width='2.6'/%3E%3Cpath d='M386 280h40M386 290h24' stroke='rgba(3,116,181,0.3)' stroke-width='2'/%3E%3Ccircle cx='440' cy='287' r='4.5' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Ccircle cx='450' cy='287' r='4.5' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Crect x='456' y='268' width='52' height='38' rx='6' stroke='rgba(0,46,93,0.16)' stroke-width='2.6'/%3E%3Cpath d='M312 246q64-54 148-40' stroke='rgba(0,46,93,0.18)' stroke-width='2.6' stroke-dasharray='7 7'/%3E%3Cpath d='M446 202l17 4-11 13' stroke='rgba(0,46,93,0.18)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 46, 93, .06) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small vault wheel. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: .5rem;
+    border: .13rem solid currentColor;
+    border-radius: 50%;
+    background-image:
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor);
+    background-size: .12rem 60%, 60% .12rem;
+    background-position: center center, center center;
+    background-repeat: no-repeat;
+    vertical-align: -.2rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the twilight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #033a72 0%, rgba(3, 58, 114, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The share card: the chapter's traced object, riding the exemplar
+   work-order card language. Gold binds the share and its file. */
+
+.share-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.share-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy-900);
+}
+
+.sc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.sc-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--phoenix-gold);
+    color: var(--navy-900);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.share-card dl {
+    margin: 0;
+}
+
+.share-card dl div {
+    display: grid;
+    grid-template-columns: clamp(7.2rem, 10vw, 9rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.share-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.share-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.share-card dd {
+    margin: 0;
+    color: var(--navy-900);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.share-card dd.sc-none {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    border: .12rem dashed var(--status-warning);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* The gold chip binds the traced pair: the share and its file. */
+
+.traced-chip {
+    display: inline-block;
+    padding: .22rem .6rem;
+    border-radius: .3rem;
+    background: var(--phoenix-gold);
+    color: var(--navy-900);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.05rem);
+    white-space: nowrap;
+}
+
+/* Reusable window chrome for rebuilt tool surfaces. */
+
+.win-dots {
+    display: inline-flex;
+    gap: .45rem;
+}
+
+.win-dots i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.win-title {
+    margin-left: .4rem;
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.75rem, 1vw, .95rem);
+    letter-spacing: .05em;
+}
+
+/* The rebuilt Windows backup settings pane. */
+
+.backup-pane {
+    align-self: start;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.backup-pane header,
+.restore-card header {
+    display: flex;
+    align-items: center;
+    padding: .55rem .9rem;
+    background: var(--navy-900);
+}
+
+.bp-rows {
+    display: grid;
+    gap: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+}
+
+.bp-row {
+    display: grid;
+    grid-template-columns: clamp(7.5rem, 11vw, 9.5rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .55rem .9rem;
+}
+
+.bp-row strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.18rem);
+}
+
+.bp-row span {
+    color: var(--navy-900);
+    font-size: clamp(.85rem, 1.12vw, 1.08rem);
+}
+
+.backup-pane footer {
+    padding: .6rem 1rem .7rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+/* The chain board: three rows of linked cartridges. */
+
+.chain-board {
+    display: grid;
+    gap: clamp(.6rem, 1.1vw, .9rem);
+    max-width: 72rem;
+}
+
+.chain-row {
+    display: grid;
+    grid-template-columns: clamp(6.8rem, 10vw, 8.8rem) minmax(0, 1fr) minmax(11rem, .55fr);
+    gap: clamp(.8rem, 1.5vw, 1.3rem);
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .55rem;
+    padding: .6rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.chain-label {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+.chain-rail {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    flex-wrap: wrap;
+}
+
+.cart {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .1rem;
+    border: .13rem solid var(--blue);
+    border-radius: .4rem;
+    background: var(--canvas-blue-tint);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    padding: .4rem .6rem;
+    min-width: 4.6rem;
+    text-align: center;
+}
+
+.cart em {
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(.58rem, .78vw, .74rem);
+    color: var(--blue);
+    line-height: 1.15;
+}
+
+.cart.full {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    min-width: 5.4rem;
+}
+
+.cart.inc {
+    min-width: 4.2rem;
+    padding: .3rem .5rem;
+}
+
+.cart.diff.big {
+    min-width: 6.4rem;
+    padding: .5rem .7rem;
+}
+
+/* A chain link: two interlocked rings. */
+
+.link {
+    position: relative;
+    display: inline-block;
+    width: 1.3rem;
+    height: .7rem;
+    flex: none;
+}
+
+.link::before,
+.link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: .7rem;
+    height: .7rem;
+    border: .13rem solid var(--navy-300);
+    border-radius: 50%;
+}
+
+.link::before {
+    left: 0;
+}
+
+.link::after {
+    right: 0;
+}
+
+.chain-cap {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .96rem);
+    line-height: 1.25;
+}
+
+/* The cost grid: the source table redrawn with labeled meters. */
+
+.cost-grid {
+    max-width: 72rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .1);
+}
+
+.cg-head,
+.cg-row {
+    display: grid;
+    grid-template-columns: clamp(7.5rem, 11vw, 10rem) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding: .6rem 1.1rem;
+}
+
+.cg-head {
+    background: var(--mist);
+    color: var(--navy);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.cg-row {
+    border-top: .08rem solid var(--mist);
+    color: var(--navy-900);
+    font-size: clamp(.88rem, 1.18vw, 1.12rem);
+    font-weight: 700;
+}
+
+.cg-name {
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.cg-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    flex-wrap: wrap;
+}
+
+.meter {
+    display: inline-flex;
+    gap: .22rem;
+    flex: none;
+}
+
+.meter i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    border: .11rem solid var(--navy-300);
+    background: transparent;
+}
+
+.meter i.on {
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+.attr {
+    padding: .16rem .55rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.75rem, 1vw, .95rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.attr.set {
+    background: var(--navy);
+    color: #fff;
+}
+
+/* The 3-2-1 rule: three copy tiles, the third leaving the building. */
+
+.copies-321 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.9rem, 1.8vw, 1.6rem);
+    max-width: 66rem;
+}
+
+.copy-tile {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: .35rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.copy-no {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.05rem;
+}
+
+.copy-tile strong {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.35vw, 1.3rem);
+}
+
+.copy-tile p {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    line-height: 1.3;
+}
+
+.copy-tile.offsite {
+    border-top-color: var(--navy);
+    background: linear-gradient(180deg, #fff 55%, var(--canvas-blue-tint));
+}
+
+.offsite-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .18rem .6rem;
+    border-radius: .3rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: clamp(.68rem, .9vw, .84rem);
+}
+
+.offsite-mark {
+    font-size: 1.05em;
+    line-height: 1;
+}
+
+/* The File History restore card, and the verified stamp that ends the
+   crisis. Green carries only the confirmed restore. */
+
+.restore-card {
+    align-self: start;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.ver-rows {
+    display: grid;
+    gap: .45rem;
+    padding: clamp(.8rem, 1.4vw, 1.1rem) clamp(.8rem, 1.4vw, 1.1rem) .4rem;
+}
+
+.ver-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    border: .12rem solid var(--mist);
+    border-radius: .45rem;
+    padding: .5rem .8rem;
+}
+
+.ver-when {
+    color: var(--navy-900);
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+}
+
+.ver-tag {
+    padding: .12rem .5rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.66rem, .88vw, .82rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.ver-row.chosen {
+    border-color: var(--phoenix-gold);
+    background: var(--gold-200);
+}
+
+.ver-row.chosen .ver-tag {
+    background: var(--phoenix-gold);
+    color: var(--navy-900);
+}
+
+.restore-btn {
+    justify-self: start;
+    margin: .3rem clamp(.8rem, 1.4vw, 1.1rem) .8rem;
+    display: inline-block;
+    padding: .45rem 1.3rem;
+    border-radius: .4rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    width: fit-content;
+}
+
+.restore-card footer.verified {
+    padding: .55rem 1rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.test-panel h3 {
+    color: var(--navy);
+}
+
+.test-panel .checklist li {
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.fact-rows.tight {
+    margin-top: .8rem;
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+.fact-rows.wide {
+    max-width: 66rem;
+}
+
+.fact-rows.tight li {
+    padding: .5rem .9rem;
+}
+
+/* Regulated data: four badge tiles. */
+
+.badge-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+    max-width: 72rem;
+}
+
+.badge-tile {
+    display: grid;
+    justify-items: start;
+    gap: .35rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.badge-mono {
+    display: inline-grid;
+    place-items: center;
+    padding: .35rem .55rem;
+    border-radius: .45rem;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.88rem, 1.2vw, 1.15rem);
+    letter-spacing: .05em;
+}
+
+.badge-tile strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.badge-tile p {
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    line-height: 1.3;
+}
+
+.law-chip {
+    padding: .18rem .55rem;
+    border-radius: .28rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.66rem, .9vw, .86rem);
+    letter-spacing: .04em;
+}
+
+/* Incident response: three nodes in reading order. */
+
+.ir-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(.6rem, 1.3vw, 1.2rem);
+    align-items: center;
+    max-width: 70rem;
+}
+
+.ir-node {
+    display: grid;
+    justify-items: start;
+    gap: .4rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+    min-height: clamp(9rem, 14vw, 11.5rem);
+    align-content: start;
+}
+
+.ir-node strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.ir-node p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    line-height: 1.35;
+}
+
+.ir-flag {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.ir-doc {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.9rem;
+    border: .13rem solid var(--blue);
+    border-radius: .18rem;
+    background-image:
+        linear-gradient(var(--blue), var(--blue)),
+        linear-gradient(var(--blue), var(--blue)),
+        linear-gradient(var(--blue), var(--blue));
+    background-size: 60% .12rem, 60% .12rem, 40% .12rem;
+    background-position: 50% 30%, 50% 50%, 32% 70%;
+    background-repeat: no-repeat;
+}
+
+.ir-team {
+    display: inline-flex;
+    gap: .25rem;
+    align-items: end;
+}
+
+.ir-team i {
+    width: .85rem;
+    height: 1.15rem;
+    border-radius: .42rem .42rem .14rem .14rem;
+    background: var(--blue);
+}
+
+.ir-team i:nth-child(2) {
+    height: 1.5rem;
+    background: var(--navy);
+}
+
+.flow-arrow {
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+}
+
+/* The order of volatility ladder and the custody chain. */
+
+.vol-ladder {
+    display: grid;
+    gap: .5rem;
+    align-content: start;
+}
+
+.vol-title {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.vol-row {
+    display: grid;
+    grid-template-columns: auto clamp(9.5rem, 15vw, 13rem) 1fr;
+    gap: .9rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .55rem .9rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.vol-mono {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: .45rem;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: 1.05rem;
+}
+
+.vol-row:nth-child(3) .vol-mono {
+    background: var(--navy-700);
+}
+
+.vol-row:nth-child(4) .vol-mono {
+    background: var(--blue);
+}
+
+.vol-row:nth-child(5) .vol-mono {
+    background: var(--navy-500);
+}
+
+.vol-row:nth-child(6) .vol-mono {
+    background: var(--navy-400);
+}
+
+.vol-row strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.18rem);
+}
+
+.vol-row span {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.custody-panel h3 {
+    color: var(--navy);
+}
+
+.custody-panel > p {
+    font-size: clamp(.9rem, 1.2vw, 1.12rem);
+}
+
+.custody-chain {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    flex-wrap: wrap;
+    margin: .8rem 0;
+}
+
+.cust-chip {
+    padding: .32rem .7rem;
+    border-radius: .35rem;
+    border: .13rem solid var(--navy);
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+}
+
+.cust-note {
+    font-size: clamp(.82rem, 1.08vw, 1.02rem);
+    line-height: 1.4;
+}
+
+/* Data destruction: two lanes and the certificate. */
+
+.destroy-paths {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .95fr);
+    gap: clamp(.9rem, 1.8vw, 1.6rem);
+    align-items: stretch;
+    max-width: 72rem;
+}
+
+.dp-lane {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .08);
+}
+
+.dp-lane.destroy {
+    border-top-color: var(--navy);
+}
+
+.dp-lane h3 {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    margin-bottom: .6rem;
+}
+
+.dp-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .4rem;
+}
+
+.dp-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    color: var(--navy-900);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.dp-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .48em;
+    width: .5rem;
+    height: .5rem;
+    border-radius: .12rem;
+    background: var(--blue);
+}
+
+.dp-flag {
+    display: inline-block;
+    margin-left: .35rem;
+    padding: .1rem .45rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-style: normal;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .84rem);
+    letter-spacing: .04em;
+}
+
+.dp-cert {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .9rem;
+    align-items: center;
+    align-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .5rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: .6rem .7rem 0 rgba(0, 46, 93, .13);
+}
+
+.cert-seal {
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: .3rem double var(--phoenix-gold);
+    border-radius: 50%;
+    background:
+        linear-gradient(45deg, transparent 44%, var(--navy) 44% 56%, transparent 56%),
+        linear-gradient(-45deg, transparent 44%, var(--navy) 44% 56%, transparent 56%);
+}
+
+.dp-cert strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.18rem);
+    line-height: 1.25;
+}
+
+.dp-cert p {
+    margin-top: .2rem;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    line-height: 1.3;
+}
+
+/* The AUP gate: data flows right, one door opens, one stays shut. */
+
+.gate-scene {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1.15fr) auto minmax(0, 1.7fr);
+    gap: clamp(.7rem, 1.5vw, 1.4rem);
+    align-items: center;
+    max-width: 72rem;
+}
+
+.gs-source {
+    display: grid;
+    gap: .35rem;
+    justify-items: center;
+    text-align: center;
+}
+
+.gs-source p {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+}
+
+.gs-wire {
+    width: clamp(1.6rem, 3vw, 3rem);
+    height: .2rem;
+    border-radius: .1rem;
+    background: var(--blue);
+    opacity: .55;
+}
+
+.gs-gate {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .1);
+}
+
+.gs-gate strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    margin-bottom: .3rem;
+}
+
+.gs-gate p {
+    font-size: clamp(.82rem, 1.08vw, 1.02rem);
+    line-height: 1.35;
+}
+
+.gs-dests {
+    display: grid;
+    gap: clamp(.7rem, 1.3vw, 1.1rem);
+}
+
+.gs-dest {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "verdict name" "verdict desc";
+    column-gap: .9rem;
+    row-gap: .15rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--status-success);
+    border-radius: .55rem;
+    padding: .65rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.gs-dest.blocked {
+    border-left-color: var(--status-danger);
+}
+
+.gs-verdict {
+    grid-area: verdict;
+    padding: .22rem .6rem;
+    border-radius: .3rem;
+    font-weight: 900;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.gs-verdict.pass {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.gs-verdict.stop {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.gs-dest strong {
+    grid-area: name;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.gs-dest p {
+    grid-area: desc;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    line-height: 1.3;
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .fact-rows + .chip-list {
+    margin-top: clamp(.9rem, 1.6vw, 1.4rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+    flex: none;
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.scenario-note .traced-chip {
+    font-size: clamp(.72rem, .95vw, .9rem);
+    margin-right: .25rem;
+}
+
+/* The exit slide gives the recap panels most of the width so their
+   prompts do not wrap into one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Check chips on gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Split tuning for the operations slide. */
+
+.ops-split {
+    align-items: start;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #fbfdff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+            linear-gradient(135deg, #033a72, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(3, 58, 114, .48);
+    }
+
+    .share-card {
+        width: 100%;
+    }
+
+    .chain-row {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .cg-head {
+        display: none;
+    }
+
+    .cg-row {
+        grid-template-columns: 1fr;
+        gap: .4rem;
+    }
+
+    .copies-321 {
+        grid-template-columns: 1fr;
+    }
+
+    .bp-row {
+        grid-template-columns: 1fr;
+        gap: .2rem;
+    }
+
+    .badge-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ir-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .ir-flow .flow-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+
+    .ir-node {
+        min-height: 0;
+    }
+
+    .vol-row {
+        grid-template-columns: auto 1fr;
+    }
+
+    .vol-row span {
+        grid-column: 2;
+    }
+
+    .destroy-paths {
+        grid-template-columns: 1fr;
+    }
+
+    .gate-scene {
+        grid-template-columns: 1fr;
+        justify-items: start;
+    }
+
+    .gs-wire {
+        width: .16rem;
+        height: 1.4rem;
+        margin-left: 2rem;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .visual-split,
+    .visual-split.reverse,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .share-card,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+}
