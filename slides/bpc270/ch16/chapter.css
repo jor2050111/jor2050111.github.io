@@ -1,0 +1,1430 @@
+/* BPC270 Chapter 16: boot media and partition blocks */
+
+/* The motif is painted as background layers only: a USB key, two sliced
+   disk rectangles, and a progress arc over a faint partition-tick field.
+   Positioned boxes would create a focus scroll trap, so everything
+   lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.06)' stroke-width='18'/%3E%3Crect x='100' y='118' width='148' height='62' rx='12' stroke='rgba(0,46,93,0.2)' stroke-width='2.6'/%3E%3Crect x='248' y='132' width='42' height='34' stroke='rgba(0,46,93,0.2)' stroke-width='2.6'/%3E%3Cpath d='M258 141h12M258 157h12' stroke='rgba(124,54,38,0.32)' stroke-width='2.4'/%3E%3Ccircle cx='118' cy='149' r='5' stroke='rgba(255,200,69,0.65)' stroke-width='2.6'/%3E%3Crect x='96' y='218' width='330' height='42' rx='6' stroke='rgba(0,46,93,0.2)' stroke-width='2.4'/%3E%3Crect x='99' y='221' width='30' height='36' fill='rgba(255,200,69,0.45)'/%3E%3Cpath d='M129 218v42M214 218v42M299 218v42M370 218v42' stroke='rgba(0,46,93,0.16)' stroke-width='2'/%3E%3Crect x='96' y='278' width='330' height='42' rx='6' stroke='rgba(0,46,93,0.13)' stroke-width='2.4'/%3E%3Cpath d='M126 278v42M156 278v42M186 278v42M216 278v42M246 278v42M276 278v42M306 278v42M336 278v42M366 278v42M396 278v42' stroke='rgba(0,46,93,0.1)' stroke-width='2'/%3E%3Ccircle cx='434' cy='140' r='38' stroke='rgba(0,46,93,0.13)' stroke-width='6'/%3E%3Cpath d='M434 102a38 38 0 0 1 33 57' stroke='rgba(255,200,69,0.6)' stroke-width='6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(124, 54, 38, .045) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+        linear-gradient(135deg, #fffaf0, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='100' y='118' width='148' height='62' rx='12' stroke='rgba(255,255,255,0.18)' stroke-width='2.6'/%3E%3Crect x='248' y='132' width='42' height='34' stroke='rgba(255,255,255,0.18)' stroke-width='2.6'/%3E%3Cpath d='M258 141h12M258 157h12' stroke='rgba(255,255,255,0.2)' stroke-width='2.4'/%3E%3Ccircle cx='118' cy='149' r='5' stroke='rgba(255,200,69,0.55)' stroke-width='2.6'/%3E%3Crect x='96' y='218' width='330' height='42' rx='6' stroke='rgba(255,255,255,0.18)' stroke-width='2.4'/%3E%3Crect x='99' y='221' width='30' height='36' fill='rgba(255,200,69,0.4)'/%3E%3Cpath d='M129 218v42M214 218v42M299 218v42M370 218v42' stroke='rgba(255,255,255,0.13)' stroke-width='2'/%3E%3Crect x='96' y='278' width='330' height='42' rx='6' stroke='rgba(255,255,255,0.11)' stroke-width='2.4'/%3E%3Cpath d='M126 278v42M156 278v42M186 278v42M216 278v42M246 278v42M276 278v42M306 278v42M336 278v42M366 278v42M396 278v42' stroke='rgba(255,255,255,0.08)' stroke-width='2'/%3E%3Ccircle cx='434' cy='140' r='38' stroke='rgba(255,255,255,0.11)' stroke-width='6'/%3E%3Cpath d='M434 102a38 38 0 0 1 33 57' stroke='rgba(255,200,69,0.55)' stroke-width='6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(255, 255, 255, .04) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='100' y='118' width='148' height='62' rx='12' stroke='rgba(0,46,93,0.2)' stroke-width='2.6'/%3E%3Crect x='248' y='132' width='42' height='34' stroke='rgba(0,46,93,0.2)' stroke-width='2.6'/%3E%3Cpath d='M258 141h12M258 157h12' stroke='rgba(124,54,38,0.4)' stroke-width='2.4'/%3E%3Ccircle cx='118' cy='149' r='5' stroke='rgba(124,54,38,0.45)' stroke-width='2.6'/%3E%3Crect x='96' y='218' width='330' height='42' rx='6' stroke='rgba(0,46,93,0.2)' stroke-width='2.4'/%3E%3Crect x='99' y='221' width='30' height='36' fill='rgba(0,46,93,0.15)'/%3E%3Cpath d='M129 218v42M214 218v42M299 218v42M370 218v42' stroke='rgba(0,46,93,0.15)' stroke-width='2'/%3E%3Crect x='96' y='278' width='330' height='42' rx='6' stroke='rgba(0,46,93,0.12)' stroke-width='2.4'/%3E%3Cpath d='M126 278v42M156 278v42M186 278v42M216 278v42M246 278v42M276 278v42M306 278v42M336 278v42M366 278v42M396 278v42' stroke='rgba(0,46,93,0.09)' stroke-width='2'/%3E%3Ccircle cx='434' cy='140' r='38' stroke='rgba(0,46,93,0.12)' stroke-width='6'/%3E%3Cpath d='M434 102a38 38 0 0 1 33 57' stroke='rgba(124,54,38,0.45)' stroke-width='6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(0, 46, 93, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small USB key with a connector cap. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.55rem;
+    height: .85rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .16rem .3rem .3rem .16rem;
+    background:
+        linear-gradient(currentColor, currentColor) 30% 50% / .12rem 100% no-repeat,
+        linear-gradient(currentColor, currentColor) 10% 30% / .24rem .12rem no-repeat,
+        linear-gradient(currentColor, currentColor) 10% 70% / .24rem .12rem no-repeat;
+    vertical-align: -.12rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #002e5d 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The build card: the chapter's traced object. Gold binds the build
+   wherever it reappears. */
+
+.build-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.build-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.bc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.bc-flag {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+}
+
+.build-card dl {
+    margin: 0;
+}
+
+.build-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.8rem, 9.5vw, 8.8rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.build-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.build-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.build-card dd {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.build-card dd.bc-staged {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+/* The gold build chip binds the traced install across slides. */
+
+.build-tag {
+    display: inline-block;
+    padding: .28rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .86rem);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* The edition shelf: five OS tiles on one rail. */
+
+.edition-shelf {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(.7rem, 1.4vw, 1.3rem);
+}
+
+.ed-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ed-tile {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 4.2rem;
+    border-bottom: .32rem solid var(--navy);
+    padding-bottom: .55rem;
+    margin-bottom: .6rem;
+}
+
+.ed-tile::before {
+    content: "";
+    display: block;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) center / .16rem 76% no-repeat,
+        linear-gradient(var(--navy), var(--navy)) center / 76% .16rem no-repeat,
+        #fff;
+}
+
+.ed-item strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    line-height: 1.12;
+}
+
+.ed-item p {
+    margin-top: .35rem;
+    font-size: clamp(.78rem, 1vw, .95rem);
+    max-width: 14rem;
+}
+
+/* Home edition limit tiles. */
+
+.limit-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.2vw, 1rem);
+    max-width: 34rem;
+    margin-bottom: clamp(.8rem, 1.5vw, 1.3rem);
+}
+
+.limit-tile {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .45rem solid var(--blue);
+    border-radius: .55rem;
+    padding: .7rem .5rem .6rem;
+    text-align: center;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.limit-tile strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+    line-height: 1;
+}
+
+.limit-tile span {
+    display: block;
+    margin-top: .3rem;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    color: var(--ink);
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(8.5rem, 13vw, 11.5rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* The feature matrix: Home against the work editions. Neutral marks
+   what is missing, canyon marks what is included, gold marks only what
+   the traced build needs. */
+
+.feature-matrix {
+    display: grid;
+    gap: .55rem;
+    max-width: 68rem;
+}
+
+.fm-head {
+    display: grid;
+    grid-template-columns: 1.35fr .8fr 1.2fr;
+    gap: .8rem;
+    padding: 0 1rem;
+}
+
+.fm-col {
+    text-align: center;
+    font-weight: 900;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: clamp(.72rem, 1vw, .95rem);
+}
+
+.fm-row {
+    display: grid;
+    grid-template-columns: 1.35fr .8fr 1.2fr;
+    gap: .8rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fm-feature {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.fm-feature small {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.need-tag {
+    display: inline-block;
+    margin-left: .5rem;
+    padding: .15rem .45rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-style: normal;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.62rem, .85vw, .8rem);
+    white-space: nowrap;
+    vertical-align: .1rem;
+}
+
+.fm-cell {
+    text-align: center;
+    padding: .38rem .5rem;
+    border-radius: .3rem;
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+}
+
+.fm-cell.out,
+.fm-cell.part {
+    background: rgba(0, 46, 93, .07);
+    color: var(--ink);
+}
+
+.fm-cell.in {
+    background: var(--blue);
+    color: #fff;
+}
+
+/* Check chips on the gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .85);
+}
+
+/* The RAM ceiling chart. Canyon carries the structure, gold marks the
+   group the traced build lives in. */
+
+.ram-chart {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 2.2rem);
+    align-items: end;
+    max-width: 60rem;
+}
+
+.ram-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+}
+
+.ram-value {
+    font-family: var(--code);
+    font-weight: 900;
+    color: var(--navy);
+    font-size: clamp(1.1rem, 1.8vw, 1.7rem);
+}
+
+.ram-bar {
+    width: min(100%, 11rem);
+    background: var(--blue);
+    border-radius: .35rem .35rem 0 0;
+}
+
+.ram-bar.h-home {
+    height: .55rem;
+}
+
+.ram-bar.h-pro {
+    height: clamp(3.1rem, 5.1vw, 4.4rem);
+}
+
+.ram-bar.h-ent {
+    height: clamp(9rem, 15vw, 13rem);
+}
+
+.ram-col strong {
+    color: var(--navy);
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+    line-height: 1.15;
+    min-height: clamp(2.2rem, 3.4vw, 2.9rem);
+}
+
+.ram-col.focus .ram-bar {
+    background: var(--gold);
+    border: .12rem solid var(--navy);
+}
+
+.ram-col .build-tag {
+    order: -1;
+    margin-bottom: .15rem;
+}
+
+.core-chip {
+    padding: .28rem .55rem;
+    border-radius: .28rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    white-space: nowrap;
+}
+
+/* The Settings About pane, rebuilt in deck colors. */
+
+.about-pane {
+    width: min(100%, 36rem);
+    justify-self: center;
+    margin: 0;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 46, 93, .15);
+}
+
+.ap-chrome {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem .9rem;
+    background: var(--navy);
+}
+
+.ap-chrome i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .4);
+}
+
+.ap-chrome span {
+    margin-left: .3rem;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: .06em;
+    font-size: clamp(.75rem, 1vw, .9rem);
+}
+
+.ap-body {
+    display: grid;
+    grid-template-columns: clamp(5rem, 8vw, 7rem) 1fr;
+}
+
+.ap-side {
+    background: var(--canvas);
+    border-right: .1rem solid var(--mist);
+    padding: .8rem .7rem;
+    display: grid;
+    gap: .55rem;
+    align-content: start;
+}
+
+.ap-search {
+    height: .95rem;
+    border: .1rem solid rgba(0, 46, 93, .3);
+    border-radius: .5rem;
+}
+
+.ap-nav {
+    height: .5rem;
+    border-radius: .25rem;
+    background: rgba(0, 46, 93, .14);
+}
+
+.ap-nav.on {
+    background: var(--blue);
+}
+
+.ap-main {
+    padding: .9rem 1.2rem 1.1rem;
+}
+
+.ap-main h3 {
+    color: var(--navy);
+}
+
+.ap-section {
+    margin: .65rem 0 .25rem;
+    font-size: clamp(.66rem, .88vw, .8rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--blue);
+}
+
+.ap-row {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8rem) 1fr;
+    gap: .8rem;
+    padding: .4rem 0;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.ap-row:last-child {
+    border-bottom: 0;
+}
+
+.ap-row span {
+    color: var(--ink);
+}
+
+.ap-row strong {
+    color: var(--navy);
+}
+
+.ap-gold {
+    justify-self: start;
+    background: var(--gold);
+    padding: .12rem .5rem;
+    border-radius: .25rem;
+}
+
+/* The upgrade gate and the edition moves. */
+
+.upgrade-split {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    align-items: start;
+}
+
+.gate-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+}
+
+.os-box {
+    width: min(100%, 18rem);
+    text-align: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    padding: .7rem 1rem;
+    font-weight: 900;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.os-box.next {
+    border-color: var(--blue);
+    border-width: .18rem;
+}
+
+.gate-arch {
+    width: min(100%, 20rem);
+    border: .16rem solid var(--blue);
+    border-bottom: 0;
+    border-radius: 1.6rem 1.6rem 0 0;
+    padding: 1rem .9rem .3rem;
+    display: grid;
+    gap: .45rem;
+    justify-items: center;
+}
+
+.gate-arch::after {
+    content: "↓";
+    color: var(--navy);
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.gate-chip {
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    text-align: center;
+}
+
+.move-panel {
+    display: grid;
+    gap: .9rem;
+    align-content: start;
+}
+
+.move-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.move-rows li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .8rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .55rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.move-path {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.2vw, 1.15rem);
+}
+
+.move-note {
+    font-weight: 800;
+    font-size: clamp(.72rem, .98vw, .95rem);
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    white-space: nowrap;
+}
+
+.cadence {
+    display: grid;
+    gap: .4rem;
+}
+
+.cadence-row {
+    background: rgba(255, 255, 255, .7);
+    border-left: .45rem solid var(--blue);
+    padding: .5rem .9rem;
+    border-radius: 0 .4rem .4rem 0;
+    font-size: clamp(.85rem, 1.15vw, 1.12rem);
+}
+
+.cadence-row strong {
+    color: var(--navy);
+}
+
+.cadence-row.warn {
+    border-left-color: var(--status-warning);
+    background: rgba(201, 130, 31, .1);
+}
+
+/* The two install paths. Gold marks only the traced build's pick. */
+
+.path-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.2vw, 2rem);
+    max-width: 66rem;
+}
+
+.path-panel {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.path-panel .build-tag {
+    align-self: start;
+    margin-top: .6rem;
+}
+
+.panel.chosen {
+    border: .16rem solid var(--gold);
+    background: rgba(255, 200, 69, .14);
+}
+
+.check-first {
+    display: grid;
+    gap: .6rem;
+    max-width: 66rem;
+}
+
+.check-first > strong {
+    color: var(--blue);
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+}
+
+/* The firmware boot-priority menu, rebuilt in deck colors. */
+
+.boot-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(16rem, .8fr);
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    align-items: start;
+    max-width: 70rem;
+}
+
+.boot-menu {
+    background: #0a1626;
+    border: .16rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .7rem 1.6rem rgba(0, 26, 54, .2);
+}
+
+.bm-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .6rem 1rem;
+    background: rgba(255, 255, 255, .08);
+    color: #ffd573;
+    font-family: var(--code);
+    font-weight: 800;
+    letter-spacing: .06em;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    text-transform: uppercase;
+}
+
+.bm-list {
+    list-style: none;
+    margin: 0;
+    padding: .6rem .9rem .8rem;
+    display: grid;
+    gap: .4rem;
+}
+
+.bm-list li {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .5rem .7rem;
+    border-radius: .35rem;
+    color: #eaf4ff;
+    font-family: var(--code);
+    font-size: clamp(.9rem, 1.25vw, 1.2rem);
+}
+
+.bm-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .12);
+    font-weight: 900;
+    font-size: .95rem;
+    flex: none;
+}
+
+.bm-name {
+    font-weight: 700;
+}
+
+.bm-sub {
+    margin-left: auto;
+    color: #9fc3ec;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    text-align: right;
+}
+
+.bm-list li.picked {
+    background: rgba(255, 200, 69, .16);
+    outline: .12rem solid var(--gold);
+}
+
+.picked .bm-no {
+    background: var(--gold);
+    color: #0a1626;
+}
+
+.picked .build-tag {
+    margin-left: auto;
+}
+
+.multiboot-note {
+    border-left: .5rem solid var(--blue);
+    border-radius: .65rem;
+}
+
+.multiboot-note h3 {
+    color: var(--navy);
+    margin-bottom: .35rem;
+}
+
+/* MBR against GPT: the sliced disk bars. */
+
+.disk-compare {
+    display: grid;
+    gap: clamp(1.1rem, 2.2vw, 2rem);
+    max-width: 70rem;
+}
+
+.disk-row {
+    display: grid;
+    grid-template-columns: clamp(11rem, 17vw, 15rem) 1fr;
+    grid-template-rows: auto auto;
+    gap: .5rem .9rem;
+    align-items: center;
+}
+
+.disk-label {
+    grid-row: 1 / span 2;
+    display: grid;
+    gap: .15rem;
+    justify-items: start;
+    align-content: center;
+}
+
+.disk-label strong {
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+}
+
+.disk-label span {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    color: var(--ink);
+}
+
+.disk-label .build-tag {
+    margin-top: .3rem;
+}
+
+.disk-bar {
+    display: flex;
+    gap: .22rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .5rem;
+    padding: .3rem;
+    min-height: 3.6rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.slice {
+    flex: 1 1 0;
+    display: grid;
+    place-items: center;
+    border-radius: .3rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.72rem, 1vw, .95rem);
+    padding: .3rem .2rem;
+    text-align: center;
+}
+
+.slice.boot {
+    flex: 0 0 clamp(3.2rem, 5vw, 4.5rem);
+    background: var(--navy);
+    color: #fff;
+}
+
+.slice.wide {
+    flex: 2.2 1 0;
+    background: var(--blue);
+    color: #fff;
+}
+
+.slice.more {
+    background: transparent;
+    border: .12rem dashed var(--blue);
+    color: var(--blue);
+}
+
+.disk-row.picked .disk-bar {
+    outline: .18rem solid var(--gold);
+    outline-offset: .18rem;
+}
+
+.disk-note {
+    margin: 0;
+    grid-column: 2;
+    font-size: clamp(.78rem, 1vw, .98rem);
+    color: var(--blue);
+    font-weight: 800;
+}
+
+/* Drive formats matched to their OS. */
+
+.format-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 56rem;
+}
+
+.format-rows li {
+    display: grid;
+    grid-template-columns: clamp(7rem, 10vw, 9rem) 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fmt-chip {
+    font-family: var(--code);
+    font-weight: 900;
+    color: #fff;
+    background: var(--navy);
+    text-align: center;
+    padding: .35rem .5rem;
+    border-radius: .3rem;
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+}
+
+.fmt-os {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+/* The install rail: the traced build's five stages. */
+
+.install-rail {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.rail-step {
+    position: relative;
+    background: #fff;
+    color: var(--navy);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 0, 0, .25);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    min-height: 9rem;
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.rail-step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.45vw, 1.4rem);
+    margin-bottom: .4rem;
+}
+
+.rail-note {
+    display: inline-block;
+    margin-top: .15rem;
+    padding: .3rem .5rem;
+    border-radius: .22rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    line-height: 1.25;
+}
+
+.rail-step::after {
+    content: "→";
+    position: absolute;
+    right: -.65rem;
+    top: 42%;
+    z-index: 2;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.rail-step:last-child::after {
+    content: none;
+}
+
+.build-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+}
+
+.build-chip {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+    white-space: nowrap;
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+.verdict-text {
+    color: rgba(255, 255, 255, .92);
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+/* The repair ladder. Red carries only the option that destroys data,
+   and it always travels with its printed label. */
+
+.repair-ladder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+    max-width: 64rem;
+}
+
+.repair-ladder li {
+    display: grid;
+    grid-template-columns: clamp(11rem, 16vw, 14rem) 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .55rem;
+    padding: .8rem 1.1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .07);
+}
+
+.rung-name {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.rung-text {
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.repair-ladder li.danger {
+    border-left-color: var(--status-danger);
+}
+
+.danger-tag {
+    padding: .3rem .6rem;
+    border-radius: .3rem;
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+    font-weight: 900;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    white-space: nowrap;
+}
+
+.danger-tag::before {
+    content: "✕ ";
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .limit-strip {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 21, 43, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* exit-split: give the recap panels most of the width so their prompts
+   stop wrapping into ragged one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .22), transparent 20rem),
+            linear-gradient(135deg, #fffaf0, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .edition-shelf {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+    }
+
+    .ed-item p {
+        max-width: none;
+    }
+
+    .fm-head {
+        display: none;
+    }
+
+    .fm-row {
+        grid-template-columns: 1fr;
+        gap: .45rem;
+        justify-items: start;
+    }
+
+    .fm-cell {
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    .fm-cell.out::before,
+    .fm-cell.part::before {
+        content: "Home: ";
+    }
+
+    .fm-cell.in::before {
+        content: "Pro · Ent · Edu: ";
+    }
+
+    .ram-chart {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .ram-col strong {
+        min-height: 0;
+    }
+
+    .upgrade-split {
+        grid-template-columns: 1fr;
+    }
+
+    .path-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .boot-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .bm-list li {
+        flex-wrap: wrap;
+    }
+
+    .bm-sub,
+    .picked .build-tag {
+        margin-left: 2.5rem;
+    }
+
+    .disk-row {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .disk-label {
+        grid-row: auto;
+    }
+
+    .disk-note {
+        grid-column: 1;
+    }
+
+    .fact-rows li,
+    .format-rows li,
+    .repair-ladder li {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+        justify-items: start;
+    }
+
+    .install-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-step {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .rail-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .rail-step:last-child::after {
+        content: none;
+    }
+
+    .visual-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split .build-card,
+    .visual-split .visual-art,
+    .visual-split .about-pane {
+        order: 2;
+    }
+
+    .build-card,
+    .about-pane {
+        width: 100%;
+    }
+}

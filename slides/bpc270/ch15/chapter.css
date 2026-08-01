@@ -1,0 +1,1551 @@
+/* BPC270 Chapter 15: locks and keys */
+
+/* The motif is painted as background layers only: a keyring with three
+   hanging keys (the chosen one gold), a padlock with a gold keyhole,
+   and a faint permission grid, over a soft ruled field. Positioned
+   boxes would create a focus scroll trap, so everything lives in the
+   slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(124,54,38,0.06)' stroke-width='18'/%3E%3Ccircle cx='150' cy='140' r='46' stroke='rgba(124,54,38,0.2)' stroke-width='4'/%3E%3Ccircle cx='122' cy='192' r='10' stroke='rgba(124,54,38,0.18)' stroke-width='3'/%3E%3Cpath d='M122 202v30M122 218h9M122 226h6' stroke='rgba(124,54,38,0.18)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='150' cy='196' r='10' stroke='rgba(224,169,46,0.6)' stroke-width='3'/%3E%3Cpath d='M150 206v34M150 224h9M150 232h6' stroke='rgba(224,169,46,0.6)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='178' cy='192' r='10' stroke='rgba(124,54,38,0.18)' stroke-width='3'/%3E%3Cpath d='M178 202v30M178 218h9M178 226h6' stroke='rgba(124,54,38,0.18)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M346 208v-24a26 26 0 0 1 52 0v24' stroke='rgba(124,54,38,0.2)' stroke-width='5'/%3E%3Crect x='332' y='208' width='80' height='62' rx='8' stroke='rgba(124,54,38,0.2)' stroke-width='5'/%3E%3Ccircle cx='372' cy='234' r='7' stroke='rgba(224,169,46,0.55)' stroke-width='4'/%3E%3Cpath d='M372 241v12' stroke='rgba(224,169,46,0.55)' stroke-width='4' stroke-linecap='round'/%3E%3Cg stroke='rgba(3,72,143,0.16)' stroke-width='2.6'%3E%3Crect x='96' y='300' width='24' height='24' rx='5'/%3E%3Crect x='130' y='300' width='24' height='24' rx='5'/%3E%3Crect x='164' y='300' width='24' height='24' rx='5'/%3E%3Crect x='96' y='334' width='24' height='24' rx='5'/%3E%3Crect x='130' y='334' width='24' height='24' rx='5'/%3E%3Crect x='164' y='334' width='24' height='24' rx='5'/%3E%3C/g%3E%3Cpath d='M102 312l5 5 9-10' stroke='rgba(3,72,143,0.22)' stroke-width='2.6'/%3E%3Cpath d='M136 346l5 5 9-10' stroke='rgba(3,72,143,0.22)' stroke-width='2.6'/%3E%3Cpath d='M168 312h16' stroke='rgba(3,72,143,0.2)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(124, 54, 38, .045) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+        linear-gradient(135deg, #faf1ec, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Ccircle cx='150' cy='140' r='46' stroke='rgba(255,255,255,0.16)' stroke-width='4'/%3E%3Ccircle cx='122' cy='192' r='10' stroke='rgba(255,255,255,0.13)' stroke-width='3'/%3E%3Cpath d='M122 202v30M122 218h9M122 226h6' stroke='rgba(255,255,255,0.13)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='150' cy='196' r='10' stroke='rgba(255,213,115,0.5)' stroke-width='3'/%3E%3Cpath d='M150 206v34M150 224h9M150 232h6' stroke='rgba(255,213,115,0.5)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='178' cy='192' r='10' stroke='rgba(255,255,255,0.13)' stroke-width='3'/%3E%3Cpath d='M178 202v30M178 218h9M178 226h6' stroke='rgba(255,255,255,0.13)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M346 208v-24a26 26 0 0 1 52 0v24' stroke='rgba(255,255,255,0.16)' stroke-width='5'/%3E%3Crect x='332' y='208' width='80' height='62' rx='8' stroke='rgba(255,255,255,0.16)' stroke-width='5'/%3E%3Ccircle cx='372' cy='234' r='7' stroke='rgba(255,213,115,0.5)' stroke-width='4'/%3E%3Cpath d='M372 241v12' stroke='rgba(255,213,115,0.5)' stroke-width='4' stroke-linecap='round'/%3E%3Cg stroke='rgba(255,255,255,0.1)' stroke-width='2.6'%3E%3Crect x='96' y='300' width='24' height='24' rx='5'/%3E%3Crect x='130' y='300' width='24' height='24' rx='5'/%3E%3Crect x='164' y='300' width='24' height='24' rx='5'/%3E%3Crect x='96' y='334' width='24' height='24' rx='5'/%3E%3Crect x='130' y='334' width='24' height='24' rx='5'/%3E%3Crect x='164' y='334' width='24' height='24' rx='5'/%3E%3C/g%3E%3Cpath d='M102 312l5 5 9-10' stroke='rgba(255,255,255,0.14)' stroke-width='2.6'/%3E%3Cpath d='M136 346l5 5 9-10' stroke='rgba(255,255,255,0.14)' stroke-width='2.6'/%3E%3Cpath d='M168 312h16' stroke='rgba(255,255,255,0.12)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+        linear-gradient(135deg, #5e2a1d, #9a4a36);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(94,42,29,0.05)' stroke-width='18'/%3E%3Ccircle cx='150' cy='140' r='46' stroke='rgba(94,42,29,0.22)' stroke-width='4'/%3E%3Ccircle cx='122' cy='192' r='10' stroke='rgba(94,42,29,0.18)' stroke-width='3'/%3E%3Cpath d='M122 202v30M122 218h9M122 226h6' stroke='rgba(94,42,29,0.18)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='150' cy='196' r='10' stroke='rgba(3,72,143,0.4)' stroke-width='3'/%3E%3Cpath d='M150 206v34M150 224h9M150 232h6' stroke='rgba(3,72,143,0.4)' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='178' cy='192' r='10' stroke='rgba(94,42,29,0.18)' stroke-width='3'/%3E%3Cpath d='M178 202v30M178 218h9M178 226h6' stroke='rgba(94,42,29,0.18)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M346 208v-24a26 26 0 0 1 52 0v24' stroke='rgba(94,42,29,0.22)' stroke-width='5'/%3E%3Crect x='332' y='208' width='80' height='62' rx='8' stroke='rgba(94,42,29,0.22)' stroke-width='5'/%3E%3Ccircle cx='372' cy='234' r='7' stroke='rgba(94,42,29,0.3)' stroke-width='4'/%3E%3Cpath d='M372 241v12' stroke='rgba(94,42,29,0.3)' stroke-width='4' stroke-linecap='round'/%3E%3Cg stroke='rgba(94,42,29,0.16)' stroke-width='2.6'%3E%3Crect x='96' y='300' width='24' height='24' rx='5'/%3E%3Crect x='130' y='300' width='24' height='24' rx='5'/%3E%3Crect x='164' y='300' width='24' height='24' rx='5'/%3E%3Crect x='96' y='334' width='24' height='24' rx='5'/%3E%3Crect x='130' y='334' width='24' height='24' rx='5'/%3E%3Crect x='164' y='334' width='24' height='24' rx='5'/%3E%3C/g%3E%3Cpath d='M102 312l5 5 9-10' stroke='rgba(94,42,29,0.2)' stroke-width='2.6'/%3E%3Cpath d='M136 346l5 5 9-10' stroke='rgba(94,42,29,0.2)' stroke-width='2.6'/%3E%3Cpath d='M168 312h16' stroke='rgba(94,42,29,0.18)' stroke-width='2.6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(94, 42, 29, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small key lying on its side. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.35rem;
+    height: .95rem;
+    margin-right: .5rem;
+    background-image:
+        radial-gradient(circle at .33rem 50%, transparent 0 .15rem, currentColor .16rem .29rem, transparent .3rem),
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor);
+    background-size: 100% 100%, .62rem .13rem, .12rem .32rem, .12rem .24rem;
+    background-position: 0 0, .56rem 50%, 1.08rem 72%, .86rem 72%;
+    background-repeat: no-repeat;
+    vertical-align: -.14rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the canyon field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #5e2a1d 0%, rgba(94, 42, 29, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The share card: the chapter's traced object, riding the exemplar
+   work-order card language. Gold binds James and the folder wherever
+   they reappear. */
+
+.share-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.share-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.sc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.sc-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.share-card dl {
+    margin: 0;
+}
+
+.share-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.share-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.share-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.share-card dd {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.share-card dd.sc-path {
+    font-family: var(--code);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.share-card dd.sc-open {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+/* The gold chip binds the traced pair, James and his folder. */
+
+.traced-chip {
+    display: inline-block;
+    padding: .22rem .6rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.05rem);
+    white-space: nowrap;
+}
+
+/* The IAM corridor: four checkpoints in reading order. */
+
+.iam-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .6rem;
+    max-width: 70rem;
+}
+
+.rail-step {
+    position: relative;
+    background: #fff;
+    color: var(--ink);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.7rem, 1.1vw, 1rem);
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.rail-step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.45vw, 1.4rem);
+    margin-bottom: .35rem;
+}
+
+.rail-step p {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    line-height: 1.3;
+}
+
+.rail-step::after {
+    content: "→";
+    position: absolute;
+    right: -.68rem;
+    top: 40%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.rail-step:last-child::after {
+    content: none;
+}
+
+/* The two house rules under the corridor. */
+
+.rule-rows {
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+}
+
+.rule-row {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--navy);
+    border-radius: .5rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.rule-row strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.rule-row span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* The risk equation. Amber marks the weakness, red the threat, and the
+   canyon field the risk they add up to. Every color sits on a label. */
+
+.risk-eq {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: clamp(.6rem, 1.4vw, 1.3rem);
+    align-items: stretch;
+    max-width: 66rem;
+}
+
+.risk-tile {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .7rem;
+    padding: clamp(1rem, 1.7vw, 1.5rem) 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .45rem;
+    box-shadow: 0 .6rem 1.4rem rgba(94, 42, 29, .08);
+}
+
+.risk-tile.vuln {
+    border-top-color: var(--status-warning);
+}
+
+.risk-tile.threat {
+    border-top-color: var(--status-danger);
+}
+
+.risk-tile.risk {
+    border-top-color: var(--navy);
+}
+
+.risk-tile strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+}
+
+.risk-tile p {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.risk-op {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900;
+}
+
+.rt-glyph {
+    width: 3rem;
+    height: 3rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.g-openlock {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cpath d='M20 24v-9a9 9 0 0 1 18 0v3' fill='none' stroke='%23c9821f' stroke-width='3.4' stroke-linecap='round'/%3E%3Crect x='6' y='24' width='24' height='17' rx='3.5' fill='none' stroke='%23c9821f' stroke-width='3.4'/%3E%3C/svg%3E");
+}
+
+.g-tri {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cpath d='M22 6 40 38H4Z' fill='none' stroke='%23a6321f' stroke-width='3.4' stroke-linejoin='round'/%3E%3Cpath d='M22 18v9' stroke='%23a6321f' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='32.5' r='1.9' fill='%23a6321f'/%3E%3C/svg%3E");
+}
+
+.g-gauge {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cpath d='M6 36a16 16 0 0 1 32 0' fill='none' stroke='%237c3626' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M22 36 31 23' stroke='%237c3626' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='36' r='2.6' fill='%237c3626'/%3E%3C/svg%3E");
+}
+
+/* The cryptography trio. Keys stay process blue: structure, not the
+   traced value. */
+
+.key-trio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    max-width: 72rem;
+}
+
+.key-panel {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1.1rem, 2vw, 1.8rem);
+    box-shadow: 0 .7rem 1.8rem rgba(94, 42, 29, .07);
+}
+
+.key-panel h3 {
+    color: var(--navy);
+    margin-bottom: .4rem;
+}
+
+.key-panel p {
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.kp-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    height: 3.4rem;
+    margin-bottom: .8rem;
+    border-bottom: .28rem solid var(--navy);
+    padding-bottom: .6rem;
+}
+
+.key-glyph {
+    display: inline-block;
+    width: 4.6rem;
+    height: 1.6rem;
+    background-image:
+        radial-gradient(circle at .8rem 50%, transparent 0 .34rem, var(--blue) .35rem .62rem, transparent .63rem),
+        linear-gradient(var(--blue), var(--blue)),
+        linear-gradient(var(--blue), var(--blue)),
+        linear-gradient(var(--blue), var(--blue));
+    background-size: 100% 100%, 2.5rem .3rem, .28rem .6rem, .28rem .46rem;
+    background-position: 0 0, 1.4rem 50%, 3.66rem 74%, 3.1rem 74%;
+    background-repeat: no-repeat;
+}
+
+.key-glyph.flip {
+    transform: scaleX(-1);
+}
+
+.key-glyph.small {
+    transform: scale(.6);
+}
+
+.hash-funnel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+}
+
+.hash-funnel i {
+    width: 3.4rem;
+    height: 1.6rem;
+    background: var(--blue);
+    clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
+}
+
+.hash-funnel b {
+    width: 2.4rem;
+    height: .55rem;
+    border-radius: .12rem;
+    background: var(--navy);
+}
+
+/* Digital signature panel and the key exchange relay. */
+
+.sig-panel {
+    border-radius: .8rem;
+    align-self: stretch;
+}
+
+.sig-head {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: .6rem;
+}
+
+.sig-head h3 {
+    color: var(--navy);
+}
+
+.g-seal {
+    display: inline-grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: var(--gold);
+    border: .14rem solid var(--navy);
+    flex-shrink: 0;
+}
+
+.g-seal::after {
+    content: "✓";
+    color: var(--navy);
+    font-weight: 900;
+    font-size: 1.05rem;
+}
+
+.kx-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: .45rem;
+    align-items: stretch;
+}
+
+.kx-node {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.3vw, 1.1rem) .6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.kx-node > span {
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kx-node strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.kx-node p {
+    font-size: clamp(.76rem, .98vw, .94rem);
+}
+
+.kx-box {
+    width: 4.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .35rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) center 0 / 100% .32rem no-repeat,
+        #fff;
+    overflow: hidden;
+}
+
+.kx-wire {
+    width: 3.2rem;
+    background: repeating-linear-gradient(90deg, var(--blue) 0 .45rem, transparent .45rem .9rem) center / 100% .3rem no-repeat;
+}
+
+.flow-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+/* Accounts and the group keyring rack. */
+
+.acct-duo {
+    max-width: 70rem;
+}
+
+.group-rack {
+    display: grid;
+    gap: .5rem;
+    max-width: 66rem;
+}
+
+.rack-row {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 10vw, 9rem) clamp(9rem, 14vw, 12.5rem) 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.rack-row strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.rack-row > span:not(.ringset) {
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.ringset {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .24rem;
+    padding-left: 1.5rem;
+    height: 1.7rem;
+}
+
+.ringset::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    border: .18rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.ringset i {
+    position: relative;
+    width: .32rem;
+    height: 1.2rem;
+    border-radius: .08rem .08rem .14rem .14rem;
+    background: var(--blue);
+}
+
+.ringset i::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: .16rem;
+    width: .52rem;
+    height: .13rem;
+    background: inherit;
+}
+
+.legacy {
+    font-style: normal;
+    padding: .16rem .5rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: clamp(.62rem, .85vw, .78rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* The rebuilt UAC dialog. Gold marks the confirming click. */
+
+.uac-dialog {
+    width: min(100%, 30rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(94, 42, 29, .18);
+}
+
+.uac-dialog header {
+    padding: .6rem 1.1rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+    letter-spacing: .03em;
+}
+
+.uac-body {
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .9rem;
+    justify-items: start;
+}
+
+.uac-shield {
+    position: relative;
+    width: 2.1rem;
+    height: 2.5rem;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+}
+
+.uac-body p {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.uac-actions {
+    display: flex;
+    gap: .7rem;
+    justify-self: end;
+}
+
+.uac-btn {
+    padding: .4rem 1.4rem;
+    border: .12rem solid var(--navy);
+    border-radius: .3rem;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.uac-btn.yes {
+    background: var(--gold);
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* The amber caution strip. */
+
+.safety {
+    margin-top: 1rem;
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .09);
+    padding: .8rem 1.2rem;
+    max-width: 62rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.safety strong {
+    color: var(--status-warning);
+}
+
+.safety p {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+/* The rebuilt sign-in options pane. Gold binds the Windows Hello rows,
+   the lesson's focus. */
+
+.signin-pane,
+.net-access,
+.map-dialog {
+    width: min(100%, 64rem);
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .7rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 2rem rgba(94, 42, 29, .14);
+}
+
+.signin-pane header,
+.net-access header,
+.map-dialog header {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    background: var(--navy);
+}
+
+.sp-dots {
+    display: inline-flex;
+    gap: .3rem;
+}
+
+.sp-dots i {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .55);
+}
+
+.sp-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    letter-spacing: .04em;
+}
+
+.sp-row {
+    display: grid;
+    grid-template-columns: clamp(10rem, 17vw, 15rem) 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: .55rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.sp-row strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.sp-row span {
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.sp-row em {
+    font-style: normal;
+    padding: .2rem .55rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .85rem);
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.sp-row.hello {
+    border-left: .45rem solid var(--gold);
+    background: rgba(255, 213, 115, .1);
+}
+
+.signin-pane footer {
+    padding: .6rem 1.1rem;
+    background: var(--mist);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+/* The domain map: the directory sits above what it describes. */
+
+.domain-map {
+    display: grid;
+    justify-items: center;
+    max-width: 62rem;
+    width: 100%;
+}
+
+.dm-node {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.5vw, 1.2rem) clamp(.9rem, 1.5vw, 1.4rem);
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+}
+
+.dm-node.dc {
+    border-top-color: var(--navy);
+    max-width: 30rem;
+}
+
+.dm-node strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.dm-node p {
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.dm-links {
+    display: flex;
+    justify-content: space-around;
+    width: min(34rem, 70%);
+    height: 2.2rem;
+    padding: .15rem 0;
+}
+
+.dm-links span {
+    width: .24rem;
+    background: var(--blue);
+    border-radius: .12rem;
+}
+
+.dm-links span:first-child {
+    transform: rotate(26deg);
+}
+
+.dm-links span:last-child {
+    transform: rotate(-26deg);
+}
+
+.dm-bottom {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 2.4rem);
+    width: 100%;
+    align-items: stretch;
+}
+
+.dm-node.ou {
+    border: .16rem dashed var(--blue);
+}
+
+.ou-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .55rem;
+    margin-top: .35rem;
+}
+
+/* Server glyph in canonical shape, shared with the domain map. */
+
+.g-obj {
+    display: grid;
+    place-items: center;
+    height: 3.2rem;
+}
+
+.g-obj::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+}
+
+.g-server::before {
+    width: 2.7rem;
+    height: 3rem;
+    border: .16rem solid var(--navy);
+    border-radius: .22rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 18% 24% / 1.3rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 18% 50% / 1.3rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 18% 76% / 1.3rem .16rem no-repeat,
+        radial-gradient(circle at 82% 24%, var(--blue) 0 .11rem, transparent .12rem),
+        radial-gradient(circle at 82% 50%, var(--blue) 0 .11rem, transparent .12rem),
+        radial-gradient(circle at 82% 76%, var(--blue) 0 .11rem, transparent .12rem),
+        #fff;
+}
+
+/* Group policy split. */
+
+.gp-split {
+    align-items: center;
+}
+
+/* The share steps beside the rebuilt Network access dialog. */
+
+.visual-split.share-split {
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, .9fr);
+    align-items: center;
+}
+
+.share-steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+}
+
+.share-steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.1rem 1fr;
+    gap: .8rem;
+    align-items: start;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .8rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(94, 42, 29, .06);
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.share-steps li::before {
+    content: counter(step);
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+}
+
+.share-steps strong {
+    color: var(--navy);
+}
+
+.net-access {
+    width: min(100%, 30rem);
+    justify-self: center;
+}
+
+.na-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: .9rem;
+    align-items: center;
+    padding: .75rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.na-row:last-child {
+    border-bottom: 0;
+}
+
+.na-row strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.na-avatar {
+    position: relative;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    border: .13rem solid var(--navy);
+    background:
+        radial-gradient(circle at 50% 34%, var(--navy) 0 .36rem, transparent .37rem),
+        radial-gradient(circle at 50% 108%, var(--navy) 0 .85rem, transparent .86rem),
+        var(--mist);
+}
+
+.na-avatar.group::after {
+    content: "";
+    position: absolute;
+    right: -.55rem;
+    bottom: -.2rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    border: .13rem solid var(--navy);
+    background:
+        radial-gradient(circle at 50% 34%, var(--navy) 0 .22rem, transparent .23rem),
+        radial-gradient(circle at 50% 108%, var(--navy) 0 .55rem, transparent .56rem),
+        var(--mist);
+}
+
+.na-perm {
+    padding: .3rem .7rem;
+    border-radius: .3rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.na-perm.owner {
+    background: var(--gold);
+}
+
+/* The two-lock gate: the mechanism of effective permissions. */
+
+.two-locks {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.1fr);
+    align-items: center;
+    gap: .55rem;
+    max-width: 70rem;
+}
+
+.tl-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+}
+
+.tl-via {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.tl-wire {
+    width: clamp(1.1rem, 2.2vw, 2.4rem);
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--blue);
+}
+
+.tl-lock {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) .7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    box-shadow: 0 .5rem 1.2rem rgba(94, 42, 29, .08);
+}
+
+.tl-lock strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.tl-lock p {
+    font-size: clamp(.74rem, .98vw, .94rem);
+}
+
+.g-lock {
+    position: relative;
+    display: inline-block;
+    width: 2.1rem;
+    height: 2.5rem;
+}
+
+.g-lock::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.25rem;
+    height: 1.15rem;
+    border: .18rem solid var(--navy);
+    border-bottom: 0;
+    border-radius: .68rem .68rem 0 0;
+}
+
+.g-lock::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.45rem;
+    border-radius: .22rem;
+    background:
+        radial-gradient(circle at 50% 42%, #fff 0 .16rem, transparent .17rem),
+        var(--navy);
+}
+
+.perm-chip {
+    padding: .25rem .6rem;
+    border-radius: .28rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    white-space: nowrap;
+}
+
+.perm-chip.effective {
+    background: var(--gold);
+}
+
+.tl-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+    text-align: center;
+}
+
+.tl-result strong {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.g-folder {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 2.1rem;
+    margin-top: .5rem;
+    background: var(--gold);
+    border: .14rem solid var(--navy);
+    border-radius: .22rem;
+}
+
+.g-folder::before {
+    content: "";
+    position: absolute;
+    top: -.52rem;
+    left: .18rem;
+    width: 1.15rem;
+    height: .5rem;
+    background: var(--gold);
+    border: .14rem solid var(--navy);
+    border-bottom: 0;
+    border-radius: .2rem .2rem 0 0;
+}
+
+.tl-note {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.tl-note::before {
+    content: "";
+    display: inline-block;
+    width: 2.2rem;
+    height: .22rem;
+    margin-right: .5rem;
+    vertical-align: middle;
+    background: repeating-linear-gradient(90deg, var(--blue) 0 .35rem, transparent .35rem .7rem);
+}
+
+.lock-facts .chip {
+    background: #fff;
+    border: .1rem solid var(--mist);
+}
+
+/* The rebuilt Map Network Drive dialog. */
+
+.map-dialog {
+    width: min(100%, 34rem);
+    justify-self: center;
+}
+
+.md-body {
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .8rem;
+}
+
+.md-field {
+    display: grid;
+    grid-template-columns: clamp(3.6rem, 6vw, 5rem) 1fr;
+    gap: .8rem;
+    align-items: center;
+}
+
+.md-label {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.75rem, 1vw, .95rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.md-input {
+    border: .12rem solid var(--mist);
+    border-radius: .3rem;
+    padding: .5rem .8rem;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    background: #fff;
+}
+
+.md-input.md-path {
+    font-family: var(--code);
+    color: var(--navy);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.md-check {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.md-tick {
+    display: grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border: .12rem solid var(--navy);
+    border-radius: .2rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 900;
+    font-size: .85rem;
+}
+
+.map-side {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+}
+
+/* Check-slide chips on the gold field. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split .fact-rows + .chip-list {
+    margin-top: 1rem;
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(46, 15, 8, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(94, 42, 29, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 213, 115, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* exit-split: give the recap panels most of the width so their
+   prompts stop wrapping into ragged one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 213, 115, .22), transparent 20rem),
+            linear-gradient(135deg, #faf1ec, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 213, 115, .16), transparent 20rem),
+            linear-gradient(135deg, #5e2a1d, #9a4a36);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(94, 42, 29, .48);
+    }
+
+    .iam-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-step {
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .rail-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1.05rem;
+    }
+
+    .rail-step:last-child::after {
+        content: none;
+    }
+
+    .rule-rows .rule-row,
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .risk-eq {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .risk-op {
+        justify-self: center;
+    }
+
+    .key-trio {
+        grid-template-columns: 1fr;
+    }
+
+    .kx-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .kx-flow .flow-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .rack-row {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+        justify-items: start;
+    }
+
+    .visual-split,
+    .visual-split.share-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .sp-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+        justify-items: start;
+    }
+
+    .dm-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .dm-links {
+        height: 1.6rem;
+    }
+
+    .two-locks {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: .7rem;
+    }
+
+    .tl-wire {
+        width: .26rem;
+        height: 1.4rem;
+    }
+
+    .tl-lock,
+    .tl-result {
+        width: 100%;
+    }
+
+    .share-card,
+    .net-access,
+    .map-dialog,
+    .uac-dialog {
+        width: 100%;
+    }
+}

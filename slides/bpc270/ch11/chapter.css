@@ -1,0 +1,1439 @@
+/* BPC270 Chapter 11: the runbook binder */
+
+/* The motif is painted as background layers only: an open ring binder
+   page with side tabs, checkbox rows, and a stamped seal, over a faint
+   form-pad ruling. It deliberately echoes the BPC170 ch01 work order,
+   since this module is its Core 2 sibling. Positioned boxes would
+   create a focus scroll trap, so everything lives in the background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(3,72,143,0.07)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(3,72,143,0.18)' stroke-width='2.4'/%3E%3Cpath d='M96 116h320' stroke='rgba(3,72,143,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='150' r='7' stroke='rgba(3,116,181,0.22)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='195' r='7' stroke='rgba(3,116,181,0.22)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='240' r='7' stroke='rgba(3,116,181,0.22)' stroke-width='2.4'/%3E%3Crect x='416' y='128' width='26' height='20' rx='4' stroke='rgba(255,200,69,0.55)' stroke-width='2.4'/%3E%3Crect x='416' y='164' width='26' height='20' rx='4' stroke='rgba(3,116,181,0.18)' stroke-width='2.4'/%3E%3Crect x='416' y='200' width='26' height='20' rx='4' stroke='rgba(3,116,181,0.18)' stroke-width='2.4'/%3E%3Crect x='128' y='138' width='14' height='14' rx='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Cpath d='M131 145l4 4 7-8' stroke='rgba(255,200,69,0.6)' stroke-width='2.4'/%3E%3Cpath d='M156 145h216' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='128' y='172' width='14' height='14' rx='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Cpath d='M156 179h216' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Crect x='128' y='206' width='14' height='14' rx='3' stroke='rgba(3,116,181,0.2)' stroke-width='2'/%3E%3Cpath d='M156 213h150' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Ccircle cx='352' cy='250' r='32' stroke='rgba(255,200,69,0.55)' stroke-width='6'/%3E%3Cpath d='M337 250l11 11 20-22' stroke='rgba(255,200,69,0.55)' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(3, 116, 181, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+        linear-gradient(135deg, #fbfcff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Cpath d='M96 116h320' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='150' r='7' stroke='rgba(255,255,255,0.16)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='195' r='7' stroke='rgba(255,255,255,0.16)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='240' r='7' stroke='rgba(255,255,255,0.16)' stroke-width='2.4'/%3E%3Crect x='416' y='128' width='26' height='20' rx='4' stroke='rgba(255,200,69,0.5)' stroke-width='2.4'/%3E%3Crect x='416' y='164' width='26' height='20' rx='4' stroke='rgba(255,255,255,0.14)' stroke-width='2.4'/%3E%3Crect x='416' y='200' width='26' height='20' rx='4' stroke='rgba(255,255,255,0.14)' stroke-width='2.4'/%3E%3Crect x='128' y='138' width='14' height='14' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Cpath d='M131 145l4 4 7-8' stroke='rgba(255,200,69,0.5)' stroke-width='2.4'/%3E%3Cpath d='M156 145h216' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='128' y='172' width='14' height='14' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Cpath d='M156 179h216' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='128' y='206' width='14' height='14' rx='3' stroke='rgba(255,255,255,0.15)' stroke-width='2'/%3E%3Cpath d='M156 213h150' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Ccircle cx='352' cy='250' r='32' stroke='rgba(255,200,69,0.5)' stroke-width='6'/%3E%3Cpath d='M337 250l11 11 20-22' stroke='rgba(255,200,69,0.5)' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Cpath d='M96 116h320' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='150' r='7' stroke='rgba(0,46,93,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='195' r='7' stroke='rgba(0,46,93,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='96' cy='240' r='7' stroke='rgba(0,46,93,0.15)' stroke-width='2.4'/%3E%3Crect x='416' y='128' width='26' height='20' rx='4' stroke='rgba(3,116,181,0.45)' stroke-width='2.4'/%3E%3Crect x='416' y='164' width='26' height='20' rx='4' stroke='rgba(0,46,93,0.14)' stroke-width='2.4'/%3E%3Crect x='416' y='200' width='26' height='20' rx='4' stroke='rgba(0,46,93,0.14)' stroke-width='2.4'/%3E%3Crect x='128' y='138' width='14' height='14' rx='3' stroke='rgba(0,46,93,0.16)' stroke-width='2'/%3E%3Cpath d='M131 145l4 4 7-8' stroke='rgba(3,116,181,0.45)' stroke-width='2.4'/%3E%3Cpath d='M156 145h216' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='128' y='172' width='14' height='14' rx='3' stroke='rgba(0,46,93,0.16)' stroke-width='2'/%3E%3Cpath d='M156 179h216' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='128' y='206' width='14' height='14' rx='3' stroke='rgba(0,46,93,0.16)' stroke-width='2'/%3E%3Cpath d='M156 213h150' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Ccircle cx='352' cy='250' r='32' stroke='rgba(3,116,181,0.45)' stroke-width='6'/%3E%3Cpath d='M337 250l11 11 20-22' stroke='rgba(3,116,181,0.45)' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 46, 93, .06) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small tabbed binder page with ring dots. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.25rem;
+    height: 1rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .16rem;
+    background-image:
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor);
+    background-size: .1rem 66%, .42rem .11rem, .42rem .11rem;
+    background-position: 18% 50%, 62% 30%, 62% 64%;
+    background-repeat: no-repeat;
+    vertical-align: -.14rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The ticket card: the chapter's traced object, riding the BPC170 ch01
+   work-order card language on purpose. */
+
+.work-order {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.work-order header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--midnight-navy);
+}
+
+.wo-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.wo-open-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.work-order dl {
+    margin: 0;
+}
+
+.work-order dl div {
+    display: grid;
+    grid-template-columns: clamp(7.5rem, 11vw, 9.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.work-order dl div:last-child {
+    border-bottom: 0;
+}
+
+.work-order dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.work-order dd {
+    margin: 0;
+    color: var(--midnight-navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.work-order dd.wo-blank {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    border: .12rem dashed var(--navy-300);
+    color: var(--blue);
+    font-weight: 700;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* The gold chip binds the traced ticket across slides. */
+
+.slip-chip {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.1vw, 1.02rem);
+    white-space: nowrap;
+}
+
+/* SOP against guideline: two binder pages side by side. */
+
+.page-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.4rem, 3vw, 3rem);
+    max-width: 64rem;
+}
+
+.rb-page {
+    position: relative;
+    background: #fff;
+    border: .13rem solid var(--navy);
+    border-radius: .35rem;
+    padding: clamp(1.1rem, 2vw, 1.7rem) clamp(1.1rem, 2vw, 1.7rem) clamp(.8rem, 1.4vw, 1.1rem);
+    box-shadow: .6rem .7rem 0 rgba(0, 46, 93, .13);
+}
+
+.rb-tab {
+    position: absolute;
+    top: 1rem;
+    right: -.95rem;
+    padding: .28rem .5rem;
+    border-radius: 0 .3rem .3rem 0;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.66rem, .9vw, .84rem);
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+}
+
+.rb-page.guide .rb-tab {
+    background: var(--navy);
+}
+
+.rb-page h3 {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+    margin-bottom: .8rem;
+}
+
+.rb-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+    counter-reset: rb;
+}
+
+.rb-steps li {
+    counter-increment: rb;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    color: var(--midnight-navy);
+}
+
+.rb-steps li::before {
+    content: counter(rb);
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: .85rem;
+    flex: none;
+}
+
+.rb-steps li::after {
+    content: "";
+    order: -1;
+    width: 1.05rem;
+    height: 1.05rem;
+    border: .13rem solid var(--navy-300);
+    border-radius: .2rem;
+    flex: none;
+}
+
+.rb-steps li.done::after {
+    border-color: var(--navy);
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 11l4 4 8-9' fill='none' stroke='%23002e5d' stroke-width='3'/%3E%3C/svg%3E") center / 82% no-repeat;
+}
+
+.rb-cap {
+    margin-top: 1rem;
+    padding-top: .6rem;
+    border-top: .1rem dashed var(--navy-300);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.rb-decide {
+    display: grid;
+    justify-items: center;
+    gap: .7rem;
+}
+
+.rb-diamond {
+    display: grid;
+    place-items: center;
+    width: clamp(7.5rem, 11vw, 9.5rem);
+    height: clamp(4.6rem, 6.6vw, 5.8rem);
+    background: var(--mist);
+    border: .13rem solid var(--navy);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    text-align: center;
+}
+
+.rb-diamond span {
+    max-width: 6.5rem;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    line-height: 1.2;
+}
+
+.rb-branches {
+    display: flex;
+    gap: 2.4rem;
+}
+
+.rb-branch {
+    position: relative;
+    padding: .32rem .8rem;
+    border-radius: .3rem;
+    border: .12rem solid var(--navy);
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.rb-branch::before {
+    content: "";
+    position: absolute;
+    top: -.75rem;
+    left: 50%;
+    width: .12rem;
+    height: .65rem;
+    background: var(--navy-300);
+}
+
+/* The rule of nines: downtime drawn to length with direct labels. */
+
+.tint-blue {
+    color: var(--blue);
+}
+
+.nines-board {
+    display: grid;
+    gap: .8rem;
+    max-width: 66rem;
+    margin-top: clamp(.8rem, 1.4vw, 1.2rem);
+}
+
+.nine-row {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 8vw, 7rem) clamp(8rem, 12vw, 10.5rem) minmax(0, 1fr);
+    grid-template-areas: "label pct track" "label pct out";
+    column-gap: clamp(.8rem, 1.6vw, 1.4rem);
+    row-gap: .35rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .8rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.nine-label {
+    grid-area: label;
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+}
+
+.nine-pct {
+    grid-area: pct;
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.nine-track {
+    grid-area: track;
+    display: block;
+    height: 1.05rem;
+    border-radius: .5rem;
+    background: var(--mist);
+    overflow: hidden;
+}
+
+.nine-fill {
+    display: block;
+    height: 100%;
+    min-width: .35rem;
+    border-radius: .5rem;
+    background: var(--blue);
+}
+
+.nine-out {
+    grid-area: out;
+    color: var(--midnight-navy);
+    font-weight: 700;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+/* The help desk queue, the AUP splash, and the PC Health Check share
+   one window chrome, rebuilt in deck colors. */
+
+.hd-chrome {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem .9rem;
+    background: var(--midnight-navy);
+    border-radius: .55rem .55rem 0 0;
+}
+
+.hd-chrome i {
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.hd-chrome span {
+    margin-left: .4rem;
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.75rem, 1vw, .95rem);
+    letter-spacing: .05em;
+}
+
+.helpdesk {
+    max-width: 62rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.hd-head,
+.hd-row {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) minmax(0, 1.4fr) minmax(0, .8fr) minmax(0, .8fr);
+    gap: 1rem;
+    align-items: center;
+    padding: .55rem 1.1rem;
+}
+
+.hd-head {
+    background: var(--mist);
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.hd-row {
+    border-top: .08rem solid var(--mist);
+    color: var(--midnight-navy);
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+}
+
+.hd-id {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.hd-status {
+    justify-self: start;
+    padding: .14rem .55rem;
+    border-radius: .25rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.hd-row.traced {
+    background: var(--gold-200);
+    border-left: .45rem solid var(--phoenix-gold);
+}
+
+.hd-row.traced .hd-status {
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+}
+
+/* Categories and severity. Red and amber carry only their rank. */
+
+.cat-sev {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(13rem, .6fr);
+    gap: clamp(1.4rem, 3vw, 3rem);
+    align-items: start;
+}
+
+.sev-stack {
+    display: grid;
+    gap: .55rem;
+    background: rgba(255, 255, 255, .7);
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.sev-title {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.sev {
+    padding: .5rem .8rem;
+    border-radius: .35rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    text-align: center;
+}
+
+.sev.critical {
+    background: var(--status-danger);
+    color: #fff;
+}
+
+.sev.major {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.sev.minor {
+    background: var(--mist);
+    color: var(--navy);
+}
+
+/* The escalation ladder. Tier 3 on top, the traced ticket at tier 1. */
+
+.tier-ladder {
+    display: grid;
+    gap: .55rem;
+    align-content: start;
+}
+
+.tier {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .9rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .6rem 1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.tier-no {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: .45rem;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 900;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+}
+
+.tier strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.3vw, 1.25rem);
+}
+
+.tier p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.tier.here {
+    grid-template-columns: auto 1fr auto;
+    border-color: var(--phoenix-gold);
+    background: var(--gold-200);
+}
+
+.tier.here .slip-chip {
+    align-self: center;
+}
+
+.tier.here .tier-up {
+    grid-column: 1 / -1;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.75rem, 1vw, .95rem);
+}
+
+.esc-rows {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+}
+
+.esc-rows li {
+    display: grid;
+    grid-template-columns: clamp(5.8rem, 9vw, 7.8rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+    border-bottom: .08rem solid var(--mist);
+    padding-bottom: .45rem;
+}
+
+.esc-rows li:last-child {
+    border-bottom: 0;
+}
+
+.esc-rows strong {
+    color: var(--blue);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.esc-note {
+    margin-top: .7rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+/* Two ticket updates compared. Green and red carry only the verdict. */
+
+.note-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    max-width: 66rem;
+    align-items: stretch;
+}
+
+.note-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 46, 93, .09);
+}
+
+.note-card header {
+    padding: .5rem 1rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, .98rem);
+}
+
+.note-body {
+    flex: 1;
+    padding: 1rem;
+    color: var(--midnight-navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    font-style: italic;
+}
+
+.note-fields {
+    flex: 1;
+    margin: 0;
+    padding: .4rem 0;
+}
+
+.note-fields div {
+    display: grid;
+    grid-template-columns: clamp(5.2rem, 8vw, 7rem) 1fr;
+    gap: .7rem;
+    padding: .42rem 1rem;
+    align-items: baseline;
+}
+
+.note-fields dt {
+    color: var(--blue);
+    font-size: clamp(.66rem, .88vw, .8rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.note-fields dd {
+    margin: 0;
+    color: var(--midnight-navy);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    line-height: 1.3;
+}
+
+.note-tag {
+    padding: .45rem 1rem;
+    font-weight: 900;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.note-tag.bad {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.note-tag.bad::before {
+    content: "✕ ";
+}
+
+.note-tag.good {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.note-tag.good::before {
+    content: "✓ ";
+}
+
+/* Term rows: bold tinted term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 15vw, 12.5rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* The AUP splash screen. */
+
+.splash {
+    width: min(100%, 30rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 46, 93, .18);
+}
+
+.splash-body {
+    display: grid;
+    justify-items: center;
+    gap: .7rem;
+    padding: clamp(1.2rem, 2.2vw, 2rem) clamp(1.2rem, 2.2vw, 2rem) 1rem;
+    text-align: center;
+}
+
+.splash-mark {
+    width: 2.5rem;
+    height: 3rem;
+    background: var(--navy);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+    position: relative;
+}
+
+.splash-body h3 {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+}
+
+.splash-body p {
+    color: var(--midnight-navy);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    max-width: 24rem;
+}
+
+.splash-btn {
+    display: inline-block;
+    margin-top: .2rem;
+    padding: .5rem 1.2rem;
+    border-radius: .4rem;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.splash-cap {
+    padding: .6rem 1rem .8rem;
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.76rem, 1vw, .95rem);
+    text-align: center;
+}
+
+/* Lesson 11.2 checklist and conduct chips. */
+
+.pro-list li {
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.conduct-chips {
+    margin-top: clamp(.9rem, 1.6vw, 1.4rem);
+}
+
+.dark .conduct-chips .chip {
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+}
+
+/* The call transcript. Blue binds question kinds, gold the ticket. */
+
+.call-log {
+    display: grid;
+    gap: .6rem;
+    align-content: start;
+}
+
+.cl-line {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: .7rem;
+    align-items: baseline;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .55rem .9rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.cl-line.user {
+    grid-template-columns: auto 1fr auto;
+    border-left: .45rem solid var(--navy-300);
+}
+
+.cl-line.tech {
+    border-left: .45rem solid var(--blue);
+}
+
+.cl-who {
+    color: var(--navy);
+    font-weight: 900;
+    font-size: clamp(.78rem, 1.02vw, .95rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.cl-kind {
+    padding: .12rem .5rem;
+    border-radius: .25rem;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .84rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--blue);
+    color: #fff;
+}
+
+.cl-kind.listen {
+    background: var(--mist);
+    color: var(--navy);
+}
+
+.cl-kind.closed {
+    background: var(--navy);
+    color: #fff;
+}
+
+.cl-line p {
+    color: var(--midnight-navy);
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+    line-height: 1.35;
+}
+
+.cl-line .slip-chip {
+    align-self: center;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.listen-panel h3 {
+    color: var(--navy);
+}
+
+.listen-panel .checklist li {
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+/* The check slides' numbered list. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+    font-family: var(--code);
+}
+
+/* The OS shelf: two labeled groups of monogram tiles. */
+
+.os-shelf {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 1.8rem);
+    align-items: stretch;
+}
+
+.os-group {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: .55rem;
+}
+
+.os-group-label {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.os-tiles {
+    display: grid;
+    gap: clamp(.6rem, 1.2vw, 1rem);
+    border-top: .32rem solid var(--navy);
+    padding-top: clamp(.6rem, 1.2vw, 1rem);
+}
+
+.os-tiles.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.os-tiles.two {
+    grid-template-columns: 1fr;
+}
+
+.os-tile {
+    position: relative;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    padding: clamp(.7rem, 1.3vw, 1.1rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .07);
+}
+
+.os-mono {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-bottom: .45rem;
+    border-radius: .45rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.os-tile strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.os-tile p {
+    margin-top: .3rem;
+    font-size: clamp(.76rem, 1vw, .95rem);
+    line-height: 1.3;
+}
+
+.on-ticket {
+    display: inline-block;
+    margin-top: .5rem;
+    padding: .24rem .55rem;
+    border-radius: .28rem;
+    background: var(--phoenix-gold);
+    color: var(--midnight-navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.66rem, .88vw, .84rem);
+}
+
+/* File systems by OS: a disk over each column. */
+
+.fs-match {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2.2vw, 2rem);
+    align-items: start;
+    max-width: 70rem;
+}
+
+.fs-head {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: .7rem;
+    border-bottom: .32rem solid var(--navy);
+    padding-bottom: .55rem;
+}
+
+.fs-head h3 {
+    color: var(--navy);
+}
+
+.g-cyl {
+    position: relative;
+    display: inline-block;
+    width: 2.9rem;
+    height: 2.7rem;
+    border: .16rem solid var(--navy);
+    border-radius: 50% / 22%;
+    background: #fff;
+}
+
+.g-cyl::before {
+    content: "";
+    position: absolute;
+    top: .16rem;
+    left: 0;
+    right: 0;
+    height: .9rem;
+    border-bottom: .14rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.fs-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+}
+
+.fs-rows li {
+    display: grid;
+    gap: .15rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .55rem .9rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fs-rows strong {
+    color: var(--blue);
+    font-family: var(--code);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.fs-rows span {
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+/* PC Health Check and the calendar panel. Amber flags need attention,
+   red flags the failed requirement. Every flag carries its label. */
+
+.health-check {
+    align-self: start;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .8rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.hc-body {
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .9rem;
+}
+
+.hc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border: .12rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .65rem 1rem;
+    color: var(--midnight-navy);
+    font-weight: 700;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.hc-flag {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    font-weight: 900;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    white-space: nowrap;
+}
+
+.hc-flag.fail {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.hc-flag.warn {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.hc-verdict {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+}
+
+.eol-panel h3 {
+    color: var(--navy);
+}
+
+.eol-flag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+    margin-top: .8rem;
+    font-size: clamp(.9rem, 1.18vw, 1.12rem);
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .pro-list {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* The exit slide gives the recap panels most of the width so their
+   prompts do not wrap into one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Check chips on gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+            linear-gradient(135deg, #fbfcff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .page-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .rb-tab {
+        right: auto;
+        left: 1rem;
+        top: -.85rem;
+        writing-mode: horizontal-tb;
+        border-radius: .3rem .3rem 0 0;
+    }
+
+    .nine-row {
+        grid-template-columns: 1fr;
+        grid-template-areas: "label" "pct" "track" "out";
+    }
+
+    .hd-head {
+        display: none;
+    }
+
+    .hd-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .cat-sev {
+        grid-template-columns: 1fr;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .note-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .note-fields div {
+        grid-template-columns: 1fr;
+        gap: .15rem;
+    }
+
+    .tier.here {
+        grid-template-columns: auto 1fr;
+    }
+
+    .tier.here .slip-chip {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .cl-line,
+    .cl-line.user {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+    }
+
+    .cl-line .slip-chip {
+        justify-self: start;
+    }
+
+    .os-shelf {
+        grid-template-columns: 1fr;
+    }
+
+    .os-tiles.four {
+        grid-template-columns: 1fr;
+    }
+
+    .fs-match {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split,
+    .visual-split.reverse,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split.reverse .work-order,
+    .visual-split.reverse .visual-art {
+        order: 2;
+    }
+
+    .work-order,
+    .splash {
+        width: 100%;
+    }
+}

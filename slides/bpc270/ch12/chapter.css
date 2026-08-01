@@ -1,0 +1,1508 @@
+/* BPC270 Chapter 12: the settings pane */
+
+/* The motif is painted as background layers only: a settings window
+   with chrome, a search pill, toggle rows, and a slider, over a faint
+   ruled field. Positioned boxes would create a focus scroll trap, so
+   everything lives in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(2,90,140,0.07)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.18)' stroke-width='2.4'/%3E%3Cpath d='M96 112h320' stroke='rgba(0,46,93,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='394' cy='92' r='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Ccircle cx='378' cy='92' r='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Ccircle cx='362' cy='92' r='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Crect x='112' y='84' width='110' height='16' rx='8' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Crect x='116' y='134' width='18' height='18' rx='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Cpath d='M146 143h130' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Crect x='344' y='134' width='44' height='18' rx='9' stroke='rgba(255,200,69,0.6)' stroke-width='2.4'/%3E%3Ccircle cx='379' cy='143' r='5' fill='rgba(255,200,69,0.6)'/%3E%3Crect x='116' y='172' width='18' height='18' rx='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Cpath d='M146 181h150' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Crect x='344' y='172' width='44' height='18' rx='9' stroke='rgba(2,90,140,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='181' r='5' fill='rgba(2,90,140,0.2)'/%3E%3Crect x='116' y='210' width='18' height='18' rx='4' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Cpath d='M146 219h110' stroke='rgba(2,90,140,0.16)' stroke-width='2'/%3E%3Crect x='344' y='210' width='44' height='18' rx='9' stroke='rgba(2,90,140,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='219' r='5' fill='rgba(2,90,140,0.2)'/%3E%3Cpath d='M116 262h280' stroke='rgba(2,90,140,0.18)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M116 262h100' stroke='rgba(255,200,69,0.55)' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='216' cy='262' r='8' stroke='rgba(255,200,69,0.7)' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.8rem, rgba(2, 90, 140, .05) 3.8rem calc(3.8rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+        linear-gradient(135deg, #f6fbff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Cpath d='M96 112h320' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='394' cy='92' r='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Ccircle cx='378' cy='92' r='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Ccircle cx='362' cy='92' r='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='112' y='84' width='110' height='16' rx='8' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='116' y='134' width='18' height='18' rx='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Cpath d='M146 143h130' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='344' y='134' width='44' height='18' rx='9' stroke='rgba(255,200,69,0.5)' stroke-width='2.4'/%3E%3Ccircle cx='379' cy='143' r='5' fill='rgba(255,200,69,0.5)'/%3E%3Crect x='116' y='172' width='18' height='18' rx='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Cpath d='M146 181h150' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='344' y='172' width='44' height='18' rx='9' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='181' r='5' fill='rgba(255,255,255,0.15)'/%3E%3Crect x='116' y='210' width='18' height='18' rx='4' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Cpath d='M146 219h110' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Crect x='344' y='210' width='44' height='18' rx='9' stroke='rgba(255,255,255,0.15)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='219' r='5' fill='rgba(255,255,255,0.15)'/%3E%3Cpath d='M116 262h280' stroke='rgba(255,255,255,0.15)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M116 262h100' stroke='rgba(255,200,69,0.5)' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='216' cy='262' r='8' stroke='rgba(255,200,69,0.6)' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.8rem, rgba(255, 255, 255, .04) 3.8rem calc(3.8rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Crect x='120' y='96' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.05)' stroke-width='18'/%3E%3Crect x='96' y='72' width='320' height='230' rx='10' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Cpath d='M96 112h320' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='394' cy='92' r='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Ccircle cx='378' cy='92' r='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Ccircle cx='362' cy='92' r='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='112' y='84' width='110' height='16' rx='8' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='116' y='134' width='18' height='18' rx='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Cpath d='M146 143h130' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='344' y='134' width='44' height='18' rx='9' stroke='rgba(2,90,140,0.45)' stroke-width='2.4'/%3E%3Ccircle cx='379' cy='143' r='5' fill='rgba(2,90,140,0.45)'/%3E%3Crect x='116' y='172' width='18' height='18' rx='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Cpath d='M146 181h150' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='344' y='172' width='44' height='18' rx='9' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='181' r='5' fill='rgba(0,46,93,0.17)'/%3E%3Crect x='116' y='210' width='18' height='18' rx='4' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Cpath d='M146 219h110' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Crect x='344' y='210' width='44' height='18' rx='9' stroke='rgba(0,46,93,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='353' cy='219' r='5' fill='rgba(0,46,93,0.17)'/%3E%3Cpath d='M116 262h280' stroke='rgba(0,46,93,0.17)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M116 262h100' stroke='rgba(2,90,140,0.45)' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='216' cy='262' r='8' stroke='rgba(2,90,140,0.5)' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.8rem, rgba(0, 46, 93, .05) 3.8rem calc(3.8rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe6a1, var(--gold));
+}
+
+/* Quiet brand corner: a small toggle switch flipped on. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.6rem;
+    height: .92rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: .46rem;
+    background: radial-gradient(circle at 69% 50%, currentColor 0 .24rem, transparent .25rem);
+    vertical-align: -.14rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The setup sheet: the chapter's traced object. Gold binds PC-2412
+   wherever it reappears. */
+
+.setup-sheet {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.setup-sheet header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.ss-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.ss-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .05em;
+}
+
+.setup-sheet dl {
+    margin: 0;
+}
+
+.setup-sheet dl div {
+    display: grid;
+    grid-template-columns: clamp(6rem, 8vw, 7.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.setup-sheet dl div:last-child {
+    border-bottom: 0;
+}
+
+.setup-sheet dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.setup-sheet dd {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.setup-sheet dd.ss-open {
+    justify-self: start;
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+}
+
+.setup-sheet.closed dl div {
+    padding: .42rem 1rem;
+}
+
+.setup-sheet.closed dd {
+    font-size: clamp(.85rem, 1.08vw, 1.02rem);
+}
+
+.stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* The gold chip binds the traced workstation across slides. */
+
+.sheet-chip {
+    display: inline-block;
+    padding: .22rem .6rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--midnight-navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.2vw, 1.1rem);
+    white-space: nowrap;
+}
+
+/* Toggle switches: the chapter's smallest mechanism. Every toggle is
+   paired with a printed state word so meaning never rides color. */
+
+.tgl {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 2.5rem;
+    height: 1.3rem;
+    border-radius: .65rem;
+    background: var(--navy-300);
+}
+
+.tgl::after {
+    content: "";
+    position: absolute;
+    top: .17rem;
+    left: .2rem;
+    width: .96rem;
+    height: .96rem;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.tgl.on {
+    background: var(--blue);
+}
+
+.tgl.on::after {
+    left: auto;
+    right: .2rem;
+}
+
+.tgl-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.tgl-state {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+/* The pane: one white settings window used by every construction. */
+
+.pane {
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .12);
+}
+
+.pane-head {
+    display: flex;
+    align-items: center;
+    padding: .55rem 1rem;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: .05em;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.pane-head::after {
+    content: "";
+    margin-left: auto;
+    width: 2.3rem;
+    height: .5rem;
+    background:
+        radial-gradient(circle, rgba(255, 255, 255, .65) 0 .16rem, transparent .17rem) left center / .5rem .5rem no-repeat,
+        radial-gradient(circle, rgba(255, 255, 255, .65) 0 .16rem, transparent .17rem) center center / .5rem .5rem no-repeat,
+        radial-gradient(circle, rgba(255, 255, 255, .65) 0 .16rem, transparent .17rem) right center / .5rem .5rem no-repeat;
+}
+
+.pane-body {
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+}
+
+/* Accounts pane. Gold marks only the chosen account type. */
+
+.account-pane {
+    width: min(100%, 58rem);
+}
+
+.profile-row,
+.acct-row,
+.uac-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .6rem .2rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.uac-row {
+    border-bottom: 0;
+}
+
+.row-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.row-text strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+}
+
+.row-text em {
+    display: block;
+    font-style: normal;
+    color: var(--ink);
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.avatar {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    letter-spacing: .04em;
+}
+
+.acct-row.chosen {
+    border-left: .45rem solid var(--gold);
+    background: var(--gold-200);
+    padding-left: .8rem;
+    border-radius: .35rem;
+}
+
+.chosen-tag {
+    flex: none;
+    align-self: center;
+    padding: .25rem .6rem;
+    border-radius: .28rem;
+    background: var(--gold);
+    color: var(--midnight-navy);
+    font-weight: 900;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.uac-shield {
+    display: inline-block;
+    flex: none;
+    width: 1.7rem;
+    height: 2rem;
+    background: var(--blue);
+    clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%);
+}
+
+/* Privacy pane. */
+
+.privacy-pane {
+    width: min(100%, 48rem);
+}
+
+.pane-note {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    padding-bottom: .5rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.priv-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .55rem .2rem;
+    border-bottom: .08rem solid var(--mist);
+}
+
+.priv-row:last-child {
+    border-bottom: 0;
+}
+
+.priv-row > span:first-child {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+}
+
+/* Two taskbars. The gold ring marks Start, the thing to find. */
+
+.taskbar-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    max-width: 66rem;
+}
+
+.tb-card strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+    margin-bottom: .55rem;
+}
+
+.tb-card p {
+    margin-top: .5rem;
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+}
+
+.taskbar {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    height: 3rem;
+    padding: 0 .7rem;
+    border-radius: .5rem;
+    background: var(--midnight-navy);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .18);
+}
+
+.tb11 {
+    justify-content: center;
+}
+
+.tb-start {
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: .3rem;
+    background:
+        linear-gradient(#fff, #fff) 24% 24% / .55rem .55rem no-repeat,
+        linear-gradient(#fff, #fff) 76% 24% / .55rem .55rem no-repeat,
+        linear-gradient(#fff, #fff) 24% 76% / .55rem .55rem no-repeat,
+        linear-gradient(#fff, #fff) 76% 76% / .55rem .55rem no-repeat,
+        var(--navy-600);
+    box-shadow: 0 0 0 .16rem var(--gold);
+}
+
+.tb-search {
+    flex: none;
+    padding: .22rem .75rem;
+    border-radius: 1rem;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.tb-app {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .3);
+}
+
+/* Two doors: the Settings window and the Control Panel applet grid. */
+
+.doors-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    max-width: 62rem;
+}
+
+.door-card strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+    margin-bottom: .55rem;
+}
+
+.door-tag {
+    margin-top: .55rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.mini-win {
+    border: .13rem solid var(--navy);
+    border-radius: .5rem;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .1);
+}
+
+.mw-bar {
+    display: flex;
+    gap: .3rem;
+    padding: .32rem .55rem;
+    background: var(--navy);
+}
+
+.mw-bar i {
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .6);
+}
+
+.mw-body {
+    display: grid;
+    gap: .5rem;
+    padding: .8rem .9rem;
+}
+
+.mw-search {
+    justify-self: start;
+    padding: .28rem .8rem;
+    border: .11rem solid var(--blue);
+    border-radius: 1rem;
+    background: var(--canvas);
+    color: var(--blue);
+    font-weight: 700;
+    font-size: clamp(.75rem, .95vw, .9rem);
+}
+
+.mw-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    padding: .3rem 0;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.8rem, 1vw, .95rem);
+}
+
+.mw-row:last-child {
+    border-bottom: 0;
+}
+
+.mw-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.applet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    text-align: center;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.66rem, .85vw, .82rem);
+    line-height: 1.15;
+}
+
+.applet i {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: .12rem solid var(--navy);
+    border-radius: .25rem;
+    background: radial-gradient(circle at 50% 50%, var(--blue) 0 .18rem, transparent .19rem), #fff;
+}
+
+/* Term rows: bold term, short definition. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 46, 93, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+/* Ease of Access monogram rows. Each tile color pairs with its label. */
+
+.access-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+    max-width: 62rem;
+}
+
+.access-rows li {
+    display: grid;
+    grid-template-columns: 3.4rem clamp(8rem, 12vw, 11rem) 1fr;
+    gap: 1.1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    padding: .7rem 1.1rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .07);
+}
+
+.access-rows strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.access-rows span:not(.mono-tile) {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.mono-tile {
+    display: inline-grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: .6rem;
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.7rem;
+}
+
+.tile-v {
+    background: var(--navy-800);
+}
+
+.tile-h {
+    background: var(--blue);
+}
+
+.tile-i {
+    background: var(--navy-500);
+}
+
+/* Check-slide chips on the gold slides. */
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* File Explorer window: system objects rail plus the directory tree. */
+
+.explorer-win {
+    width: min(100%, 58rem);
+}
+
+.ex-body {
+    display: grid;
+    grid-template-columns: clamp(11rem, 16vw, 14rem) 1fr;
+}
+
+.ex-nav {
+    list-style: none;
+    margin: 0;
+    padding: clamp(.8rem, 1.4vw, 1.2rem);
+    background: var(--canvas);
+    border-right: .08rem solid var(--mist);
+    display: grid;
+    gap: .45rem;
+    align-content: start;
+}
+
+.ex-nav li {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    padding-left: 1.15rem;
+    background: radial-gradient(circle at .32rem 50%, var(--blue) 0 .2rem, transparent .21rem) left center no-repeat;
+}
+
+.ex-tree {
+    list-style: none;
+    margin: 0;
+    padding: clamp(.8rem, 1.4vw, 1.2rem);
+    display: grid;
+    gap: .42rem;
+    align-content: start;
+}
+
+.ex-tree li {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--navy);
+    font-size: clamp(.9rem, 1.15vw, 1.1rem);
+    font-weight: 600;
+}
+
+.ex-tree .lvl0 {
+    font-weight: 900;
+}
+
+.ex-tree .lvl1 {
+    margin-left: 1.7rem;
+}
+
+.ex-tree .lvl2 {
+    margin-left: 3.4rem;
+}
+
+.ex-tree .lvl1::before,
+.ex-tree .lvl2::before {
+    content: "";
+    width: .75rem;
+    height: .9rem;
+    margin-top: -.5rem;
+    border-left: .12rem solid var(--navy-300);
+    border-bottom: .12rem solid var(--navy-300);
+    border-radius: 0 0 0 .2rem;
+    flex: none;
+}
+
+.fldr {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 1.15rem;
+    height: .82rem;
+    border: .12rem solid var(--blue);
+    border-radius: .12rem;
+    background: #fff;
+}
+
+.fldr::before {
+    content: "";
+    position: absolute;
+    top: -.3rem;
+    left: -.02rem;
+    width: .5rem;
+    height: .2rem;
+    border: .12rem solid var(--blue);
+    border-bottom: 0;
+    border-radius: .12rem .12rem 0 0;
+    background: #fff;
+}
+
+.fldr.drive {
+    border-color: var(--navy);
+    background: radial-gradient(circle at 78% 50%, var(--gold) 0 .12rem, transparent .13rem), #fff;
+}
+
+.fldr.drive::before {
+    content: none;
+}
+
+.sys32 {
+    padding: .08rem .5rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--midnight-navy);
+    font-weight: 800;
+}
+
+/* File Explorer Options dialog. Gold marks the admin's changes. */
+
+.fo-dialog {
+    align-self: start;
+}
+
+.fo-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .8rem;
+    padding: .5rem 0;
+    border-bottom: .08rem solid var(--mist);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+.cb {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: .15rem solid var(--navy);
+    border-radius: .25rem;
+    background: #fff;
+}
+
+.off-tag {
+    padding: .2rem .55rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--midnight-navy);
+    font-weight: 900;
+    font-size: clamp(.7rem, .92vw, .86rem);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.fo-note {
+    margin-top: .6rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.8rem, 1.02vw, .98rem);
+}
+
+.idx-panel {
+    align-self: start;
+    border-radius: .65rem;
+}
+
+.idx-panel h3 {
+    color: var(--navy);
+}
+
+.idx-panel > p {
+    margin-top: .5rem;
+}
+
+.idx-warn {
+    margin-top: .8rem;
+    border-left: .5rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .1);
+    padding: .7rem 1rem;
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.idx-warn strong {
+    color: var(--status-warning);
+}
+
+.idx-warn p {
+    margin: 0;
+    font-size: clamp(.9rem, 1.15vw, 1.1rem);
+}
+
+/* System pane on the dark 12.2 opener. */
+
+.sys-pane {
+    width: min(100%, 56rem);
+    color: var(--midnight-navy);
+}
+
+.sp-body {
+    display: grid;
+    grid-template-columns: clamp(11rem, 16vw, 14rem) 1fr;
+}
+
+.sp-nav {
+    list-style: none;
+    margin: 0;
+    padding: clamp(.7rem, 1.2vw, 1rem) 0;
+    background: var(--canvas);
+    border-right: .08rem solid var(--mist);
+    display: grid;
+    align-content: start;
+}
+
+.sp-nav li {
+    padding: .34rem 1.1rem;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: clamp(.85rem, 1.1vw, 1.02rem);
+}
+
+.sp-nav li.active {
+    border-left: .4rem solid var(--gold);
+    padding-left: .7rem;
+    background: var(--gold-200);
+    color: var(--midnight-navy);
+    font-weight: 900;
+}
+
+.sp-about {
+    margin: 0;
+    padding: clamp(.6rem, 1vw, .9rem) 0;
+    align-self: center;
+}
+
+.sp-about div {
+    display: grid;
+    grid-template-columns: clamp(8rem, 12vw, 10.5rem) 1fr;
+    gap: .8rem;
+    padding: .6rem 1.1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: center;
+}
+
+.sp-about div:last-child {
+    border-bottom: 0;
+}
+
+.sp-about dt {
+    color: var(--blue);
+    font-size: clamp(.7rem, .92vw, .84rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.sp-about dd {
+    margin: 0;
+    color: var(--midnight-navy);
+    font-weight: 700;
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+/* Mirror or extend. Gold marks only the chosen mode. */
+
+.disp-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.2vw, 2rem);
+    max-width: 54rem;
+}
+
+.disp-opt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .4rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    box-shadow: 0 .6rem 1.5rem rgba(0, 46, 93, .08);
+}
+
+.disp-opt.chosen {
+    border: .16rem solid var(--gold);
+    background: rgba(255, 200, 69, .1);
+}
+
+.disp-opt strong {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+}
+
+.disp-opt p {
+    font-size: clamp(.85rem, 1.08vw, 1.02rem);
+}
+
+.mon-pair {
+    display: flex;
+    gap: .9rem;
+    margin-bottom: .5rem;
+}
+
+.mon {
+    display: grid;
+    place-items: center;
+    width: clamp(4.2rem, 6vw, 5.4rem);
+    height: clamp(2.8rem, 4vw, 3.6rem);
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background: #fff;
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+    box-shadow: 0 .55rem 0 -.3rem var(--navy);
+}
+
+/* Apps and Network: the two closing panes of lesson 12.2. */
+
+.pane-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    align-items: stretch;
+}
+
+.duo-card {
+    background: rgba(255, 255, 255, .75);
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1.1rem, 2vw, 1.7rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 46, 93, .07);
+}
+
+.duo-head {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-bottom: .8rem;
+}
+
+.duo-head h3 {
+    color: var(--navy);
+}
+
+.ok-tag {
+    margin-left: auto;
+    padding: .25rem .6rem;
+    border-radius: .3rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    white-space: nowrap;
+}
+
+.ok-tag::before {
+    content: "✓ ";
+}
+
+.g-grid {
+    display: inline-block;
+    flex: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 26% 26% / .6rem .6rem no-repeat,
+        linear-gradient(var(--gold), var(--gold)) 74% 26% / .6rem .6rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 26% 74% / .6rem .6rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 74% 74% / .6rem .6rem no-repeat,
+        #fff;
+}
+
+.g-net {
+    display: inline-block;
+    flex: none;
+    width: 2.7rem;
+    height: 2.4rem;
+    background:
+        radial-gradient(circle at 50% 18%, var(--navy) 0 .34rem, transparent .35rem),
+        radial-gradient(circle at 16% 84%, var(--navy) 0 .34rem, transparent .35rem),
+        radial-gradient(circle at 84% 84%, var(--navy) 0 .34rem, transparent .35rem),
+        linear-gradient(64deg, transparent calc(50% - .07rem), var(--blue) calc(50% - .07rem) calc(50% + .07rem), transparent calc(50% + .07rem)),
+        linear-gradient(-64deg, transparent calc(50% - .07rem), var(--blue) calc(50% - .07rem) calc(50% + .07rem), transparent calc(50% + .07rem));
+}
+
+.duo-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.duo-rows li {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 10vw, 8.5rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+    border-bottom: .08rem solid var(--mist);
+    padding-bottom: .42rem;
+}
+
+.duo-rows li:last-child {
+    border-bottom: 0;
+}
+
+.duo-rows strong {
+    color: var(--navy);
+    font-size: clamp(.88rem, 1.12vw, 1.08rem);
+}
+
+/* The Run dialog and the command list. */
+
+.admin-split {
+    grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+    align-items: start;
+}
+
+.run-col {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+}
+
+.run-dialog {
+    width: min(100%, 24rem);
+}
+
+.rd-label {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.rd-input {
+    margin-top: .4rem;
+    padding: .5rem .8rem;
+    border: .14rem solid var(--navy);
+    border-radius: .3rem;
+    background: #fff;
+    color: var(--navy);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+}
+
+.rd-input::after {
+    content: "";
+    display: inline-block;
+    width: .14rem;
+    height: 1em;
+    margin-left: .18rem;
+    vertical-align: text-bottom;
+    background: var(--gold);
+    animation: caret-blink 1.1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rd-input::after {
+        animation: none;
+    }
+}
+
+.rd-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: .6rem;
+    margin-top: .7rem;
+}
+
+.btn-ok,
+.btn-cancel {
+    padding: .3rem 1.1rem;
+    border-radius: .3rem;
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.btn-ok {
+    background: var(--gold);
+    color: var(--midnight-navy);
+    border: .12rem solid var(--navy);
+}
+
+.btn-cancel {
+    background: var(--mist);
+    color: var(--navy);
+}
+
+.admin-split .code {
+    font-size: clamp(.92rem, 1.28vw, 1.5rem);
+}
+
+/* The install gate: requirements, source, then the UAC prompt. */
+
+.install-gate {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) auto minmax(0, 1fr) auto minmax(0, 1.05fr);
+    gap: clamp(.6rem, 1.2vw, 1.1rem);
+    align-items: stretch;
+    max-width: 70rem;
+}
+
+.gate-stage {
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.9rem, 1.6vw, 1.3rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 46, 93, .08);
+}
+
+.gate-stage h3 {
+    color: var(--navy);
+    font-size: clamp(.98rem, 1.28vw, 1.25rem);
+    margin-bottom: .55rem;
+}
+
+.gate-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .42rem;
+}
+
+.gate-list li {
+    font-size: clamp(.82rem, 1.05vw, 1.02rem);
+    line-height: 1.3;
+    padding-left: 1rem;
+    background: radial-gradient(circle at .28rem .55em, var(--blue) 0 .17rem, transparent .18rem) left top no-repeat;
+}
+
+.gate-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    font-weight: 800;
+}
+
+.uac-dialog {
+    align-self: center;
+}
+
+.uac-dialog .pane-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .55rem;
+}
+
+.uac-dialog .uac-shield {
+    width: 2.1rem;
+    height: 2.5rem;
+}
+
+.uac-text {
+    color: var(--midnight-navy);
+    font-size: clamp(.95rem, 1.2vw, 1.15rem);
+    line-height: 1.3;
+}
+
+.uac-text strong {
+    font-family: var(--code);
+    color: var(--navy);
+}
+
+.uac-dialog .rd-buttons {
+    align-self: stretch;
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split h2 + .fact-rows {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 31, 63, .16);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 46, 93, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* exit-split: give the recap panels most of the width so their
+   prompts stop wrapping into ragged one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .72fr);
+    gap: clamp(1.6rem, 3.4vw, 4rem);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+.exit-split .setup-sheet {
+    width: 100%;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+            linear-gradient(135deg, #f6fbff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe6a1, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 46, 93, .48);
+    }
+
+    .taskbar-duo,
+    .doors-duo,
+    .disp-duo,
+    .pane-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .taskbar {
+        gap: .45rem;
+        padding: 0 .5rem;
+    }
+
+    .ex-body,
+    .sp-body {
+        grid-template-columns: 1fr;
+    }
+
+    .ex-nav,
+    .sp-nav {
+        border-right: 0;
+        border-bottom: .08rem solid var(--mist);
+    }
+
+    .sp-nav {
+        padding: .5rem 0;
+    }
+
+    .access-rows li {
+        grid-template-columns: 3rem 1fr;
+    }
+
+    .access-rows li span:not(.mono-tile) {
+        grid-column: 2;
+    }
+
+    .mono-tile {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.4rem;
+    }
+
+    .fact-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .duo-rows li {
+        grid-template-columns: 1fr;
+        gap: .2rem;
+    }
+
+    .admin-split {
+        grid-template-columns: 1fr;
+    }
+
+    .install-gate {
+        grid-template-columns: 1fr;
+    }
+
+    .gate-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .acct-row,
+    .uac-row {
+        flex-wrap: wrap;
+    }
+
+    .visual-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-split .setup-sheet,
+    .visual-split .visual-art {
+        order: 2;
+    }
+
+    .setup-sheet {
+        width: 100%;
+    }
+}

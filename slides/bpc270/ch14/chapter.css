@@ -1,0 +1,1572 @@
+/* BPC270 Chapter 14: restore points and update rings. The motif is a
+   timeline with save markers and a rewind arrow, painted as background
+   layers only. Positioned boxes would create a focus scroll trap, so
+   the timeline, the markers, the update rings, and the rewind arc all
+   live in the slide background. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M70 250h380' stroke='rgba(3,72,143,0.22)' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M100 262v10M180 262v10M300 262v10M420 262v10' stroke='rgba(3,72,143,0.14)' stroke-width='2.6'/%3E%3Ccircle cx='140' cy='250' r='12' stroke='rgba(3,72,143,0.26)' stroke-width='3'/%3E%3Ccircle cx='140' cy='250' r='4' fill='rgba(3,72,143,0.26)'/%3E%3Ccircle cx='250' cy='250' r='12' stroke='rgba(224,169,46,0.62)' stroke-width='3.4'/%3E%3Ccircle cx='250' cy='250' r='4' fill='rgba(224,169,46,0.62)'/%3E%3Ccircle cx='250' cy='250' r='24' stroke='rgba(224,169,46,0.3)' stroke-width='2.4'/%3E%3Ccircle cx='250' cy='250' r='36' stroke='rgba(224,169,46,0.16)' stroke-width='2'/%3E%3Ccircle cx='360' cy='250' r='12' stroke='rgba(2,90,140,0.24)' stroke-width='3'/%3E%3Ccircle cx='360' cy='250' r='4' fill='rgba(2,90,140,0.24)'/%3E%3Cpath d='M418 214c-30-70-150-80-168 12' stroke='rgba(3,72,143,0.24)' stroke-width='4' stroke-linecap='round' stroke-dasharray='1 9'/%3E%3Cpath d='M242 214l8 16 12-12' stroke='rgba(3,72,143,0.3)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(2, 90, 140, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+        linear-gradient(135deg, #f6faff, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M70 250h380' stroke='rgba(255,255,255,0.18)' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M100 262v10M180 262v10M300 262v10M420 262v10' stroke='rgba(255,255,255,0.12)' stroke-width='2.6'/%3E%3Ccircle cx='140' cy='250' r='12' stroke='rgba(255,255,255,0.2)' stroke-width='3'/%3E%3Ccircle cx='140' cy='250' r='4' fill='rgba(255,255,255,0.2)'/%3E%3Ccircle cx='250' cy='250' r='12' stroke='rgba(255,213,115,0.55)' stroke-width='3.4'/%3E%3Ccircle cx='250' cy='250' r='4' fill='rgba(255,213,115,0.55)'/%3E%3Ccircle cx='250' cy='250' r='24' stroke='rgba(255,213,115,0.28)' stroke-width='2.4'/%3E%3Ccircle cx='250' cy='250' r='36' stroke='rgba(255,213,115,0.15)' stroke-width='2'/%3E%3Ccircle cx='360' cy='250' r='12' stroke='rgba(255,255,255,0.16)' stroke-width='3'/%3E%3Ccircle cx='360' cy='250' r='4' fill='rgba(255,255,255,0.16)'/%3E%3Cpath d='M418 214c-30-70-150-80-168 12' stroke='rgba(255,255,255,0.2)' stroke-width='4' stroke-linecap='round' stroke-dasharray='1 9'/%3E%3Cpath d='M242 214l8 16 12-12' stroke='rgba(255,255,255,0.26)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(255, 255, 255, .04) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+        linear-gradient(135deg, #033a72, #03488f);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Cpath d='M70 250h380' stroke='rgba(0,26,54,0.2)' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M100 262v10M180 262v10M300 262v10M420 262v10' stroke='rgba(0,26,54,0.13)' stroke-width='2.6'/%3E%3Ccircle cx='140' cy='250' r='12' stroke='rgba(0,26,54,0.24)' stroke-width='3'/%3E%3Ccircle cx='140' cy='250' r='4' fill='rgba(0,26,54,0.24)'/%3E%3Ccircle cx='250' cy='250' r='12' stroke='rgba(2,90,140,0.42)' stroke-width='3.4'/%3E%3Ccircle cx='250' cy='250' r='4' fill='rgba(2,90,140,0.42)'/%3E%3Ccircle cx='250' cy='250' r='24' stroke='rgba(2,90,140,0.24)' stroke-width='2.4'/%3E%3Ccircle cx='250' cy='250' r='36' stroke='rgba(2,90,140,0.13)' stroke-width='2'/%3E%3Ccircle cx='360' cy='250' r='12' stroke='rgba(0,26,54,0.2)' stroke-width='3'/%3E%3Ccircle cx='360' cy='250' r='4' fill='rgba(0,26,54,0.2)'/%3E%3Cpath d='M418 214c-30-70-150-80-168 12' stroke='rgba(0,26,54,0.22)' stroke-width='4' stroke-linecap='round' stroke-dasharray='1 9'/%3E%3Cpath d='M242 214l8 16 12-12' stroke='rgba(0,26,54,0.28)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to right, transparent 0 4.2rem, rgba(0, 26, 54, .05) 4.2rem calc(4.2rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a save marker sitting on a timeline. */
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1rem;
+    margin-right: .5rem;
+    background:
+        radial-gradient(circle at 50% 42%, currentColor 0 .12rem, transparent .13rem .23rem, currentColor .24rem .34rem, transparent .35rem),
+        linear-gradient(currentColor, currentColor) 0 78% / 100% .13rem no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* brand-z-fix: keep the corner label above full-bleed title art. */
+
+.brand {
+    z-index: 2;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 13ch;
+}
+
+/* Title art: full bleed on the right, blended into the twilight field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #033a72 0%, rgba(3, 58, 114, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The ticket card: the chapter's central paper object. */
+
+.ticket-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.ticket-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.tc-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.tc-open {
+    display: inline-flex;
+    align-items: center;
+    padding: .18rem .55rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(.72rem, 1vw, .9rem);
+}
+
+.ticket-card dl {
+    margin: 0;
+}
+
+.ticket-card dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--canvas);
+    align-items: baseline;
+}
+
+.ticket-card dl div:last-child {
+    border-bottom: 0;
+}
+
+.ticket-card dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.ticket-card dd {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+/* The gold trace chip binds ticket #1402 and Tuesday's update across
+   the deck. Gold marks only the traced value and chosen moves. */
+
+.trace-chip {
+    display: inline-block;
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+/* Verdict rows under the code and ring figures. Amber warns, red marks
+   the failure, and each color carries its printed label. */
+
+.ticket-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+    margin-top: clamp(.8rem, 1.5vw, 1.3rem);
+}
+
+.verdict {
+    font-weight: 900;
+    white-space: nowrap;
+    padding: .35rem .7rem;
+    border-radius: .3rem;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.verdict.warn {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.verdict.warn::before {
+    content: "! ";
+}
+
+.verdict.fail {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.verdict.fail::before {
+    content: "✕ ";
+}
+
+.verdict-text {
+    font-size: clamp(.92rem, 1.2vw, 1.15rem);
+}
+
+/* The ping rings: four targets in expanding order. Ring count grows
+   left to right, and the traced marks ride each card. */
+
+.ring-path {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: .5rem;
+    max-width: 72rem;
+}
+
+.ring-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .35rem;
+    background: #fff;
+    border: .13rem solid var(--mist);
+    border-radius: .7rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.5rem, .9vw, .8rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.ring-node strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.ring-node p {
+    font-size: clamp(.76rem, .98vw, .94rem);
+}
+
+.ring-glyph {
+    width: 2.9rem;
+    height: 2.9rem;
+}
+
+.ring-glyph.r1 {
+    background: radial-gradient(circle, var(--blue) 0 .16rem, transparent .17rem .42rem, var(--blue) .43rem .54rem, transparent .55rem);
+}
+
+.ring-glyph.r2 {
+    background: radial-gradient(circle, var(--blue) 0 .16rem, transparent .17rem .42rem, var(--blue) .43rem .54rem, transparent .55rem .78rem, var(--blue) .79rem .9rem, transparent .91rem);
+}
+
+.ring-glyph.r3 {
+    background: radial-gradient(circle, var(--blue) 0 .16rem, transparent .17rem .42rem, var(--blue) .43rem .54rem, transparent .55rem .78rem, var(--blue) .79rem .9rem, transparent .91rem 1.14rem, var(--blue) 1.15rem 1.26rem, transparent 1.27rem);
+}
+
+.ring-glyph.r4 {
+    background: radial-gradient(circle, var(--blue) 0 .14rem, transparent .15rem .36rem, var(--blue) .37rem .46rem, transparent .47rem .66rem, var(--blue) .67rem .76rem, transparent .77rem .96rem, var(--blue) .97rem 1.06rem, transparent 1.07rem 1.26rem, var(--blue) 1.27rem 1.36rem, transparent 1.37rem);
+}
+
+.ring-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(1.3rem, 1.9vw, 1.8rem);
+    font-weight: 800;
+}
+
+.ring-mark {
+    margin-top: .15rem;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    font-weight: 900;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.ring-mark.pass {
+    background: var(--status-success-tint);
+    color: var(--status-success);
+}
+
+.ring-mark.pass::before {
+    content: "✓ ";
+}
+
+.ring-mark.fail {
+    background: rgba(166, 50, 31, .12);
+    color: var(--status-danger);
+}
+
+.ring-mark.fail::before {
+    content: "✕ ";
+}
+
+.ring-mark.skip {
+    background: var(--canvas);
+    color: var(--blue);
+}
+
+/* Term rows: bold tinted term, short definition. Command rows put the
+   term in code type. */
+
+.fact-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 66rem;
+    align-content: start;
+}
+
+.fact-rows li {
+    display: grid;
+    grid-template-columns: clamp(9rem, 14vw, 12rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.fact-rows strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.fact-rows span {
+    font-size: clamp(.9rem, 1.18vw, 1.15rem);
+}
+
+.fact-rows span code,
+.checklist code {
+    font-family: var(--code);
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.cmd-rows strong {
+    font-family: var(--code);
+    color: var(--blue);
+}
+
+.cmd-rows {
+    margin-bottom: clamp(.9rem, 1.6vw, 1.4rem);
+}
+
+/* Check-slide prompt lists. */
+
+.job-list {
+    margin: 0;
+    padding: 0 0 0 1.4rem;
+    max-width: 56rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.job-list li {
+    font-size: clamp(1.02rem, 1.45vw, 1.45rem);
+    font-weight: 600;
+}
+
+.evidence-chips .chip {
+    background: rgba(255, 255, 255, .82);
+}
+
+/* The Remote Desktop Connection dialog, rebuilt in deck colors. */
+
+.rdc-win,
+.dm-win {
+    width: min(100%, 32rem);
+    justify-self: center;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 26, 54, .16);
+}
+
+.rdc-bar,
+.dm-bar,
+.ev-bar,
+.tm-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .6rem 1rem;
+    background: var(--navy);
+}
+
+.rdc-title,
+.dm-title,
+.ev-title,
+.tm-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.rdc-exe,
+.ev-exe {
+    padding: .18rem .5rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .16);
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.7rem, .95vw, .9rem);
+}
+
+.rdc-body {
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .55rem;
+}
+
+.rdc-label {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.72rem, .95vw, .88rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.rdc-field {
+    border: .12rem solid var(--mist);
+    border-radius: .35rem;
+    padding: .55rem .8rem;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    color: var(--ink);
+    background: #fbfdff;
+}
+
+.rdc-hint {
+    color: var(--ink);
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.rdc-actions {
+    display: flex;
+    gap: .6rem;
+    margin-top: .3rem;
+}
+
+.rdc-btn,
+.dm-btn {
+    display: inline-grid;
+    place-items: center;
+    padding: .45rem 1.1rem;
+    border-radius: .35rem;
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+}
+
+.rdc-btn.primary {
+    background: var(--navy);
+    color: #fff;
+}
+
+.rdc-btn.ghost,
+.dm-btn.ghost {
+    min-width: 5.5rem;
+    background: var(--canvas);
+    border: .1rem solid var(--mist);
+}
+
+.rdc-foot,
+.dm-foot {
+    padding: .5rem 1rem;
+    background: var(--canvas);
+    border-top: .08rem solid var(--mist);
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+/* The helper shelf: invited assistance against signed-in
+   administration. */
+
+.store-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.4vw, 2.2rem);
+    align-items: stretch;
+}
+
+.store-panel {
+    background: rgba(255, 255, 255, .72);
+    border: .12rem solid var(--mist);
+    border-radius: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.store-head {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-bottom: .8rem;
+}
+
+.store-head h3 {
+    color: var(--navy);
+}
+
+.store-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .5rem;
+}
+
+.store-rows li {
+    display: grid;
+    grid-template-columns: clamp(8.5rem, 12vw, 10.5rem) 1fr;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: clamp(.88rem, 1.15vw, 1.12rem);
+    border-bottom: .08rem solid var(--mist);
+    padding-bottom: .45rem;
+}
+
+.store-rows li:last-child {
+    border-bottom: 0;
+}
+
+.store-rows strong {
+    color: var(--navy);
+    font-size: clamp(.9rem, 1.18vw, 1.14rem);
+}
+
+.store-note {
+    margin-top: .6rem;
+    padding: .45rem .8rem;
+    border-left: .4rem solid var(--status-warning);
+    background: rgba(201, 130, 31, .09);
+    color: #7c4f0e;
+    font-weight: 700;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    border-radius: 0 .3rem .3rem 0;
+}
+
+.toolkit-vpn {
+    margin-top: clamp(.8rem, 1.5vw, 1.2rem);
+    margin-bottom: .5rem;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    max-width: 62rem;
+}
+
+.g-bubble {
+    position: relative;
+    display: inline-block;
+    width: 2.9rem;
+    height: 2.2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .8rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) 30% 42% / 1.5rem .16rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 30% 68% / 1rem .16rem no-repeat,
+        #fff;
+}
+
+.g-bubble::after {
+    content: "";
+    position: absolute;
+    left: .5rem;
+    bottom: -.62rem;
+    width: .7rem;
+    height: .7rem;
+    background: var(--navy);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.g-keycard {
+    position: relative;
+    display: inline-block;
+    width: 2.9rem;
+    height: 2rem;
+    border: .16rem solid var(--navy);
+    border-radius: .3rem;
+    background:
+        radial-gradient(circle at 26% 42%, var(--gold) 0 .3rem, transparent .31rem),
+        linear-gradient(var(--navy), var(--navy)) 78% 36% / .9rem .14rem no-repeat,
+        linear-gradient(var(--navy), var(--navy)) 78% 62% / .9rem .14rem no-repeat,
+        #fff;
+}
+
+/* The Event Viewer, rebuilt: five logs, three entries, one suspect. */
+
+.ev-win {
+    max-width: 66rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .7rem 1.6rem rgba(0, 26, 54, .12);
+}
+
+.ev-body {
+    display: grid;
+    grid-template-columns: clamp(10rem, 16vw, 13rem) 1fr;
+}
+
+.ev-side {
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    padding: .8rem .9rem;
+    background: var(--canvas);
+    border-right: .08rem solid var(--mist);
+    font-size: clamp(.78rem, 1vw, .95rem);
+    color: var(--ink);
+}
+
+.ev-side-head {
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    margin-bottom: .3rem;
+}
+
+.ev-side .ev-active {
+    background: var(--navy);
+    color: #fff;
+    border-radius: .3rem;
+    padding: .12rem .45rem;
+    font-weight: 700;
+    margin: 0 -.45rem;
+    padding-left: .45rem;
+}
+
+.ev-side span:not(.ev-side-head):not(.ev-active) {
+    padding: .12rem 0;
+}
+
+.ev-rows {
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: .8rem .9rem;
+}
+
+.ev-row {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: .7rem;
+    background: #fbfdff;
+    border: .1rem solid var(--mist);
+    border-radius: .45rem;
+    padding: .5rem .8rem;
+}
+
+.ev-row.traced {
+    grid-template-columns: auto auto 1fr auto;
+    background: var(--gold-200);
+    border-color: var(--gold);
+}
+
+.ev-time {
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.74rem, 1vw, .95rem);
+    color: var(--blue);
+    white-space: nowrap;
+}
+
+.ev-text {
+    color: var(--ink);
+    font-size: clamp(.85rem, 1.12vw, 1.1rem);
+}
+
+.ev-row .trace-chip {
+    font-size: clamp(.7rem, .92vw, .88rem);
+    padding: .2rem .5rem;
+    border: .1rem solid var(--ink);
+}
+
+/* Severity chips: each level keeps its functional color and label. */
+
+.sev {
+    display: inline-block;
+    padding: .2rem .55rem;
+    border-radius: .28rem;
+    font-weight: 800;
+    font-size: clamp(.68rem, .9vw, .86rem);
+    white-space: nowrap;
+}
+
+.sev.info {
+    background: rgba(3, 116, 181, .13);
+    color: #025a8c;
+}
+
+.sev.warn {
+    background: rgba(201, 130, 31, .16);
+    color: #7c4f0e;
+}
+
+.sev.err {
+    background: rgba(166, 50, 31, .14);
+    color: var(--status-danger);
+}
+
+.sev.crit {
+    background: var(--status-danger);
+    color: #fff;
+}
+
+.sev-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    margin-top: clamp(.7rem, 1.3vw, 1.1rem);
+}
+
+.legend-title {
+    font-weight: 800;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+/* Task Manager: the gauge cluster. */
+
+.tm-win {
+    max-width: 70rem;
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0 .7rem 1.6rem rgba(0, 26, 54, .12);
+}
+
+.tm-tabs,
+.dm-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .2rem;
+    padding: .45rem .8rem 0;
+    background: var(--canvas);
+    border-bottom: .1rem solid var(--mist);
+    font-size: clamp(.72rem, .95vw, .92rem);
+    color: var(--ink);
+}
+
+.tm-tabs span,
+.dm-tabs span {
+    padding: .3rem .7rem;
+    border-radius: .35rem .35rem 0 0;
+}
+
+.tm-tabs .tm-active,
+.dm-tabs .dm-active {
+    background: #fff;
+    border: .1rem solid var(--mist);
+    border-bottom-color: #fff;
+    margin-bottom: -.1rem;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.tm-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.2vw, 1rem);
+    padding: clamp(.8rem, 1.5vw, 1.2rem);
+}
+
+.tm-tile {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    border: .1rem solid var(--mist);
+    border-radius: .5rem;
+    padding: .7rem .8rem;
+    background: #fbfdff;
+}
+
+.tm-tile strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+}
+
+.tm-tile p {
+    font-size: clamp(.74rem, .96vw, .92rem);
+    line-height: 1.3;
+}
+
+.tm-meter {
+    display: flex;
+    align-items: flex-end;
+    gap: .3rem;
+    height: 2.6rem;
+    border-bottom: .16rem solid var(--navy);
+    padding-bottom: .1rem;
+}
+
+.tm-meter i {
+    flex: 1;
+    border-radius: .14rem .14rem 0 0;
+    background: var(--blue);
+}
+
+.open-keys {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: clamp(.7rem, 1.3vw, 1.1rem);
+}
+
+.keychip {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .35rem .7rem;
+    border-radius: .35rem;
+    background: rgba(255, 255, 255, .8);
+    border: .1rem solid var(--mist);
+    font-weight: 700;
+    font-size: clamp(.78rem, 1.02vw, .98rem);
+    color: var(--ink);
+}
+
+.keychip kbd {
+    font-family: var(--code);
+    font-size: .92em;
+    font-weight: 800;
+    color: var(--navy);
+    background: #fff;
+    border: .1rem solid var(--mist);
+    border-bottom-width: .22rem;
+    border-radius: .25rem;
+    padding: .06rem .38rem;
+}
+
+/* Monitoring depth: three ascending steps. */
+
+.depth-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+    align-items: end;
+    max-width: 66rem;
+}
+
+.step {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.step.s1 {
+    min-height: 7.4rem;
+}
+
+.step.s2 {
+    min-height: 8.8rem;
+}
+
+.step.s3 {
+    min-height: 10.2rem;
+}
+
+.step-tag {
+    display: inline-block;
+    padding: .16rem .5rem;
+    border-radius: .25rem;
+    background: var(--canvas);
+    color: var(--blue);
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    font-size: clamp(.64rem, .85vw, .8rem);
+    margin-bottom: .4rem;
+}
+
+.step strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.tool-exe {
+    display: inline-block;
+    margin-top: .15rem;
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.76rem, 1vw, .95rem);
+    color: var(--blue);
+}
+
+.step p {
+    margin-top: .3rem;
+    font-size: clamp(.8rem, 1.02vw, .98rem);
+}
+
+.counter-chips {
+    margin: clamp(.7rem, 1.3vw, 1.1rem) 0;
+}
+
+.inv-rows {
+    max-width: 66rem;
+}
+
+.inv-rows strong {
+    font-family: var(--code);
+    color: var(--blue);
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+/* The boot chains: two rails read top to bottom, drivers last. */
+
+.boot-rails {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(1rem, 2.2vw, 2rem);
+    align-items: start;
+    max-width: 72rem;
+}
+
+.rail {
+    display: grid;
+    gap: .8rem;
+}
+
+.rail-head {
+    justify-self: start;
+    color: var(--gold);
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+}
+
+.chain-step {
+    position: relative;
+    background: #fff;
+    color: var(--ink);
+    border-radius: .45rem;
+    padding: .42rem .8rem;
+    font-weight: 700;
+    font-size: clamp(.82rem, 1.1vw, 1.08rem);
+    box-shadow: 0 .35rem .9rem rgba(0, 0, 0, .25);
+}
+
+.chain-step code {
+    font-family: var(--code);
+    font-weight: 800;
+    color: var(--blue);
+}
+
+.chain-step:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 1rem;
+    bottom: -.95rem;
+    color: rgba(255, 255, 255, .85);
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.chain-step.last {
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 900;
+}
+
+.rail-note {
+    display: grid;
+    justify-items: start;
+    gap: .7rem;
+    align-self: center;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    border: .12rem solid rgba(255, 255, 255, .3);
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .07);
+}
+
+.rail-note p {
+    color: #fff;
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+    line-height: 1.45;
+}
+
+/* The rewind figure: the chapter motif, made operational. A timeline
+   with save markers, a rewind arc, and three depths beneath it. */
+
+.rw-figure {
+    max-width: 70rem;
+}
+
+.rw-timeline {
+    position: relative;
+    padding-top: 3.6rem;
+    margin-bottom: clamp(1rem, 1.8vw, 1.6rem);
+}
+
+.rw-arc {
+    position: absolute;
+    top: .4rem;
+    left: 50%;
+    width: 33.4%;
+    height: 3.4rem;
+    border: .26rem dashed var(--navy);
+    border-bottom: 0;
+    border-radius: 3.2rem 3.2rem 0 0 / 3.4rem 3.4rem 0 0;
+}
+
+.rw-arrowhead {
+    position: absolute;
+    left: -.62rem;
+    bottom: -.35rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--navy);
+    clip-path: polygon(50% 100%, 0 18%, 100% 18%);
+}
+
+.rw-marks {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.rw-marks::before {
+    content: "";
+    position: absolute;
+    top: .5rem;
+    left: 8%;
+    right: 8%;
+    height: .26rem;
+    border-radius: .13rem;
+    background: var(--blue);
+}
+
+.rw-mark {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .15rem;
+}
+
+.rw-dot {
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    margin-bottom: .25rem;
+}
+
+.rw-dot.save {
+    background: #fff;
+    border: .26rem solid var(--blue);
+}
+
+.rw-dot.upd {
+    background: var(--gold);
+    border: .26rem solid var(--ink);
+    box-shadow: 0 0 0 .35rem rgba(255, 200, 69, .35);
+}
+
+.rw-dot.now {
+    background: var(--navy);
+    border: .26rem solid var(--navy);
+}
+
+.rw-mark strong {
+    color: var(--navy);
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.rw-mark.traced strong {
+    background: var(--gold);
+    color: var(--ink);
+    padding: .05rem .5rem;
+    border-radius: .28rem;
+}
+
+.rw-when {
+    font-family: var(--code);
+    font-weight: 700;
+    font-size: clamp(.74rem, 1vw, .95rem);
+    color: var(--blue);
+}
+
+.rw-depths {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.7rem, 1.4vw, 1.2rem);
+    align-items: stretch;
+}
+
+.rw-depth {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: .7rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .6rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+}
+
+.rw-depth.chosen {
+    border: .16rem solid var(--gold);
+    background: rgba(255, 200, 69, .12);
+    padding-bottom: 2.1rem;
+}
+
+.depth-no {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: .95rem;
+}
+
+.rw-depth strong {
+    display: block;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.rw-depth p {
+    margin-top: .25rem;
+    font-size: clamp(.76rem, 1vw, .96rem);
+    line-height: 1.35;
+}
+
+.chosen-tag {
+    position: absolute;
+    left: .9rem;
+    bottom: .55rem;
+    padding: .16rem .5rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.66rem, .88vw, .84rem);
+}
+
+/* Device Manager: the Driver tab with one button that matters. */
+
+.dm-body {
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    display: grid;
+    gap: .6rem;
+    justify-items: start;
+}
+
+.dm-skel {
+    width: 82%;
+    height: .55rem;
+    border-radius: .3rem;
+    background: var(--canvas);
+}
+
+.dm-skel.short {
+    width: 56%;
+}
+
+.dm-btns {
+    display: grid;
+    gap: .5rem;
+    width: 100%;
+    margin-top: .4rem;
+}
+
+.dm-btn {
+    justify-self: start;
+    min-width: 12rem;
+}
+
+.dm-btn.primary {
+    background: var(--gold);
+    color: var(--ink);
+    border: .12rem solid var(--ink);
+    font-weight: 900;
+}
+
+.dm-btn.ghost {
+    height: 2.1rem;
+    min-width: 12rem;
+}
+
+/* Verification list: success green carries only "confirmed". */
+
+.verify-list li::before {
+    background: var(--status-success);
+    color: #fff;
+}
+
+.verify-list li {
+    font-size: clamp(1rem, 1.4vw, 1.38rem);
+}
+
+.forward-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+    margin-top: clamp(1rem, 1.8vw, 1.5rem);
+    padding: .85rem 1.1rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--gold);
+    border-radius: .5rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.forward-strip p {
+    flex: 1 1 18rem;
+    font-size: clamp(.88rem, 1.15vw, 1.1rem);
+}
+
+.closed-stamp {
+    display: inline-block;
+    padding: .18rem .6rem;
+    border: .18rem solid var(--status-success);
+    border-radius: .25rem;
+    background: var(--status-success-tint);
+    color: var(--status-success);
+    font-weight: 900;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-size: clamp(.75rem, 1vw, .92rem);
+    transform: rotate(-5deg);
+}
+
+/* Symptom rows next to the framed print. */
+
+.symptom-rows li {
+    grid-template-columns: clamp(9rem, 13vw, 11.5rem) 1fr;
+    padding: .5rem 1rem;
+}
+
+.symptom-rows strong {
+    font-size: clamp(.9rem, 1.18vw, 1.14rem);
+}
+
+.symptom-rows span {
+    font-size: clamp(.84rem, 1.1vw, 1.06rem);
+}
+
+.rows-split {
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, .75fr);
+    align-items: center;
+}
+
+/* Illustration frames for the generated art pass. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split .lede + .chip-list {
+    margin-top: clamp(.8rem, 1.5vw, 1.3rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 18, 40, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.1rem);
+    color: var(--blue);
+    font-size: clamp(.8rem, 1.05vw, 1rem);
+    font-weight: 800;
+    max-width: 66rem;
+}
+
+.dark .scenario-note {
+    color: var(--gold);
+}
+
+/* Exit ticket: the recap panels take most of the width so their
+   prompts do not wrap into one-word lines. */
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+    align-items: center;
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .2), transparent 20rem),
+            linear-gradient(135deg, #f6faff, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .16), transparent 20rem),
+            linear-gradient(135deg, #033a72, #03488f);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .3), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(3, 58, 114, .5);
+    }
+
+    .ring-path {
+        grid-template-columns: 1fr;
+    }
+
+    .ring-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .ev-body {
+        grid-template-columns: 1fr;
+    }
+
+    .ev-side {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: .4rem .8rem;
+        border-right: 0;
+        border-bottom: .08rem solid var(--mist);
+    }
+
+    .ev-side .ev-active {
+        margin: 0;
+    }
+
+    .ev-row,
+    .ev-row.traced {
+        grid-template-columns: auto 1fr;
+    }
+
+    .ev-text {
+        grid-column: 1 / -1;
+    }
+
+    .tm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .store-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .store-rows li {
+        grid-template-columns: 1fr;
+        gap: .2rem;
+    }
+
+    .depth-steps {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .step.s1,
+    .step.s2,
+    .step.s3 {
+        min-height: auto;
+    }
+
+    .boot-rails {
+        grid-template-columns: 1fr;
+    }
+
+    .rw-timeline {
+        padding-top: 0;
+    }
+
+    .rw-arc {
+        display: none;
+    }
+
+    .rw-marks {
+        grid-template-columns: 1fr;
+        gap: .8rem;
+    }
+
+    .rw-marks::before {
+        top: .6rem;
+        bottom: .6rem;
+        left: .45rem;
+        right: auto;
+        width: .26rem;
+        height: auto;
+    }
+
+    .rw-mark {
+        flex-direction: row;
+        align-items: baseline;
+        text-align: left;
+        gap: .6rem;
+        padding-left: 0;
+    }
+
+    .rw-dot {
+        flex: none;
+        align-self: center;
+        margin-bottom: 0;
+    }
+
+    .rw-depths {
+        grid-template-columns: 1fr;
+    }
+
+    .fact-rows li,
+    .symptom-rows li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .visual-split,
+    .visual-split.rows-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .ticket-card,
+    .rdc-win,
+    .dm-win {
+        width: 100%;
+    }
+}
