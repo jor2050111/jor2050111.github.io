@@ -1,0 +1,857 @@
+/* BPC270 Chapter 23: the exam clock */
+
+/* The clock motif is painted as background layers only: a rotated
+   clock face with a gold sweep arc beside a small answer sheet, over
+   a faint ledger ruling. Positioned boxes would create a focus
+   scroll trap. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='240' cy='195' r='118' stroke='rgba(0,46,93,0.07)' stroke-width='18'/%3E%3Ccircle cx='240' cy='195' r='104' stroke='rgba(0,46,93,0.18)' stroke-width='2.4'/%3E%3Ccircle cx='240' cy='195' r='90' stroke='rgba(255,200,69,0.5)' stroke-width='6' stroke-dasharray='424 142' transform='rotate(-90 240 195)'/%3E%3Cpath d='M240 103v14M240 273v14M148 195h14M318 195h14' stroke='rgba(0,46,93,0.22)' stroke-width='3'/%3E%3Cpath d='M240 195v-58M240 195h38' stroke='rgba(0,46,93,0.28)' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='240' cy='195' r='6' stroke='rgba(0,46,93,0.28)' stroke-width='3'/%3E%3Crect x='384' y='112' width='72' height='160' rx='6' stroke='rgba(0,46,93,0.16)' stroke-width='2.4'/%3E%3Cpath d='M398 140h44M398 168h44M398 196h44M398 224h44M398 252h30' stroke='rgba(124,54,38,0.25)' stroke-width='3' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(124, 54, 38, .05) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .24), transparent 20rem),
+        linear-gradient(135deg, #fff7e2, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='240' cy='195' r='118' stroke='rgba(255,255,255,0.04)' stroke-width='18'/%3E%3Ccircle cx='240' cy='195' r='104' stroke='rgba(255,255,255,0.14)' stroke-width='2.4'/%3E%3Ccircle cx='240' cy='195' r='90' stroke='rgba(255,200,69,0.45)' stroke-width='6' stroke-dasharray='424 142' transform='rotate(-90 240 195)'/%3E%3Cpath d='M240 103v14M240 273v14M148 195h14M318 195h14' stroke='rgba(255,255,255,0.18)' stroke-width='3'/%3E%3Cpath d='M240 195v-58M240 195h38' stroke='rgba(255,255,255,0.22)' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='240' cy='195' r='6' stroke='rgba(255,255,255,0.22)' stroke-width='3'/%3E%3Crect x='384' y='112' width='72' height='160' rx='6' stroke='rgba(255,255,255,0.12)' stroke-width='2.4'/%3E%3Cpath d='M398 140h44M398 168h44M398 196h44M398 224h44M398 252h30' stroke='rgba(255,200,69,0.3)' stroke-width='3' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(255, 255, 255, .04) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+        linear-gradient(135deg, #002e5d, #0a3f74);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 420'%3E%3Cg fill='none' transform='rotate(-8 260 210)'%3E%3Ccircle cx='240' cy='195' r='118' stroke='rgba(0,26,54,0.05)' stroke-width='18'/%3E%3Ccircle cx='240' cy='195' r='104' stroke='rgba(0,26,54,0.17)' stroke-width='2.4'/%3E%3Ccircle cx='240' cy='195' r='90' stroke='rgba(124,54,38,0.4)' stroke-width='6' stroke-dasharray='424 142' transform='rotate(-90 240 195)'/%3E%3Cpath d='M240 103v14M240 273v14M148 195h14M318 195h14' stroke='rgba(0,26,54,0.2)' stroke-width='3'/%3E%3Cpath d='M240 195v-58M240 195h38' stroke='rgba(0,26,54,0.24)' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='240' cy='195' r='6' stroke='rgba(0,26,54,0.24)' stroke-width='3'/%3E%3Crect x='384' y='112' width='72' height='160' rx='6' stroke='rgba(0,26,54,0.14)' stroke-width='2.4'/%3E%3Cpath d='M398 140h44M398 168h44M398 196h44M398 224h44M398 252h30' stroke='rgba(3,116,181,0.35)' stroke-width='3' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") right -8rem bottom -7rem / 32.5rem 26.25rem no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 3.6rem, rgba(0, 26, 54, .06) 3.6rem calc(3.6rem + 1px)),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+        linear-gradient(135deg, #ffe3a3, var(--gold));
+}
+
+/* Quiet brand corner: a small clock. */
+
+.brand {
+    z-index: 2;
+}
+
+.brand::before {
+    content: "";
+    display: inline-block;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: .5rem;
+    border: .12rem solid currentColor;
+    border-radius: 50%;
+    background:
+        linear-gradient(currentColor, currentColor) 50% 26% / .1rem .3rem no-repeat,
+        linear-gradient(currentColor, currentColor) 63% 50% / .26rem .1rem no-repeat;
+    vertical-align: -.16rem;
+}
+
+/* Shared softening to match the course card language. */
+
+.panel {
+    border-radius: .65rem;
+}
+
+.three-up .panel,
+.four-up .panel {
+    border-radius: .8rem;
+    box-shadow: 0 .7rem 1.8rem rgba(0, 26, 54, .07);
+}
+
+.title-slide h1 {
+    max-width: 14ch;
+}
+
+/* Title art: full bleed on the right, blended into the navy field. */
+
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(53vw, 52rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, rgba(0, 46, 93, .42) 22%, transparent 50%);
+}
+
+.title-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* The exam facts and week cards, in the course work-order language. */
+
+.work-order {
+    width: min(100%, 40rem);
+    background: #fff;
+    border: .14rem solid var(--navy);
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: .8rem .9rem 0 rgba(0, 26, 54, .14);
+}
+
+.week-card {
+    width: min(100%, 34rem);
+    justify-self: center;
+    box-shadow: .8rem .9rem 0 rgba(0, 0, 0, .28);
+}
+
+.work-order header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 1rem;
+    background: var(--navy);
+}
+
+.wo-id {
+    color: #fff;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.3vw, 1.2rem);
+    letter-spacing: .04em;
+}
+
+.prio {
+    display: inline-flex;
+    align-items: center;
+    padding: .22rem .55rem;
+    border-radius: .28rem;
+    font-size: clamp(.72rem, 1vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+}
+
+.prio.p2 {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+.work-order dl {
+    margin: 0;
+}
+
+.work-order dl div {
+    display: grid;
+    grid-template-columns: clamp(6.5rem, 9vw, 8.5rem) 1fr;
+    gap: .8rem;
+    padding: .55rem 1rem;
+    border-bottom: .08rem solid var(--mist);
+    align-items: baseline;
+}
+
+.work-order dl div:last-child {
+    border-bottom: 0;
+}
+
+.work-order dt {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.work-order dd {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(.92rem, 1.2vw, 1.12rem);
+    line-height: 1.3;
+}
+
+/* Domain weight bars, drawn to share. Two co-leaders wear the gold. */
+
+.weight-bars {
+    display: grid;
+    gap: .7rem;
+    max-width: 62rem;
+}
+
+.wb-row {
+    display: grid;
+    grid-template-columns: clamp(13rem, 24vw, 18rem) 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wb-label {
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.15vw, 1.1rem);
+}
+
+.wb-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 4.2rem;
+    height: 2.3rem;
+    padding: 0 .7rem;
+    background: var(--navy);
+    border-radius: .3rem;
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+.wb-bar.gold-bar {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+/* Domain exam to chapter map. */
+
+.map-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .55rem;
+    max-width: 58rem;
+}
+
+.map-rows li {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-radius: .55rem;
+    padding: .6rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.map-exam {
+    color: var(--ink);
+    font-size: clamp(.95rem, 1.3vw, 1.25rem);
+}
+
+.map-exam b {
+    display: inline-block;
+    margin-right: .6rem;
+    color: var(--blue);
+    font-size: clamp(.72rem, .95vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.map-arrow {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.map-ch {
+    padding: .3rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: clamp(.85rem, 1.1vw, 1.05rem);
+    white-space: nowrap;
+}
+
+/* The 90-minute time plan. */
+
+.time-plan {
+    max-width: 64rem;
+    display: grid;
+    gap: .55rem;
+}
+
+.tp-pre {
+    display: flex;
+}
+
+.tp-chip {
+    padding: .35rem .7rem;
+    border: .14rem dashed var(--blue);
+    border-radius: .35rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.78rem, 1vw, .95rem);
+}
+
+.time-band {
+    position: relative;
+    display: flex;
+    height: 3.1rem;
+    margin-top: 1.7rem;
+    border-radius: .4rem;
+    overflow: visible;
+}
+
+.tb-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(.78rem, 1.05vw, 1rem);
+    white-space: nowrap;
+}
+
+.tb-seg:first-child {
+    border-radius: .4rem 0 0 .4rem;
+}
+
+.tb-seg:last-child {
+    border-radius: 0 .4rem .4rem 0;
+}
+
+.seg-dump {
+    position: relative;
+    background: var(--gold);
+}
+
+.seg-dump::after {
+    content: "Brain dump · 0-2";
+    position: absolute;
+    top: -1.7rem;
+    left: 0;
+    color: #8a6508;
+    font-weight: 900;
+    font-size: clamp(.75rem, .95vw, .9rem);
+    white-space: nowrap;
+}
+
+.seg-pass {
+    background: var(--navy);
+}
+
+.seg-flag {
+    background: var(--status-warning);
+}
+
+.seg-review {
+    background: var(--mist);
+    color: var(--navy);
+}
+
+.tb-ticks {
+    display: flex;
+    justify-content: space-between;
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.75rem, .95vw, .9rem);
+}
+
+/* Mini score reports for the traced week. */
+
+.mini-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.5vw, 1.3rem);
+    max-width: 62rem;
+}
+
+.mini-score {
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--status-success);
+    border-radius: .55rem;
+    padding: .8rem 1rem .7rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.mini-score.below {
+    border-left-color: var(--status-warning);
+    background: #fff7dd;
+}
+
+.mini-score h3 {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.2rem);
+    margin-bottom: .55rem;
+}
+
+.mini-track {
+    position: relative;
+    height: 1.6rem;
+    background: var(--mist);
+    border-radius: .3rem;
+    margin-bottom: .5rem;
+}
+
+.mini-fill {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 0 .45rem;
+    background: var(--status-warning);
+    border-radius: .3rem 0 0 .3rem;
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(.72rem, .95vw, .9rem);
+}
+
+.mini-fill.fill-pass {
+    background: var(--status-success);
+}
+
+.mini-fill span {
+    position: relative;
+    z-index: 1;
+    padding: .05rem .3rem;
+    border-radius: .2rem;
+    background: inherit;
+}
+
+.pass-line {
+    position: absolute;
+    top: -.35rem;
+    bottom: -.35rem;
+    width: .2rem;
+    background: var(--gold-600, #e0a92e);
+    border-radius: .1rem;
+}
+
+.mini-score p {
+    color: var(--ink);
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+    font-weight: 600;
+}
+
+/* Five-step rails, in the course rail language. */
+
+.method-rail {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .5rem;
+    align-items: stretch;
+}
+
+.rail-step {
+    position: relative;
+    background: #fff;
+    color: var(--ink);
+    border-top: .5rem solid var(--blue);
+    border-radius: .6rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .1);
+    padding: clamp(.9rem, 1.5vw, 1.3rem) clamp(.6rem, 1vw, .9rem);
+    min-height: 9.5rem;
+}
+
+.step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.rail-step strong {
+    display: block;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    margin-bottom: .4rem;
+    color: var(--navy);
+}
+
+.rail-step p {
+    font-size: clamp(.78rem, 1vw, .95rem);
+    line-height: 1.3;
+}
+
+.rail-step::after {
+    content: "→";
+    position: absolute;
+    right: -.65rem;
+    top: 42%;
+    z-index: 2;
+    color: var(--navy);
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.rail-step:last-child::after {
+    content: none;
+}
+
+/* During-exam rule rows. */
+
+.evidence {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+}
+
+.evidence li {
+    display: grid;
+    grid-template-columns: clamp(11rem, 22vw, 16rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: .12rem solid var(--mist);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    padding: .65rem 1.1rem;
+    box-shadow: 0 .4rem 1rem rgba(0, 26, 54, .06);
+}
+
+.evidence strong {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.evidence span {
+    font-size: clamp(.95rem, 1.25vw, 1.22rem);
+}
+
+.evidence li.clue {
+    border-left-color: var(--gold);
+    background: #fff7dd;
+}
+
+/* Pacing drill. */
+
+.drill-stem {
+    font-size: clamp(1.2rem, 1.9vw, 1.8rem);
+    max-width: 50ch;
+    color: var(--navy);
+}
+
+.drill-stem strong {
+    color: #7c3626;
+}
+
+/* Prep checklists. */
+
+.prep-list li {
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+/* The exam whiteboard. */
+
+.wipeboard {
+    position: relative;
+    width: min(100%, 34rem);
+    justify-self: center;
+    aspect-ratio: 16 / 10;
+    background: #fff;
+    border: .5rem solid var(--navy);
+    border-radius: .7rem;
+    box-shadow: .8rem .9rem 0 rgba(0, 26, 54, .14);
+}
+
+.wb-sketch {
+    position: absolute;
+    border-radius: .2rem;
+}
+
+.wb-table {
+    left: 7%;
+    top: 12%;
+    width: 34%;
+    height: 40%;
+    background:
+        repeating-linear-gradient(to bottom, transparent 0 28%, rgba(29, 94, 163, .55) 28% 31%),
+        repeating-linear-gradient(to right, transparent 0 46%, rgba(29, 94, 163, .55) 46% 49%);
+    border: .16rem solid rgba(29, 94, 163, .6);
+}
+
+.wb-list {
+    left: 52%;
+    top: 14%;
+    width: 38%;
+    height: 34%;
+    background:
+        radial-gradient(circle at .35rem 18%, rgba(0, 46, 93, .6) 0 .18rem, transparent .19rem),
+        radial-gradient(circle at .35rem 50%, rgba(0, 46, 93, .6) 0 .18rem, transparent .19rem),
+        radial-gradient(circle at .35rem 82%, rgba(0, 46, 93, .6) 0 .18rem, transparent .19rem),
+        linear-gradient(rgba(0, 46, 93, .55), rgba(0, 46, 93, .55)) 1.1rem 14% / 62% .16rem no-repeat,
+        linear-gradient(rgba(0, 46, 93, .55), rgba(0, 46, 93, .55)) 1.1rem 46% / 78% .16rem no-repeat,
+        linear-gradient(rgba(0, 46, 93, .55), rgba(0, 46, 93, .55)) 1.1rem 78% / 55% .16rem no-repeat;
+}
+
+.wb-diagram {
+    left: 14%;
+    bottom: 10%;
+    width: 64%;
+    height: 26%;
+    background:
+        radial-gradient(circle at 12% 50%, transparent 0 .55rem, rgba(124, 54, 38, .6) .55rem .72rem, transparent .73rem),
+        radial-gradient(circle at 88% 50%, transparent 0 .55rem, rgba(124, 54, 38, .6) .55rem .72rem, transparent .73rem),
+        linear-gradient(rgba(124, 54, 38, .55), rgba(124, 54, 38, .55)) 22% 50% / 56% .18rem no-repeat;
+}
+
+.wb-marker {
+    position: absolute;
+    right: 4%;
+    bottom: -1.1rem;
+    width: 5.2rem;
+    height: 1.15rem;
+    background: linear-gradient(90deg, var(--navy) 0 22%, var(--gold) 22% 100%);
+    border-radius: .55rem;
+    transform: rotate(-8deg);
+    box-shadow: 0 .35rem .8rem rgba(0, 26, 54, .25);
+}
+
+/* Chosen panel for the timed part. */
+
+.panel.chosen {
+    border: .16rem solid var(--gold);
+    background: rgba(255, 200, 69, .14);
+}
+
+/* Illustration frames, matching the course conventions. */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    position: relative;
+}
+
+.visual-split h2 + .lede {
+    margin-top: clamp(.9rem, 1.6vw, 1.5rem);
+}
+
+.visual-split .lede + .field-note {
+    margin-top: clamp(.7rem, 1.3vw, 1.2rem);
+}
+
+.visual-split.exit-split {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .62fr);
+}
+
+.exit-split .three-up {
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+.visual-art {
+    overflow: hidden;
+    border-radius: 1.1rem;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 16, 34, .18);
+}
+
+.visual-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 rgba(0, 26, 54, .13);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    background: rgba(255, 200, 69, .62);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+.dark .visual-art {
+    border-color: rgba(255, 255, 255, .25);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.14rem);
+}
+
+.field-note::before {
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.scenario-note {
+    margin-top: .4rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 800;
+}
+
+/* Phones drop the painted motif and stack every construction. */
+
+@media (max-width: 760px) {
+
+    .slide {
+        background:
+            radial-gradient(circle at 92% 8%, rgba(255, 200, 69, .24), transparent 20rem),
+            linear-gradient(135deg, #fff7e2, var(--canvas));
+    }
+
+    .slide.dark {
+        background:
+            radial-gradient(circle at 90% 8%, rgba(255, 200, 69, .18), transparent 20rem),
+            linear-gradient(135deg, #002e5d, #0a3f74);
+    }
+
+    .slide.gold {
+        background:
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .32), transparent 24rem),
+            linear-gradient(135deg, #ffe3a3, var(--gold));
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        position: absolute;
+        width: 100%;
+        opacity: .24;
+    }
+
+    .title-art::after {
+        background: rgba(0, 26, 54, .5);
+    }
+
+    .wb-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .map-rows li {
+        grid-template-columns: 1fr auto;
+    }
+
+    .map-arrow {
+        display: none;
+    }
+
+    .time-band {
+        flex-direction: column;
+        height: auto;
+        margin-top: .6rem;
+    }
+
+    .tb-seg {
+        min-height: 2.6rem;
+        width: 100% !important;
+        justify-content: flex-start;
+        padding-left: .8rem;
+    }
+
+    .tb-seg:first-child {
+        border-radius: .4rem .4rem 0 0;
+    }
+
+    .tb-seg:last-child {
+        border-radius: 0 0 .4rem .4rem;
+    }
+
+    .seg-dump::after {
+        content: "Brain dump · minutes 0-2";
+        position: static;
+        color: var(--navy);
+    }
+
+    .tb-ticks {
+        display: none;
+    }
+
+    .mini-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .method-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-step {
+        min-height: auto;
+        border-top: 0;
+        border-left: .5rem solid var(--blue);
+    }
+
+    .rail-step::after {
+        content: "↓";
+        right: 46%;
+        top: auto;
+        bottom: -1rem;
+    }
+
+    .rail-step:last-child::after {
+        content: none;
+    }
+
+    .evidence li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .visual-split,
+    .visual-split.exit-split {
+        grid-template-columns: 1fr;
+    }
+
+    .work-order,
+    .week-card,
+    .wipeboard {
+        width: 100%;
+    }
+}
