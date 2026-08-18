@@ -580,3 +580,47 @@
   .pay-strip { grid-template-columns: minmax(0, 1fr); }
   .ladder .rung { grid-template-columns: minmax(0, 1fr); gap: .3rem; }
 }
+
+/* ---------- Who to contact ---------- */
+
+.who {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.8rem, 2vw, 2rem);
+  max-width: 66rem;
+}
+
+.who li {
+  border-top: .22rem solid var(--gold);
+  padding-top: .5rem;
+  display: grid;
+  gap: .12rem;
+}
+
+.who strong {
+  font-family: var(--display);
+  font-size: clamp(1rem, 1.5vw, 1.32rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+
+.who span {
+  font-size: clamp(.78rem, 1.02vw, .96rem);
+  line-height: 1.24;
+  opacity: .9;
+}
+
+.who .mail {
+  font-family: var(--code);
+  font-size: clamp(.72rem, .95vw, .88rem);
+  color: var(--gold);
+  opacity: 1;
+  word-break: break-word;
+}
+
+@media (max-width: 60rem) {
+  .who { grid-template-columns: minmax(0, 1fr); }
+}

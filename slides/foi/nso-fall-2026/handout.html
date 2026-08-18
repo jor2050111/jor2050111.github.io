@@ -33,11 +33,11 @@
       width: 8.5in;
       min-height: 11in;
       margin: 0 auto;
-      padding: 0.42in 0.5in 0.36in;
+      padding: 0.38in 0.5in 0.3in;
       background: #ffffff;
       display: flex;
       flex-direction: column;
-      gap: 0.17in;
+      gap: 0.125in;
     }
 
     header {
@@ -61,12 +61,12 @@
       color: var(--navy);
     }
 
-    .sub { margin: 0; font-size: 11pt; color: var(--ink); }
+    .sub { margin: 0; font-size: 10.4pt; color: var(--ink); }
 
     h2 {
       margin: 0 0 .05in;
-      font-size: 12.6pt;
-      line-height: 1.1;
+      font-size: 11.8pt;
+      line-height: 1.08;
       color: var(--navy);
       letter-spacing: -.01em;
     }
@@ -74,20 +74,20 @@
     .cols {
       display: grid;
       grid-template-columns: 1.06fr 1fr;
-      gap: .14in .3in;
+      gap: .11in .3in;
       align-items: start;
     }
 
     section { break-inside: avoid; }
 
-    p, li { font-size: 10.2pt; line-height: 1.34; margin: 0; }
+    p, li { font-size: 9.6pt; line-height: 1.3; margin: 0; }
 
     ol, ul { margin: 0; padding-left: 1.05em; }
-    li { margin-bottom: .055in; }
+    li { margin-bottom: .04in; }
     li::marker { color: var(--canyon); font-weight: 800; }
 
     /* The ladder: three rungs from day one to a bachelor's degree. */
-    .ladder { display: grid; gap: .06in; }
+    .ladder { display: grid; gap: .045in; }
 
     .rung {
       display: grid;
@@ -95,7 +95,7 @@
       align-items: center;
       gap: .1in;
       border-left: 4px solid var(--gold);
-      padding: .07in .1in;
+      padding: .055in .1in;
       background: var(--pale);
     }
 
@@ -108,16 +108,16 @@
       text-transform: uppercase;
     }
 
-    .rung strong { font-size: 10.6pt; display: block; line-height: 1.12; }
-    .rung small { font-size: 9pt; color: #4a4636; }
+    .rung strong { font-size: 10pt; display: block; line-height: 1.12; }
+    .rung small { font-size: 8.5pt; color: #4a4636; }
 
     /* Wage table */
     table { width: 100%; border-collapse: collapse; }
 
     th, td {
       text-align: left;
-      font-size: 9.7pt;
-      padding: .05in .04in;
+      font-size: 9.2pt;
+      padding: .042in .04in;
       border-bottom: 1px solid var(--line);
     }
 
@@ -141,8 +141,8 @@
       display: grid;
       grid-template-columns: .82in 1fr;
       gap: .09in;
-      font-size: 9.7pt;
-      line-height: 1.18;
+      font-size: 9.2pt;
+      line-height: 1.16;
       align-items: baseline;
     }
 
@@ -159,7 +159,7 @@
     .callout {
       background: var(--navy);
       color: #ffffff;
-      padding: .14in .16in;
+      padding: .12in .15in;
       display: grid;
       gap: .03in;
     }
@@ -169,8 +169,8 @@
 
     .meet {
       display: grid;
-      gap: .06in;
-      font-size: 9.9pt;
+      gap: .05in;
+      font-size: 9.4pt;
     }
 
     .meet span { display: block; }
@@ -179,11 +179,22 @@
     footer {
       margin-top: auto;
       border-top: 2px solid var(--navy);
-      padding-top: .07in;
+      padding-top: .08in;
       font-size: 8pt;
       line-height: 1.32;
       color: #4a4636;
     }
+
+    footer .who {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .1in;
+      font-size: 8.2pt;
+      line-height: 1.26;
+      margin-bottom: .04in;
+    }
+
+    footer .who b { color: var(--navy); display: block; font-size: 8.8pt; }
 
     footer a { color: var(--canyon); }
 
@@ -271,8 +282,8 @@
         <h2>Get involved from week one</h2>
         <div class="meet">
           <span><b>Computer Science Club.</b> Mondays at noon, E-223.</span>
-          <span><b>FBLA.</b> Tuesdays at 1:00, B-317.</span>
-          <span><b>Bears Den.</b> The college pitch competition, for anyone building something of their own.</span>
+          <span><b>PC Business Club.</b> Tuesdays at 1:00, B-317.</span>
+          <span><b>Bear&#39;s Den.</b> The college pitch competition, for anyone building something of their own.</span>
           <span><b>Campus student worker roles.</b> Paid, on campus, and directly industry-relevant.</span>
         </div>
       </section>
@@ -291,10 +302,12 @@
     </section>
 
     <footer>
-      <strong>Questions, any time:</strong> Jorge Vega, Computer and Information Technology, Jorge.Vega@phoenixcollege.edu ·
-      IT Institute at Phoenix College, phoenixcollege.edu/ITI ·
-      Course sequence, learning outcomes, and wage figures are from the Maricopa Bachelor of Applied Science in Information Technology pathway map.
-      Program details change between catalog years, so confirm your plan with an academic advisor.
+      <div class="who">
+        <span><b>Jorge Vega</b>Faculty, Computer and Information Technology<br>Jorge.Vega@phoenixcollege.edu</span>
+        <span><b>Will Tagart</b>Program Director, Information Technology and Cybersecurity<br>Will.Tagart@phoenixcollege.edu</span>
+        <span><b>Brad Olsen</b>Program Director, Bachelor of Applied Science in IT<br>Brad.Olsen@phoenixcollege.edu</span>
+      </div>
+      <p style="margin-top:.05in;">IT Institute at Phoenix College, phoenixcollege.edu/ITI · Course sequence, learning outcomes, and wage figures are from the Maricopa Bachelor of Applied Science in Information Technology pathway map. Program details change between catalog years, so confirm your plan with an academic advisor.</p>
     </footer>
 
   </main>
