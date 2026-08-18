@@ -33,11 +33,11 @@
       width: 8.5in;
       min-height: 11in;
       margin: 0 auto;
-      padding: 0.38in 0.5in 0.3in;
+      padding: 0.34in 0.5in 0.28in;
       background: #ffffff;
       display: flex;
       flex-direction: column;
-      gap: 0.125in;
+      gap: 0.1in;
     }
 
     header {
@@ -83,7 +83,7 @@
     p, li { font-size: 9.6pt; line-height: 1.3; margin: 0; }
 
     ol, ul { margin: 0; padding-left: 1.05em; }
-    li { margin-bottom: .04in; }
+    li { margin-bottom: .032in; }
     li::marker { color: var(--canyon); font-weight: 800; }
 
     /* The ladder: three rungs from day one to a bachelor's degree. */
@@ -176,6 +176,17 @@
     .meet span { display: block; }
     .meet b { color: var(--navy); }
 
+    .cost {
+      margin-top: .07in;
+      border-left: 4px solid var(--gold);
+      background: var(--pale);
+      padding: .07in .09in;
+      font-size: 9.2pt;
+      line-height: 1.26;
+    }
+
+    .cost b { color: var(--navy); }
+
     footer {
       margin-top: auto;
       border-top: 2px solid var(--navy);
@@ -234,7 +245,7 @@
     </header>
 
     <section>
-      <h2>You can go all the way to a bachelor's degree in this pathway.</h2>
+      <h2>Few community colleges can award a bachelor's degree. This one can.</h2>
       <div class="ladder">
         <div class="rung">
           <span class="step">Start</span>
@@ -246,7 +257,7 @@
         </div>
         <div class="rung">
           <span class="step">Then</span>
-          <span><strong>Bachelor of Applied Science in Information Technology</strong><small>120 credits across eight terms. Phoenix College teaches the upper-division courses in this pathway.</small></span>
+          <span><strong>Bachelor of Applied Science in Information Technology</strong><small>120 credits across eight terms. Phoenix College teaches every course, upper division included, and awards the degree. You do not transfer out to finish.</small></span>
         </div>
       </div>
     </section>
@@ -265,7 +276,8 @@
             <tr><td>Computer Systems Analysts</td><td class="pay">$105,510</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:.05in;font-size:8.4pt;line-height:1.28;color:#4a4636;">Arizona annual median wages from the Maricopa BAS in Information Technology pathway map. Education requirements vary by occupation, so some of these need study beyond this degree. Talk to an advisor.</p>
+        <p style="margin-top:.04in;font-size:8.4pt;line-height:1.26;color:#4a4636;">Arizona annual medians. Education requirements vary by occupation, so some need study beyond this degree.</p>
+        <p class="cost">Your whole bachelor's costs about what <b>one year</b> costs at a public in-state university. That is roughly <b>75 percent</b> off the tuition.</p>
       </section>
 
       <section>
@@ -275,7 +287,6 @@
           <li><strong>Cloud cost engineer.</strong> Finds the money a company wastes on cloud services.</li>
           <li><strong>Security operations analyst.</strong> Decides which alerts are real attacks, then runs the response.</li>
           <li><strong>Data engineer.</strong> Builds the pipes that carry data to the people analyzing it.</li>
-          <li><strong>Solutions architect.</strong> Designs what gets built, sitting between customer and engineers.</li>
         </ul>
       </section>
 

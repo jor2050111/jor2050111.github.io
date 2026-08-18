@@ -559,6 +559,11 @@
   font-weight: 800;
   letter-spacing: -.035em;
   line-height: 1;
+  color: var(--navy);
+}
+
+/* Gold clears contrast on the dark field only. */
+.dark .pay-strip b {
   color: var(--gold);
 }
 
@@ -623,4 +628,81 @@
 
 @media (max-width: 60rem) {
   .who { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- Cost comparison: four years here vs one year there ---------- */
+
+.cost-compare {
+  display: grid;
+  gap: clamp(.6rem, 1.3vw, 1rem);
+  max-width: 62rem;
+}
+
+.cost-compare .row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(.8rem, 1.8vw, 1.5rem);
+}
+
+.cost-compare .label {
+  font-size: clamp(.88rem, 1.15vw, 1.1rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* Both bars run the full width. Equal length is the whole argument. */
+.cost-compare .bar {
+  display: grid;
+  gap: .22rem;
+  height: clamp(2.6rem, 4.4vw, 3.6rem);
+}
+
+.cost-compare .bar.years {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.cost-compare .bar span {
+  display: grid;
+  place-items: center;
+  font-family: var(--code);
+  font-size: clamp(.68rem, .92vw, .82rem);
+  font-weight: 800;
+  letter-spacing: .04em;
+  background: var(--gold);
+  border: .12rem solid var(--navy);
+  color: var(--navy);
+}
+
+.cost-compare .bar.one span {
+  background: transparent;
+  border-style: dashed;
+  color: var(--ink);
+}
+
+.dark .cost-compare .bar span {
+  background: rgba(255, 200, 69, .26);
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+.dark .cost-compare .bar.one span {
+  background: transparent;
+  border-color: rgba(255, 255, 255, .5);
+  color: var(--white);
+}
+
+.cost-compare .verdict {
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 800;
+  color: var(--blue);
+  margin-top: .2rem;
+}
+
+.dark .cost-compare .verdict {
+  color: var(--gold);
+}
+
+@media (max-width: 60rem) {
+  .cost-compare .row { grid-template-columns: minmax(0, 1fr); }
 }
