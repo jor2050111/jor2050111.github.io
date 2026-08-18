@@ -208,9 +208,23 @@
     @media screen {
       .sheet { box-shadow: 0 .06in .3in rgba(0, 26, 54, .28); }
     }
+
+    .get-pdf {
+      display: block;
+      width: 8.5in;
+      max-width: 100%;
+      margin: 0 auto .6rem;
+      text-align: right;
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    @media print { .get-pdf { display: none; } }
   </style>
 </head>
 <body>
+  <a class="get-pdf" href="cit-student-handout.pdf">Download this page as a PDF &darr;</a>
   <main class="sheet">
 
     <header>
