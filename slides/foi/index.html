@@ -8,6 +8,42 @@
   <title>FOI Presentations | Phoenix College</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M12 52L28 12l10 24 6-9 8 25z' fill='%23FFC845'/%3E%3Ccircle cx='28' cy='12' r='4' fill='%23FFF0CF'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../shared/catalog.css">
+  <style>
+    .sessions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 1rem;
+      margin: 2rem 0 2.5rem;
+      max-width: 47rem;
+    }
+
+    .sessions div {
+      border-left: .35rem solid var(--gold, #ffc845);
+      background: rgba(255, 255, 255, .55);
+      padding: .85rem 1rem;
+    }
+
+    .sessions .day {
+      display: block;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue, #7c3626);
+      margin-bottom: .3rem;
+    }
+
+    .sessions .when {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy, #002e5d);
+      line-height: 1.15;
+    }
+
+    .sessions .where { display: block; margin-top: .2rem; font-size: .95rem; }
+    .sessions .who { display: block; margin-top: .35rem; font-size: .88rem; opacity: .8; }
+  </style>
 </head>
 <body data-palette="golden-hour">
   <a class="skip-link" href="#main-content">Skip to sessions</a>
@@ -20,7 +56,21 @@
   <main id="main-content">
     <p class="eyebrow">Phoenix College</p>
     <h1>Field of Interest sessions.</h1>
-    <p class="intro">Student-facing sessions run by the Computer and Information Technology field of interest lead. Choose a session to open its browser-based presentation.</p>
+    <p class="intro">The Computer and Information Technology breakout at New Student and Family Orientation. Same 45 minutes both days. Everything below runs in a browser, so there is nothing to install and nothing to prepare.</p>
+    <div class="sessions">
+      <div>
+        <span class="day">Thursday, August 20</span>
+        <span class="when">7:00 to 7:45 PM</span>
+        <span class="where">Room <strong>E201</strong>. Doors open around 6:30 PM.</span>
+        <span class="who">Jorge Vega presenting.</span>
+      </div>
+      <div>
+        <span class="day">Saturday, August 22</span>
+        <span class="when">11:00 to 11:45 AM</span>
+        <span class="where">Room <strong>DB201</strong>, not E201. Doors open around 10:30 AM.</span>
+        <span class="who">Will Tagart presenting.</span>
+      </div>
+    </div>
     <div class="cards">
       <a class="card" data-card-palette="golden-hour" href="nso-fall-2026/">
         <div>
