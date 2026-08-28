@@ -2,3 +2,4 @@
 .playwright-cli/
 output/playwright/
 slides/output/
+.claude/settings.local.json
