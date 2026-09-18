@@ -24,6 +24,8 @@ Use an HTTP server because the game loads JavaScript modules. Opening the HTML a
 - Cable selection and assignment, automatic swapping, undo, reset, three hints, and a finish recap.
 - Native keyboard controls and tap controls, with no dragging requirement.
 - Reduced motion, optional synthesized sound, and a modal help panel.
+- Prominent How to play orientation and a collapsible transfer explanation above the courtyard.
+- A dismissible win celebration with a staggered title, animated festival badge, two confetti bursts, and a victory chime when sound is enabled. Reduced motion shows a static win message.
 - Local storage for preferences only. Blocked storage does not prevent play.
 - No account, gradebook, analytics, or runtime third-party requests.
 
@@ -46,12 +48,15 @@ No package installation is required. Tests use Node's built-in test runner. See 
 | --- | --- |
 | `index.html`, `styles.css` | Semantic interface, layout, and visual scene |
 | `game.js` | Interaction state, feedback, rendering, and audio |
+| `celebration.js` | Win choreography, finite confetti, and motion cleanup |
 | `rules.js` | Compatibility, transfer estimates, and inventory rules |
 | `levels.js` | Authored equipment and encounter data |
 | `assets/festival.png` | Original AI-generated festival illustration |
 | `tests/rules.test.js` | Compatibility, math, inventory, and solution tests |
 
 The illustration was generated with the built-in image tool for this project. Connector diagrams and reward graphics are authored SVG. The illustration is about 2.7 MB. The prototype exceeds the proposed 2 MB initial-asset target, so an optimized release asset remains a task for the full build.
+
+The win choreography draws on the [HyperFrames reference](https://github.com/heygen-com/hyperframes) supplied during playtesting. This live interaction uses the browser's animation API and canvas directly. It does not install HyperFrames or Remotion or require a rendered video. Effects last up to 4.6 seconds, stop on dismissal, and respect the reduced-motion setting and OS preference. The readable win message has no time limit.
 
 ## Next decision
 

@@ -20,7 +20,6 @@
     <div class="settings">
       <button id="sound" class="setting" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Zm13 0 4 6m0-6-4 6"/></svg><span>Sound off</span></button>
       <button id="motion" class="setting" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span>Less motion</span></button>
-      <button id="help" class="help-button" aria-label="How to play">?</button>
     </div>
   </header>
 
@@ -29,6 +28,13 @@
       <div><p class="eyebrow">A LITTLE LOGIC. A BIG NIGHT.</p><h1 id="title">Campus <em>Festival</em><span class="title-star" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 1 24 14 37 8 29 20 39 27 25 26 24 39 18 27 5 34 12 21 1 14 15 15Z" fill="currentColor"/></svg></span></h1></div>
       <p class="intro-copy">Two installations. One fast cable. <br>Make every connection count.<span>About 2 minutes · Untimed · No course points</span></p>
     </section>
+
+    <section class="orientation" aria-label="Start here">
+      <button id="help" class="help-button" aria-haspopup="dialog" aria-controls="help-dialog"><span class="help-icon" aria-hidden="true">?</span>How to play<span aria-hidden="true">↗</span></button>
+      <p><strong>Start here.</strong> Pick a cable. Connect an installation. Test your choices.</p>
+    </section>
+
+    <details class="math-note" id="math-note"><summary>How do the transfer estimates work?</summary><div><p><strong>8 bits = 1 byte.</strong> Multiply a file’s size in GB by 8 to get Gb, then divide by the connection’s rate in Gbps.</p><p>For example: <strong>2 GB × 8 ÷ 5 Gbps = 3.2 seconds.</strong> And 480 Mbps = 0.48 Gbps.</p><p>We use decimal units and ideal transfer estimates. Actual copies take longer. Each station here has its own independent connection. The host, cable, and destination must support a common transfer mode.</p></div></details>
 
     <div class="game-layout">
       <section class="festival" aria-label="Festival courtyard">
@@ -72,11 +78,22 @@
       <div class="finish-star" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 1 24 14 37 8 29 20 39 27 25 26 24 39 18 27 5 34 12 21 1 14 15 15Z" fill="currentColor"/></svg></div><div><p class="eyebrow">YOU MADE IT HAPPEN</p><h2 id="finish-title">Small choices. A brighter night.</h2><p>You gave the big file the fast connection. Both installations are ready.</p><p class="takeaway">The shape tells you what fits. The supported speeds tell you what works.</p><button id="experiment" class="text-button">Keep experimenting <span aria-hidden="true">↗</span></button></div>
     </section>
 
-    <details class="math-note" id="math-note"><summary>How do the transfer estimates work?</summary><div><p><strong>8 bits = 1 byte.</strong> Multiply a file’s size in GB by 8 to get Gb, then divide by the connection’s rate in Gbps.</p><p>For example: <strong>2 GB × 8 ÷ 5 Gbps = 3.2 seconds.</strong> And 480 Mbps = 0.48 Gbps.</p><p>We use decimal units and ideal transfer estimates. Actual copies take longer. Each station here has its own independent connection. The host, cable, and destination must support a common transfer mode.</p></div></details>
     <footer><span>A BPC170 connection puzzle</span><a href="../../../slides/bpc170/ch02/">Back to Chapter 02 <span aria-hidden="true">↗</span></a></footer>
     <noscript><p class="noscript">This game needs JavaScript. You can still use the Chapter 02 slides linked above.</p></noscript>
   </main>
   <div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="announcer"></div>
+  <dialog id="win-dialog" aria-labelledby="win-title" aria-describedby="win-description">
+    <canvas id="win-confetti" aria-hidden="true"></canvas>
+    <div class="win-card">
+      <button id="close-win" class="close-help" aria-label="Close celebration">×</button>
+      <div class="win-medal" aria-hidden="true"><svg viewBox="0 0 120 120"><path class="medal-rays" d="m60 2 9 16 17-8 1 19 19 1-8 17 16 9-16 9 8 17-19 1-1 19-17-8-9 16-9-16-17 8-1-19-19-1 8-17-16-9 16-9-8-17 19-1 1-19 17 8Z"/><circle cx="60" cy="56" r="32"/><path class="medal-check" d="m44 56 11 11 22-24"/></svg></div>
+      <p class="win-kicker">BOTH CONNECTIONS. ONE GREAT NIGHT.</p>
+      <h2 id="win-title"><span>You lit up</span> <em>the night.</em></h2>
+      <p id="win-description">The mural moves. The stage glows.<br>You made it happen.</p>
+      <div class="win-score"><span>2 / 2</span> installations ready</div>
+      <button id="win-done" class="test-button" autofocus>Back to the festival <span aria-hidden="true">↗</span></button>
+    </div>
+  </dialog>
   <dialog id="help-dialog" aria-labelledby="help-title"><button id="close-help" class="close-help" aria-label="Close how to play">×</button><p class="eyebrow">MAKE SOME CONNECTIONS</p><h2 id="help-title">Your festival, your pace.</h2><ol><li><strong>Pick a cable.</strong> Its label tells you its supported speed.</li><li><strong>Choose an installation.</strong> Both endpoints are already set up. You choose the cable between them.</li><li><strong>Test your connections.</strong> See what finishes within each transfer target.</li><li><strong>Try another arrangement.</strong> Moving an assigned cable swaps the two cables.</li></ol><p>No countdown. No grades. Use hints and undo as often as you like.</p><p class="help-keys">Keyboard: Tab through controls, then Enter or Space to select. Escape closes this help.</p><button id="help-done" class="test-button">Let’s make it happen <span aria-hidden="true">↗</span></button></dialog>
 </body>
 </html>

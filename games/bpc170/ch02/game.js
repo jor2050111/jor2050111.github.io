@@ -1,5 +1,6 @@
 import { cables, encounter } from './levels.js';
 import { assignCable, evaluate, formatSeconds } from './rules.js';
+import { createCelebration } from './celebration.js';
 
 const $ = selector => document.querySelector(selector);
 const storageKey = 'campus-festival-ch02-settings-v1';
@@ -12,6 +13,8 @@ try {
   if (saved && typeof saved.sound === 'boolean') state.sound = saved.sound;
   if (saved && typeof saved.lessMotion === 'boolean') state.lessMotion ||= saved.lessMotion;
 } catch { /* The puzzle also works with browser storage unavailable. */ }
+
+const victory = createCelebration({ reducedMotion: () => state.lessMotion || matchMedia('(prefers-reduced-motion: reduce)').matches });
 
 const connector = '<svg aria-hidden="true" viewBox="0 0 28 18"><rect x="2" y="3" width="24" height="12" rx="6"/><path d="M8 9h12"/></svg>';
 const cableDrawing = '<svg class="cable-diagram" aria-hidden="true" viewBox="0 0 240 55"><path d="M38 27h22c25 0 12 20 39 20s22-36 49-36 20 16 36 16h18"/><rect x="12" y="20" width="28" height="14" rx="6"/><path d="M19 27h14"/><rect x="201" y="20" width="28" height="14" rx="6"/><path d="M208 27h14"/></svg>';
@@ -49,11 +52,11 @@ function chime(success = false) {
   try {
     audio ||= new (window.AudioContext || window.webkitAudioContext)();
     audio.resume().catch(() => {});
-    const tones = success ? [261.63, 329.63, 392, 523.25] : [440];
+    const tones = success ? [261.63, 329.63, 392, 523.25, 659.25, 783.99, 1046.5] : [440];
     tones.forEach((frequency, index) => {
       const oscillator = audio.createOscillator();
       const gain = audio.createGain();
-      const start = audio.currentTime + index * 0.11;
+      const start = audio.currentTime + index * (success ? 0.14 : 0.11);
       oscillator.type = 'sine'; oscillator.frequency.value = frequency;
       gain.gain.setValueAtTime(0, start);
       gain.gain.linearRampToValueAtTime(0.055, start + 0.025);
@@ -174,6 +177,7 @@ $('#test').addEventListener('click', () => {
     if (result.complete) {
       feedback('Both targets met. Mural: 3.2 seconds. Stage: 8.3 seconds. The fast cable handled the larger file.');
       chime(true);
+      victory.play();
     } else {
       feedback('The stage is ready in 0.8 seconds, but the mural needs 33.3 seconds. Which connection would help the larger file?');
     }

@@ -37,3 +37,27 @@ Local screenshots are in the repository's ignored `output/playwright/campus-fest
 - The remaining planned encounters, alternate finale, and public URL verification.
 
 This record describes prototype checks. It does not claim full WCAG conformance or readiness for student release.
+
+## Playtest revision: orientation and celebration
+
+Three comments from Mr. Vega applied on September 18, 2026:
+
+1. Replaced the small question-mark control with a gold How to play button and a short Start here orientation above the courtyard.
+2. Added a full-screen win message with an animated title and badge, confetti, and the optional victory chime.
+3. Moved the existing collapsible transfer explanation above the courtyard, preserving its content.
+
+Verification:
+
+- All 11 rule tests still pass. Both JavaScript entry files pass syntax checks.
+- Help opens from its new location. Escape closes it and restores focus.
+- Expanded math content remains above the courtyard.
+- An unsuccessful transfer arrangement never opens the win dialog.
+- A successful arrangement opens the celebration with the expected completion state.
+- Motion finishes within the 4.6-second effect duration. The message remains until dismissed.
+- Escape restores focus to Test. The visible return button dismisses the dialog and cancels active effects.
+- OS reduced-motion mode shows the win message with no running animations or confetti loop.
+- Desktop and 390-pixel phone win states visually inspected. Phone card fits within the viewport.
+- Orientation and math controls reflow without horizontal overflow at 320, 390, and 640 pixels.
+- No runtime errors or unhandled rejections observed in the instrumented revision playthrough.
+
+Screenshots: `celebration-desktop.png`, `celebration-phone.png`, and `orientation-revision.png` in the same ignored evidence folder. This revision remains local and unpublished.
