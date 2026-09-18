@@ -1,10 +1,10 @@
 # BPC170 Chapter 02: Optional browser game plan
 
-Draft for discussion. Prepared September 18, 2026.
+Design direction approved September 18, 2026. First playable encounter ready for local review.
 
 **Recommendation:** Build *Signal Festival*, a short, untimed connection puzzle. Players arrange a limited set of cables, test their choices, and bring an illustrated campus festival to life. Correct hardware reasoning is how players solve the puzzle.
 
-This is a proposed direction, not an approved design or an implemented game. The working assumptions are 5–8 minutes, individual play, phone and laptop support, and no grades. Theme and duration questions remain open for Mr. Vega.
+Mr. Vega approved this plan, the Campus Festival setting, and a target under eight minutes. Play is untimed by default. A timer may be considered only if playtesting shows it improves engagement. Individual play, phone and laptop support, and no grades remain the scope. The next review is the first playable encounter, before additional levels are produced.
 
 ## 1. Purpose and scope
 
@@ -20,7 +20,7 @@ The intended game directory is this folder:
 
 `/Users/vega/Documents/code/jor2050111.github.io/games/bpc170/ch02/`
 
-The intended student URL is [the Chapter 02 game](https://jor2050111.github.io/games/bpc170/ch02/). No game has been published by this planning work.
+The intended student URL is [the Chapter 02 game](https://jor2050111.github.io/games/bpc170/ch02/). The first encounter is available for local review. No game has been published. See `README.md` for the preview command and current scope.
 
 ## 2. What the sources suggest
 

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132923">
+  <meta name="description" content="Bring a campus festival to life. A short connection puzzle about USB cables, transfer speeds, and choosing what goes where.">
+  <title>Campus Festival · BPC170</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23132923'/%3E%3Cpath d='M20 6 24 16 34 20 24 24 20 34 16 24 6 20 16 16Z' fill='%23ffc845'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#puzzle">Skip to the puzzle</a>
+  <header class="masthead">
+    <a class="college" href="../../../slides/bpc170/ch02/" aria-label="Return to BPC170 Chapter 02 slides">
+      <svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 3 25 15 37 20 25 25 20 37 15 25 3 20 15 15Z"/></svg>
+      <span>PHOENIX COLLEGE<span>BPC170 · CHAPTER 02</span></span>
+    </a>
+    <div class="settings">
+      <button id="sound" class="setting" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Zm13 0 4 6m0-6-4 6"/></svg><span>Sound off</span></button>
+      <button id="motion" class="setting" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg><span>Less motion</span></button>
+      <button id="help" class="help-button" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <div><p class="eyebrow">A LITTLE LOGIC. A BIG NIGHT.</p><h1 id="title">Campus <em>Festival</em><span class="title-star" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 1 24 14 37 8 29 20 39 27 25 26 24 39 18 27 5 34 12 21 1 14 15 15Z" fill="currentColor"/></svg></span></h1></div>
+      <p class="intro-copy">Two installations. One fast cable. <br>Make every connection count.<span>About 2 minutes · Untimed · No course points</span></p>
+    </section>
+
+    <div class="game-layout">
+      <section class="festival" aria-label="Festival courtyard">
+        <img class="festival-art" src="./assets/festival.png" alt="An art and music festival in a desert campus courtyard at dusk, with a mural and a small stage." width="1536" height="1024" fetchpriority="high">
+        <div class="scene-top"><span class="location"><i aria-hidden="true"></i>THE CAMPUS COURTYARD</span><span id="scene-count">0 / 2 ready</span></div>
+        <svg class="scene-effects" aria-hidden="true" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice">
+          <defs><radialGradient id="bloom"><stop stop-color="#ffd782" stop-opacity=".45"/><stop offset="1" stop-color="#ffd782" stop-opacity="0"/></radialGradient><clipPath id="mural-screen"><path d="M267 320 674 334 674 570 269 583Z"/></clipPath><clipPath id="stage-screen"><path d="M1000 405 1319 405 1319 548 1000 548Z"/></clipPath></defs>
+          <ellipse class="scene-bloom mural-bloom" cx="470" cy="450" rx="300" ry="250" fill="url(#bloom)"/>
+          <ellipse class="scene-bloom stage-bloom" cx="1160" cy="475" rx="270" ry="230" fill="url(#bloom)"/>
+          <g class="mural-art" clip-path="url(#mural-screen)"><path fill="#18443f" d="M260 310h430v280H260z"/><circle cx="561" cy="393" r="77" fill="#ffd078"/><path fill="#dc764d" d="m245 520 140-156 110 157 120-82 100 91v80H245Z"/><path fill="#f0ac67" d="M240 534Q330 410 447 539T710 499v100H240Z"/><path fill="#83ad96" d="M240 570Q360 445 485 567T710 521v100H240Z"/><g class="mural-spark" fill="#fff0c7"><path d="m329 366 7 18 18 7-18 7-7 18-7-18-18-7 18-7Z"/><circle cx="431" cy="358" r="4"/><circle cx="636" cy="446" r="4"/></g></g>
+          <g class="stage-art" clip-path="url(#stage-screen)"><path fill="#193b49" d="M992 397h336v163H992Z"/><g fill="#ffc96d" transform="translate(1033 423)"><rect x="0" y="44" width="17" height="41" rx="8"/><rect x="29" y="16" width="17" height="69" rx="8"/><rect x="58" y="35" width="17" height="50" rx="8"/><rect x="87" y="0" width="17" height="85" rx="8"/><rect x="116" y="23" width="17" height="62" rx="8"/><rect x="145" y="10" width="17" height="75" rx="8"/><rect x="174" y="34" width="17" height="51" rx="8"/><rect x="203" y="20" width="17" height="65" rx="8"/><rect x="232" y="48" width="17" height="37" rx="8"/></g></g>
+          <g class="celebration"><path d="m124 135 7 18 18 7-18 7-7 18-7-18-18-7 18-7Z"/><path d="m820 170 5 13 13 5-13 5-5 13-5-13-13-5 13-5Z"/><circle cx="520" cy="175" r="5"/><circle cx="160" cy="300" r="4"/><circle cx="870" cy="380" r="6"/></g>
+        </svg>
+        <div class="station-tag mural-tag" id="mural-tag"><span class="tag-number">01</span><span>Motion mural<small>Waiting for media</small></span></div>
+        <div class="station-tag stage-tag" id="stage-tag"><span class="tag-number">02</span><span>Music stage<small>Waiting for media</small></span></div>
+        <div class="scene-caption"><span class="caption-line" aria-hidden="true"></span><p id="scene-caption">The courtyard is ready. Your connections bring the visuals.</p></div>
+      </section>
+
+    <section class="cable-tray" aria-labelledby="tray-title">
+      <div class="tray-heading"><p class="eyebrow">YOUR CABLE KIT</p><h2 id="tray-title">Same shape. <br>Different possibilities.</h2><p id="selection-copy">Select a cable to begin.</p></div>
+      <div class="cables" id="cables"></div>
+      <div class="tray-note"><span class="small-star" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 1 24 14 37 8 29 20 39 27 25 26 24 39 18 27 5 34 12 21 1 14 15 15Z" fill="currentColor"/></svg></span><p>Read the label.<br>A USB-C shape alone<br>doesn’t tell you the speed.</p></div>
+    </section>
+
+
+      <section class="puzzle" id="puzzle" aria-labelledby="puzzle-title" tabindex="-1">
+        <div class="puzzle-heading"><span class="eyebrow">OPENING NIGHT</span><span class="chapter-mark">01</span></div>
+        <h2 id="puzzle-title">Bring both to life.</h2>
+        <p class="puzzle-intro">Pick a cable from your kit, then choose an installation. Meet both transfer targets.</p>
+
+        <div class="stations" id="stations"></div>
+
+        <div class="feedback" id="feedback"><span class="feedback-mark" aria-hidden="true">i</span><p id="feedback-copy">Both cables fit. Check their speeds before you connect.</p></div>
+        <div class="main-actions"><button class="test-button" id="test" aria-disabled="true">Test connections <span aria-hidden="true">↗</span></button><button class="undo-button" id="undo" aria-label="Undo last connection" disabled><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8 4-5 5 5 5M3 9h10a6 6 0 0 1 0 12"/></svg></button></div>
+        <div class="secondary-actions"><button id="hint">Need a hint?</button><button id="reset">Start over</button></div>
+        <p class="timing-note">Targets describe the transfer, not your thinking time.</p>
+      </section>
+    </div>
+
+    <section class="finish" id="finish" hidden aria-labelledby="finish-title" tabindex="-1">
+      <div class="finish-star" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M20 1 24 14 37 8 29 20 39 27 25 26 24 39 18 27 5 34 12 21 1 14 15 15Z" fill="currentColor"/></svg></div><div><p class="eyebrow">YOU MADE IT HAPPEN</p><h2 id="finish-title">Small choices. A brighter night.</h2><p>You gave the big file the fast connection. Both installations are ready.</p><p class="takeaway">The shape tells you what fits. The supported speeds tell you what works.</p><button id="experiment" class="text-button">Keep experimenting <span aria-hidden="true">↗</span></button></div>
+    </section>
+
+    <details class="math-note" id="math-note"><summary>How do the transfer estimates work?</summary><div><p><strong>8 bits = 1 byte.</strong> Multiply a file’s size in GB by 8 to get Gb, then divide by the connection’s rate in Gbps.</p><p>For example: <strong>2 GB × 8 ÷ 5 Gbps = 3.2 seconds.</strong> And 480 Mbps = 0.48 Gbps.</p><p>We use decimal units and ideal transfer estimates. Actual copies take longer. Each station here has its own independent connection. The host, cable, and destination must support a common transfer mode.</p></div></details>
+    <footer><span>A BPC170 connection puzzle</span><a href="../../../slides/bpc170/ch02/">Back to Chapter 02 <span aria-hidden="true">↗</span></a></footer>
+    <noscript><p class="noscript">This game needs JavaScript. You can still use the Chapter 02 slides linked above.</p></noscript>
+  </main>
+  <div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="announcer"></div>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button id="close-help" class="close-help" aria-label="Close how to play">×</button><p class="eyebrow">MAKE SOME CONNECTIONS</p><h2 id="help-title">Your festival, your pace.</h2><ol><li><strong>Pick a cable.</strong> Its label tells you its supported speed.</li><li><strong>Choose an installation.</strong> Both endpoints are already set up. You choose the cable between them.</li><li><strong>Test your connections.</strong> See what finishes within each transfer target.</li><li><strong>Try another arrangement.</strong> Moving an assigned cable swaps the two cables.</li></ol><p>No countdown. No grades. Use hints and undo as often as you like.</p><p class="help-keys">Keyboard: Tab through controls, then Enter or Space to select. Escape closes this help.</p><button id="help-done" class="test-button">Let’s make it happen <span aria-hidden="true">↗</span></button></dialog>
+</body>
+</html>
