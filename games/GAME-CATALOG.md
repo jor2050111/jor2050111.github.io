@@ -8,6 +8,7 @@ Check course folders and their READMEs before choosing.
 | Course | Chapter / sequence | Title | Primary family | Main player action | Status | Scope / record |
 | --- | --- | --- | --- | --- | --- | --- |
 | BPC170 | 02 / 2 | Campus Festival | Puzzle | Allocate two cables, test transfer targets, swap and retry | Live, 2026-09-18 | One encounter, about 2 minutes. [Record](bpc170/ch02/README.md) |
+| BPC170 | 03 / 3 | Breeze Lab | Creative sandbox | Alter airflow and cooling, change workloads, compare several viable designs | Local playtest ready, 2026-09-19 | Three discoveries and an experiment notebook. [Record](bpc170/ch03/README.md) |
 
 ## Rotation rule
 
@@ -18,8 +19,20 @@ both neighbors. Never ship two consecutive games in the same course with the
 same primary family. If a new explicit user request conflicts, identify the
 conflict and obtain a decision instead of silently relabeling the game.
 
-BPC170 Chapter 03 must therefore use a family other than Puzzle. There is no
-chosen Chapter 03 concept yet. Different courses have independent sequences.
+BPC170 Chapter 03 uses Creative sandbox, following Chapter 02's Puzzle.
+The next BPC170 game must use another primary family. Different courses have
+independent sequences.
+
+## Future BPC170 candidates
+
+Mr. Vega asked to retain these on September 19, 2026. They are ideas, not
+chapter reservations or authorization to build. Check the future chapter's
+actual concepts and neighboring game families before selecting either.
+
+| Candidate | Primary family | Play and concepts | Chapter |
+| --- | --- | --- | --- |
+| Premiere Night | Strategy / management | Run an animation studio across changing production rounds. Schedule jobs and choose upgrades while balancing power headroom, cooling, and workloads. Completed jobs reveal a short movie. | Unassigned |
+| The Last Copy | Narrative adventure | Explore a filmmaker's editing room and archive. Storage and preservation choices change which footage survives drive failure or deletion. Focus on capacity, RAID, and separate backups. | Unassigned |
 
 ## Classify by the dominant action
 

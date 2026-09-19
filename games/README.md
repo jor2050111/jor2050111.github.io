@@ -28,6 +28,7 @@ repository-local skill is loaded through `AGENTS.md`.
 | [Canvas and release guide](educational-game-builder/references/release-and-canvas.md) | Local preview, deployment checks, and the accepted Canvas pattern |
 | [BPC170 context](bpc170/COURSE.md) | Verified source locations and course-specific constraints |
 | [Campus Festival](bpc170/ch02/README.md) | The first shipped example, including its limits |
+| [Breeze Lab](bpc170/ch03/README.md) | Chapter 03 creative sandbox, local instructor playtest |
 
 ## Defaults
 

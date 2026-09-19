@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9eee3">
+  <meta name="description" content="A tiny computer. A little breathing room. Explore airflow, cooling, and workloads in this untimed BPC170 sandbox.">
+  <title>Breeze Lab · BPC170 Chapter 03</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23264338'/%3E%3Cpath d='M7 15h20q8 0 4-6M7 21h24M7 27h16q8 0 4 6' fill='none' stroke='%23e4efbd' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <a class="skip" href="#controls">Skip to workbench controls</a>
+  <header class="masthead">
+    <a class="course" href="../../../slides/bpc170/ch03/"><span class="brand-mark" aria-hidden="true">b.</span><span>PHOENIX COLLEGE<small>BPC170 · CHAPTER 03</small></span></a>
+    <div class="utilities"><button id="sound" aria-pressed="false">Sound off</button><button id="motion" aria-pressed="false">Pause motion</button><button id="help" class="help" aria-haspopup="dialog">How to play <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <div><p class="eyebrow">THE LITTLE WORKBENCH FOR BIG IDEAS</p><h1 id="title">Breeze <em>Lab.</em><svg class="breeze-mark" aria-hidden="true" viewBox="0 0 90 60"><path d="M4 15h54c19 0 18-20 4-12M4 30h78M4 45h44c19 0 18 20 4 12"/></svg></h1></div>
+      <p class="intro-note">A tiny computer. A little breathing room.<span>Explore. Adjust. See what changes.</span><small>About 4–6 minutes · Untimed · Optional, no course points</small></p>
+    </section>
+    <div class="start-note"><span class="step-dot">1</span><p><strong>Start with the cables.</strong> Clear the crowded air path. Test your build, then see what else you can make.</p><span class="sandbox-label">YOUR SANDBOX</span></div>
+    <section class="workload-bar" aria-label="Choose a workload">
+      <div><p class="eyebrow">WHAT ARE WE MAKING?</p><p id="workload-description">Notes, research, a little music.</p></div>
+      <div class="workload-options" role="group" aria-label="Workload">
+        <button data-key="workload" data-value="light" aria-pressed="true"><span class="work-icon" aria-hidden="true">Aa</span>Writing desk</button>
+        <button data-key="workload" data-value="studio" aria-pressed="false"><span class="work-icon" aria-hidden="true">▧</span>Photo studio</button>
+        <button data-key="workload" data-value="render" aria-pressed="false"><span class="work-icon" aria-hidden="true">▷</span>Animation render</button>
+      </div>
+    </section>
+
+    <div class="mobile-readings" aria-label="Current model result"><strong id="mobile-pace">Reduced pace</strong><span id="mobile-balance">Cooling 28 / demand 30</span></div>
+    <div class="workbench">
+      <section class="observation" aria-labelledby="scene-title">
+        <div class="scene-heading"><h2 id="scene-title">Room to breathe.</h2><span id="scene-state">AIR PATH CROWDED</span></div>
+        <div class="machine-scene" id="scene">
+          <svg id="machine" viewBox="0 0 760 485" role="img" aria-labelledby="machine-title machine-description">
+            <title id="machine-title">Your miniature computer workbench</title>
+            <desc id="machine-description">A cutaway computer with adjustable front, rear, and top fans. Text controls below the diagram describe all settings.</desc>
+            <defs>
+              <linearGradient id="glass" x2="0.7" y2="1"><stop stop-color="#f8fbf2" stop-opacity=".94"/><stop offset="1" stop-color="#dae8d5" stop-opacity=".8"/></linearGradient>
+              <linearGradient id="case-edge" x2="1" y2="1"><stop stop-color="#7e9d89"/><stop offset="1" stop-color="#526f5d"/></linearGradient>
+              <radialGradient id="heat"><stop stop-color="#eb9a62" stop-opacity=".55"/><stop offset="1" stop-color="#eb9a62" stop-opacity="0"/></radialGradient>
+              <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#97b0a0" stroke-opacity=".15"/></pattern>
+              <marker id="arrow-cool" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="m0 0 10 5-10 5Z" fill="#267b84"/></marker>
+              <marker id="arrow-warm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="m0 0 10 5-10 5Z" fill="#b75d35"/></marker>
+              <g id="fan-blades"><path d="M0-7C-38-48 10-53 11-17L7-2C48-38 53 10 17 11L2 7C38 48-10 53-11 17L-7 2C-48 38-53-10-17-11Z" fill="currentColor"/><circle r="9" fill="#fcf8e7" stroke="currentColor" stroke-width="3"/></g>
+            </defs>
+            <rect x="0" y="0" width="760" height="485" fill="url(#grid)"/>
+            <ellipse cx="383" cy="432" rx="282" ry="23" fill="#294d3a" opacity=".09"/>
+            <!-- The plants stay outside the case. All machine parts are live SVG. -->
+            <g class="plant" aria-hidden="true"><path d="M78 384q2-80-8-119m8 85q18-57 42-75m-42 96q-25-58-49-76" fill="none" stroke="#496f4b" stroke-width="4"/><path d="M71 299q-42-24-21-63 33 22 21 63M85 331q-1-44 42-58 4 35-42 58M62 342q-42-3-43-38 36-2 43 38" fill="#8ba675"/><path d="M49 378h58l-9 52H59Z" fill="#d99c77"/><path d="M45 378h66v12H45Z" fill="#e8b08b"/></g>
+            <path d="M158 115 212 80H617L566 115Z" fill="#d2deca" stroke="#6f8e79" stroke-width="2"/>
+            <path d="M566 115 617 80V362L566 402Z" fill="url(#case-edge)" stroke="#526e5c" stroke-width="2"/>
+            <rect x="150" y="109" width="424" height="296" rx="21" fill="#98b29c" stroke="#637f6b" stroke-width="2"/>
+            <rect x="164" y="123" width="394" height="266" rx="13" fill="url(#glass)" stroke="#f9fff3" stroke-width="3"/>
+            <path d="M180 404v17h35v-17m302 0v17h35v-17" fill="#526f5d"/>
+            <path d="M583 154v126m8-130v123m8-129v122" stroke="#bdd1b7" stroke-width="3"/>
+            <rect x="587" y="325" width="14" height="7" rx="3" fill="#dfe9bc"/>
+            <rect x="265" y="151" width="236" height="213" rx="10" fill="#709584" stroke="#527766" stroke-width="2"/>
+            <g fill="none" stroke="#bad0a1" stroke-width="2" opacity=".6"><path d="M282 173h42v45h57m-99 132h48v-39h85v-47m67-103v53h-31m34 102h-48v30h-31M293 227v50h40"/><path d="M301 164v33h33m143 144v-56h-30"/></g>
+            <g fill="#2f594b" stroke="#b1cbb1" stroke-width="2"><rect x="442" y="181" width="13" height="104" rx="3"/><rect x="465" y="181" width="13" height="104" rx="3"/><rect x="302" y="328" width="109" height="14" rx="3"/></g>
+            <g id="heat-glow"><ellipse cx="371" cy="241" rx="150" ry="126" fill="url(#heat)"/></g>
+            <rect x="327" y="206" width="81" height="75" rx="8" fill="#d8bf88" stroke="#efddb7" stroke-width="5"/>
+            <text x="367" y="297" text-anchor="middle" class="svg-small">CPU + COOLER</text>
+            <g id="compact-cooler"><rect x="324" y="203" width="86" height="80" rx="12" fill="#c6d4c5" stroke="#456858" stroke-width="3"/><g stroke="#91a797" stroke-width="3"><path d="M332 213h70m-70 10h70m-70 10h70m-70 10h70m-70 10h70m-70 10h70"/></g><g transform="translate(367 242)"><circle r="30" fill="#456b57"/><use href="#fan-blades" class="rotor cpu-rotor" transform="scale(.67)" style="color:#b7d0a2"/></g></g>
+            <g id="tower-cooler" hidden><path d="M323 216 346 184h79l-18 32Z" fill="#dce6d5" stroke="#557963" stroke-width="2"/><rect x="323" y="216" width="84" height="66" rx="5" fill="#bccfb7" stroke="#557963" stroke-width="2"/><path d="M407 216 425 184v64l-18 34Z" fill="#86a38d"/><g stroke="#7c9981" stroke-width="3"><path d="M328 224h73m-73 9h73m-73 9h73m-73 9h73m-73 9h73m-73 9h73"/></g><g transform="translate(367 244)"><circle r="29" fill="#426d59"/><use href="#fan-blades" class="rotor cpu-rotor" transform="scale(.7)" style="color:#cfe0ae"/></g></g>
+            <g id="cable-bundle" fill="none" stroke-width="8" stroke-linecap="round"><path d="M263 355C350 158 219 189 326 307S438 340 323 300 274 218 306 177" stroke="#d29764"/><path d="M270 361C346 237 230 206 334 321S428 327 332 285 280 218 314 177" stroke="#ac7858"/><path d="M281 362C337 291 253 205 342 326S430 304 341 273 289 220 322 177" stroke="#ebc893"/></g>
+            <g id="cable-tidy" hidden fill="none" stroke-width="5" stroke-linecap="round"><path d="M274 356H291V166H322" stroke="#c18a5f"/><path d="M279 363H299V172H322" stroke="#e6bb85"/></g>
+            <g id="front-fan" transform="translate(207 266)"><rect x="-33" y="-43" width="66" height="86" rx="12" fill="#e2eadb" stroke="#91ab99" stroke-width="2"/><circle r="29" fill="#4a7464"/><use href="#fan-blades" class="rotor" style="color:#a8c7ae" transform="scale(.68)"/></g>
+            <g id="rear-fan" transform="translate(522 194)"><rect x="-25" y="-34" width="50" height="68" rx="10" fill="#dfe9d5" stroke="#8ea892" stroke-width="2"/><circle r="22" fill="#4a7464"/><use href="#fan-blades" class="rotor" style="color:#b8cc9f" transform="scale(.51)"/></g>
+            <g id="top-fan" transform="translate(416 108) scale(1 .45)"><rect x="-42" y="-33" width="84" height="66" rx="12" fill="#dfe9d5" stroke="#708e78" stroke-width="3"/><circle r="27" fill="#4a7464"/><use href="#fan-blades" class="rotor" style="color:#b8cc9f" transform="scale(.65)"/></g>
+            <g class="flow-lines" fill="none" stroke-width="3" stroke-linecap="round">
+              <path id="flow-front" d="M109 266H258"/>
+              <path id="flow-rear" d="M477 195H658"/>
+              <path id="flow-top" d="M416 152V44"/>
+              <path id="flow-core" d="M262 250C305 225 314 181 357 180S436 189 480 195" stroke="#397b77" stroke-dasharray="7 10" opacity=".65"/>
+            </g>
+            <g class="diagram-label"><text x="109" y="248" text-anchor="middle">FRONT</text><text x="653" y="178" text-anchor="middle">REAR</text><text x="438" y="52">TOP</text></g>
+            <g transform="translate(642 374)" aria-hidden="true"><rect width="60" height="43" rx="5" fill="#faf6e7" stroke="#b9c7ab" stroke-width="2"/><path d="m13 23 8 8 24-20" fill="none" stroke="#638561" stroke-width="3"/><path d="M9 43v8m42-8v8" stroke="#8ea27e" stroke-width="3"/></g>
+            <g class="success-sparkles" fill="#749455" aria-hidden="true"><path d="m610 293 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/><path d="m136 161 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/><circle cx="630" cy="271" r="3"/></g>
+          </svg>
+          <p class="scene-caption" id="scene-caption">Follow the arrows. Blue comes in. Amber goes out.</p>
+        </div>
+        <div class="readings" aria-label="Live model readings">
+          <div><span class="reading-label">HEAT BALANCE</span><strong id="thermal">Heat-limited</strong><span id="capacity-caption">Cooling below demand</span></div>
+          <div><span class="reading-label">WORKLOAD PACE</span><strong id="pace">Reduced</strong><span id="pace-caption">Cooling needs a little help</span></div>
+          <div><span class="reading-label">FAN NOISE</span><strong id="noise">Low</strong><span>Relative, not measured dB</span></div>
+        </div>
+        <div class="model-bar"><div><span>Cooling <b id="capacity">27</b></span><span>Demand <b id="demand">30</b></span></div><div class="meter" aria-hidden="true"><span id="capacity-bar"></span><i id="demand-mark"></i></div><p>Illustrative model units, not temperature or hardware ratings.</p></div>
+      </section>
+
+      <section class="controls" id="controls" aria-labelledby="controls-title" tabindex="-1">
+        <div class="controls-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="controls-title">The workbench</h2></div><span class="tiny-mark" aria-hidden="true">↗</span></div>
+        <fieldset class="cables-control"><legend><span class="control-number">01</span> Give the air some room</legend><button id="tidy" aria-pressed="false"><span id="tidy-title">Clear the cable path</span><span class="toggle-track" aria-hidden="true"><i></i></span></button><p id="tidy-note">A loose bundle crowds the path through the case.</p></fieldset>
+        <div class="fan-controls"><p class="control-heading"><span class="control-number">02</span> Point the fans</p><p class="control-note">In = intake · Out = exhaust</p>
+          <fieldset class="fan-row"><legend>Front</legend><div class="segments"><button data-key="front" data-value="in" aria-pressed="true" aria-label="Front fan intake">In</button><button data-key="front" data-value="out" aria-pressed="false" aria-label="Front fan exhaust">Out</button><button data-key="front" data-value="off" aria-pressed="false" aria-label="Front fan off">Off</button></div></fieldset>
+          <fieldset class="fan-row"><legend>Rear</legend><div class="segments"><button data-key="rear" data-value="in" aria-pressed="true" aria-label="Rear fan intake">In</button><button data-key="rear" data-value="out" aria-pressed="false" aria-label="Rear fan exhaust">Out</button><button data-key="rear" data-value="off" aria-pressed="false" aria-label="Rear fan off">Off</button></div></fieldset>
+          <fieldset class="fan-row"><legend>Top</legend><div class="segments"><button data-key="top" data-value="in" aria-pressed="false" aria-label="Top fan intake">In</button><button data-key="top" data-value="out" aria-pressed="false" aria-label="Top fan exhaust">Out</button><button data-key="top" data-value="off" aria-pressed="true" aria-label="Top fan off">Off</button></div></fieldset>
+        </div>
+        <fieldset><legend><span class="control-number">03</span> Set the fan speed</legend><div class="segments speed"><button data-key="speed" data-value="quiet" aria-pressed="true">Quiet</button><button data-key="speed" data-value="balanced" aria-pressed="false">Balanced</button><button data-key="speed" data-value="boost" aria-pressed="false">Boost</button></div></fieldset>
+        <fieldset><legend><span class="control-number">04</span> Choose the CPU cooler</legend><div class="segments coolers"><button data-key="cooler" data-value="compact" aria-pressed="true">Compact</button><button data-key="cooler" data-value="tower" aria-pressed="false">Tower</button></div><p class="control-note">Both include a working fan and thermal interface.</p></fieldset>
+        <button id="test" class="primary">Test &amp; keep this build <span aria-hidden="true">↗</span></button>
+        <div class="secondary"><button id="hint">A little nudge</button><button id="undo" disabled>Undo</button><button id="reset">Start fresh</button></div>
+      </section>
+    </div>
+    <section class="feedback" aria-labelledby="feedback-title"><span class="feedback-symbol" aria-hidden="true">i</span><div><h2 id="feedback-title">Every change tells you something.</h2><p id="feedback-copy">The cable bundle crowds the air path. Clear it, then compare the same workload again.</p></div></section>
+    <section class="discoveries" aria-labelledby="discoveries-title"><div class="section-heading"><div><p class="eyebrow">A FEW THINGS TO TRY</p><h2 id="discoveries-title">Three ways to run cool.</h2></div><span id="discovery-count">0 / 3 discovered</span></div><div class="goal-grid" id="goals"></div></section>
+    <section class="notebook" aria-labelledby="notebook-title"><div class="section-heading"><div><p class="eyebrow">YOUR EXPERIMENT NOTEBOOK</p><h2 id="notebook-title">Keep the changes. See the difference.</h2></div><span>Latest 6 tests · this visit only</span></div><p id="empty-notebook">Test a build to leave your first note here. Try changing one thing at a time.</p><ol id="experiments"></ol></section>
+    <details class="model-notes"><summary>What does this little model leave out?</summary><div><p>Cooling depends on moving heat off the CPU and out of the case. The model uses the lower of its CPU-cooler capacity and case-airflow capacity. Higher workloads ask for more cooling. If demand exceeds capacity, the model shows reduced pace.</p><p>These are invented comparison units, not degrees, watts, benchmark results, or buying advice. The paths are diagrams, not fluid simulations. Real cases differ. Passive vents still exchange air, and an all-intake or all-exhaust setup does not seal the case.</p><p>Fan speed affects case fans here. Each CPU cooler includes its own working fan and correctly applied thermal interface. Dust, room temperature, fan curves, GPU cooling, and case geometry are held constant. No thermal paste or liquid-cooling installation is simulated.</p><p>Chapter concepts: intake and exhaust, a clear air path, and the CPU-to-case cooling path. Technical reference: <a href="https://www.intel.com/content/www/us/en/gaming/resources/pc-cooling-the-importance-of-keeping-your-pc-cool.html" target="_blank" rel="noopener">Intel’s PC cooling guide (opens in a new tab)</a>.</p></div></details>
+    <footer><a href="../../../slides/bpc170/ch03/">Back to Chapter 03 <span aria-hidden="true">↗</span></a><span>Made for curiosity. No account. No grades.</span></footer>
+    <noscript><p>This sandbox needs JavaScript. You can still read the Chapter 03 slides using the link above.</p></noscript>
+  </main>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="close" id="close-help" aria-label="Close help">×</button><p class="eyebrow">WELCOME TO YOUR WORKBENCH</p><h2 id="help-title">Make a little room.</h2><ol><li><strong>Change one thing.</strong> Start by clearing the cable path.</li><li><strong>Watch the readings.</strong> Heat balance, pace, and noise update as you experiment.</li><li><strong>Test and compare.</strong> Keep a build in your notebook. You can restore it later.</li><li><strong>Try a new workload.</strong> Discover a quiet writing build, a steady photo studio, and a heavy lifter.</li></ol><p>There is more than one good design. Hints, undo, and retries are unlimited. Start fresh clears this visit’s discoveries and notebook.</p><p>Use Tab to move, then Enter or Space to choose. Escape closes dialogs. Pause motion keeps every reading available. Sound is optional.</p><button id="help-done" class="primary">Let’s experiment <span aria-hidden="true">↗</span></button></dialog>
+  <dialog id="win-dialog" aria-labelledby="win-title" aria-describedby="win-description"><button id="close-win" class="close" aria-label="Close celebration">×</button><div class="win-emblem" aria-hidden="true"><svg viewBox="0 0 90 60"><path d="M4 15h54c19 0 18-20 4-12M4 30h78M4 45h44c19 0 18 20 4 12"/></svg></div><p class="eyebrow">THREE BUILDS. YOUR OWN WAY.</p><h2 id="win-title">You found your flow.</h2><p id="win-description">A quiet desk, a steady studio, and a machine that handles the heavy work.</p><p>Clear the path. Move heat off the CPU. Match the cooling to the workload.</p><button id="win-done" class="primary" autofocus>Keep experimenting <span aria-hidden="true">↗</span></button></dialog>
+</body>
+</html>
