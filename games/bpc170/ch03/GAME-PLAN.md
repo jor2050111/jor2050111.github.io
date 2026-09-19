@@ -1,8 +1,7 @@
 # BPC170 Chapter 03: Breeze Lab
 
-Status: Ready for local playtest. Selected by Mr. Vega on September 19, 2026.
-Scope: build the selected brainstorming option as a local game. Publication
-and Canvas editing are not authorized.
+Status: Live. Selected, reviewed, and approved for publication by Mr. Vega on
+September 19, 2026. Runtime release: `5610498`. Canvas editing is not authorized.
 
 ## Chapter context
 
@@ -77,6 +76,8 @@ are inferred. Documentation and in-game disclosure state these limits.
 ## Review and release
 
 Local preview: http://localhost:8765/games/bpc170/ch03/
-See `QA.md` for actual checks. Mr. Vega's game-feel review remains pending.
-Publishing requires current-game authorization. Pushing this repository's
-main branch can publish through Pages, so this build stays local.
+See `QA.md` for actual checks. Mr. Vega accepted the playable build and said
+to push it live. Student URL: https://jor2050111.github.io/games/bpc170/ch03/
+Publication was verified with Pages build status and exact runtime file hashes.
+Future games must follow the strengthened creative-play standard. This
+accepted game is not a default pattern for later chapters.

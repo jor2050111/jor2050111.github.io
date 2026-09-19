@@ -20,6 +20,10 @@ Timing: untimed by default. Optional and ungraded unless explicitly changed.
 
 ## Mechanic decision
 
+Read `../references/creative-play.md` from this template's directory. Propose
+three distinct suitable families, including two settings beyond a literal
+hardware bench or help desk. An explicit user selection can settle the choice.
+
 | Candidate | Primary family | Main loop | Fit / tradeoff |
 | --- | --- | --- | --- |
 | {{CANDIDATE}} | {{FAMILY}} | {{VERBS_AND_CONSEQUENCES}} | {{REASON}} |
@@ -29,6 +33,22 @@ Closest earlier course game / family:
 Closest later course game / family, if any:
 Rotation decision, including other recent games considered:
 Catalog row added or updated:
+
+## Creative-play check
+
+What students already do in the existing labs or practice:
+Evidence inspected, with unavailable references labeled:
+What this game lets them do that those activities do not:
+The repeated player action and why it is enjoyable:
+The meaningful choice, competing goals, or expressive freedom:
+How the chapter concept changes what happens, beyond answering a question:
+Different viable approaches, consequences, or replay variations:
+Why this is not a component picker, installation checklist, or lab reskin:
+Where the analogy ends and how that boundary will be explained:
+
+If those answers describe only clicking settings until readings turn green,
+following a fixed procedure, or answering recall questions, revise the concept
+before building. Visual polish alone does not pass this check.
 
 ## Playable scope
 

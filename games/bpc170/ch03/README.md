@@ -1,6 +1,6 @@
 # Breeze Lab
 
-Status: local build for instructor playtest. September 19, 2026.
+Status: live, accepted and published September 19, 2026. Runtime commit `5610498`.
 BPC170 Chapter 03: Installing System Devices.
 
 A creative sandbox about fan direction, clear airflow, and CPU cooling.
@@ -18,7 +18,8 @@ python3 -m http.server 8765 --bind 127.0.0.1
 Open http://localhost:8765/games/bpc170/ch03/.
 Use HTTP because JavaScript modules do not support a direct file preview.
 Return link: `../../../slides/bpc170/ch03/`.
-This game is not published. No Canvas embed has been applied.
+Student URL: https://jor2050111.github.io/games/bpc170/ch03/
+No Canvas embed has been applied.
 
 ## Play loop
 
@@ -64,9 +65,12 @@ Heavy Lifter. Reverse and alternate fan arrangements are also accepted.
 ## Review and release
 
 See `QA.md` for exact checks and outstanding human testing. No learning-gain
-or full accessibility-conformance claim is made. Mr. Vega selected this
-concept, but has not reviewed this playable build or authorized publication.
-Pushing main publishes the site, so release requires a separate instruction.
+or full accessibility-conformance claim is made. Mr. Vega reviewed the local
+build and explicitly requested publication on September 19, 2026. GitHub Pages
+built runtime commit `5610498`, and all five live runtime files matched local
+SHA-256 hashes. The chapter return link returned HTTP 200. A separate live
+browser playthrough was blocked by a browser permission prompt and was not
+performed. The earlier complete browser playthroughs were local.
 
 Premiere Night and The Last Copy remain future BPC170 candidates in
 `../../GAME-CATALOG.md`, with no chapter assigned.

@@ -30,6 +30,12 @@ Do not invent missing content from a chapter number or another course.
 
 ## 2. Choose learning through play
 
+Read [the creative-play standard](references/creative-play.md). Mr. Vega's
+September 19 direction for future games is to move beyond the typical
+simulation labs students already complete. Start with an engaging play loop,
+then make two or three chapter concepts govern its consequences. Do not start
+with a lab checklist and decorate it with a story or celebration.
+
 Select two or three concepts. For each, state the player action, consequence,
 and evidence of understanding. Educational reasoning must change what
 happens in the game. A multiple-choice worksheet with confetti is insufficient.
@@ -42,7 +48,11 @@ choosing a mechanic. Compare both neighboring games in course order.
 Choose by the dominant player action, not the theme or implementation library.
 For BPC170 Chapter 03, Puzzle is excluded by the shipped Chapter 02 game.
 
-Compare two or three concise concepts and recommend the strongest fit. Use
+Compare three concise concepts from different suitable game families. At least
+two should explore a setting outside a literal computer bench, help desk, or
+hardware lab. Explain the player's repeated actions, the interesting choice,
+the consequence, and how it differs from existing practice. Recommend the
+strongest fit. Use
 the [plan template](templates/GAME-PLAN.md) to make the decision reviewable.
 When the user requests a build, choose a reasonable direction and build the
 first playable interaction without demanding approval of routine choices.
@@ -80,6 +90,11 @@ Use the available image-generation skill/tool for raster artwork. Use SVG or
 CSS for diagrams and simple effects when clearer. Avoid baking UI text into art.
 
 ## 4. Build a complete small loop
+
+Before building, apply the creative-play checks in the plan template. Reject
+ideas that only repeat a lab procedure, match components, or wrap fixed-answer
+questions in a new theme. A sandbox needs expressive choices and distinct
+outcomes, not just settings that converge on one correct configuration.
 
 Create `games/<course>/<chapter>/`. Copy the documentation templates and fill
 them with real decisions. Use a static page with local assets and relative

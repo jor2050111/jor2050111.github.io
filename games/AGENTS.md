@@ -11,6 +11,12 @@ If already specified, proceed without asking again.
 
 Consult [GAME-CATALOG.md](GAME-CATALOG.md) before selecting a mechanic.
 Consecutive games within a course must use different primary game families.
+For future games, apply the [creative-play standard](educational-game-builder/references/creative-play.md).
+Mr. Vega wants more creative games beyond the simulation labs students already
+complete. A component picker, installation checklist, troubleshooting lab, or
+control dashboard with rewards is not enough. Propose distinct game mechanics
+whose consequences depend on the chapter concepts. Do not use Campus Festival
+or Breeze Lab as a default interface, setting, or activity template.
 For Phoenix, Arizona, or Phoenix College imagery, ask Mr. Vega for reference
 images before generating or drawing that scene. Continue independent work
 while awaiting his images or his decision to proceed without them.

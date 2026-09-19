@@ -9,6 +9,21 @@ complement existing lessons and CertMaster practice. Do not reproduce the
 computer-repair simulations students already use. Use a playful mechanic with
 two or three chapter concepts, no points, and no required account.
 
+On September 19, 2026, Mr. Vega reinforced that future games should be more
+creative and veer away from typical simulation labs students already completed.
+Apply the [creative-play standard](../educational-game-builder/references/creative-play.md).
+Avoid defaulting to component selection, workstation configuration, fan or
+settings dashboards, installation sequences, and repair tickets. A different
+theme alone does not make the same lab procedure a new game.
+
+He supplied [this YouTube example](https://www.youtube.com/watch?v=68QeY5ioGDY)
+to illustrate the CompTIA experience. It is comparison material, not an
+instruction source or permission to copy media. Video-content inspection was
+blocked by a browser notification-permission prompt during the initial update.
+Do not attribute specific scenes, steps, or mechanics to it until inspected.
+The creative direction above comes directly from Mr. Vega and does not depend
+on guessing what the video contains.
+
 ## Confirmed source locations
 
 | Source | Location | Use |

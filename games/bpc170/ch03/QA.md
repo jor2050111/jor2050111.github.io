@@ -1,6 +1,6 @@
 # Breeze Lab: verification
 
-September 19, 2026. Local build, not released.
+September 19, 2026. Local verification below, followed by approved publication.
 Preview: http://localhost:8765/games/bpc170/ch03/
 Server: `python3 -m http.server 8765 --bind 127.0.0.1` from the site root.
 
@@ -72,8 +72,21 @@ verifies results. No test awards discoveries by modifying application state.
 
 ## Human review and release
 
-Instructor game-feel review: pending. Student playtime, comprehension, and
+Instructor game-feel review: accepted September 19, 2026. Student playtime, comprehension, and
 transfer of learning: not measured. Estimated 4–6 minutes only.
 
-Publication authorization: none. Live asset and browser checks: not run.
-Canvas changes: none. Canvas Student View and saved embed: not tested.
+### Approved publication, September 19
+
+- Mr. Vega accepted the local preview and explicitly requested publication.
+- GitHub Pages configuration: legacy build, branch `main`, repository root.
+- Pushed runtime commit `56104983446956f85f58fc3e48d17cc9483d7910`.
+- Pages reported `built` for that commit with no error.
+- Live URL: https://jor2050111.github.io/games/bpc170/ch03/
+- `index.html`, `styles.css`, `game.js`, `levels.js`, and `rules.js` returned
+  HTTP 200 and matched the local SHA-256 hashes.
+- The Chapter 03 slide return link returned HTTP 200.
+- A live browser playthrough was not run. The release browser session opened
+  the user-supplied YouTube reference and stopped at a notification-permission
+  prompt, which handed browser control to the user. It was not bypassed.
+  The earlier keyboard, touch, success, retry, and reset checks were local.
+- Canvas changes: none. Canvas Student View and saved embed: not tested.

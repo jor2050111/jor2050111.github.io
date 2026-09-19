@@ -8,7 +8,7 @@ Check course folders and their READMEs before choosing.
 | Course | Chapter / sequence | Title | Primary family | Main player action | Status | Scope / record |
 | --- | --- | --- | --- | --- | --- | --- |
 | BPC170 | 02 / 2 | Campus Festival | Puzzle | Allocate two cables, test transfer targets, swap and retry | Live, 2026-09-18 | One encounter, about 2 minutes. [Record](bpc170/ch02/README.md) |
-| BPC170 | 03 / 3 | Breeze Lab | Creative sandbox | Alter airflow and cooling, change workloads, compare several viable designs | Local playtest ready, 2026-09-19 | Three discoveries and an experiment notebook. [Record](bpc170/ch03/README.md) |
+| BPC170 | 03 / 3 | Breeze Lab | Creative sandbox | Alter airflow and cooling, change workloads, compare several viable designs | Live, 2026-09-19 | Three discoveries and an experiment notebook. [Record](bpc170/ch03/README.md) |
 
 ## Rotation rule
 
