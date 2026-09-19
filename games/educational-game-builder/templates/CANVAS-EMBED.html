@@ -1,0 +1,14 @@
+<!-- Replace every {{TOKEN}}. Choose height from this game's saved Canvas preview. -->
+<!-- Chapter 02 uses 69rem. This is a starting example, not a universal requirement. -->
+<div style="overflow: hidden; border-radius: 0.4rem; background: #f7f4ec; width: 100%; margin: 0px; border: 0.1rem solid #ece6d6;">
+    <div style="background: #f7f4ec; padding: 0; margin: 0;">
+        <p style="margin: 0; padding: 0.5rem; font-size: 0.8rem;"><strong>Optional game: {{GAME_TITLE}}: </strong>About {{MINUTES}} minutes. Untimed. No course points. Start with &ldquo;How to play&rdquo; inside the game. Scroll inside the frame, or <a href="{{GAME_URL}}" target="_blank" rel="noopener">open the game in a new tab <span class="screenreader-only">(opens in a new window)</span></a>.</p>
+    </div>
+    <div><iframe style="width: 100%; height: {{HEIGHT_REM}}rem; border: 0px none currentcolor;" title="{{GAME_TITLE}}: {{COURSE}} {{CHAPTER_LABEL}} optional game" src="{{GAME_URL}}" loading="lazy" allowfullscreen="allowfullscreen"></iframe></div>
+    <div style="margin: 0; padding: 0.5rem; font-size: 0.8rem; line-height: 1.3;">
+        <p style="margin: 0; padding: 0; font-size: 0.8rem;"><strong>Credits &amp; Attributions</strong> These materials were created, generated, or adapted using the following sources and tools:</p>
+        <ul style="margin: 0; padding: 0 0 0 1.1rem;">
+            {{VERIFIED_CREDIT_LIST_ITEMS}}
+        </ul>
+    </div>
+</div>

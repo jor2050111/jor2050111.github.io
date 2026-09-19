@@ -1,4 +1,11 @@
-# First playable verification
+# Campus Festival verification record
+
+Current status, September 19, 2026: published with Mr. Vega's approval on
+September 18, release `3df82f7`. The dated local checks below remain evidence
+for that build. See the release and Canvas sections at the end for later
+verification. Publication does not convert unperformed checks into passes.
+
+## September 18: first playable verification
 
 September 18, 2026. Local HTTP preview, Node 26.8.2, Chromium through ego-browser.
 
@@ -27,16 +34,16 @@ Local screenshots are in the repository's ignored `output/playwright/campus-fest
 
 ## Still requires human or release testing
 
-- Mr. Vega's judgment of the game feel and scene reward.
+- Mr. Vega's judgment of the game feel and scene reward. Subsequently accepted after the playtest revision below.
 - Student playtime and comprehension. The two-minute encounter estimate is provisional.
 - Actual phone hardware, Safari, Firefox, and Edge.
 - VoiceOver or another screen reader with the entire interaction. Semantic controls and status announcements are implemented, but browser automation is not a screen-reader audit.
 - Formal contrast and zoom review across the completed game's states.
 - Listening to the optional synthesized audio on representative devices.
 - Reducing the illustration's delivery size toward the proposed 2 MB asset budget.
-- The remaining planned encounters, alternate finale, and public URL verification.
+- At prototype time, further encounters and public URL verification were pending. The smaller encounter was subsequently accepted as the release scope, and the public URL was verified below. Extra encounters and an alternate finale remain optional ideas.
 
-This record describes prototype checks. It does not claim full WCAG conformance or readiness for student release.
+These were prototype checks at the time performed. They do not establish full WCAG conformance. Mr. Vega later authorized student publication with the outstanding checks documented here.
 
 ## Playtest revision: orientation and celebration
 
@@ -60,4 +67,32 @@ Verification:
 - Orientation and math controls reflow without horizontal overflow at 320, 390, and 640 pixels.
 - No runtime errors or unhandled rejections observed in the instrumented revision playthrough.
 
-Screenshots: `celebration-desktop.png`, `celebration-phone.png`, and `orientation-revision.png` in the same ignored evidence folder. This revision remains local and unpublished.
+Screenshots: `celebration-desktop.png`, `celebration-phone.png`, and `orientation-revision.png` in the same ignored evidence folder. This revision was local at the time of these checks and was subsequently published as recorded below.
+
+## September 18: approved publication
+
+- Mr. Vega explicitly requested publication after reviewing the changes.
+- Pushed commits through `3df82f7a2c53c40e3b53aa052815c389f6a5b736` to `main`.
+- GitHub Pages reported `built` for that commit with no build error.
+- The trailing-slash student URL returned HTTP 200 and matched local `index.html`.
+- Published `index.html`, `styles.css`, `game.js`, `celebration.js`, `rules.js`,
+  `levels.js`, and `assets/festival.png` returned HTTP 200 and matched local
+  SHA-256 hashes.
+- A separate live-browser gameplay run was not recorded. The browser
+  interaction checks above were local. Do not conflate these two kinds of evidence.
+
+Student URL: [Campus Festival](https://jor2050111.github.io/games/bpc170/ch02/).
+
+## September 19: Canvas handoff and documentation review
+
+Mr. Vega reported the `69rem` iframe pattern working within Canvas's HTML
+editor restrictions. This supersedes earlier sizing suggestions in the task.
+The pattern is retained in [CANVAS-EMBED.html](CANVAS-EMBED.html). He accepted
+two wording corrections: the game-specific iframe title and a Codex usage
+date instead of a software version date. We have not verified that these
+corrections were saved in Canvas.
+
+No Canvas page was edited and no Student View or assistive-technology audit
+was performed during this handoff. The saved embed is a reproducible artifact,
+not evidence of a Canvas API update. Runtime files were not changed during
+the workflow documentation review.

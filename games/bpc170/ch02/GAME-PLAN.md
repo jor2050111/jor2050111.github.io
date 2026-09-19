@@ -1,10 +1,12 @@
 # BPC170 Chapter 02: Optional browser game plan
 
-Design direction approved September 18, 2026. First playable encounter ready for local review.
+Design direction approved September 18, 2026. Current release status updated September 19, 2026.
 
-**Recommendation:** Build *Signal Festival*, a short, untimed connection puzzle. Players arrange a limited set of cables, test their choices, and bring an illustrated campus festival to life. Correct hardware reasoning is how players solve the puzzle.
+**Outcome:** Mr. Vega approved and published the two-installation encounter as *Campus Festival* on September 18, commit `3df82f7`. The current release takes about two minutes, provisionally. The larger progression below is the original design proposal, retained as context and optional expansion ideas. It is not a list of unfinished release requirements. See [README.md](README.md), [QA.md](QA.md), and [the reusable workflow](../../README.md) for current status.
 
-Mr. Vega approved this plan, the Campus Festival setting, and a target under eight minutes. Play is untimed by default. A timer may be considered only if playtesting shows it improves engagement. Individual play, phone and laptop support, and no grades remain the scope. The next review is the first playable encounter, before additional levels are produced.
+**Original recommendation:** Build *Signal Festival*, a short, untimed connection puzzle. The shipped title is *Campus Festival*. Players arrange a limited set of cables, test their choices, and bring an illustrated campus festival to life. Correct hardware reasoning is how players solve the puzzle.
+
+Mr. Vega approved this plan, the Campus Festival setting, and a target under eight minutes. Play is untimed by default. A timer may be considered only if playtesting shows it improves engagement. Individual play, phone and laptop support, and no grades remain the scope. The first-encounter review occurred, followed by orientation and celebration revisions and publication. Additional levels were not requested for the accepted release.
 
 ## 1. Purpose and scope
 
@@ -20,7 +22,7 @@ The intended game directory is this folder:
 
 `/Users/vega/Documents/code/jor2050111.github.io/games/bpc170/ch02/`
 
-The intended student URL is [the Chapter 02 game](https://jor2050111.github.io/games/bpc170/ch02/). The first encounter is available for local review. No game has been published. See `README.md` for the preview command and current scope.
+The student URL is [the live Chapter 02 game](https://jor2050111.github.io/games/bpc170/ch02/). See `README.md` for the preview command and current scope. Sections 2 through 11 retain the original proposal and research, with planned features distinguished by the current-outcome note above.
 
 ## 2. What the sources suggest
 
@@ -201,9 +203,9 @@ Suggested pilot: 5–8 volunteers with varied gaming experience and device use. 
 
 ## 12. Chapters 03–10
 
-Use Chapter 02 to establish interaction quality, accessible controls, testing, and deployment. After the pilot succeeds, extract only the parts that recur: start/help/settings, progress, feedback, and visual tokens.
+Chapter 02 now supplies a documented example of accessible controls, testing, and deployment. The reusable workflow has been extracted. Shared runtime components should be extracted only after later games demonstrate a recurring need. A representative student pilot remains unperformed.
 
-Future chapters can use different mechanics matched to their concepts. Do not build a universal chapter-game engine before learning which parts students enjoy and which abstractions hold up.
+Future chapters must use different primary game families for consecutive games within the same course, as requested September 19. Read [GAME-CATALOG.md](../../GAME-CATALOG.md) before selecting a mechanic. Ask Mr. Vega for reference images before producing a new scene that could depict Phoenix, Arizona, or Phoenix College. These rules and the full cross-course process now live in [the workflow](../../educational-game-builder/SKILL.md). Do not build a universal chapter-game engine before learning which parts students enjoy and which abstractions hold up.
 
 ## Source record
 
