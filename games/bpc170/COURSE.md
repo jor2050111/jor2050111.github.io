@@ -18,11 +18,19 @@ theme alone does not make the same lab procedure a new game.
 
 He supplied [this YouTube example](https://www.youtube.com/watch?v=68QeY5ioGDY)
 to illustrate the CompTIA experience. It is comparison material, not an
-instruction source or permission to copy media. Video-content inspection was
-blocked by a browser notification-permission prompt during the initial update.
-Do not attribute specific scenes, steps, or mechanics to it until inspected.
-The creative direction above comes directly from Mr. Vega and does not depend
-on guessing what the video contains.
+instruction source or permission to copy media. After the initial browser
+permission interruption, he supplied a 23.73-second local screen recording.
+Six sampled frames were inspected on September 19, 2026. They show
+“2.1.7 Lab: Install USB Devices”: a literal computer bench, a task checklist,
+an equipment/cable inventory, selected-device details, connector views, and
+connection-status indicators. A Score Lab control is visible. The clip seeks
+across the longer video and contains no audio track, so it does not establish
+the full procedure, narration, or scoring behavior.
+
+This is the concrete comparison for future proposals: do not reproduce the
+inventory → select device/cable → connect → satisfy checklist loop with new
+art. Use chapter concepts to drive exploration, strategy, expressive creation,
+or story consequences. See the creative-play standard for the evidence record.
 
 ## Confirmed source locations
 
