@@ -127,3 +127,36 @@ comprehension, transfer of learning, and learning gains have not been measured.
 
 Publication: not authorized or performed. No live URL or live-runtime checks
 are claimed. Canvas: no update, embed, Student View, or HTML round-trip check.
+
+## Approved publication and live verification, September 20
+
+Mr. Vega accepted the game and explicitly requested publication to the live
+GitHub site. This supersedes the local-only status recorded above.
+
+- Verified Pages configuration: legacy build, main branch, repository root.
+- Fetched origin and inspected the full change range. Only the scoped game
+  commit and its catalog/course documentation were pending.
+- Fast-forwarded main and pushed `a2499ea0f6451cae104deb95ca4508b3cdf5e131`.
+- Pages reported `built` for that commit with no error.
+- Live URL: https://jor2050111.github.io/games/bpc170/ch04/
+- HTML, CSS, and all three JS modules returned 200 and matched local SHA-256
+  hashes. The Chapter 04 slide return link also returned 200.
+- Live browser run in Chrome 152: an unavailable film produced an empty block;
+  rewind restored the plan; a full late-shift run filled all six blocks, shared
+  all three program types, preserved the archive, and reached success.
+- Closing the live success dialog returned focus to the recap button.
+- An early-show run with four band blocks and no startup recovery verified
+  that the final hint points to startup evidence instead of an unavailable
+  return-feed job.
+- Refresh restored the initial state with sound off. Instrumented live runs
+  and refresh captured zero runtime errors or unhandled rejections.
+- Final local screenshot at 390 × 844 was visually inspected. Joined text and
+  the ident subtitle collision are resolved. Live DOM checks found the same
+  correction, with viewport width and document width both 390 pixels.
+- No Canvas changes. No claim of new physical-device or assistive-technology
+  verification. Previous human playtime and learning-evidence limits remain.
+
+This release closes the final browser recheck gap recorded above. Evidence:
+`release-hashes.json`, `live-checks.json`, `live-win.png`, and
+`phone-final-local.png` under the ignored evidence folder. Documentation-only
+follow-up commits record this release; runtime files remain those of `a2499ea`.

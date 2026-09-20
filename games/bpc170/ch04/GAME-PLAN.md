@@ -1,7 +1,7 @@
 # BPC170 Chapter 04: Blackout Broadcast
 
-Status: local build for instructor playtest. Selected September 20, 2026,
-by Mr. Vega after three-concept brainstorming. Publication is separate.
+Status: live, accepted and published September 20, 2026. Runtime `a2499ea`.
+Mr. Vega selected this concept and then explicitly authorized GitHub publication.
 See SOURCES.md for source boundaries and QA.md for actual verification.
 
 ## Learning through play
@@ -69,5 +69,6 @@ static reduced-motion feedback, and restored focus. Sound defaults off.
 Help, contextual hints, rewind, and restart are explicit. Color is paired
 with text. No storage access or third-party runtime requests.
 
-Instructor review follows local QA. Seek feedback about game feel and the
-production/recovery balance. No deployment until publication is authorized.
+Mr. Vega accepted the local game and authorized publication on September 20.
+GitHub Pages deployed runtime `a2499ea`. See QA.md for release evidence and
+unverified human playtime, learning, and accessibility checks.

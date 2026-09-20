@@ -9,7 +9,7 @@ Check course folders and their READMEs before choosing.
 | --- | --- | --- | --- | --- | --- | --- |
 | BPC170 | 02 / 2 | Campus Festival | Puzzle | Allocate two cables, test transfer targets, swap and retry | Live, 2026-09-18 | One encounter, about 2 minutes. [Record](bpc170/ch02/README.md) |
 | BPC170 | 03 / 3 | Breeze Lab | Creative sandbox | Alter airflow and cooling, change workloads, compare several viable designs | Live, 2026-09-19 | Three discoveries and an experiment notebook. [Record](bpc170/ch03/README.md) |
-| BPC170 | 04 / 4 | Blackout Broadcast | Strategy / management | Program six broadcast blocks and allocate crew between production, fault isolation, and preserving recordings | Ready for local playtest, selected 2026-09-20 | Two authored shifts. Publication not authorized. [Record](bpc170/ch04/README.md) |
+| BPC170 | 04 / 4 | Blackout Broadcast | Strategy / management | Program six broadcast blocks and allocate crew between production, fault isolation, and preserving recordings | Live, 2026-09-20 | Two authored shifts. Runtime `a2499ea`. [Record](bpc170/ch04/README.md) |
 
 ## Rotation rule
 

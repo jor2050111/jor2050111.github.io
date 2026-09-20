@@ -1,6 +1,6 @@
 # Blackout Broadcast
 
-Status: local build for instructor playtest, September 20, 2026.
+Status: live, accepted and published September 20, 2026. Runtime `a2499ea`.
 BPC170 Chapter 04: Troubleshooting PC Hardware.
 Primary family: Strategy / management.
 
@@ -64,10 +64,12 @@ returns a deep copy for inspection, with no game-state setter.
 
 ## Review and publication
 
-Mr. Vega selected this concept on September 20. No publication or Canvas
-update is authorized. Pushing the site's main branch publishes GitHub Pages.
-Human playtime, enjoyment, learning gains, and full accessibility conformance
-remain unverified. Instructor playtest is the next review step.
+Mr. Vega accepted the game and explicitly authorized GitHub publication on
+September 20. GitHub Pages deployed runtime commit `a2499ea`, and all five
+runtime files matched the local release. [Play the live game](https://jor2050111.github.io/games/bpc170/ch04/).
+See QA.md for the live gameplay record. No Canvas update was requested or made.
+Human playtime, student enjoyment, learning gains, and full accessibility
+conformance remain unverified.
 
 The Last Copy and Mirrorfall remain unassigned future candidates in
 [the catalog](../../GAME-CATALOG.md), alongside Premiere Night.

@@ -30,7 +30,7 @@ repository-local skill is loaded through `AGENTS.md`.
 | [BPC170 context](bpc170/COURSE.md) | Verified source locations and course-specific constraints |
 | [Campus Festival](bpc170/ch02/README.md) | The first shipped example, including its limits |
 | [Breeze Lab](bpc170/ch03/README.md) | Chapter 03 creative sandbox, published September 19 |
-| [Blackout Broadcast](bpc170/ch04/README.md) | Chapter 04 strategy game, local build for playtest |
+| [Blackout Broadcast](bpc170/ch04/README.md) | Chapter 04 strategy game, published September 20 |
 
 ## Defaults
 
@@ -52,6 +52,10 @@ The accepted Chapter 02 and Chapter 03 games remain historical examples,
 not a required format for the rest of the course.
 
 ## Current releases
+
+[Blackout Broadcast, BPC170 Chapter 04](https://jor2050111.github.io/games/bpc170/ch04/)
+was accepted and published September 20, 2026, from runtime commit `a2499ea`.
+See its [QA record](bpc170/ch04/QA.md) for local and live verification.
 
 [Breeze Lab, BPC170 Chapter 03](https://jor2050111.github.io/games/bpc170/ch03/)
 was accepted and published September 19, 2026, from runtime commit `5610498`.
