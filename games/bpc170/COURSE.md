@@ -1,6 +1,6 @@
 # BPC170 game context
 
-Last checked: September 19, 2026.
+Last checked: September 20, 2026.
 
 ## Scope and students
 
@@ -44,9 +44,10 @@ or story consequences. See the creative-play standard for the evidence record.
 `NN` means the zero-padded chapter number. Local module files 01 through 10 were
 present during this review. Validate the specific chapter title and mapping
 before use. Chapter 02 used `module02/module02.md` and `slides/bpc170/ch02/`.
-For Chapter 03, both `module03/module03.md` and the local `ch03` slide directory
-exist. Their existence is a discovery lead, not a completed Chapter 03 content
-review. Read actual content because a slide README may still be scaffold text.
+Chapter 03 and Chapter 04 now have completed game-specific source reviews:
+see [Chapter 03 sources](ch03/SOURCES.md) and [Chapter 04 sources](ch04/SOURCES.md).
+Read actual content for each future chapter because a slide README may still
+be scaffold text. Prior game reviews cover only their selected concepts.
 
 ## Design history
 

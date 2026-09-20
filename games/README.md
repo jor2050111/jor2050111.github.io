@@ -28,11 +28,23 @@ repository-local skill is loaded through `AGENTS.md`.
 | [Workflow validation](educational-game-builder/references/workflow-validation.md) | Artifact checks, scenario review, and limits of this documentation pass |
 | [Canvas and release guide](educational-game-builder/references/release-and-canvas.md) | Local preview, deployment checks, and the accepted Canvas pattern |
 | [BPC170 context](bpc170/COURSE.md) | Verified source locations and course-specific constraints |
+| [BPC270 agent start](bpc270/README.md) | Future-game intake and structure, with no game selected |
+| [BPC270 context](bpc270/COURSE.md) | Verified chapter map, shared Module 1, and missing-source boundaries |
+| [September 20 workflow review](WORKFLOW-REVIEW.md) | BPC170 progress, fresh rule checks, and remaining evidence gaps |
 | [Campus Festival](bpc170/ch02/README.md) | The first shipped example, including its limits |
 | [Breeze Lab](bpc170/ch03/README.md) | Chapter 03 creative sandbox, published September 19 |
 | [Blackout Broadcast](bpc170/ch04/README.md) | Chapter 04 strategy game, published September 20 |
 
 ## Defaults
+
+For BPC270, open a future task here or in `games/bpc270/` and use:
+
+> Follow the educational-game-builder workflow for BPC270. Read its COURSE.md
+> and the shared GAME-CATALOG.md. Ask which chapter I want, verify its sources,
+> and build a locally testable game. Publication is a separate step.
+
+If a chapter is supplied, skip that question. Workflow setup and review do
+not require chapter intake. The BPC270 folder currently holds guidance only.
 
 One browser page, two or three concepts, optional and ungraded. Aim for a
 complete first play under eight minutes. Keep play untimed unless a timer

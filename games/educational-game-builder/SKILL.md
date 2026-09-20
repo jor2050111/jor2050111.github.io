@@ -12,7 +12,13 @@ Publishing and Canvas editing require their own authorization.
 
 ## 1. Establish the target and find context
 
-If missing, ask: "Which course and chapter are we building a game for?"
+First distinguish a game build from workflow setup or review. For setup-only
+work, establish the requested course context and agent guidance, then stop.
+Do not ask for a chapter, choose a mechanic, reserve catalog rows, or create
+chapter folders until a game is requested.
+
+For a game request, ask only for missing course or chapter information:
+"Which course and chapter are we building a game for?" when both are missing.
 Accept a module name or title when the course does not use chapter numbers.
 Normalize a code such as BPC170 to `bpc170`, and Chapter 2 to `ch02`.
 Do not assume that a module number equals a textbook chapter number.
@@ -46,7 +52,8 @@ reason tied to play, not artificial urgency. Support untimed access.
 Read [the catalog](../GAME-CATALOG.md) and enforce its rotation rule before
 choosing a mechanic. Compare both neighboring games in course order.
 Choose by the dominant player action, not the theme or implementation library.
-For BPC170 Chapter 03, Puzzle is excluded by the shipped Chapter 02 game.
+Use current catalog rows and course folders to determine excluded families.
+Different courses have independent sequences, including a course with no games.
 
 Compare three concise concepts from different suitable game families. At least
 two should explore a setting outside a literal computer bench, help desk, or

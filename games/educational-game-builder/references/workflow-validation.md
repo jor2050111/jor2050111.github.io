@@ -1,5 +1,9 @@
 # Workflow validation
 
+Current follow-up: the [September 20 workflow review](../../WORKFLOW-REVIEW.md)
+records the subsequent Chapter 03 and Chapter 04 builds and BPC270 setup.
+The September 19 record below remains a dated snapshot.
+
 September 19, 2026. Documentation and intake review. No new game or Canvas
 page was built by this validation, and no independent agent trial was run.
 

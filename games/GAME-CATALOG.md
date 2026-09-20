@@ -24,6 +24,13 @@ BPC170 Chapter 04 uses Strategy / management, following Chapter 03's Creative
 sandbox and Chapter 02's Puzzle. The next BPC170 game must use another primary
 family. Different courses have independent sequences.
 
+## BPC270 setup status
+
+September 20, 2026: [course context](bpc270/COURSE.md) and
+[agent entry guidance](bpc270/README.md) are ready. No game, chapter reservation,
+or primary family has been selected. Add a row only when a design is selected
+for a requested game. BPC270's rotation is independent of BPC170's sequence.
+
 ## Future BPC170 candidates
 
 Mr. Vega retained Premiere Night and The Last Copy on September 19, 2026.
