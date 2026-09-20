@@ -52,10 +52,13 @@ review. Read actual content because a slide README may still be scaffold text.
 
 Read [the catalog](../GAME-CATALOG.md). Chapter 02 is Campus Festival, a Puzzle.
 Mr. Vega selected Breeze Lab for Chapter 03 on September 19, 2026. It uses
-Creative sandbox, focused on airflow and CPU cooling. The next BPC170 game
-must use another primary family. Campus Festival is a successful example,
-not a required theme for this course. Premiere Night and The Last Copy remain
-future candidates in the catalog, without assigned chapters.
+Creative sandbox, focused on airflow and CPU cooling. Chapter 04 is Blackout
+Broadcast, selected September 20, using Strategy / management. It is a local
+build, without publication authorization. The next BPC170 game must use another
+primary family. Campus Festival is an example, not a required theme.
+Premiere Night, The Last Copy, and Mirrorfall remain unassigned future
+candidates in the catalog. Mr. Vega reaffirmed The Last Copy and added
+Mirrorfall when selecting Blackout Broadcast.
 
 Ask for reference images if a new scene could show Phoenix, Arizona, or Phoenix
 College. The current courtyard image is fictional generated art, not a

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151a27">
+  <meta name="description" content="Program a tiny TV station through six unpredictable broadcast blocks. An optional, untimed BPC170 Chapter 04 strategy game.">
+  <title>Blackout Broadcast · BPC170 Chapter 04</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23e6f074'/%3E%3Cpath d='M8 12h24v18H8zM15 6l5 6 5-6' fill='none' stroke='%23151a27' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <a class="skip" href="#programs">Skip to program choices</a>
+  <header class="masthead">
+    <a class="brand" href="../../../slides/bpc170/ch04/"><strong>04<span>TV</span></strong><span>BPC170 · CHAPTER 04<small>Troubleshooting PC Hardware</small></span></a>
+    <nav aria-label="Game settings"><button id="motion" aria-pressed="false">Pause motion</button><button id="sound" aria-pressed="false">Sound off</button><button id="help" aria-haspopup="dialog">How to play</button></nav>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <div><p class="eyebrow">A SMALL STATION. A BIG NIGHT.</p><h1 id="title">Blackout<br><em>Broadcast.</em></h1></div>
+      <div class="intro-copy"><p>The show must go on.<br> <strong>You decide what makes the air.</strong></p><p class="fine">About 6–8 minutes · Untimed<br> Optional · No course points</p></div>
+    </section>
+    <section class="orientation" aria-label="Quick start"><strong>YOU’RE THE PRODUCER</strong><p>Choose a program. Assign any spare crew. Air the block.<br> Keep six blocks on air, share a story, music, and a film, and save the archive.</p><span class="pill">Nothing moves until you say so.</span></section>
+    <div class="broadcast-grid">
+      <section class="watch" aria-labelledby="screen-title">
+        <div class="section-top"><h2 id="screen-title" tabindex="-1">The viewers’ screen</h2><span id="live-label" class="on-air">STANDBY</span></div>
+        <div id="screen" class="screen art-ident" role="img" aria-label="Channel 04 test pattern. The broadcast has not started.">
+          <div class="screen-art" aria-hidden="true"><div class="sky-disc"></div><div class="orbit"></div><div class="tower t-one"></div><div class="tower t-two"></div><div class="tower t-three"></div><div class="person p-one"></div><div class="person p-two"></div><div class="record"></div><div class="waveform"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="station-mark">04<span>STAY CURIOUS.</span></div></div>
+          <div class="screen-bug" aria-hidden="true">CH / 04</div><div class="lower-third"><span id="screen-kicker">INDEPENDENT TELEVISION</span><strong id="screen-caption">Your night. Your running order.</strong></div>
+        </div>
+        <p class="screen-note">This shows what aired last. Crew jobs finish afterward, ready for the next block.</p>
+        <a class="next-plan" href="#decisions">Plan the next block ↓</a>
+        <ol id="rundown" class="rundown" aria-label="Six-block running order"></ol>
+        <div class="viewer-wishes"><p class="eyebrow">GIVE THE NIGHT A LITTLE OF EVERYTHING</p><ul id="wishes"></ul></div>
+      </section>
+      <aside class="producer" aria-labelledby="producer-title">
+        <div class="section-top"><h2 id="producer-title">Producer’s notebook</h2><span id="block-count">BLOCK 01 / 06</span></div>
+        <div id="brief" class="brief"></div>
+        <dl id="systems" class="systems"></dl>
+        <details id="evidence"><summary>Startup evidence</summary><p id="evidence-copy">Assign a crew member to read the startup evidence.</p></details>
+        <details><summary>Scheduled challenges</summary><p id="forecast"></p><p class="fine">These events make a repeatable game. Real drive warnings cannot predict an exact failure time.</p></details>
+        <button id="hint" class="text-button">Ask the floor manager for a hint</button><p id="hint-copy" class="hint" hidden></p>
+      </aside>
+    </div>
+    <section class="decisions" id="decisions" aria-labelledby="decision-title">
+      <div class="section-top decision-heading"><div><p class="eyebrow" id="next-block">BUILD BLOCK 01</p><h2 id="decision-title">What’s going on air?</h2></div><p>Two crew. Plenty of possibilities.</p></div>
+      <div id="programs" class="programs" role="group" aria-label="Choose one program"></div>
+      <div class="crew-heading"><div><p class="eyebrow">WHILE THE PROGRAM AIRS</p><h3>Give the crew a job.</h3></div><p id="crew-count" role="status">Choose a program first.</p></div>
+      <p class="crew-note">Jobs are optional. A job finished this block helps the next one. Each crew member takes one assignment.</p>
+      <div id="jobs" class="jobs" role="group" aria-label="Crew assignments"></div>
+      <div class="take-bar"><div><strong id="plan-title">Your block is waiting.</strong><p id="plan-copy">Pick a program above, then assign spare crew if you want.</p><p id="plan-error" class="error" role="alert"></p></div><button id="air" class="primary">Air block 01 <span aria-hidden="true">↗</span></button></div>
+    </section>
+    <section class="after" aria-labelledby="log-title"><div class="section-top"><h2 id="log-title">The shift log</h2><div class="log-actions"><button id="undo" disabled>Rewind one block</button><button id="recap" hidden>View the closing credits</button><button id="restart">Restart this shift</button></div></div><div id="log" class="log"><p>Your first broadcast will appear here.</p></div></section>
+    <footer><div><p class="eyebrow">TRY A DIFFERENT OPENING</p><label for="shift">Choose a shift</label> <select id="shift"><option value="late">The late shift</option><option value="early">The early show</option></select><button id="new-shift">Start selected shift</button><p class="fine">Starting a shift clears its running order. Rewind compares individual choices.</p></div><details><summary>The ideas behind the game</summary><p>Follow startup evidence before changing hardware. A dark preview is not proof of a stopped PC. Change one part at a time when isolating a fault. A degraded mirrored array and a separate backup provide different kinds of protection.</p><p>This fictional station has independent live sources and a separate archive. Crew costs and six-block events are game rules, not repair-time estimates. RAID failure tolerance depends on its level. Here, a two-drive mirror has already lost one drive.</p><a href="../../../slides/bpc170/ch04/">Return to Chapter 04 slides</a></details></footer>
+  </main>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" id="close-help" aria-label="Close how to play">Close</button><p class="eyebrow">WELCOME TO CHANNEL 04</p><h2 id="help-title">Make a little television.</h2><ol class="help-steps"><li><strong>Choose one program.</strong> Live shows use crew. Recorded shows need working playback but leave both crew free.</li><li><strong>Assign spare crew.</strong> Read evidence, recover playback, protect recordings, or isolate the preview fault. You can leave crew unassigned.</li><li><strong>Air the block.</strong> The program runs first. Jobs finish second. Scheduled events happen last.</li><li><strong>Read what changed.</strong> Use the notebook and shift log. Try a new plan next block, or rewind any decision.</li></ol><p>Your aim: six filled blocks, a story, music, a film, and a verified separate archive copy. An imperfect night still reaches the closing credits.</p><p>No countdown. No grades. Sound starts off. All controls work by keyboard or tap.</p><button id="help-done" class="primary">Back to the station</button></dialog>
+  <dialog id="finish-dialog" aria-labelledby="finish-title"><p class="eyebrow">CHANNEL 04 · CLOSING CREDITS</p><h2 id="finish-title">That’s a wrap.</h2><div id="finish-art" class="finish-art" aria-hidden="true">04<span>THANKS FOR WATCHING</span></div><p id="finish-copy"></p><ul id="finish-results" class="finish-results"></ul><p id="finish-lesson"></p><div class="finish-actions"><button id="close-finish" class="primary">See my running order</button><button id="replay">Try this shift again</button></div></dialog>
+  <p id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+</body>
+</html>

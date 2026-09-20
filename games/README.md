@@ -30,6 +30,7 @@ repository-local skill is loaded through `AGENTS.md`.
 | [BPC170 context](bpc170/COURSE.md) | Verified source locations and course-specific constraints |
 | [Campus Festival](bpc170/ch02/README.md) | The first shipped example, including its limits |
 | [Breeze Lab](bpc170/ch03/README.md) | Chapter 03 creative sandbox, published September 19 |
+| [Blackout Broadcast](bpc170/ch04/README.md) | Chapter 04 strategy game, local build for playtest |
 
 ## Defaults
 
