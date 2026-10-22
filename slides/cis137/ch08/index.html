@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 8 classroom presentation: Governance, Privacy, and Content Ownership.">
+  <meta name="theme-color" content="#7c3626">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237c3626'/%3E%3Crect x='14' y='12' width='26' height='40' rx='3' fill='%23ffd573'/%3E%3Crect x='40' y='18' width='10' height='12' rx='2' fill='%23ffffff'/%3E%3Crect x='19' y='12' width='4' height='40' fill='%237c3626'/%3E%3C/svg%3E">
+  <title>CIS137: Governance, Privacy, and Content Ownership</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Governance, Privacy, and Content Ownership" data-course="cis137"
+  data-chapter="ch08" data-palette="canyon-sand">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's leasing agent. She wants a late-rent notice to sound kinder, so she pastes it, with the tenant's name and unit number, into a free chat assistant on her personal account. Take two or three answers to the lede before you say anything. Most students will name one rule. Promise the payoff: by the end of class they can name four different rules her paste touched, read the document behind each one, and write a policy other people can follow. Every law status today carries the date it was read, October 21, 2026, because one of the biggest rules changed in July 2026.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-rulebook-shelf.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 8 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Governance, Privacy, and Content Ownership</h1>
+        <p class="lede">She pasted a tenant’s late-rent notice into a free chat assistant. Which rule did she break?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as the actions students take today. 8.1 is sorting a rule by its kind and placing a use in the EU AI Act's tiers and the NIST functions. 8.2 is reading a vendor's data policy and terms, then relating FERPA, HIPAA, and copyright to a case. 8.3 is the AI Use Policy, the artifact the Skills Lab builds for Copperwind. The chapter serves CLO 5 (apply ethical guidelines to make responsible decisions) and CLO 4 (analyze the current state of AI). It leans on Chapter 1's one rule and Chapter 3's five principles.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS137 · Chapter 8</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2 class="wide-title">Sort the rule. Read the policy. Write the policy.</h2>
+        <ol class="targets">
+          <li><span class="t-num">8.1</span><strong>Categorize</strong><p>a rule about an AI use as law, policy, guidance, or ethics, and place an AI use in the EU AI Act’s risk tiers and NIST AI RMF functions</p></li>
+          <li><span class="t-num">8.2</span><strong>Examine</strong><p>a vendor’s data policy and terms of use to determine what it keeps, trains on, and deletes, and relate FERPA, HIPAA, and copyright to a case</p></li>
+          <li><span class="t-num">8.3</span><strong>Recommend</strong><p>an AI Use Policy that the people in an organization can follow, and justify each of its rules by the kind of rule behind it</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Put the four questions from the chapter's opening on the board. Did she break a law? Her company's rules? The tool's own terms? Or something nobody wrote down, a duty to the tenant who never agreed to any of this? Each question has a different answer and a different person who enforces it. Point to the four doors in the picture. People say the AI rules about four different things, and mixing them up causes mistakes. A manager who thinks a framework is a law spends money on the wrong problem. A technician who thinks a company policy is only advice ignores it. Governance is the system of rules, roles, and checks that decides how AI may be used and who answers for the result.&#10;&#10;Time: 5-7 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">One paste, four questions</div>
+          <h2>Four questions. Four different enforcers.</h2>
+          <ul class="four-q">
+            <li><span class="q-tag">A law?</span>Did she break a law?</li>
+            <li><span class="q-tag">Her company?</span>Did she break her company’s rules?</li>
+            <li><span class="q-tag">The tool?</span>Did she break the tool’s own terms?</li>
+            <li><span class="q-tag">A duty?</span>Did she break a duty to the tenant?</li>
+          </ul>
+          <p class="field-note">Name the kind of rule before you answer.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/four-enforcers.png" alt="Four doors stand in a row, each with a different keyhole and emblem: a courthouse, an office building, a round framework seal, and a desk lamp. A small figure holding one sheet of paper stands in front, deciding which door to try."><figcaption>Each question goes to a different door.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The four kinds of rules, in this order: law, policy, guidance, ethics. Walk the shelf left to right and read each spine. Then trace one rule from the chapter's table: a credit union branch lets staff use one approved chat assistant, on a work account only. Ask the three questions out loud. Who made it? An organization. Who must follow it? Its own people. What happens if it is broken? Discipline, lost access, or a lost job. It lands on the policy binder. The lines can move. Guidance becomes binding when a contract requires it, and a law can reward it, as Colorado's 2024 act did for companies that followed a risk management framework. So ask two questions of any rule: what kind is it today, and what points to it?&#10;&#10;Time: 7-10 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">The four kinds of rules</div>
+        <h2 class="wide-title">Three questions sort any rule onto the shelf.</h2>
+        <div class="sorter" role="img" aria-label="One rule sorted by three questions. The rule: a credit union branch lets staff use one approved chat assistant, on a work account only. Question one, who made it: an organization. Question two, who must follow it: its own people. Question three, what happens if it is broken: discipline, lost access, or a lost job. To the right, a shelf of four binders in order: law, binding with penalties, made by a legislature or regulator. Policy, an organization's own rules for its people. Guidance, a framework or standard an organization chooses to follow. Ethics, the principles behind the other three. The rule lands on the policy binder.">
+          <div class="stack">
+            <p class="rule-card"><span class="card-label">The rule</span>A credit union branch lets staff use one approved chat assistant, on a work account only.</p>
+            <ol class="three-q">
+              <li><b>Who made it?</b><span>An organization</span></li>
+              <li><b>Who must follow it?</b><span>Its own people</span></li>
+              <li><b>What happens if it is broken?</b><span>Discipline, lost access, or a lost job</span></li>
+            </ol>
+          </div>
+          <ol class="shelf">
+            <li class="binder law"><strong>Law</strong><span>Binding, with penalties, made by a legislature or regulator</span></li>
+            <li class="binder policy lit"><strong>Policy</strong><span>An organization’s own rules for its people</span><span class="landed">The rule lands here</span></li>
+            <li class="binder guidance"><strong>Guidance</strong><span>A framework an organization chooses to follow</span></li>
+            <li class="binder ethics"><strong>Ethics</strong><span>The principles behind the other three</span></li>
+          </ol>
+        </div>
+        <p class="field-note">Then ask: what kind is it today, and what points to it?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The EU AI Act is Regulation (EU) 2024/1689. A risk tier is a level of possible harm that a law assigns to a kind of AI use, with duties that grow as the risk grows. Walk one use down the gates, top to bottom: the dispatcher's tool that ranks job applicants for driver positions. Gate one, prohibited practices under Article 5(1)(f), such as inferring emotions at work: no. Fines for banned practices reach 35 million euros or 7 percent of worldwide yearly turnover under Article 99. Gate two, high-risk: yes. Annex III, point 4(a) covers AI used to recruit or select people. It stops there. The transparency and everything-else gates are dimmed because this use never needs them. Warn students: you will see limited risk and minimal risk in the wild, but those labels are not in the Act. Cite the article.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">EU AI Act risk tiers</div>
+        <h2 class="wide-title">The applicant-ranking tool stops at the high-risk gate.</h2>
+        <p class="traced-use">A tool that ranks job applicants for driver positions</p>
+        <ol class="gates" role="img" aria-label="One AI use walks down four tier gates from top to bottom. Gate one, prohibited practices, Article 5(1)(f), for example inferring emotions at work or in school, applies from February 2, 2025, fines up to 35 million euros or 7 percent: the applicant tool does not match, so it passes down. Gate two, high-risk systems, Article 6 and Annex III point 4(a), AI used to recruit or select people: the tool matches and stops here, applying from December 2, 2027 for Annex III. Gate three, transparency duties under Article 50, and gate four, everything else such as a spam filter, are dimmed because this use does not reach them.">
+          <li class="gate pass"><span class="gate-name">Prohibited practices</span><span class="gate-what"><em>Article 5(1)(f)</em>Inferring emotions at work or in school</span><span class="gate-date">From February 2, 2025<span class="fine">Fines up to 35 million euros or 7 percent</span></span><span class="outcome">No match ↓</span></li>
+          <li class="gate stop"><span class="gate-name">High-risk systems</span><span class="gate-what"><em>Article 6 and Annex III, point 4(a)</em>AI used to recruit or select people</span><span class="gate-date">December 2, 2027 for Annex III</span><span class="outcome">Match: stops here</span></li>
+          <li class="gate skip"><span class="gate-name">Transparency duties</span><span class="gate-what"><em>Article 50</em>A system that talks with people</span><span class="gate-date">August 2, 2026</span><span class="outcome">Not this use</span></li>
+          <li class="gate skip"><span class="gate-name">Everything else</span><span class="gate-what"><em>None of the tiers’ duties</em>A spam filter</span><span class="gate-date">Not applicable</span><span class="outcome">Not this use</span></li>
+        </ol>
+        <p class="read-on"><span class="stamp">Read Oct 21, 2026</span>EUR-Lex consolidated text, version of July 27, 2026</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The dates on the last slide are not the dates the Act was passed with. Walk the track left to right. The original Article 113 set August 2, 2026 for the Annex III high-risk rules. On July 8, 2026, the EU adopted Regulation (EU) 2026/1744, called the Digital Omnibus on AI. It was published on July 24, 2026. It moved the high-risk dates later, to December 2, 2027 for Annex III, and added two bans. Land the point: a policy written in 2025 that copied those dates is now wrong, and nobody had to break a rule to make it wrong. That is why every status in this chapter carries the document and the date read.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">Cite the dated text</div>
+        <h2 class="wide-title">The date moved. Nobody broke a rule.</h2>
+        <ol class="date-track" role="img" aria-label="A dated track read left to right. July 8, 2026: Regulation (EU) 2026/1744, the Digital Omnibus on AI, is adopted. July 24, 2026: it is published. August 2, 2026: the original Annex III high-risk date, now struck out. An arrow marked moved leads to December 2, 2027, the Annex III high-risk date as read on October 21, 2026.">
+          <li class="station"><b>July 8, 2026</b><span>Regulation (EU) 2026/1744 adopted, the Digital Omnibus on AI</span></li>
+          <li class="station"><b>July 24, 2026</b><span>Published. It moves the high-risk dates and adds two bans.</span></li>
+          <li class="station old"><span class="was">Was</span><b>August 2, 2026</b><span>The original Annex III date in Article 113</span></li>
+          <li class="moved">Moved</li>
+          <li class="station new"><b>December 2, 2027</b><span>Annex III high-risk rules apply</span><span class="stamp dated">As read October 21, 2026</span></li>
+        </ol>
+        <p class="field-note">A policy written in 2025 that copied the old date is now wrong.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is the dispatcher who is opening an office in Spain, asking a chat assistant to sort its four uses. Point to Steps 3 and 4. The prompt asks for the article because the article is what you will check, and it asks for doubt because the dates change. Now check the sample, one article at a time. The tiers hold: Annex III point 4(a), Article 50(1), and Article 5(1)(f). The date slips. It gives 2 Aug 2026, the date as first published. Then it flags its own doubt about the Omnibus, and that doubt was the most useful line in the response. This is Chapter 2's knowledge cutoff at work. Point to the two gold marks: limited risk and minimal risk are not the Act's words.&#10;&#10;Time: 15-18 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">Ask for a tier, then check it</div>
+        <h2 class="wide-title">The tiers held. The date slipped.</h2>
+        <figure class="chat split-chat">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <p class="verbatim">[...]</p>
+                <span class="step">Step 3: ask for the article, which is what you will check</span>
+                <p class="verbatim">For each use, name the risk tier and the article of the Act that puts it there.</p>
+                <span class="step">Step 4: ask for dates and for doubt, because the dates change</span>
+                <p class="verbatim">Say the date that tier’s obligations apply, and mark any answer you are unsure of. One line per use.</p>
+              </div>
+            </div>
+            <div class="turn assistant">
+              <span class="who">Assistant</span>
+              <div class="tier-lines">
+                <p class="verbatim">1. <b>Applicant ranking tool:</b> <span class="mark holds" data-label="holds">High-risk, under Art. 6(2) with Annex III point 4(a)</span> [...]. <span class="mark wrong" data-label="now Dec 2, 2027">The original date is 2 Aug 2026.</span> <span class="mark hedge" data-label="most useful line"><b>Unsure:</b> the EU’s "Digital Omnibus" proposal would push Annex III high-risk obligations back to about 2 Dec 2027, and I can’t confirm whether that was adopted, so check the current text.</span></p>
+                <p class="verbatim">2. <b>Website shipment chat assistant:</b> <span class="mark add" data-label="not the Act’s words">Limited risk</span> (transparency), under <span class="mark holds" data-label="holds">Art. 50(1)</span> [...]</p>
+                <p class="verbatim">3. <b>Dispatch inbox spam filter:</b> <span class="mark add" data-label="not the Act’s words">Minimal risk.</span> [...]</p>
+                <p class="verbatim">4. <b>Facial-expression mood camera for drivers:</b> <span class="mark holds" data-label="holds">Prohibited, under Art. 5(1)(f)</span> [...]</p>
+              </div>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 8.1, question 1. Give students a minute to decide before you reveal. The key is the scope line from the sample. Article 2(1)(c) covers providers and deployers outside the EU when the AI system's output is used in the EU. That is why the Spanish office changed the answer for the first dispatcher. This one has no EU customers, hires, or drivers, so the output is never used in the EU. The Act does not bind it. The owner can still read the Act for ideas, not as a law it must follow.&#10;&#10;Time: 18-20 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 8.1</div>
+        <h2 class="check-title">No EU customers. Does the Act bind it?</h2>
+        <div class="prompt">
+          <p class="verbatim">A trucking dispatcher in Phoenix has no EU customers, hires, or drivers. Its owner asks whether the EU AI Act’s high-risk rules apply to its applicant-ranking tool. Use Article 2(1)(c) to decide, and name the kind of rule the Act becomes for this owner.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">No. Article 2(1)(c) reaches companies outside the EU only when the AI system’s output is used in the EU, and this dispatcher has no EU hires, customers, or drivers. For this owner it reads the Act for ideas, not as a law it must follow.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The NIST AI RMF is a voluntary framework from the U.S. National Institute of Standards and Technology, released as AI 100-1 on January 26, 2023. Its core has four functions. Govern runs under the other three because NIST calls it cross-cutting. Read each Copperwind example. Govern: the operations manager signs an AI Use Policy and names who answers questions. Map: list each use, the data it touches, and the clients it reaches. Measure: count how many AI-drafted replies needed a fix. Manage: decide who reviews a reply and what happens after an error reaches a client. As of October 21, 2026, NIST's page says the framework is being revised, so version 1.0 is still the one to cite. The OECD AI Principles were adopted in May 2019 and updated in May 2024, with 47 adherents as of October 21, 2026. For a company, both are guidance.&#10;&#10;Time: 20-22 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">Frameworks and principles</div>
+        <h2 class="wide-title">A framework binds no one until someone adopts it.</h2>
+        <div class="rmf" role="img" aria-label="The NIST AI RMF's four functions, labeled guidance. Three functions read left to right: Map, establish the context, Copperwind lists each AI use, the data it touches, and the clients it reaches. Measure, analyze and track the mapped risks, Copperwind counts how many AI-drafted replies needed a fix before sending. Manage, act on the risks and plan for errors, Copperwind decides who reviews a reply and what happens after an error reaches a client. Under all three runs Govern, cross-cutting: the operations manager signs an AI Use Policy and names who answers questions.">
+          <div class="fn"><strong>Map</strong><span class="asks">Establish the context: what it is for, who it could affect</span><span class="cw">List each AI use, the data it touches, and the clients it reaches</span></div>
+          <div class="fn"><strong>Measure</strong><span class="asks">Analyze, assess, and track the risks you mapped</span><span class="cw">Count how many AI-drafted replies needed a fix before sending</span></div>
+          <div class="fn"><strong>Manage</strong><span class="asks">Act on the risks and plan for when something goes wrong</span><span class="cw">Decide who reviews a reply, and what happens after an error reaches a client</span></div>
+          <div class="govern-band"><strong>Govern</strong><span>Cross-cutting: policies, roles, and accountability under the other three.</span><span>The operations manager signs an AI Use Policy and names who answers questions.</span></div>
+        </div>
+        <p class="oecd"><span class="kind guidance">[guidance]</span>NIST AI 100-1, January 26, 2023, being revised. OECD AI Principles: 47 adherents. Both read October 21, 2026.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Colorado shows how fast a state law can move. Read the rows top to bottom from the Colorado General Assembly's bill pages, read October 21, 2026. SB24-205, approved May 17, 2024, set duties for high-risk AI systems starting February 1, 2026. SB25B-004, approved August 28, 2025, moved them to June 30, 2026. SB26-189, signed May 14, 2026, repeals and reenacts those provisions effective January 1, 2027, and covers automated decision-making technology used in consequential decisions such as employment, housing, and lending. The duties were delayed once, then rewritten before they began. The sector laws are older and steadier: FERPA and HIPAA, next section.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS137 · 8.1</div>
+      <div class="content">
+        <div class="eyebrow">State laws</div>
+        <h2 class="wide-title">Colorado rewrote its law before the duties began.</h2>
+        <ol class="bills" role="img" aria-label="Three Colorado bills read top to bottom. SB24-205, approved May 17, 2024: duties start February 1, 2026, a date later struck. SB25B-004, approved August 28, 2025: moves the start to June 30, 2026, also struck. SB26-189, signed May 14, 2026: repeals and reenacts the provisions, effective January 1, 2027.">
+          <li class="bill"><span class="bill-id">SB24-205</span><span class="bill-when">Approved May 17, 2024. Duties for high-risk AI systems.</span><span class="bill-start">Start: <s>February 1, 2026</s></span></li>
+          <li class="bill"><span class="bill-id">SB25B-004</span><span class="bill-when">Approved August 28, 2025. Moves the requirements.</span><span class="bill-start">Start: <s>June 30, 2026</s></span></li>
+          <li class="bill current"><span class="bill-id">SB26-189</span><span class="bill-when">Signed May 14, 2026. Repeals and reenacts.</span><span class="bill-start">Effective: <b>January 1, 2027</b><span class="kind law">[law]</span></span></li>
+        </ol>
+        <p class="read-on"><span class="stamp">Read Oct 21, 2026</span>Colorado General Assembly bill pages. Read the bill page before you cite one.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Chapter 1's one rule told you what never goes into a tool, and it still stands. This section adds the other half: what happens to what you do enter. Personal data is any information that identifies a person or can be linked to one: a name, an address, an account number, a face, a voice. A ticket has a client employee's name and email. A late-rent notice has a tenant's unit number. Two vendor documents answer the question. The data policy says what the vendor collects, what it does with it, how long it keeps it, and how you can delete it. The terms of use are the contract you accept, and accepting them makes them binding on you. Both usually split in two. Consumer terms cover free and personal plans. Business terms cover work, school, and enterprise accounts, and they often promise more. So the same tool can be fine for one task on a work account and wrong for it on a personal one.&#10;&#10;Time: 24-26 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 8.2</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">What the vendor keeps</div>
+          <h2>Same tool, two plans, two answers.</h2>
+          <dl class="terms">
+            <dt>Personal data</dt><dd>Any information that identifies a person or links to one</dd>
+            <dt>Data policy</dt><dd>What the vendor collects, uses, keeps, and deletes</dd>
+            <dt>Terms of use</dt><dd>The contract you accept, binding on you</dd>
+          </dl>
+          <div class="plans">
+            <span><b>Consumer terms</b>Free and personal plans</span>
+            <span><b>Business terms</b>Work, school, enterprise. Often promise more.</span>
+          </div>
+          <p class="field-note">The leasing agent’s late-rent notice carried a tenant’s name and unit number. That is personal data.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/privacy-gate.png" alt="A chat bubble rides a conveyor through a tall blue gate. On the far side of the gate, one of its lines is covered by a dark red redaction bar. Behind the gate, an archive box and a clock sit on a shelf."><figcaption>What you type passes into the vendor’s keeping.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the chapter's fictional tool policy, run through a reading prompt that asks for five fields, a quote for each, and Not stated when the text is silent. Follow each highlighted sentence to its numbered row. Sentence 1 fills what it keeps. Sentence 2 fills training: yes, by default, unless you turn the setting off. Sentence 3 fills how long. Sentence 4 fills what deleting does. Then row 5. No sentence covers business accounts, so the answer is Not stated, and that is the most useful line in the response. A policy writer who filled that field from memory would be guessing. One small catch: the quote under field 2 swapped the double quotation marks for single ones. A quote is supposed to be exact.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS137 · 8.2</div>
+      <div class="content">
+        <div class="eyebrow">Reading a data policy’s fields</div>
+        <h2 class="wide-title">“Not stated” is a finding.</h2>
+        <div class="extract" role="img" aria-label="Left, a fictional data policy excerpt with four highlighted sentences numbered 1 to 4. An arrow points right to a reading sheet with five fields. Field 1, what it keeps: prompts, uploaded files, and generated responses, from sentence 1. Field 2, trains on input: yes by default on free or personal plans, from sentence 2. Field 3, how long: until you delete, from sentence 3. Field 4, deleting: removed from history right away and from systems within 30 days, flagged conversations kept up to two years, from sentence 4. Field 5, business accounts: no sentence covers it, stamped Not stated.">
+          <div class="excerpt"><span class="src">Excerpt: a fictional tool’s data policy</span>
+            <p class="verbatim"><span class="hl" data-f="1">When you use the free or personal plan, we store your prompts, the files you upload, and the responses we generate.</span> <span class="hl" data-f="2">We may use this content to improve our models unless you turn off "Help improve the service" in Settings.</span> <span class="hl" data-f="3">Conversations stay in your history until you delete them.</span> <span class="hl" data-f="4">When you delete a conversation, we remove it from your history right away and from our systems within 30 days, except conversations flagged for a safety review, which we keep for up to two years.</span></p>
+          </div>
+          <div class="extract-arrow" aria-hidden="true">→</div>
+          <figure class="artifact-card sheet">
+            <span class="card-tab">Reading sheet</span>
+            <dl class="card-fields">
+              <dt><span class="f-num">1</span>Keeps</dt><dd class="verbatim">Prompts, uploaded files, and generated responses.</dd>
+              <dt><span class="f-num">2</span>Trains</dt><dd class="verbatim">Yes, by default, on free or personal plans. [...]</dd>
+              <dt><span class="f-num">3</span>How long</dt><dd class="verbatim">Conversations stay in your history until you delete them. [...]</dd>
+              <dt><span class="f-num">4</span>Deleting</dt><dd class="verbatim">[...] removed from your history immediately and from the vendor’s systems within 30 days. [...]</dd>
+              <dt><span class="f-num">5</span>Business</dt><dd><span class="not-stated">Not stated</span></dd>
+            </dl>
+          </figure>
+        </div>
+        <p class="field-note">Sample, October 2026. Field 2’s quote changed the quotation marks. A quote must be exact.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Field 4 deserves its own slide, because deleting does not always delete. Read the two lanes from the fictional policy. An ordinary conversation: you delete it, it leaves your history right away, and it leaves the vendor's systems within 30 days. A conversation flagged for a safety review: same click, same history, and then the vendor keeps it for up to two years. These are the chapter's fictional numbers. Real tools publish their own numbers in their own pages, and the chapter's Tool check shows they differ by vendor and by plan. Students find their tool's numbers in Try It Yourself 8.3 and write them on their own reading sheet, with the page title, URL, and date.&#10;&#10;Time: 29-31 minutes.">
+      <div class="brand">CIS137 · 8.2</div>
+      <div class="content">
+        <div class="eyebrow">What deleting does</div>
+        <h2 class="wide-title">Deleting does not always delete.</h2>
+        <div class="lanes" role="img" aria-label="Two timelines from the fictional policy, read left to right. Ordinary conversation: you click delete, it is gone from your history right away, then gone from the vendor's systems within 30 days. Conversation flagged for a safety review: you click delete, it is gone from your history right away, then kept by the vendor for up to two years.">
+          <div class="lane"><span class="lane-name">Ordinary conversation</span><div class="tick"><b>You delete</b><span>One click</span></div><div class="tick"><b>Right away</b><span>Gone from your history</span></div><div class="tick gone"><b>Within 30 days</b><span>Gone from the vendor’s systems</span></div></div>
+          <div class="lane"><span class="lane-name">Flagged for a safety review</span><div class="tick"><b>You delete</b><span>The same click</span></div><div class="tick"><b>Right away</b><span>Gone from your history</span></div><div class="tick kept"><b>Up to two years</b><span>Kept by the vendor</span></div></div>
+        </div>
+        <p class="field-note">The chapter’s fictional policy. Your tool’s numbers live in its own pages.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 8.2, question 3. Pairs get one minute. The claim does not hold, or holds only in part. Under the fictional excerpt, deleting removes the chat from history right away, but from the vendor's systems only within 30 days, and a conversation flagged for a safety review stays up to two years. The Tool check showed one vendor keeping chats that human reviewers read, even after you delete your activity. The reading sheet should record the deletion field with its exceptions, quoting the page, with the page title, URL, and date.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS137 · 8.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 8.2</div>
+        <h2 class="check-title">“I deleted the chat.” Is the data gone?</h2>
+        <div class="prompt">
+          <p class="verbatim">A coworker says, "I deleted the chat, so the client's data is gone." Using the fictional policy excerpt and the Tool check above, examine whether that claim holds, and say what your reading sheet should record.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Not fully. The chat leaves your history right away, but the vendor’s systems only within <strong>30 days</strong>, and a flagged chat stays <strong>up to two years</strong>. One vendor keeps chats that people reviewed longer still. Record the deletion field with its exceptions, quoted from the page, with the page title, URL, and date.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Two federal sector laws come up whenever students or patients appear in a prompt. Students do not need to master either one. They need to recognize when one applies, then follow the rules of the organization that holds the records. FERPA: the degree audit. The verdict holds. Under 34 CFR 99.30, a school needs written consent before it discloses personally identifiable information, except under 99.31, and the school official condition is 99.31(a)(1). The line that free tools may retain or train on inputs is a lead, not a fact about any one tool. HIPAA: the physical therapy reminder. The contract point holds. But the response says flatly that a physical therapy office is a covered entity, and HHS adds a condition: a provider is covered only if it transmits information electronically in a standard transaction. Close on Copperwind. Its medical and physical therapy clients send tickets that can name a patient. Whether Copperwind is a business associate depends on its contracts, and that question belongs to the operations manager, not to a chat assistant.&#10;&#10;Dates: the FERPA source is studentprivacy.ed.gov, read October 21, 2026. The HHS covered-entities page was last reviewed August 21, 2024, and read October 21, 2026.&#10;&#10;Time: 33-36 minutes.">
+      <div class="brand">CIS137 · 8.2</div>
+      <div class="content">
+        <div class="eyebrow">FERPA and HIPAA touchpoints</div>
+        <h2 class="wide-title">Recognize the law. Then follow the record holder’s rules.</h2>
+        <div class="touch">
+          <article class="case">
+            <h3>FERPA <span class="kind law">[law]</span></h3>
+            <p class="asked-q">A student worker in an advising office wants to paste a degree audit, with name and grades, into a free chat assistant.</p>
+            <p class="said verbatim"><span class="mark holds" data-label="holds">Pasting it into a free chat assistant is risky and generally not okay.</span> Free tools [...] <span class="mark hedge" data-label="a lead, not a fact">may retain or train on inputs</span> [...]</p>
+            <p class="backed"><b>Backed by</b> 34 CFR 99.30 (written consent first) and 99.31(a)(1) (school official).</p>
+          </article>
+          <article class="case">
+            <h3>HIPAA <span class="kind law">[law]</span></h3>
+            <p class="asked-q">A physical therapy office wants a friendlier reminder text from a patient’s appointment note.</p>
+            <p class="said verbatim"><span class="mark holds" data-label="holds">Generally no, not with a free chat assistant.</span> <span class="mark hedge" data-label="HHS adds a condition">A physical therapy office is a covered entity</span> [...]</p>
+            <p class="backed"><b>HHS:</b> a provider is covered only if it transmits information electronically in a standard transaction.</p>
+          </article>
+        </div>
+        <p class="read-on"><span class="stamp">Sample, Oct 2026</span><span class="stamp">Read Oct 21, 2026</span>Response fragments are samples. Sources: studentprivacy.ed.gov and the HHS covered-entity page.</p>
+        <p class="cw-line"><strong>Copperwind:</strong> some clients are medical and physical therapy offices whose tickets can name a patient. The operations manager owns the business associate question.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Copyright is the legal right of the author of an original work to control copies, adaptations, and public uses. In the United States it requires a human author. The Copyright Office's report Part 2, January 29, 2025, says prompts alone do not make you an author, and your own additions can be protected. Thaler v. Perlmutter, March 18, 2025, upheld that human authorship rule. Now the community theater's poster. Read the layers. The AI image is not protected. The layout and arrangement are the theater's own expression. The title and dates are not copyrightable at all: 37 CFR 202.1(a) excludes names, titles, and short phrases. That is where the sample slipped. And under everything sits the generator's terms of use, the contract that says what you may do with the image. A Copyright Office report cannot tell you what a vendor's contract allows. Part 3 covers training on copyrighted works, a fair use question courts decide case by case.&#10;&#10;Time: 36-39 minutes.">
+      <div class="brand">CIS137 · 8.3</div>
+      <div class="content">
+        <div class="eyebrow">Who owns what</div>
+        <h2 class="wide-title">One poster, three answers, and a contract under all of it.</h2>
+        <div class="poster-split">
+          <div class="poster-stack" role="img" aria-label="A theater poster drawn in layers from top to bottom. The title band at the top and the dates band at the bottom are labeled not copyrightable, 37 CFR 202.1(a). The hatched image in the middle is labeled AI-generated, not protected. A solid blue frame around the whole poster is labeled layout and arrangement, the theater's own expression, protected. Under the poster lies the terms of use, the vendor's contract on what you may do with the image.">
+            <div class="poster">
+              <span class="own human layout-tag">Layout and arrangement: protected</span>
+              <div class="p-title"><span class="own">Title: not copyrightable</span></div>
+              <div class="p-art"><span class="own">AI-generated image: not protected</span></div>
+              <div class="p-dates"><span class="own">Dates: not copyrightable</span></div>
+            </div>
+            <p class="terms-sheet"><b>Under it all, the terms of use:</b> what the vendor’s contract lets you do with the image.</p>
+          </div>
+          <div class="stack">
+            <p class="said verbatim"><span class="mark holds" data-label="holds">Writing a prompt and picking one of four outputs generally isn’t enough authorship.</span></p>
+            <p class="said verbatim">Your <span class="mark wrong" data-label="not copyrightable">title, dates,</span> text, and the <span class="mark holds" data-label="holds">layout/arrangement you created</span> are human-authored and registrable.</p>
+            <p class="read-on"><span class="stamp">Sample, Oct 2026</span>Checked against Part 2 (January 29, 2025) and 37 CFR 202.1(a), read October 21, 2026.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 8.3, question 1. Ask students to commit in one sentence before the reveal. Apply Part 2's conclusions. A prompt alone does not give the volunteer enough control to be the author, given current generally available technology, and picking one of three adds no expression. Changing nothing means the bare logo is purely AI-generated, so the theater can claim nothing in it. To claim more, the theater must add human expression of its own: its own changes to the image, or a layout and arrangement it made. Remind them the theater's name is a title-like short phrase and is not copyrightable either.&#10;&#10;Time: 39-41 minutes.">
+      <div class="brand">CIS137 · 8.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 8.3</div>
+        <h2 class="check-title">A 20-word prompt, one pick, no edits. What can it claim?</h2>
+        <div class="prompt">
+          <p class="verbatim">A community theater’s volunteer writes a 20-word prompt, picks one of three generated logos, and changes nothing. The board wants to register the logo. Apply Part 2’s conclusions to decide what the theater can claim, and say what it would need to add to claim more.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Nothing in the bare logo. Prompts alone do not make the volunteer an author, and picking one of three adds no human expression. To claim more, the theater must add <strong>its own expression</strong>: its own changes to the image, or a layout and arrangement it made.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="An AI Use Policy is an organization's written rules for how its people use AI tools. In this book it has seven sections, in this order: Purpose, Approved tools, What never goes in, Review before use, Disclosure, Who to ask, and Review date. Each section answers one question, and each leans on a kind of rule you can name. Read down the card. Point out that What never goes in can rest on law, but only where FERPA or HIPAA applies, and Disclosure rests first on ethics, the honesty principle. The labels do work. A [law] label makes a reviewer ask which law, read on what date. A [policy] label makes the reviewer ask who decided it. Students already follow one of these: the syllabus states the AI expectations for this class.&#10;&#10;Time: 41-43 minutes.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow">Writing the AI Use Policy</div>
+        <h2 class="wide-title">Seven sections. Each rule names its kind.</h2>
+        <figure class="artifact-card policy-card">
+          <span class="card-tab">AI Use Policy</span>
+          <dl class="card-fields">
+            <dt>Purpose</dt><dd>Why does this policy exist, and who must follow it?</dd><dd class="labels"><span class="kind policy">[policy]</span><span class="kind ethics">[ethics]</span></dd>
+            <dt>Approved tools</dt><dd>Which tools, on which plan, with which settings?</dd><dd class="labels"><span class="kind policy">[policy]</span></dd>
+            <dt>What never goes in</dt><dd>What may no one type into any tool?</dd><dd class="labels"><span class="kind law">[law]</span><span class="kind policy">[policy]</span></dd>
+            <dt>Review before use</dt><dd>What must a person check before output goes out?</dd><dd class="labels"><span class="kind policy">[policy]</span><span class="kind guidance">[guidance]</span></dd>
+            <dt>Disclosure</dt><dd>When do we tell readers that AI helped, and what do we say?</dd><dd class="labels"><span class="kind ethics">[ethics]</span><span class="kind policy">[policy]</span><span class="kind law">[law]</span></dd>
+            <dt>Who to ask</dt><dd>Which role answers questions?</dd><dd class="labels"><span class="kind policy">[policy]</span></dd>
+            <dt>Review date</dt><dd>When will this policy be checked again?</dd><dd class="labels"><span class="kind policy">[policy]</span></dd>
+          </dl>
+        </figure>
+        <p class="field-note">A [law] label asks: which law, read on what date?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A city parks department needs a policy after a staff member pasted a resident's complaint, with the home address, into a personal chat account. The deputy director asked for a draft with the seven sections, 25 staff, one approved assistant on the city's work account, no law named, under 300 words. The draft ran 269 words and read well. Audit it section by section against the question each one answers. What never goes in added a line nobody gave, complaint text copied from residents. That is a new rule the deputy director must decide, not a fact. Review date invented one year from the signing date. Disclosure fails outright. It answers a different question, what to do after a mistake, and never says when to tell residents that AI helped write a reply. A reader who checked only for polish would sign it.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow">A first draft, audited</div>
+        <h2 class="wide-title">The parks draft read well. Disclosure still failed.</h2>
+        <div class="stats"><span>25 staff</span><span>269 words of 300</span><span>No law named</span></div>
+        <div class="audit">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn assistant">
+                <span class="who">Assistant</span>
+                <p class="verbatim">[...] <span class="sec">What never goes in</span>Never enter resident information into any AI tool, including:<br>- Home addresses<br>- Names or contact details<br>- <span class="mark add" data-label="nobody gave this">Complaint text copied from residents</span><br>[...]</p>
+                <p class="verbatim"><span class="sec">Disclosure</span><span class="mark wrong" data-label="wrong question">If you are unsure whether AI was used appropriately, or if resident information is entered into an AI tool by mistake, tell the deputy director right away.</span> [...]</p>
+                <p class="verbatim"><span class="sec">Review date</span>This policy will be reviewed <span class="mark add" data-label="invented">one year from the signing date</span>: ______________</p>
+              </div>
+            </div>
+          </figure>
+          <ol class="audit-list">
+            <li><b>What never goes in</b><span>Adds a rule the deputy director must decide.</span><span class="verdict not-in-source">Added</span></li>
+            <li><b>Disclosure</b><span>Never says when to tell residents AI helped.</span><span class="verdict contradicted">Fails</span></li>
+            <li><b>Review date</b><span>“One year” came from nowhere.</span><span class="verdict not-in-source">Invented</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 8.1. Symptom: the Copperwind-style Disclosure prompt asked for laws with a name, a section number, and one sentence each. The response opened with a careful disclaimer and closed with a warning, and the table between them looked like legal research. Diagnose before you change a word: open the Utah row on le.utah.gov and the Colorado row on leg.colorado.gov. What the sites showed on October 21, 2026: Utah's disclosure rule is real, but Chapter 75 was the number S.B. 226 gave it in 2025. It now sits at Title 13, Chapter 77, section 13-77-103, and Chapter 75 is the Franchise Protection Act. Colorado's 6-1-1704 is real, but it reaches any AI system intended to interact with consumers, not only high-risk ones. The prompt demanded a section number for every row, so the model supplied one. Repair: swap that one sentence. Verify on the second run: websites instead of numbers, but the California row's name still carried a section number, so the risk narrowed without vanishing. For Copperwind's Disclosure, write the rule as [policy] and [ethics], and cite a law only after reading it on the legislature's own site.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 8.1: The Disclosure Table</div>
+        <h2 class="wide-title">A real citation can still send you to the wrong place.</h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">The model’s rows</span>
+            <p class="cite-row verbatim"><span class="law-name">Utah AI Policy Act (as amended 2025)</span>Utah Code Title 13, <span class="circled">Ch. 75</span> (verify exact section)</p>
+            <p class="cite-row verbatim"><span class="law-name">Colorado AI Act (SB 24-205)</span>C.R.S. § 6-1-1704 [...] <span class="circled">Mainly applies to high-risk systems</span> and consumers. [...]</p>
+            <p class="read-on"><span class="stamp">Sample, Oct 2026</span>The Fix It symptom response.</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">The legislatures’ sites, Oct 21, 2026</span>
+            <p class="found"><b>Utah:</b> Title 13, Chapter 77, section 13-77-103. Chapter 75 is the Franchise Protection Act.</p>
+            <p class="found"><b>Colorado:</b> 6-1-1704 reaches any AI system intended to interact with consumers.</p>
+          </div>
+        </div>
+        <p class="repair"><span class="ba-label">Repair</span><span class="verbatim">For each law, give only its name and the official website where I can read its current text, and say how sure you are that it applies to us.</span><span>Copperwind’s Disclosure: write it as <span class="kind policy">[policy]</span> and <span class="kind ethics">[ethics]</span>. Cite a law only after you read it.</span></p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Try It Yourself 8.5 as a model of one section done well. The gaps held the personal data a teller handles, from Section 8.2, and Chapter 1's one rule. Read the six items. All six appear, each example fits a teller's day, and the closing rule is Chapter 1's word for word. It ran 123 words, under the 150 limit. One example invents a member's name as the thing not to type. That is fine in a policy, as long as the name is fictional and nobody mistakes it for a real member. Ask: what did your gaps make the model produce that it could not have guessed?&#10;&#10;Time: 48-49 minutes.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow">Try It Yourself 8.5</div>
+        <h2 class="wide-title">Six things a teller never types, and one rule for the rest.</h2>
+        <figure class="artifact-card teller-card">
+          <span class="card-tab">What never goes in</span>
+          <ul class="never verbatim">
+            <li><b>Member names.</b> Example: typing "Maria Lopez complained about a hold" into a draft email.</li>
+            <li><b>Account numbers.</b> Example: copying a number from a screen to ask why a deposit looks wrong.</li>
+            <li><b>Card numbers.</b> Example: pasting a debit card number while explaining a declined purchase.</li>
+            <li><b>Social Security numbers.</b> Example: adding the number from a new-account form to a summary.</li>
+            <li><b>Balances.</b> Example: asking for help wording a message about a member's overdrawn balance.</li>
+            <li><b>Home addresses.</b> Example: pasting an address from a change-of-address request.</li>
+          </ul>
+          <p class="closing verbatim"><b>When you are unsure:</b> if you would not post it on a public bulletin board, do not type it into an AI tool.</p>
+        </figure>
+        <div class="stats"><span>Sample, Oct 2026</span><span>123 words of 150</span><span>Closing rule matches Chapter 1</span></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 8.4, question 2, and it closes the loop on the opening slide. Give pairs a minute. HIPAA protects health information held by covered entities, certain health care providers, health plans, and clearinghouses, and their business associates. An apartment management office is none of those, so the rule points to a law that does not apply, and the [law] label sends a reviewer to the wrong document. The office should write the rule as its own policy, built on Chapter 1's one rule. Example line: never paste a tenant's name, unit number, or other personal data into any AI tool [policy]. That is the rule the leasing agent needed.&#10;&#10;Time: 49-51 minutes.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 8.4</div>
+        <h2 class="check-title">Back to the leasing office. Does HIPAA fit?</h2>
+        <div class="prompt">
+          <p class="verbatim">A draft rule reads "Staff must follow HIPAA when using AI [law]." Judge whether the rule and its label work for an apartment management office, and write the line the office should use instead.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Neither works. HIPAA covers health information held by covered entities and their business associates, and a leasing office is neither, so the [law] label points to the wrong document. Use a <strong>[policy]</strong> line instead: Never paste a tenant’s name, unit number, or other personal data into any AI tool.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Back to Copperwind. Two Deskside technicians still draft client emails on personal chat accounts, and nothing in writing says what anyone may type into a tool. Some Copperwind clients are medical and physical therapy offices whose tickets can name a patient, which is the HIPAA touchpoint from Section 8.2. Mei Lin has asked each student, as the AI adoption assistant, to draft the Copperwind AI Use Policy from the roster tools' data policies. The operations manager signs it. Point to the signature line in the picture. A policy is finished when the person who answers for it signs and dates it, and it names when it will be reviewed again.&#10;&#10;Time: 51-53 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 8.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Copperwind’s brief</div>
+          <h2>Nothing is in writing yet. You draft it.</h2>
+          <dl class="fact-key">
+            <dt>Now</dt><dd>Two Deskside technicians draft client emails on personal chat accounts</dd>
+            <dt>Gap</dt><dd>Nothing in writing says what anyone may type into a tool</dd>
+            <dt>Clients</dt><dd>Some are medical and physical therapy offices whose tickets can name a patient</dd>
+            <dt>Ask</dt><dd>Mei Lin asks you to draft the Copperwind AI Use Policy</dd>
+            <dt>Signs</dt><dd>The operations manager</dd>
+          </dl>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/signed-policy.png" alt="A desk seen from above with one printed policy page divided into seven short ruled sections, a fresh signature on the line at the bottom, a fountain pen beside it, and a round date stamp next to an inked circle."><figcaption>A policy counts once someone signs and dates it.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 8A. Part 1: write a privacy plan for Mei Lin's brief, fill the rules sorting sheet for situations A, B, and C and the applicant-summary question, then place that use under the EU tiers and name the NIST function it calls for. Part 2: read two roster tools' data policies into two reading sheets, check a chat assistant's account of one against your sheet, and apply HIPAA to situation A and Part 2 to situation B. Part 3: draft the seven-section policy with every rule labeled, test it cold as a new Deskside technician, and write a 100 to 150 word note to the operations manager. Exit ticket: the opening question, now answerable. Name the four kinds of rules the leasing agent's paste may have broken, and the document you would read to settle each one. Chapter 9 weighs whether an AI use is worth it at all, and the policy students write here is one of the things that decision must respect.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS137 · Lab 8A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 8A</div>
+        <h2 class="wide-title">Draft the Copperwind AI Use Policy.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Sort the rules</strong><span>A privacy plan, the rules sorting sheet, an EU tier, and a NIST function.</span></li>
+          <li><span class="part">Part 2</span><strong>Read two data policies</strong><span>Two reading sheets, a chat check, HIPAA for A, Part 2 for B.</span></li>
+          <li><span class="part">Part 3</span><strong>Draft and test the policy</strong><span>Seven sections, every rule labeled, a cold test, a 100 to 150 word note.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Back to the leasing agent. Name the four kinds of rules her paste may have broken, and the document you would read to settle each one.</p>
+        </div>
+        <p class="ahead">Next: Chapter 9 weighs whether an AI use is worth it at all.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

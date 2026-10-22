@@ -1,0 +1,1562 @@
+/* CIS137 Chapter 8: the rulebook shelf
+   The chapter's first question is always "which kind of rule is this?",
+   so the room is a shelf of four binders (law, policy, guidance,
+   ethics). A highlighter stroke runs along the top edge, because every
+   rule here is read in its primary document, and a signature rule sits
+   low on the page, because the chapter ends with a policy someone
+   signs. The brand glyph is a binder tab. All of it is painted as
+   background layers so nothing positioned can overflow or trap focus. */
+
+body {
+    /* The four kinds of rules keep one color each, everywhere they
+       appear: shelf spines, label chips, the policy card, the lab.
+       Law takes the heaviest color because it binds with penalties. */
+    --kind-law: var(--navy);
+    --kind-policy: var(--blue);
+    --kind-guidance: #e0a92e;
+    --kind-ethics: #7d7560;
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 28'%3E%3Cpath d='M6 20Q60 8 150 12T294 10' fill='none' stroke='rgba(255,213,115,0.75)' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 270'%3E%3Cg%3E%3Crect x='14' y='20' width='42' height='236' rx='4' fill='rgba(124,54,38,0.13)'/%3E%3Crect x='62' y='34' width='42' height='222' rx='4' fill='rgba(3,72,143,0.11)'/%3E%3Crect x='110' y='12' width='42' height='244' rx='4' fill='rgba(224,169,46,0.24)'/%3E%3Crect x='158' y='44' width='42' height='212' rx='4' fill='rgba(125,117,96,0.16)'/%3E%3Cpath d='M24 60h22M72 74h22M120 52h22M168 84h22' stroke='rgba(255,255,255,0.7)' stroke-width='8' stroke-linecap='round'/%3E%3Crect x='0' y='256' width='220' height='10' rx='2' fill='rgba(94,42,29,0.14)'/%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 40'%3E%3Cpath d='M8 22c14-18 22 10 34-4s16-8 22 4 18-6 26-2' fill='none' stroke='rgba(94,42,29,0.28)' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M0 34h260' stroke='rgba(94,42,29,0.22)' stroke-width='1.5'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #fbf6f2, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left clamp(6rem, 12vw, 14rem) top .6rem, right -1.5rem bottom -1rem, left clamp(9rem, 16vw, 18rem) bottom 1.1rem, 0 0;
+    background-size: clamp(10rem, 15vw, 16rem) auto, clamp(11rem, 14vw, 15rem) auto, clamp(10rem, 13vw, 14rem) auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 28'%3E%3Cpath d='M6 20Q60 8 150 12T294 10' fill='none' stroke='rgba(255,213,115,0.4)' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 270'%3E%3Cg%3E%3Crect x='14' y='20' width='42' height='236' rx='4' fill='rgba(255,255,255,0.1)'/%3E%3Crect x='62' y='34' width='42' height='222' rx='4' fill='rgba(3,72,143,0.4)'/%3E%3Crect x='110' y='12' width='42' height='244' rx='4' fill='rgba(255,213,115,0.26)'/%3E%3Crect x='158' y='44' width='42' height='212' rx='4' fill='rgba(236,230,214,0.16)'/%3E%3Cpath d='M24 60h22M72 74h22M120 52h22M168 84h22' stroke='rgba(255,255,255,0.3)' stroke-width='8' stroke-linecap='round'/%3E%3Crect x='0' y='256' width='220' height='10' rx='2' fill='rgba(255,255,255,0.14)'/%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 40'%3E%3Cpath d='M8 22c14-18 22 10 34-4s16-8 22 4 18-6 26-2' fill='none' stroke='rgba(255,213,115,0.4)' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M0 34h260' stroke='rgba(255,255,255,0.22)' stroke-width='1.5'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #5e2a1d, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 28'%3E%3Cpath d='M6 20Q60 8 150 12T294 10' fill='none' stroke='rgba(255,255,255,0.55)' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 270'%3E%3Cg%3E%3Crect x='14' y='20' width='42' height='236' rx='4' fill='rgba(124,54,38,0.16)'/%3E%3Crect x='62' y='34' width='42' height='222' rx='4' fill='rgba(3,72,143,0.14)'/%3E%3Crect x='110' y='12' width='42' height='244' rx='4' fill='rgba(255,255,255,0.4)'/%3E%3Crect x='158' y='44' width='42' height='212' rx='4' fill='rgba(125,117,96,0.18)'/%3E%3Crect x='0' y='256' width='220' height='10' rx='2' fill='rgba(94,42,29,0.16)'/%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 40'%3E%3Cpath d='M0 34h260' stroke='rgba(94,42,29,0.25)' stroke-width='1.5'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #ffe3a3, var(--gold));
+}
+
+/* The title field stays flat canyon so the hero art blends without a
+   seam. Only the highlighter stroke remains. */
+.slide.dark.title-slide {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 28'%3E%3Cpath d='M6 20Q60 8 150 12T294 10' fill='none' stroke='rgba(255,213,115,0.4)' stroke-width='14' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-position: left clamp(6rem, 12vw, 14rem) top .6rem;
+    background-size: clamp(10rem, 15vw, 16rem) auto;
+    background-repeat: no-repeat;
+}
+
+.title-slide h1 {
+    max-width: 22ch;
+    font-size: clamp(2.6rem, 4.4vw, 4.8rem);
+}
+
+/* Binder tab glyph in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: .7em;
+    height: 1.2em;
+    border-radius: 0 .3em .3em 0;
+    background:
+        linear-gradient(currentColor, currentColor) left / .2em 100% no-repeat,
+        color-mix(in srgb, var(--gold) 80%, transparent);
+    opacity: .9;
+}
+
+/* ---------- Shared type helpers ---------------------------------------- */
+
+h2.wide-title,
+h2.check-title {
+    max-width: 32ch;
+    font-size: clamp(2rem, 3.4vw, 3.9rem);
+}
+
+.visual-split h2 {
+    font-size: clamp(2.1rem, 3.6vw, 4.1rem);
+    max-width: 15ch;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.5vw, 1.4rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+/* A dated source line: every law status in this chapter carries the
+   document and the day it was read. */
+.read-on {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .8rem;
+    color: var(--ink);
+    font-size: clamp(.82rem, 1.02vw, 1.04rem);
+    font-weight: 700;
+}
+
+.dark .read-on {
+    color: rgba(255, 255, 255, .88);
+}
+
+/* ---------- Kind-of-rule chips ----------------------------------------- */
+
+/* The four kinds read as bracketed labels, the way students write them
+   in a policy draft, so the chip text alone carries the meaning. */
+.kind {
+    display: inline-block;
+    padding: .12rem .5rem;
+    border-radius: .3rem;
+    color: #fff;
+    background: var(--kind-law);
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+    line-height: 1.35;
+    white-space: nowrap;
+}
+
+.kind.policy {
+    background: var(--kind-policy);
+}
+
+.kind.guidance {
+    background: var(--kind-guidance);
+    color: #2b1a0c;
+}
+
+.kind.ethics {
+    background: var(--kind-ethics);
+}
+
+.dark .kind.law {
+    box-shadow: 0 0 0 .12rem rgba(255, 255, 255, .6);
+}
+
+/* ---------- Slide 2: targets as binder tabs ---------------------------- */
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.targets li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .5rem;
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    background: #fff;
+    border-left: .55rem solid var(--kind-law);
+    border-radius: .2rem;
+    box-shadow: .45rem .5rem 0 rgba(124, 54, 38, .1);
+}
+
+.targets li:nth-child(2) {
+    border-left-color: var(--kind-policy);
+}
+
+.targets li:nth-child(3) {
+    border-left-color: var(--kind-guidance);
+}
+
+.t-num {
+    color: var(--navy);
+    font-size: clamp(1.6rem, 2.6vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.targets strong {
+    color: var(--blue);
+    font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+}
+
+.targets p {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+/* ---------- Slide 3: four questions ------------------------------------ */
+
+.four-q {
+    display: grid;
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.four-q li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: .9rem;
+    align-items: center;
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.q-tag {
+    padding: .25rem .6rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .1);
+    color: var(--gold);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* ---------- Slide 4: the sorting shelf --------------------------------- */
+
+.sorter {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: clamp(1.4rem, 3vw, 3.2rem);
+    align-items: stretch;
+}
+
+.rule-card {
+    padding: .8rem 1rem;
+    border: .12rem dashed var(--kind-policy);
+    background: #fff;
+    color: var(--ink);
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.rule-card .card-label {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--blue);
+    font-size: clamp(.7rem, .88vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.three-q {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: q;
+}
+
+.three-q li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .1rem .75rem;
+    align-items: center;
+    padding: .55rem .8rem;
+    background: rgba(255, 255, 255, .7);
+    border-left: .3rem solid var(--kind-policy);
+    counter-increment: q;
+}
+
+.three-q li::before {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    content: counter(q);
+    background: var(--navy);
+    color: var(--gold);
+    font-weight: 900;
+}
+
+.three-q b {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.2vw, 1.2rem);
+}
+
+.three-q span {
+    font-size: clamp(.9rem, 1.12vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.shelf {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .7rem;
+    align-items: end;
+    margin: 0;
+    padding: 0 .6rem .9rem;
+    list-style: none;
+    border-bottom: .9rem solid color-mix(in srgb, var(--navy) 55%, #3a1a10);
+    border-radius: 0 0 .3rem .3rem;
+}
+
+.binder {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .5rem;
+    min-height: 19rem;
+    padding: 1.2rem .8rem .9rem;
+    border-radius: .35rem .35rem .15rem .15rem;
+    color: #fff;
+    background: var(--kind-law);
+    box-shadow: inset .5rem 0 0 rgba(0, 0, 0, .14);
+    filter: saturate(.5);
+}
+
+.binder.policy {
+    background: var(--kind-policy);
+}
+
+.binder.guidance {
+    background: var(--kind-guidance);
+    color: #2b1a0c;
+}
+
+.binder.ethics {
+    background: var(--kind-ethics);
+}
+
+/* The traced rule lands on one binder. That binder stands taller and at
+   full strength, and its marker names the rule that landed there. */
+.binder.lit {
+    min-height: 22rem;
+    filter: none;
+    outline: .25rem solid var(--gold);
+    outline-offset: .2rem;
+}
+
+.binder strong {
+    font-size: clamp(1.05rem, 1.45vw, 1.5rem);
+    letter-spacing: -.01em;
+}
+
+.binder span {
+    font-size: clamp(.8rem, 1vw, 1rem);
+    line-height: 1.3;
+}
+
+.binder .landed {
+    margin-top: .4rem;
+    padding: .2rem .45rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #2b1a0c;
+    font-size: clamp(.68rem, .86vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* ---------- Slide 5: tier gates ---------------------------------------- */
+
+.traced-use {
+    align-self: start;
+    padding: .45rem .9rem;
+    border-radius: 2rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+    font-weight: 800;
+}
+
+.gates {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.gate {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1.25fr) minmax(0, 1fr) 13rem;
+    gap: .9rem;
+    align-items: center;
+    padding: .6rem .9rem;
+    border: .14rem solid var(--navy);
+    border-radius: .4rem;
+    background: #fff;
+}
+
+.gate .outcome {
+    font-size: clamp(.82rem, 1.02vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.gate.pass .outcome {
+    color: var(--ink);
+}
+
+.gate.stop {
+    border-width: .22rem;
+    background: color-mix(in srgb, var(--gold) 30%, #fff);
+}
+
+.gate.stop .outcome {
+    color: var(--navy);
+}
+
+/* Gates the use never reaches are dashed and dimmed, the same way the
+   CIS215 decision ladder shows branches that never ran. */
+.gate.skip {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--navy) 35%, transparent);
+    background: transparent;
+    opacity: .62;
+}
+
+.gate-name {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    font-weight: 900;
+    line-height: 1.15;
+}
+
+.gate-what {
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.gate-what em {
+    display: block;
+    color: var(--blue);
+    font-style: normal;
+    font-weight: 800;
+}
+
+.gate-date {
+    font-size: clamp(.82rem, 1vw, 1.02rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.fine {
+    display: block;
+    margin-top: .2rem;
+    color: var(--navy);
+    font-weight: 900;
+}
+
+/* ---------- Slide 6: the date that moved ------------------------------- */
+
+.date-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto minmax(0, 1.2fr);
+    gap: clamp(.6rem, 1.2vw, 1.2rem);
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.station {
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    padding: 1rem;
+    border-top: .5rem solid rgba(255, 255, 255, .55);
+    background: rgba(255, 255, 255, .08);
+}
+
+.station b {
+    color: var(--gold);
+    font-size: clamp(1.05rem, 1.5vw, 1.55rem);
+    line-height: 1.1;
+}
+
+.station span {
+    font-size: clamp(.86rem, 1.08vw, 1.1rem);
+    line-height: 1.3;
+}
+
+.station.old b {
+    color: rgba(255, 255, 255, .7);
+    text-decoration: line-through .16rem;
+}
+
+.station.old .was {
+    display: inline-block;
+    justify-self: start;
+    padding: .1rem .45rem;
+    border: .12rem solid rgba(255, 255, 255, .7);
+    border-radius: .25rem;
+    font-size: clamp(.68rem, .85vw, .85rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.station.new {
+    border-top-color: var(--gold);
+    background: rgba(255, 213, 115, .16);
+    outline: .2rem solid var(--gold);
+}
+
+.station.new b {
+    font-size: clamp(1.4rem, 2.2vw, 2.3rem);
+}
+
+.moved {
+    display: grid;
+    place-items: center;
+    gap: .2rem;
+    align-self: center;
+    color: var(--gold);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.moved::before {
+    content: "\2192";
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    line-height: 1;
+}
+
+.dark .stamp.dated {
+    font-size: clamp(.72rem, .9vw, .92rem);
+}
+
+/* ---------- Slide 7: the tier check ------------------------------------ */
+
+.chat.split-chat .chat-body {
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    align-items: start;
+}
+
+.chat.split-chat .turn {
+    max-width: 100%;
+}
+
+.chat.split-chat .turn.user {
+    justify-self: stretch;
+}
+
+.chat.split-chat .stepped {
+    grid-template-columns: 1fr;
+    gap: .35rem;
+}
+
+.tier-lines {
+    display: grid;
+    gap: .5rem;
+}
+
+.tier-lines p {
+    font-size: clamp(.86rem, 1.04vw, 1.08rem);
+    line-height: 1.5;
+}
+
+.chat-bar .stamp {
+    margin-left: auto;
+    color: var(--navy);
+    transform: rotate(-1.5deg);
+}
+
+/* ---------- Slide 9: NIST functions ------------------------------------ */
+
+.rmf {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .9rem;
+}
+
+.rmf .fn {
+    display: grid;
+    align-content: start;
+    gap: .35rem;
+    padding: .9rem 1rem;
+    background: #fff;
+    border-top: .45rem solid var(--kind-guidance);
+    position: relative;
+}
+
+.rmf .fn:not(:nth-child(3))::after {
+    position: absolute;
+    top: 40%;
+    right: -.85rem;
+    content: "\2192";
+    color: var(--navy);
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.fn strong {
+    color: var(--navy);
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+}
+
+.fn .asks {
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    line-height: 1.3;
+}
+
+.fn .cw {
+    color: var(--blue);
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Govern runs under the other three because NIST calls it
+   cross-cutting. */
+.govern-band {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .2rem 1rem;
+    align-items: center;
+    padding: .75rem 1rem;
+    background: var(--kind-guidance);
+    color: #2b1a0c;
+}
+
+.govern-band strong {
+    grid-row: span 2;
+    font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+}
+
+.govern-band span {
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    line-height: 1.3;
+}
+
+.oecd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem 1rem;
+    padding: .6rem .9rem;
+    border-left: .35rem solid var(--kind-guidance);
+    background: rgba(255, 255, 255, .6);
+    font-size: clamp(.88rem, 1.08vw, 1.1rem);
+}
+
+/* ---------- Slide 10: Colorado rows ------------------------------------ */
+
+.bills {
+    display: grid;
+    gap: .7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bill {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 1rem;
+    align-items: center;
+    padding: .7rem 1rem;
+    background: #fff;
+    border-left: .45rem solid var(--kind-law);
+}
+
+.bill-id {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    font-weight: 900;
+}
+
+.bill-when {
+    font-size: clamp(.86rem, 1.06vw, 1.08rem);
+    line-height: 1.3;
+}
+
+.bill-start {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem .7rem;
+    font-size: clamp(.9rem, 1.12vw, 1.14rem);
+    line-height: 1.3;
+}
+
+.bill-start s {
+    color: color-mix(in srgb, var(--ink) 65%, #fff);
+    text-decoration-thickness: .14rem;
+}
+
+.bill.current {
+    outline: .2rem solid var(--gold);
+    background: color-mix(in srgb, var(--gold) 22%, #fff);
+}
+
+.bill.current .bill-start b {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.4vw, 1.4rem);
+}
+
+/* ---------- Slide 11: privacy terms ------------------------------------ */
+
+.terms {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .5rem 1rem;
+    margin: 0;
+}
+
+.terms dt {
+    color: var(--blue);
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    font-weight: 900;
+}
+
+.terms dd {
+    margin: 0;
+    font-size: clamp(.98rem, 1.25vw, 1.26rem);
+    line-height: 1.3;
+}
+
+.plans {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.plans span {
+    padding: .5rem .7rem;
+    background: #fff;
+    border-top: .3rem solid var(--blue);
+    font-size: clamp(.86rem, 1.05vw, 1.06rem);
+    line-height: 1.3;
+}
+
+.plans span:last-child {
+    border-top-color: var(--gold);
+}
+
+.plans b {
+    display: block;
+    color: var(--navy);
+}
+
+/* ---------- Slide 12: excerpt to reading sheet ------------------------- */
+
+.extract {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.05fr);
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    align-items: start;
+}
+
+.extract-arrow {
+    align-self: center;
+    color: var(--navy);
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    font-weight: 900;
+}
+
+.excerpt {
+    margin: 0;
+    padding: 1rem 1.1rem;
+    background: #fff;
+    border: .12rem solid color-mix(in srgb, var(--navy) 25%, transparent);
+    box-shadow: .5rem .5rem 0 rgba(124, 54, 38, .1);
+}
+
+.excerpt .src {
+    display: block;
+    margin-bottom: .5rem;
+    color: var(--blue);
+    font-size: clamp(.7rem, .88vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.excerpt p {
+    font-size: clamp(.86rem, 1.06vw, 1.1rem);
+    line-height: 1.6;
+}
+
+/* Each sentence wears the highlighter and the number of the field it
+   fills, so the eye can run from the sentence to its row. */
+.hl {
+    padding: .05em .15em;
+    background: color-mix(in srgb, var(--gold) 55%, transparent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.hl::before,
+.f-num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.45em;
+    height: 1.45em;
+    margin-right: .3em;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-size: .78em;
+    font-weight: 900;
+    vertical-align: .1em;
+}
+
+.hl::before {
+    content: attr(data-f);
+}
+
+.sheet .card-fields dd {
+    font-size: clamp(.78rem, .96vw, .98rem);
+    line-height: 1.45;
+}
+
+.sheet .card-fields dt {
+    white-space: nowrap;
+}
+
+.not-stated {
+    display: inline-block;
+    padding: .1rem .55rem;
+    border: .16rem double var(--warning);
+    border-radius: .3rem;
+    color: color-mix(in srgb, var(--warning) 70%, #000);
+    font-family: var(--body);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transform: rotate(-3deg);
+}
+
+/* ---------- Slide 13: delete timeline ---------------------------------- */
+
+.lanes {
+    display: grid;
+    gap: 1.1rem;
+}
+
+.lane {
+    display: grid;
+    grid-template-columns: 12rem repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+    align-items: stretch;
+}
+
+.lane-name {
+    align-self: center;
+    color: #fff;
+    font-size: clamp(.95rem, 1.2vw, 1.22rem);
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.tick {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .25rem;
+    padding: .75rem .9rem;
+    color: var(--ink);
+    background: #fff;
+    border-top: .4rem solid var(--blue);
+}
+
+.tick:not(:last-child)::after {
+    position: absolute;
+    top: 38%;
+    right: -.75rem;
+    z-index: 1;
+    content: "\2192";
+    color: var(--gold);
+    font-weight: 900;
+}
+
+.tick b {
+    color: var(--navy);
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    line-height: 1.1;
+}
+
+.tick span {
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    line-height: 1.3;
+}
+
+.tick.gone {
+    border-top-color: var(--good);
+}
+
+.tick.kept {
+    border-top-color: var(--warning);
+    background: color-mix(in srgb, var(--warning) 14%, #fff);
+}
+
+.tick.kept b {
+    color: color-mix(in srgb, var(--warning) 65%, #000);
+}
+
+/* ---------- Slide 15: FERPA and HIPAA ---------------------------------- */
+
+.touch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+}
+
+.case {
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+    padding: 1rem 1.1rem;
+    background: #fff;
+    border-top: .5rem solid var(--kind-law);
+}
+
+.case h3 {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--navy);
+}
+
+.case .asked-q {
+    font-size: clamp(.86rem, 1.04vw, 1.06rem);
+    line-height: 1.35;
+}
+
+.case .said {
+    padding: .5rem .7rem;
+    background: color-mix(in srgb, var(--canvas) 70%, #fff);
+    border-left: .25rem solid var(--navy);
+    font-size: clamp(.86rem, 1.04vw, 1.06rem);
+    line-height: 1.55;
+}
+
+.case .backed {
+    font-size: clamp(.82rem, 1vw, 1.02rem);
+    line-height: 1.35;
+}
+
+.case .backed b {
+    color: var(--blue);
+}
+
+.cw-line {
+    padding: .6rem .9rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .65);
+    font-size: clamp(.9rem, 1.12vw, 1.14rem);
+    line-height: 1.35;
+}
+
+/* ---------- Slide 16: the poster -------------------------------------- */
+
+.poster-split {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    gap: clamp(1.4rem, 3vw, 3rem);
+    align-items: center;
+}
+
+/* The poster is three layers on a contract. The image layer is hatched
+   to read as "no human author", the layout frame is solid blue for the
+   theater's own expression, and the terms of use sit underneath as the
+   sheet everything else rests on. */
+.poster-stack {
+    display: grid;
+    gap: .8rem;
+}
+
+.poster {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: .6rem;
+    padding: .9rem;
+    aspect-ratio: 4 / 4.2;
+    max-height: 30rem;
+    border: .35rem solid var(--blue);
+    background: #fff;
+    box-shadow: .7rem .7rem 0 color-mix(in srgb, var(--kind-guidance) 70%, transparent);
+}
+
+.poster .p-title {
+    padding: .5rem;
+    border: .14rem dashed var(--kind-ethics);
+    background: var(--mist);
+    text-align: center;
+}
+
+.poster .p-art {
+    display: grid;
+    place-items: center;
+    background:
+        repeating-linear-gradient(45deg, rgba(125, 117, 96, .2) 0 .5rem, transparent .5rem 1rem),
+        radial-gradient(circle at 35% 40%, rgba(255, 213, 115, .9) 0 18%, transparent 19%),
+        radial-gradient(circle at 65% 62%, rgba(124, 54, 38, .55) 0 22%, transparent 23%),
+        var(--canvas);
+}
+
+.poster .p-dates {
+    padding: .4rem;
+    border: .14rem dashed var(--kind-ethics);
+    background: var(--mist);
+    text-align: center;
+}
+
+.own {
+    display: inline-block;
+    padding: .2rem .55rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .92);
+    color: #2b1a0c;
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .03em;
+    line-height: 1.3;
+}
+
+.own.human {
+    background: var(--blue);
+    color: #fff;
+}
+
+.poster .layout-tag {
+    position: absolute;
+    top: -1rem;
+    right: 1rem;
+}
+
+.terms-sheet {
+    padding: .55rem .8rem;
+    background: color-mix(in srgb, var(--kind-guidance) 35%, #fff);
+    border-left: .4rem solid var(--kind-guidance);
+    font-size: clamp(.84rem, 1.04vw, 1.06rem);
+    line-height: 1.3;
+}
+
+.terms-sheet b {
+    color: var(--navy);
+}
+
+.poster-split .said {
+    background: #fff;
+    border-left: .25rem solid var(--navy);
+    padding: .7rem .9rem;
+    font-size: clamp(.92rem, 1.15vw, 1.18rem);
+    line-height: 1.6;
+}
+
+/* ---------- Slide 18: the AI Use Policy card --------------------------- */
+
+.policy-card .card-fields {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    gap: .55rem 1.1rem;
+    align-items: baseline;
+}
+
+.policy-card .card-fields dd {
+    font-family: var(--body);
+    font-size: clamp(.86rem, 1.06vw, 1.08rem);
+    line-height: 1.95;
+}
+
+.policy-card .labels {
+    display: flex;
+    gap: .3rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* ---------- Slide 19: the parks audit ---------------------------------- */
+
+.audit {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: start;
+}
+
+.audit .turn p {
+    font-size: clamp(.84rem, 1.02vw, 1.06rem);
+    line-height: 1.55;
+}
+
+.audit .sec {
+    display: block;
+    margin-top: .35rem;
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.audit-list {
+    display: grid;
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.audit-list li {
+    display: grid;
+    gap: .3rem;
+    padding: .6rem .8rem;
+    background: #fff;
+    border-left: .3rem solid var(--navy);
+}
+
+.audit-list b {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.2vw, 1.2rem);
+}
+
+.audit-list span {
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    line-height: 1.3;
+}
+
+.audit-list .verdict {
+    justify-self: start;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.stats span {
+    padding: .25rem .65rem;
+    border: .12rem solid var(--navy);
+    border-radius: 2rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.78rem, .98vw, 1rem);
+    font-weight: 800;
+}
+
+/* ---------- Slide 20: Fix It ------------------------------------------- */
+
+.fix-col {
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+}
+
+.cite-row {
+    display: block;
+    padding: .65rem .85rem;
+    background: rgba(255, 255, 255, .1);
+    border-left: .3rem solid rgba(255, 255, 255, .5);
+    font-size: clamp(.84rem, 1.04vw, 1.06rem);
+    line-height: 1.45;
+}
+
+.cite-row .law-name {
+    display: block;
+    color: var(--gold);
+    font-weight: 900;
+}
+
+/* A hand-drawn circle around the part of the row that sends the reader
+   to the wrong place. */
+.circled {
+    padding: .05em .3em;
+    border: .16rem solid #ff9b85;
+    border-radius: 50% / 60%;
+    color: #fff;
+    font-weight: 800;
+}
+
+.found {
+    display: grid;
+    gap: .25rem;
+    padding: .65rem .85rem;
+    background: #fff;
+    color: var(--ink);
+    border-left: .3rem solid var(--gold);
+    font-size: clamp(.84rem, 1.04vw, 1.06rem);
+    line-height: 1.4;
+}
+
+.found b {
+    color: var(--navy);
+}
+
+.repair {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .2rem 1rem;
+    align-items: start;
+    padding: .7rem 1rem;
+    background: rgba(255, 213, 115, .14);
+    border-left: .4rem solid var(--gold);
+    font-size: clamp(.9rem, 1.12vw, 1.14rem);
+    line-height: 1.4;
+}
+
+.repair .ba-label {
+    grid-row: span 2;
+}
+
+.fixit .ba-label {
+    justify-self: start;
+}
+
+/* ---------- Slide 21: teller section ----------------------------------- */
+
+/* One item per ruled line: the list starts on the card's first rule
+   and every line box is exactly one rule tall, so text sits on the
+   lines the way a hand-filled index card does. */
+.teller-card {
+    padding-top: 1.1rem;
+}
+
+.teller-card .never {
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.teller-card .never li,
+.teller-card .closing {
+    font-size: clamp(.84rem, 1.02vw, 1.04rem);
+    line-height: 2.15rem;
+    white-space: nowrap;
+}
+
+.teller-card .closing {
+    font-weight: 700;
+}
+
+/* ---------- Slide 23: Copperwind key ----------------------------------- */
+
+.fact-key {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .45rem 1rem;
+    margin: 0;
+}
+
+.fact-key dt {
+    padding-top: .2rem;
+    color: var(--blue);
+    font-size: clamp(.78rem, .98vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.fact-key dd {
+    margin: 0;
+    font-size: clamp(.98rem, 1.25vw, 1.28rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 24: lab handoff -------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.9rem, 1.8vw, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    padding: 1rem 1.1rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .08);
+}
+
+.lab-parts .part {
+    color: var(--gold);
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    line-height: 1.2;
+}
+
+.lab-parts span:last-child {
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+}
+
+.ahead {
+    color: rgba(255, 255, 255, .85);
+    font-size: clamp(.95rem, 1.2vw, 1.25rem);
+}
+
+.dark .prompt.exit p {
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+/* ---------- Gold check slides ------------------------------------------ */
+
+.slide.gold .prompt p {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+}
+
+/* ---------- Laptop height ---------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .8rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.7rem, 2.9vw, 3.1rem);
+    }
+
+    .binder {
+        min-height: 13rem;
+    }
+
+    .binder.lit {
+        min-height: 15rem;
+    }
+
+    .gate {
+        padding: .4rem .7rem;
+    }
+
+    .tier-lines p,
+    .audit .turn p,
+    .excerpt p {
+        font-size: .8rem;
+        line-height: 1.4;
+    }
+
+    .sheet .card-fields dd,
+    .policy-card .card-fields dd,
+    .teller-card .never li {
+        font-size: .76rem;
+        line-height: 1.5;
+    }
+
+    .case .said,
+    .case .asked-q,
+    .case .backed,
+    .cite-row,
+    .found {
+        font-size: .78rem;
+    }
+
+    .poster {
+        max-height: 20rem;
+    }
+
+    .poster-split .said {
+        font-size: .86rem;
+    }
+
+    .teller-card .never li,
+    .teller-card .closing {
+        font-size: .8rem;
+    }
+
+    .chat-body {
+        padding: .55rem;
+    }
+
+    .turn {
+        padding: .5rem .7rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        background-size: 8rem auto, 7rem auto, 8rem auto, auto;
+        background-position: left 1rem top .4rem, right -1rem bottom 3.5rem, left 1rem bottom 4rem, 0 0;
+    }
+
+    .brand {
+        right: auto;
+        left: 1.25rem;
+    }
+
+    .targets,
+    .sorter,
+    .rmf,
+    .extract,
+    .touch,
+    .poster-split,
+    .audit,
+    .lab-parts,
+    .plans,
+    .teller-card .never,
+    .chat.split-chat .chat-body {
+        grid-template-columns: 1fr;
+    }
+
+    .four-q li {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .shelf {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .binder,
+    .binder.lit {
+        min-height: 0;
+    }
+
+    .gate {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .date-track {
+        grid-template-columns: 1fr;
+    }
+
+    .moved::before {
+        transform: rotate(90deg);
+    }
+
+    .rmf .fn:not(:nth-child(3))::after,
+    .tick:not(:last-child)::after {
+        display: none;
+    }
+
+    .bill {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .lane {
+        grid-template-columns: 1fr;
+    }
+
+    .extract-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .policy-card .card-fields {
+        grid-template-columns: 1fr;
+        gap: .15rem;
+    }
+
+    .policy-card .labels {
+        justify-content: flex-start;
+        margin-bottom: .5rem;
+    }
+
+    .policy-card .card-fields dd {
+        line-height: 1.4;
+    }
+
+    .repair {
+        grid-template-columns: 1fr;
+    }
+
+    .repair .ba-label {
+        grid-row: auto;
+        justify-self: start;
+    }
+
+    .poster {
+        aspect-ratio: auto;
+        min-height: 18rem;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .chat-bar .stamp,
+    .read-on .stamp {
+        margin-left: 0;
+        white-space: normal;
+    }
+
+    .teller-card .never li,
+    .teller-card .closing {
+        line-height: 1.5;
+        white-space: normal;
+    }
+
+    .teller-card .never li + li {
+        margin-top: .5rem;
+    }
+}
+
+/* The card tab sits above the card's top edge, so ruled cards keep a
+   little air under the title at every width. */
+.sheet,
+.policy-card,
+.teller-card {
+    margin-top: 1rem;
+}
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .teller-card .never li,
+    .teller-card .closing {
+        line-height: 2.15rem;
+    }
+}
