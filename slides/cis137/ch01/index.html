@@ -178,11 +178,12 @@
       <div class="content">
         <div class="eyebrow">Milestones</div>
         <h2 class="wide-title">Three eras, one question: where did the behavior come from?</h2>
-        <div class="timeline" role="img" aria-label="A timeline from 1950 to today in three lanes, read left to right. Rules era lane, 1950s into the 1990s: 1950 Turing test, 1956 Dartmouth workshop, 1966 ELIZA, a first AI winter in the 1970s, a second around 1990, then 1997 Deep Blue. Learning era lane, 2000s onward: 2012 AlexNet, 2016 AlphaGo. Generating era lane, 2017 onward: 2017 transformer, 2022 chat assistants become everyday tools.">
+        <div class="timeline" role="img" aria-label="A timeline from 1950 to today in three lanes, read left to right. Rules era lane, 1950s into the 1990s: 1950 Turing test, 1956 Dartmouth workshop, 1966 ELIZA, a first AI winter in the 1970s, a second around 1990, then 1997 Deep Blue, and a lighter tail running to today because rule-based systems still run payroll and traffic lights. Learning era lane, 2000s onward: 2012 AlexNet, 2016 AlphaGo. Generating era lane, 2017 onward: 2017 transformer, 2022 chat assistants become everyday tools.">
           <div class="lane rules">
             <span class="lane-name">Rules era</span>
             <div class="lane-track">
               <span class="band" style="--from: 0; --to: 50"></span>
+              <span class="band tail" style="--from: 50; --to: 76"><b>still running today</b></span>
               <span class="event" style="--at: 0"><b>1950</b> Turing test</span>
               <span class="event below" style="--at: 6"><b>1956</b> Dartmouth</span>
               <span class="event" style="--at: 16"><b>1966</b> ELIZA</span>
@@ -288,7 +289,7 @@
           </div>
           <ol class="data-flow" role="img" aria-label="What can happen to a prompt, left to right: your prompt is stored, may be reviewed by people at the vendor, and may become training data for the next model.">
             <li class="you">Your prompt</li>
-            <li>Stored</li>
+            <li>May be stored</li>
             <li>May be reviewed</li>
             <li class="last">May become training data</li>
           </ol>
@@ -326,7 +327,7 @@
           <p class="verbatim">Your manager asks you to paste a customer’s email into a chat assistant to draft a reply. Using the rule, say what you would do instead, or what you would have to remove and confirm before you did it.</p>
         </div>
         <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
-        <div class="answer">The email is another person’s information, so it fails the bulletin board test. Remove the customer’s name, contact details, and account facts first, and confirm your employer allows the tool. Or skip the paste and draft from a summary you write yourself.</div>
+        <div class="answer">The email is another person’s information, so it fails the bulletin board test. Before you paste anything, remove the customer’s personal information and any employer confidential data. If you cannot remove it, do not paste it. If you would not post it on a public bulletin board, do not type it into an AI tool.</div>
       </div>
     </section>
 

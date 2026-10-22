@@ -626,6 +626,27 @@ h2.check-title {
     background: var(--type-learned);
 }
 
+/* No era retires the one before it (Section 1.2), so the rules lane
+   keeps a faint tail past 2000 instead of stopping where learning starts. */
+.band.tail {
+    height: .35rem;
+    opacity: .38;
+    border-radius: 0 .3rem .3rem 0;
+}
+
+.band.tail b {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: .35rem;
+    color: var(--navy);
+    font-size: clamp(.68rem, .82vw, .85rem);
+    font-weight: 800;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    opacity: 1;
+}
+
 .lane.generated .band {
     background: var(--type-generated);
 }

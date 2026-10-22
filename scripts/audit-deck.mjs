@@ -128,7 +128,9 @@ for (const [width, height] of viewports) {
             i,
             { timeout: 5000 }
         );
-        await page.waitForTimeout(80);
+        // The shared runtime fades a slide in over 360 ms. Wait it out so
+        // screenshots show the final state, not a half-faded frame.
+        await page.waitForTimeout(450);
 
         const check = await page.evaluate(({ isPhone, BANNED_WORDS, FILLER }) => {
             const slide = document.querySelector(".slide.active");
