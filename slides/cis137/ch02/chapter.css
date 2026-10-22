@@ -1,0 +1,1963 @@
+/* CIS137 Chapter 2: the next-word rail
+   The chapter's mechanism is one tile at a time: a model reads tokens,
+   sees only what fits in a window, and picks the next piece with a
+   little chance. So the room is a rail of word tiles. A faint tile rail
+   runs along the bottom edge with a gold frame around its newest tiles
+   (the context window), dot ticks mark the steps, and the brand glyph
+   is a single tile beside an open slot. All of it is painted as
+   background layers so nothing positioned can overflow or trap focus. */
+
+body {
+    /* The three shaping forces keep one color each wherever they
+       appear: training data in support blue, the prompt in navy ink,
+       chance in gold. */
+    --force-data: var(--blue);
+    --force-prompt: var(--navy);
+    --force-chance: #b8860b;
+    /* The four error types keep one color each, and every chip also
+       carries its name. Danger red is reserved for fabrication because
+       fabrication is the invented one. */
+    --err-fab: var(--danger);
+    --err-stale: var(--warning);
+    --err-omit: var(--blue);
+    --err-agree: #4d80ba;
+    --tile-edge: color-mix(in srgb, var(--navy) 24%, transparent);
+}
+
+/* ---------- Motif layers ---------------------------------------------- */
+
+.slide {
+    background-color: var(--canvas);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 64'%3E%3Cg fill='rgba(0,26,54,0.07)'%3E%3Crect x='2' y='14' width='52' height='40' rx='7'/%3E%3Crect x='62' y='14' width='52' height='40' rx='7'/%3E%3Crect x='122' y='14' width='52' height='40' rx='7'/%3E%3Crect x='182' y='14' width='52' height='40' rx='7'/%3E%3Crect x='242' y='14' width='52' height='40' rx='7'/%3E%3Crect x='302' y='14' width='52' height='40' rx='7'/%3E%3C/g%3E%3Crect x='362' y='14' width='52' height='40' rx='7' fill='none' stroke='rgba(184,134,11,0.45)' stroke-width='3' stroke-dasharray='7 5'/%3E%3Crect x='176' y='4' width='242' height='58' rx='9' fill='none' stroke='rgba(184,134,11,0.4)' stroke-width='3'/%3E%3C/svg%3E"),
+        radial-gradient(circle, rgba(29, 94, 163, .22) .12rem, transparent .14rem),
+        linear-gradient(165deg, #f4f8fc, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: right clamp(1rem, 3vw, 3rem) bottom clamp(4.2rem, 6vw, 5.4rem), left 0 bottom clamp(2.6rem, 3.6vw, 3.4rem), 0 0;
+    background-size: clamp(16rem, 24vw, 27rem) auto, 1.6rem 1.6rem, auto;
+    background-repeat: no-repeat, repeat-x, no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 64'%3E%3Cg fill='rgba(255,255,255,0.06)'%3E%3Crect x='2' y='14' width='52' height='40' rx='7'/%3E%3Crect x='62' y='14' width='52' height='40' rx='7'/%3E%3Crect x='122' y='14' width='52' height='40' rx='7'/%3E%3Crect x='182' y='14' width='52' height='40' rx='7'/%3E%3Crect x='242' y='14' width='52' height='40' rx='7'/%3E%3Crect x='302' y='14' width='52' height='40' rx='7'/%3E%3C/g%3E%3Crect x='362' y='14' width='52' height='40' rx='7' fill='none' stroke='rgba(255,213,115,0.45)' stroke-width='3' stroke-dasharray='7 5'/%3E%3Crect x='176' y='4' width='242' height='58' rx='9' fill='none' stroke='rgba(255,213,115,0.3)' stroke-width='3'/%3E%3C/svg%3E"),
+        radial-gradient(circle, rgba(255, 213, 115, .2) .12rem, transparent .14rem),
+        linear-gradient(165deg, #00244a, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 64'%3E%3Cg fill='rgba(0,26,54,0.08)'%3E%3Crect x='2' y='14' width='52' height='40' rx='7'/%3E%3Crect x='62' y='14' width='52' height='40' rx='7'/%3E%3Crect x='122' y='14' width='52' height='40' rx='7'/%3E%3Crect x='182' y='14' width='52' height='40' rx='7'/%3E%3Crect x='242' y='14' width='52' height='40' rx='7'/%3E%3Crect x='302' y='14' width='52' height='40' rx='7'/%3E%3C/g%3E%3Crect x='362' y='14' width='52' height='40' rx='7' fill='none' stroke='rgba(0,26,54,0.35)' stroke-width='3' stroke-dasharray='7 5'/%3E%3Crect x='176' y='4' width='242' height='58' rx='9' fill='none' stroke='rgba(0,26,54,0.22)' stroke-width='3'/%3E%3C/svg%3E"),
+        radial-gradient(circle, rgba(0, 26, 54, .16) .12rem, transparent .14rem),
+        linear-gradient(165deg, #ffe3a3, var(--gold));
+}
+
+/* The title field stays flat navy so the hero art blends without a
+   seam, and keeps only the dot ticks. */
+.slide.dark.title-slide {
+    background-image: radial-gradient(circle, rgba(255, 213, 115, .2) .12rem, transparent .14rem);
+    background-position: left 0 bottom clamp(2.6rem, 3.6vw, 3.4rem);
+    background-size: 1.6rem 1.6rem;
+    background-repeat: repeat-x;
+}
+
+/* Brand glyph: one filled tile beside an open dashed slot. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    --glyph: #b8860b;
+    content: "";
+    width: 1.8em;
+    height: 1em;
+    /* Left: a filled word tile. Right: the open slot, drawn as four
+       thin gold edges, waiting for the next tile. */
+    background:
+        linear-gradient(currentColor, currentColor) 0 0 / 44% 100% no-repeat,
+        linear-gradient(var(--glyph), var(--glyph)) 100% 0 / 44% .14em no-repeat,
+        linear-gradient(var(--glyph), var(--glyph)) 100% 100% / 44% .14em no-repeat,
+        linear-gradient(var(--glyph), var(--glyph)) 56% 0 / .14em 100% no-repeat,
+        linear-gradient(var(--glyph), var(--glyph)) 100% 0 / .14em 100% no-repeat;
+    opacity: .9;
+}
+
+.dark .brand::before {
+    --glyph: var(--gold);
+}
+
+/* The chapter title is long, so it steps down a size to hold three
+   lines beside the hero art. */
+.title-slide h1 {
+    max-width: none;
+    font-size: clamp(2.8rem, 4.3vw, 5.2rem);
+}
+
+/* The hero's focal point (the open gold slot and the die) sits at the
+   right edge of the render, so the crop anchors right instead of center. */
+.title-slide .title-art img {
+    object-position: 100% 50%;
+}
+
+/* ---------- Shared type helpers --------------------------------------- */
+
+/* Slide 2: the title breaks only between whole sentences. */
+h2.target-title {
+    max-width: none;
+}
+
+h2.wide-title,
+h2.check-title {
+    max-width: 30ch;
+    font-size: clamp(2rem, 3.5vw, 4rem);
+}
+
+.visual-split h2 {
+    font-size: clamp(2.1rem, 3.7vw, 4.2rem);
+    max-width: 14ch;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.5rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.chat-bar .stamp {
+    margin-left: auto;
+    transform: rotate(-2deg);
+    letter-spacing: .06em;
+}
+
+.dark .chat-bar .stamp {
+    color: var(--blue);
+}
+
+/* A word tile: the deck's one recurring object. */
+.tile {
+    display: inline-grid;
+    place-items: center;
+    min-width: 3.2em;
+    padding: .45em .7em;
+    background: #fff;
+    color: #001a36;
+    border: .1rem solid var(--tile-edge);
+    border-radius: .45rem;
+    box-shadow: 0 .28rem 0 color-mix(in srgb, var(--navy) 22%, transparent);
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+/* ---------- Error chips (one color and one name per type) ------------- */
+
+.err-chip,
+.err-tag {
+    display: inline-block;
+    padding: .25rem .7rem;
+    border-radius: .35rem;
+    color: #fff;
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.err-chip.fab,
+.err-tag.fab {
+    background: var(--err-fab);
+}
+
+.err-chip.stale,
+.err-tag.stale {
+    background: var(--err-stale);
+    color: #001a36;
+}
+
+.err-chip.omit,
+.err-tag.omit {
+    background: var(--err-omit);
+}
+
+.err-chip.agree,
+.err-tag.agree {
+    background: #fff;
+    color: #001a36;
+    border: .14rem dashed var(--err-agree);
+}
+
+.fab-text {
+    color: var(--err-fab);
+}
+
+/* ---------- Slide 2: targets as tiles on a rail ----------------------- */
+
+.target-rail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 0;
+    padding: 0 0 1.1rem;
+    list-style: none;
+    background: linear-gradient(var(--navy), var(--navy)) 0 100% / 100% .35rem no-repeat;
+}
+
+.target-rail li {
+    display: grid;
+    align-content: start;
+    gap: .5rem;
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    background: #fff;
+    border: .12rem solid var(--tile-edge);
+    border-radius: .7rem;
+    box-shadow: 0 .5rem 0 color-mix(in srgb, var(--navy) 18%, transparent);
+}
+
+.target-rail li:last-child {
+    border: .18rem solid #b8860b;
+    box-shadow: 0 .5rem 0 var(--gold);
+}
+
+.t-num {
+    color: var(--blue);
+    font-size: clamp(.8rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.target-rail strong {
+    font-size: clamp(1.4rem, 2.2vw, 2.2rem);
+    line-height: 1;
+}
+
+.target-rail p {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+/* ---------- Slide 3: the training loop and the stages ----------------- */
+
+.learn-figure {
+    display: grid;
+    gap: clamp(1.2rem, 2.4vw, 2.4rem);
+}
+
+.learn-loop,
+.stage-strip {
+    display: grid;
+    gap: clamp(.6rem, 1.4vw, 1.4rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.learn-loop {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.25fr);
+}
+
+.learn-loop li,
+.stage-strip li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .25rem;
+    padding: .85rem 1rem;
+    border-radius: .55rem;
+    background: rgba(255, 255, 255, .08);
+    border: .12rem solid rgba(255, 255, 255, .25);
+}
+
+.learn-loop li:not(:last-child)::after,
+.stage-strip li:not(:last-child)::after {
+    position: absolute;
+    top: 50%;
+    right: clamp(-1.25rem, -1.1vw, -.6rem);
+    content: "\2192";
+    color: var(--gold);
+    font-weight: 900;
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    transform: translate(35%, -50%);
+}
+
+.learn-loop b,
+.stage-strip b {
+    color: var(--gold);
+    font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+}
+
+.learn-loop span,
+.stage-strip span {
+    font-size: clamp(.86rem, 1.1vw, 1.12rem);
+    line-height: 1.3;
+}
+
+.learn-loop .repeat {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #001a36;
+}
+
+.learn-loop .repeat b {
+    color: #001a36;
+}
+
+.stage-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    padding-top: clamp(1rem, 2vw, 1.6rem);
+    border-top: .14rem dashed rgba(255, 255, 255, .3);
+}
+
+.stage-strip li {
+    background: #fff;
+    border-color: #fff;
+    color: #001a36;
+}
+
+.stage-strip li b {
+    color: var(--blue);
+}
+
+.stage-strip li.none {
+    align-content: center;
+    background: transparent;
+    border: 0;
+}
+
+.stage-strip .stamp {
+    color: var(--gold);
+    font-size: clamp(.9rem, 1.2vw, 1.2rem);
+}
+
+/* ---------- Slide 4: the next-word rail ------------------------------- */
+
+.next-word .rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: .5rem;
+    padding-bottom: .9rem;
+    background: linear-gradient(var(--navy), var(--navy)) 0 100% / 100% .3rem no-repeat;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+.slot {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .3rem;
+    margin-left: .4rem;
+}
+
+.candidates {
+    display: grid;
+    gap: .25rem;
+}
+
+.candidates span {
+    padding: .18em .6em;
+    background: #fff;
+    border: .1rem solid var(--tile-edge);
+    border-radius: .35rem;
+    color: #001a36;
+    font-size: .72em;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.candidates span:first-child {
+    background: var(--gold);
+    border-color: #b8860b;
+}
+
+.slot-mark {
+    display: grid;
+    place-items: center;
+    min-height: 2.1em;
+    padding: 0 .9em;
+    border: .16rem dashed #b8860b;
+    border-radius: .45rem;
+    background: color-mix(in srgb, var(--gold) 30%, #fff);
+    color: #001a36;
+    font-weight: 900;
+}
+
+.endings .chat-body {
+    padding: .6rem .9rem;
+    gap: .45rem;
+}
+
+.endings .turn {
+    max-width: 100%;
+    padding: .45rem .8rem;
+}
+
+.endings ol {
+    margin: 0;
+    padding-left: 1.4rem;
+}
+
+.endings li {
+    font-size: clamp(.82rem, 1vw, 1.06rem);
+    line-height: 1.32;
+}
+
+/* ---------- Slide 5: knowing versus predicting ------------------------ */
+
+.know-predict {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.kp-row {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1.1fr) minmax(8rem, .8fr) minmax(0, 1.5fr) auto;
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    align-items: center;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(.9rem, 1.6vw, 1.4rem);
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .07);
+    border: .12rem solid rgba(255, 255, 255, .2);
+}
+
+.kp-q {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.kp-meter {
+    height: 1.1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, .15);
+    overflow: hidden;
+}
+
+.kp-meter .fill {
+    display: block;
+    height: 100%;
+    background: var(--blue);
+    box-shadow: inset 0 0 0 .12rem #86a8d1;
+}
+
+.kp-row.strong .fill {
+    width: 96%;
+}
+
+.kp-row.weak .fill {
+    width: 9%;
+}
+
+.kp-why {
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+    line-height: 1.3;
+}
+
+.kp-pattern {
+    display: grid;
+    gap: .3rem;
+}
+
+.kp-pattern small {
+    color: #86a8d1;
+    font-size: clamp(.68rem, .82vw, .82rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.tone {
+    padding: .3rem .8rem;
+    border-radius: 2rem;
+    background: var(--gold);
+    color: #001a36;
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* ---------- Slide 6: three forces ------------------------------------- */
+
+.forces {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 clamp(1rem, 2vw, 1.8rem);
+}
+
+.force {
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: clamp(.9rem, 1.6vw, 1.4rem);
+    background: #fff;
+    border-top: .55rem solid var(--force-data);
+    border-radius: .3rem;
+    box-shadow: .4rem .45rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.force.f-prompt {
+    border-color: var(--force-prompt);
+}
+
+.force.f-chance {
+    border-color: var(--gold);
+}
+
+.force-tag {
+    color: var(--force-data);
+    font-size: clamp(1.15rem, 1.7vw, 1.7rem);
+    font-weight: 900;
+}
+
+.f-prompt .force-tag {
+    color: var(--force-prompt);
+}
+
+.f-chance .force-tag {
+    color: #7a5a06;
+}
+
+.force p {
+    font-size: clamp(.95rem, 1.25vw, 1.28rem);
+}
+
+.force-ex {
+    justify-self: start;
+    padding: .2rem .55rem;
+    border-radius: .3rem;
+    background: var(--mist);
+    color: #001a36;
+    font-size: clamp(.8rem, 1vw, 1rem);
+    font-weight: 800;
+}
+
+.force-ex::before {
+    content: "e.g. ";
+    color: var(--blue);
+}
+
+.force-merge {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    height: clamp(2.6rem, 4vw, 4rem);
+}
+
+/* The two outer lines run past their column into the gap so they meet
+   the response tile's top corners. */
+.force-merge span {
+    border-bottom: .3rem solid var(--force-data);
+    border-left: .3rem solid var(--force-data);
+    margin-left: 50%;
+    margin-right: calc(-1 * clamp(1rem, 2vw, 1.8rem) - .3rem);
+}
+
+.force-merge span:nth-child(2) {
+    margin-right: 0;
+    border-color: var(--force-prompt);
+    border-bottom: 0;
+}
+
+.force-merge span:nth-child(3) {
+    margin-left: calc(-1 * clamp(1rem, 2vw, 1.8rem) - .3rem);
+    margin-right: 50%;
+    border-left: 0;
+    border-right: .3rem solid var(--gold);
+    border-bottom: .3rem solid var(--gold);
+}
+
+.response-tile {
+    grid-column: 2;
+    justify-self: stretch;
+    text-align: center;
+    padding: .7rem 1.6rem;
+    border-radius: .55rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 900;
+    box-shadow: 0 .3rem 0 var(--gold);
+}
+
+/* ---------- Slide 8: tokens ------------------------------------------- */
+
+.token-figure {
+    display: grid;
+    gap: clamp(.9rem, 1.6vw, 1.4rem);
+}
+
+.token-text {
+    font-size: clamp(1.4rem, 2.4vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+}
+
+.token-rail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    font-family: var(--code);
+    font-size: clamp(1.05rem, 1.65vw, 1.7rem);
+}
+
+.tok {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.4em;
+    padding: .4em .6em;
+    border-radius: .45rem;
+    background: #fff;
+    color: #001a36;
+    font-weight: 800;
+    box-shadow: 0 .28rem 0 rgba(255, 255, 255, .25);
+}
+
+.tok.piece {
+    background: #bcd0e6;
+}
+
+.tok.num {
+    background: var(--gold);
+}
+
+.tok.punct {
+    background: transparent;
+    color: #fff;
+    border: .14rem dashed #fff;
+}
+
+.tok-group {
+    display: inline-flex;
+    gap: .12rem;
+    padding-bottom: .5rem;
+    border-bottom: .22rem solid #86a8d1;
+}
+
+.tok-group .tok:first-child {
+    border-radius: .45rem .1rem .1rem .45rem;
+}
+
+.tok-group .tok:last-child {
+    border-radius: .1rem .45rem .45rem .1rem;
+}
+
+.token-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 1.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.token-key li {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    font-size: clamp(.82rem, 1.05vw, 1.05rem);
+}
+
+.key {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: .25rem;
+    background: #fff;
+}
+
+.key.piece {
+    background: #bcd0e6;
+}
+
+.key.num {
+    background: var(--gold);
+}
+
+.key.punct {
+    background: transparent;
+    border: .12rem dashed #fff;
+}
+
+.oddities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+}
+
+.oddities p {
+    padding-left: .9rem;
+    border-left: .3rem solid var(--gold);
+    font-size: clamp(.95rem, 1.3vw, 1.32rem);
+}
+
+.oddities b {
+    color: var(--gold);
+}
+
+/* ---------- Slide 9: the context window ------------------------------- */
+
+/* One continuous rail, oldest message on the left. The gold frame is
+   laid over the right-hand tiles from the same grid, so the tiles never
+   break where the window starts: the early instruction simply sits
+   outside it, fading toward the left edge. */
+.msg-rail {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) repeat(8, minmax(0, 1fr)) minmax(0, 2.2fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(.45rem, .9vw, .9rem);
+    row-gap: .7rem;
+    max-width: 78rem;
+    padding: 0 0 1rem;
+}
+
+/* The rail itself: a track under every tile, end to end. */
+.msg-rail::before {
+    position: absolute;
+    right: 0;
+    bottom: .2rem;
+    left: 0;
+    height: .3rem;
+    border-radius: .2rem;
+    content: "";
+    background: linear-gradient(90deg, transparent, var(--tile-edge) 12%, var(--navy) 100%);
+}
+
+.fell-out,
+.frame-label {
+    grid-row: 1;
+    align-self: end;
+    font-size: clamp(.9rem, 1vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.fell-out {
+    grid-column: 1 / 5;
+    color: var(--ink);
+    opacity: .75;
+}
+
+.frame-label {
+    grid-column: 5 / -1;
+    padding-left: .6rem;
+    color: #001a36;
+}
+
+.msg {
+    grid-row: 2;
+    display: grid;
+    align-content: center;
+    min-height: clamp(3.2rem, 4.8vw, 5.2rem);
+    padding: .4rem .55rem;
+    border-radius: .45rem;
+    background: var(--mist);
+    border: .1rem solid var(--tile-edge);
+    font-size: clamp(.9rem, 1vw, 1.1rem);
+    line-height: 1.2;
+}
+
+.msg.a {
+    background: #fff;
+}
+
+.msg b {
+    color: var(--blue);
+    font-size: .85em;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.msg.instr {
+    border: .16rem dashed #b8860b;
+    background: color-mix(in srgb, var(--gold) 35%, #fff);
+    color: #001a36;
+    font-weight: 800;
+    /* The oldest tile fades toward the left edge, as if sliding off.
+       The text starts past the faded strip so it stays readable. */
+    padding-left: clamp(1rem, 1.6vw, 1.7rem);
+    -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .12), #000 22%);
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, .12), #000 22%);
+    opacity: .78;
+}
+
+/* Tiles step back toward full strength as they near the window. */
+.msg.o1 {
+    opacity: .55;
+}
+
+.msg.o2 {
+    opacity: .68;
+}
+
+.msg.o3 {
+    opacity: .82;
+}
+
+.msg.now {
+    border: .14rem solid var(--blue);
+}
+
+/* The window: drawn over the last six tiles and their label. */
+.win-frame {
+    position: absolute;
+    grid-column: 5 / -1;
+    grid-row: 1 / 3;
+    inset: -.45rem -.55rem -.35rem -.45rem;
+    border: .24rem solid #b8860b;
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .28);
+    pointer-events: none;
+}
+
+.forget-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2.4vw, 2.6rem);
+    align-items: start;
+}
+
+.forget {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .9rem;
+    align-items: start;
+}
+
+.forget > div {
+    display: grid;
+    gap: .5rem;
+}
+
+.forget-num {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    aspect-ratio: 1;
+    border-radius: .45rem;
+    background: var(--navy);
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+.forget strong {
+    font-size: clamp(1.02rem, 1.4vw, 1.4rem);
+    line-height: 1.2;
+}
+
+.forget .stamp {
+    justify-self: start;
+}
+
+.chat.mini .chat-body {
+    padding: .55rem .7rem;
+    gap: .4rem;
+}
+
+.chat.mini .turn {
+    padding: .4rem .7rem;
+    font-size: clamp(.8rem, .98vw, 1.02rem);
+}
+
+/* ---------- Slide 10: the fork ---------------------------------------- */
+
+.fork {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: center;
+}
+
+.fork-prompt {
+    padding: .9rem 1.1rem;
+    border-radius: .7rem .7rem .2rem .7rem;
+    background: var(--mist);
+    color: #001a36;
+    font-size: clamp(1rem, 1.35vw, 1.38rem);
+    line-height: 1.35;
+}
+
+.die {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: clamp(3rem, 4vw, 4.2rem);
+    aspect-ratio: 1;
+    padding: .5rem;
+    border-radius: .7rem;
+    background: var(--gold);
+    transform: rotate(-10deg);
+}
+
+.die i {
+    width: .55rem;
+    height: .55rem;
+    border-radius: 50%;
+    background: #001a36;
+}
+
+.die i:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.die i:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.die i:nth-child(3) {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.branches {
+    display: grid;
+    gap: clamp(1.2rem, 2.6vw, 2.6rem);
+    padding-left: 1.2rem;
+    border-left: .3rem solid var(--gold);
+}
+
+.branch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem;
+    font-size: clamp(1.05rem, 1.6vw, 1.65rem);
+}
+
+.branch .run {
+    min-width: 4.2rem;
+    color: var(--gold);
+    font-size: .62em;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.branch .tile.first {
+    background: var(--gold);
+    border-color: #b8860b;
+    box-shadow: 0 .28rem 0 #b8860b;
+}
+
+.gift-warning {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+}
+
+.gift-warning p {
+    padding: .7rem .9rem;
+    border-radius: .4rem;
+    background: rgba(255, 255, 255, .07);
+    font-size: clamp(.95rem, 1.3vw, 1.32rem);
+}
+
+.gift-warning .gift {
+    color: var(--gold);
+}
+
+.gift-warning .warn {
+    color: #f0b766;
+}
+
+/* ---------- Slide 12: the limit pair ---------------------------------- */
+
+.limit-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 3vw, 3.2rem);
+    align-items: start;
+}
+
+.limit-col {
+    display: grid;
+    gap: .8rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    background: #fff;
+    border-radius: .4rem;
+    box-shadow: .45rem .5rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.limit-col .ba-label {
+    justify-self: start;
+}
+
+.limit-text {
+    padding: .6rem .8rem;
+    border-left: .3rem solid var(--blue);
+    background: color-mix(in srgb, var(--canvas) 70%, #fff);
+    font-size: clamp(.92rem, 1.15vw, 1.18rem);
+}
+
+.gauge {
+    display: grid;
+    gap: .25rem;
+}
+
+.cells {
+    display: grid;
+    grid-template-columns: repeat(26, minmax(0, 1fr));
+    gap: .14rem;
+}
+
+.cells i {
+    position: relative;
+    height: 1.25rem;
+    border-radius: .14rem;
+    background: var(--blue);
+}
+
+.cells i:nth-child(25)::after {
+    position: absolute;
+    top: -.4rem;
+    right: -.18rem;
+    bottom: -.4rem;
+    width: .2rem;
+    content: "";
+    background: #001a36;
+}
+
+.cells i.over {
+    background: var(--gold);
+    box-shadow: inset 0 0 0 .12rem #b8860b;
+}
+
+.cap-mark {
+    justify-self: end;
+    margin-right: 2.5%;
+    color: #001a36;
+    font-size: clamp(.7rem, .88vw, .88rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.limit-stat {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+.limit-stat b {
+    color: var(--blue);
+}
+
+.limit-lead {
+    font-size: clamp(.95rem, 1.2vw, 1.22rem);
+}
+
+.added-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.added-list li {
+    font-size: clamp(.95rem, 1.2vw, 1.22rem);
+    font-weight: 700;
+}
+
+/* ---------- Slide 13: the four errors --------------------------------- */
+
+.errors {
+    display: grid;
+    grid-template-columns: auto repeat(3, minmax(0, 1fr));
+    gap: .55rem clamp(.6rem, 1.2vw, 1.1rem);
+    align-items: stretch;
+}
+
+.err-head {
+    align-self: end;
+    padding-bottom: .2rem;
+    color: var(--gold);
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.errors .err-tag {
+    display: grid;
+    align-items: center;
+    font-size: clamp(.72rem, .92vw, .92rem);
+}
+
+.err-cell {
+    padding: .6rem .8rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .08);
+    font-size: clamp(.86rem, 1.1vw, 1.14rem);
+    line-height: 1.3;
+}
+
+.err-cell.catch {
+    background: #fff;
+    color: #001a36;
+    font-weight: 700;
+}
+
+/* ---------- Slide 14: hallucination ----------------------------------- */
+
+.term {
+    font-weight: 900;
+}
+
+.probe {
+    padding-left: .9rem;
+    border-left: .3rem solid var(--err-fab);
+    font-size: clamp(.95rem, 1.25vw, 1.28rem);
+}
+
+/* ---------- Slides 15 and 16: cutoff and pressure --------------------- */
+
+.cutoff-split,
+.pressure-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(14rem, 1fr);
+    gap: clamp(1.2rem, 2.6vw, 3rem);
+    align-items: center;
+}
+
+.cutoff-split .turn,
+.pressure-split .turn {
+    max-width: 100%;
+}
+
+.pressure-split .chat-body {
+    gap: .5rem;
+}
+
+.pressure-split .turn {
+    padding: .5rem .85rem;
+    font-size: clamp(.86rem, 1.05vw, 1.12rem);
+}
+
+.turn.user.push {
+    max-width: 80%;
+    border: .14rem dashed var(--err-agree);
+}
+
+.cutoff-side,
+.pressure-side {
+    display: grid;
+    gap: .8rem;
+    justify-items: start;
+}
+
+.cutoff-side p,
+.pressure-side p {
+    font-size: clamp(1rem, 1.35vw, 1.38rem);
+    line-height: 1.3;
+}
+
+.cutoff-side b {
+    color: var(--gold);
+}
+
+.cutoff-rule {
+    padding: .6rem .8rem;
+    border-left: .3rem solid var(--gold);
+    font-weight: 800;
+}
+
+.pressure-side .cutoff-rule {
+    border-color: var(--navy);
+}
+
+.dates {
+    display: grid;
+    gap: .4rem;
+}
+
+.dates p {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+/* ---------- Slide 18: the blended citation ---------------------------- */
+
+.blend {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(.8rem, 1.8vw, 1.8rem);
+    align-items: center;
+}
+
+.real-papers {
+    display: grid;
+    gap: clamp(.7rem, 1.4vw, 1.2rem);
+}
+
+.paper {
+    display: grid;
+    gap: .45rem;
+    justify-items: start;
+    padding: .8rem 1rem;
+    border-radius: .3rem;
+    background: #fff;
+    color: #001a36;
+    border-left: .5rem solid var(--blue);
+}
+
+.real-papers .paper {
+    align-content: start;
+}
+
+.paper.src-b {
+    border-left-color: var(--gold);
+}
+
+.paper p {
+    font-size: clamp(.84rem, 1.06vw, 1.1rem);
+    line-height: 1.38;
+}
+
+.paper-tag {
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.paper.blended {
+    border: .2rem dashed var(--danger);
+    border-left-width: .5rem;
+    border-left-style: solid;
+}
+
+.paper.blended .paper-tag {
+    color: var(--danger);
+}
+
+/* In every card, the parts that came from paper A are underlined in
+   blue and the parts from paper B are washed in gold, so the blend
+   shows where each piece of the fake came from. */
+.from-a-title,
+.from-a-journal {
+    border-bottom: .2rem solid var(--blue);
+}
+
+.src-b .from-b,
+.blended .from-b {
+    background: color-mix(in srgb, var(--gold) 55%, transparent);
+}
+
+/* The middle column draws the blend: a blue line from paper A and a
+   gold line from paper B run into the response card and meet at its
+   edge. The real-paper cards share one height so each line starts at
+   its card's middle. */
+.real-papers {
+    grid-auto-rows: 1fr;
+}
+
+.blend-arrows {
+    position: relative;
+    align-self: stretch;
+    width: clamp(9rem, 12vw, 14rem);
+    margin-inline: calc(-1 * clamp(.8rem, 1.8vw, 1.8rem));
+}
+
+.blend-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.blend-lines path {
+    fill: none;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+}
+
+.blend-lines .line-a {
+    stroke: var(--blue);
+}
+
+.blend-lines .line-b {
+    stroke: var(--gold);
+}
+
+.blend-arrows .arr-a,
+.blend-arrows .arr-b {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.blend-arrows .arr-a {
+    top: 34%;
+}
+
+.blend-arrows .arr-b {
+    top: 66%;
+}
+
+.blend-arrows span {
+    display: block;
+    padding: .25rem .6rem;
+    border-radius: .3rem;
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.blend-arrows span::after {
+    content: " \2192";
+}
+
+.arr-a {
+    background: var(--blue);
+    color: #fff;
+}
+
+.arr-b {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.danger-stamp {
+    margin-top: .35rem;
+    color: var(--danger);
+}
+
+.dark .paper .danger-stamp {
+    margin-top: .35rem;
+    color: var(--danger);
+}
+
+/* ---------- Slide 19: Fix It ------------------------------------------ */
+
+.fixit {
+    align-items: start;
+}
+
+.fix-col {
+    display: grid;
+    gap: .7rem;
+    align-content: start;
+}
+
+.fix-col .ba-label {
+    justify-self: start;
+}
+
+.fix-prompt {
+    padding: .7rem .9rem;
+    background: var(--mist);
+    color: #001a36;
+    border-radius: .6rem;
+    font-size: clamp(.86rem, 1.05vw, 1.12rem);
+    line-height: 1.38;
+}
+
+.fix-prompt.stepped {
+    grid-template-columns: 1fr;
+    gap: .25rem;
+}
+
+.fix-prompt.stepped .step {
+    justify-self: start;
+    margin-top: .2rem;
+}
+
+.fix-prompt.stepped p {
+    font-size: inherit;
+    line-height: 1.35;
+}
+
+.fix-out {
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+}
+
+.verify-list .src-phrase {
+    color: var(--ink);
+    font-style: italic;
+}
+
+.verify-list {
+    display: grid;
+    gap: .4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.verify-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .55rem;
+    font-size: clamp(.86rem, 1.05vw, 1.1rem);
+}
+
+/* ---------- Slide 20: claims first ------------------------------------ */
+
+.claim-kinds {
+    display: grid;
+    gap: .45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.claim-kinds li {
+    font-size: clamp(.98rem, 1.3vw, 1.32rem);
+    line-height: 1.3;
+}
+
+.claim-kinds b {
+    color: var(--gold);
+}
+
+.two-claims {
+    padding: .7rem .9rem;
+    border-radius: .5rem;
+    background: #fff;
+    color: #001a36;
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+    line-height: 1.7;
+}
+
+/* ---------- Slide 21: the verify strip -------------------------------- */
+
+.verify-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 14rem) minmax(7rem, 9rem);
+    gap: 0 clamp(.6rem, 1.4vw, 1.4rem);
+}
+
+.vs-head {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .7rem;
+    border-radius: .4rem .4rem 0 0;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.vs-step {
+    display: grid;
+    place-items: center;
+    width: 1.6em;
+    aspect-ratio: 1;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #001a36;
+    letter-spacing: 0;
+}
+
+.vs-rows {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: claim;
+    background: #fff;
+}
+
+.vs-rows li {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+    padding: .28rem 0;
+    border-bottom: .08rem solid color-mix(in srgb, var(--blue) 22%, transparent);
+    counter-increment: claim;
+    font-size: clamp(.8rem, 1vw, 1.04rem);
+    line-height: 1.25;
+}
+
+.vs-rows .c {
+    padding-left: .7rem;
+}
+
+.vs-rows .c::before {
+    content: counter(claim) ". ";
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.vs-rows .s {
+    color: var(--blue);
+    font-weight: 800;
+    padding-left: .7rem;
+}
+
+.vs-rows .verdict {
+    justify-self: start;
+    font-size: clamp(.68rem, .84vw, .86rem);
+    padding-top: .1rem;
+    padding-bottom: .1rem;
+}
+
+.vs-rows li.gap {
+    background: color-mix(in srgb, var(--mist) 45%, #fff);
+}
+
+.vs-report {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: stretch;
+    margin-top: .7rem;
+    border: .16rem solid var(--navy);
+    border-radius: .4rem;
+    background: color-mix(in srgb, var(--gold) 30%, #fff);
+}
+
+.vs-report .vs-head {
+    border-radius: 0;
+}
+
+.vs-report p {
+    align-self: center;
+    padding: .5rem .9rem;
+    color: #001a36;
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+    font-weight: 700;
+}
+
+/* ---------- Slide 23: Copperwind -------------------------------------- */
+
+.fact-key {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .55rem 1rem;
+    margin: 0;
+}
+
+.fact-key dt {
+    padding-top: .2rem;
+    color: var(--gold);
+    font-size: clamp(.78rem, .98vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.fact-key dd {
+    margin: 0;
+    font-size: clamp(.98rem, 1.3vw, 1.32rem);
+    line-height: 1.3;
+}
+
+.file {
+    display: inline-block;
+    margin: 0 .35rem .3rem 0;
+    padding: .1rem .45rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .12);
+    font-family: var(--code);
+    font-size: .82em;
+}
+
+/* ---------- Slide 24: lab handoff ------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.9rem, 1.8vw, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    padding: 1rem 1.1rem;
+    border-radius: .55rem;
+    border: .12rem solid rgba(255, 255, 255, .25);
+    border-bottom: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .07);
+}
+
+.lab-parts .part {
+    color: var(--gold);
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    line-height: 1.2;
+}
+
+.lab-parts span:last-child {
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+}
+
+/* The handoff runs as one numbered vertical strip: a gold spine ties
+   the three parts in order, then a single exit-ticket bar closes it. */
+.lab-parts.lab-strip {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: clamp(.5rem, 1vw, .9rem);
+    max-width: 74rem;
+}
+
+.lab-parts.lab-strip::before {
+    position: absolute;
+    top: 1.2rem;
+    bottom: 1.2rem;
+    left: clamp(2.6rem, 3.4vw, 3.4rem);
+    width: .3rem;
+    content: "";
+    background: var(--gold);
+}
+
+.lab-parts.lab-strip li {
+    position: relative;
+    grid-template-columns: clamp(5.2rem, 6.8vw, 6.8rem) minmax(12rem, 20rem) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    padding: .65rem 1.1rem .65rem 0;
+    border: 0;
+    border-bottom: .12rem solid rgba(255, 255, 255, .18);
+    border-radius: 0;
+    background: none;
+}
+
+.lab-parts.lab-strip li:last-child {
+    border-bottom: 0;
+}
+
+.lab-parts.lab-strip .part {
+    z-index: 1;
+    justify-self: center;
+    padding: .35rem .6rem;
+    border-radius: .4rem;
+    background: var(--gold);
+    color: #001a36;
+}
+
+.ahead {
+    color: rgba(255, 255, 255, .85);
+    font-size: clamp(.95rem, 1.2vw, 1.25rem);
+}
+
+/* ---------- Gold check slides ----------------------------------------- */
+
+.slide.gold .prompt p {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+}
+
+/* ---------- Laptop height --------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .8rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.7rem, 2.8vw, 3rem);
+    }
+
+    .endings li,
+    .pressure-split .turn,
+    .paper p,
+    .fix-prompt {
+        font-size: .86rem;
+        line-height: 1.3;
+    }
+
+    .endings .turn,
+    .pressure-split .turn {
+        padding: .35rem .6rem;
+    }
+
+    .next-word .rail {
+        font-size: 1rem;
+    }
+
+    .vs-rows li {
+        padding: .14rem 0;
+        font-size: .86rem;
+    }
+
+    .vs-rows .verdict {
+        font-size: .64rem;
+    }
+
+    .vs-report p {
+        font-size: .82rem;
+        padding: .35rem .7rem;
+    }
+
+    .learn-loop li,
+    .stage-strip li {
+        padding: .55rem .7rem;
+    }
+
+    .force-merge {
+        height: 2rem;
+    }
+
+    .msg {
+        min-height: 2.8rem;
+    }
+
+    .chat.mini .turn,
+    .limit-text {
+        font-size: .8rem;
+    }
+
+    .limit-col {
+        gap: .5rem;
+        padding: .8rem;
+    }
+
+    .verify-list li,
+    .fix-out {
+        font-size: .8rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        /* The tile rail drops on a phone so it never sits behind the
+           last lines of a scrolled slide. The dot ticks stay. */
+        background-size: 0 0, 1.4rem 1.4rem, auto;
+        background-position: right 1rem bottom 5rem, left 0 bottom 3.4rem, 0 0;
+    }
+
+    .brand {
+        right: auto;
+        left: 1.25rem;
+    }
+
+    .target-rail,
+    .learn-loop,
+    .stage-strip,
+    .forces,
+    .oddities,
+    .forget-pair,
+    .fork,
+    .gift-warning,
+    .limit-pair,
+    .cutoff-split,
+    .pressure-split,
+    .blend,
+    .lab-parts {
+        grid-template-columns: 1fr;
+    }
+
+    .learn-loop li:not(:last-child)::after,
+    .stage-strip li:not(:last-child)::after {
+        top: auto;
+        right: 50%;
+        bottom: -.55rem;
+        transform: translate(50%, 50%) rotate(90deg);
+    }
+
+    .stage-strip li.none {
+        justify-items: start;
+    }
+
+    .kp-row {
+        grid-template-columns: 1fr;
+        gap: .45rem;
+    }
+
+    .tone {
+        justify-self: start;
+    }
+
+    .force-merge {
+        display: none;
+    }
+
+    .forces {
+        gap: .8rem;
+    }
+
+    .response-tile {
+        grid-column: 1;
+    }
+
+    /* The rail stays one row on a phone. The plain tiles narrow and the
+       two labeled tiles keep the room. */
+    .msg-rail {
+        grid-template-columns: minmax(0, 3.4fr) repeat(8, minmax(0, .55fr)) minmax(0, 2.4fr);
+        column-gap: .2rem;
+    }
+
+    .msg {
+        min-height: 3.6rem;
+        padding: .3rem .3rem;
+        font-size: .76rem;
+    }
+
+    .fell-out {
+        grid-column: 1 / 3;
+    }
+
+    .fell-out,
+    .frame-label {
+        font-size: .68rem;
+    }
+
+    .die {
+        justify-self: start;
+    }
+
+    .blend-arrows {
+        display: flex;
+        width: auto;
+        margin-inline: 0;
+        gap: .6rem;
+    }
+
+    .blend-lines {
+        display: none;
+    }
+
+    .real-papers {
+        grid-auto-rows: auto;
+    }
+
+    .blend-arrows .arr-a,
+    .blend-arrows .arr-b {
+        position: static;
+        transform: none;
+    }
+
+    .blend-arrows span::after {
+        content: " \2193";
+    }
+
+    .errors {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .err-head {
+        display: none;
+    }
+
+    .errors .err-tag {
+        justify-self: start;
+        margin-top: .7rem;
+    }
+
+    /* With the column heads hidden, each cell names its own column. */
+    .err-cell:nth-child(4n + 2)::before {
+        content: "You see: ";
+        font-weight: 900;
+    }
+
+    .err-cell:nth-child(4n + 3)::before {
+        content: "Comes from: ";
+        font-weight: 900;
+    }
+
+    .err-cell:nth-child(4n)::before {
+        content: "Caught by: ";
+        font-weight: 900;
+    }
+
+    .verify-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-parts.lab-strip li {
+        grid-template-columns: auto minmax(0, 1fr);
+        padding-right: 0;
+    }
+
+    .lab-parts.lab-strip li > span:last-child {
+        grid-column: 2;
+    }
+
+    .lab-parts.lab-strip::before {
+        left: 2.1rem;
+    }
+
+    .verify-strip > .vs-head:nth-child(2),
+    .verify-strip > .vs-head:nth-child(3) {
+        display: none;
+    }
+
+    .vs-rows,
+    .vs-rows li {
+        grid-template-columns: 1fr auto;
+    }
+
+    .vs-rows .c {
+        grid-column: 1 / -1;
+    }
+
+    .vs-report {
+        grid-template-columns: 1fr;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .turn.user.push {
+        max-width: 100%;
+    }
+}

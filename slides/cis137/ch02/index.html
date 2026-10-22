@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 2 classroom presentation: How Generative AI Works and Where It Fails.">
+  <meta name="theme-color" content="#001A36">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Crect x='10' y='18' width='20' height='24' rx='4' fill='%23ffffff'/%3E%3Crect x='34' y='18' width='20' height='24' rx='4' fill='none' stroke='%23FFD573' stroke-width='3' stroke-dasharray='5 3'/%3E%3Crect x='8' y='48' width='48' height='4' rx='2' fill='%231D5EA3'/%3E%3C/svg%3E">
+  <title>CIS137: How Generative AI Works and Where It Fails</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: How Generative AI Works and Where It Fails" data-course="cis137"
+  data-chapter="ch02" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's hook. A charter school's office manager needs two studies for the parent newsletter. In ten seconds a chat assistant gives her a tidy paragraph, two citations, and a link. One of them names a paper that does not exist, and the warning at the top of the response does not say which one. Ask the lede: how would you find out which one? Take two answers. Promise the payoff: by the end of class, students can trace where an answer came from, name how it fails, and check it claim by claim before anyone relies on it.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-rail-hero.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 2 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>How Generative AI Works and Where It Fails</h1>
+        <p class="lede">Two citations in ten seconds. One names a paper that does not exist. Which one?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as actions students take today. 2.1 is tracing a response to training data, the prompt, and chance, and telling knowing from predicting. 2.2 is naming the four errors and the mechanism behind each one. 2.3 is the verify habit: claim by claim, against a source, with a report. The chapter serves CLO 1 (evaluate AI responses for accuracy) and CLO 2 (differentiate the major types of AI). It builds only on Chapter 1.&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 2</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2 class="target-title">Trace it. Attribute it.<br> Verify it.</h2>
+        <ol class="target-rail">
+          <li><span class="t-num">2.1 · Analyze</span><strong>Trace</strong><p>a response to what shaped it (training data, prompt, chance), separate what a model knows from what it predicts, and contrast language and image models</p></li>
+          <li><span class="t-num">2.2 · Analyze</span><strong>Attribute</strong><p>a model’s errors (fabrication, staleness, omission, agreement under pressure) to the mechanism that produced each one, and name the check that catches it</p></li>
+          <li><span class="t-num">2.3 · Evaluate</span><strong>Verify</strong><p>an AI response against a source, claim by claim, and report what held and what did not</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Walk the loop clockwise. The model starts as a neural network with no knowledge. It reads a stretch of text, guesses the next word, checks the guess against the real next word, and adjusts its connections a tiny amount. Then it does that again, billions of times. Nobody tells it a single fact, so it ends up with patterns: Phoenix often appears near Arizona. The patterns live in the strengths of the connections, not in a list of facts it can look up. Then the strip below. Pretraining is learning from the huge pile of text. Fine-tuning is an extra round on sample conversations that show good answers. RLHF has people compare two answers and pick the better one. Together they teach the model to answer, follow instructions, and sound polite. None of them gives it a fact checker.&#10;&#10;Time: 4-7 minutes.">
+      <div class="brand">CIS137 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">What the model learned</div>
+        <h2 class="wide-title">It learned patterns, not facts. No stage added a fact checker.</h2>
+        <div class="learn-figure">
+          <ol class="learn-loop" role="img" aria-label="A training loop in four beats, repeated billions of times. One, read a stretch of text: Phoenix, Arizona. Two, guess the next word. Three, check the guess against the real next word. Four, adjust the connections a tiny amount. Then repeat.">
+            <li><b>Read</b><span>a stretch of text</span></li>
+            <li><b>Guess</b><span>the next word</span></li>
+            <li><b>Check</b><span>against the real next word</span></li>
+            <li><b>Adjust</b><span>connections a tiny amount</span></li>
+            <li class="repeat"><b>× billions</b><span>Phoenix often appears near Arizona</span></li>
+          </ol>
+          <ol class="stage-strip" role="img" aria-label="Three training stages left to right. Pretraining: learning from the huge pile of text. Fine-tuning: an extra round on sample conversations that show good answers. RLHF: people compare two answers and pick the better one. The strip ends at a stamp: no fact checker.">
+            <li><b>Pretraining</b><span>learns from the huge pile of text</span></li>
+            <li><b>Fine-tuning</b><span>sample conversations show good answers</span></li>
+            <li><b>RLHF</b><span>people pick the better of two answers</span></li>
+            <li class="none"><span class="stamp">No fact checker</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the mechanism the whole chapter rests on. The model reads all of the prompt and predicts a likely next word, adds it, and predicts the next one, until the answer is done. Point to the open gold slot at the end of the rail. Above it are the five continuations the sample produced, stacked like candidates. Read two of the full endings aloud. Every ending is plausible, and none of them is about a ticket that exists. The model has never seen your help desk. If you asked why a specific ticket was closed, it would use the same machinery and give you a reason just as smooth.&#10;&#10;Time: 7-10 minutes.">
+      <div class="brand">CIS137 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">What it does with your prompt</div>
+        <h2 class="wide-title">Every ending fits. None is about a real ticket.</h2>
+        <div class="next-word" role="img" aria-label="A rail of word tiles reads: The help desk closed the ticket because, then an open gold slot. Stacked above the slot are five candidate next words, one per sample ending: the user, no response, it was, the request, the software. Each candidate fits the sentence before it.">
+          <div class="rail">
+            <span class="tile">The</span><span class="tile">help</span><span class="tile">desk</span><span class="tile">closed</span><span class="tile">the</span><span class="tile">ticket</span><span class="tile">because</span>
+            <span class="slot">
+              <span class="candidates verbatim"><span>the user</span><span>no response</span><span>it was</span><span>the request</span><span>the software</span></span>
+              <span class="slot-mark">next?</span>
+            </span>
+          </div>
+        </div>
+        <figure class="chat endings">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user"><span class="who">You</span><p class="verbatim">Finish this sentence in five different ways, one per line: "The help desk closed the ticket because"</p></div>
+            <div class="turn assistant"><span class="who">Assistant</span>
+              <ol class="verbatim">
+                <li>The help desk closed the ticket because the user confirmed the issue was resolved after restarting their computer.</li>
+                <li>The help desk closed the ticket because no response was received after three follow-up attempts.</li>
+                <li>The help desk closed the ticket because it was a duplicate of an existing, higher-priority outage report.</li>
+                <li>The help desk closed the ticket because the request required admin approval that was never granted.</li>
+                <li>The help desk closed the ticket because the software update pushed overnight fixed the login error automatically.</li>
+              </ol>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Here is the distinction the chapter turns on. A model knows something only in the sense that its training data repeated it so often the pattern is strong. The year of the first Moon landing has appeared millions of times in its training text, so the prediction and the truth line up. The closing time of a small shop near you appeared rarely or never, and the model still predicts. It reaches for what closing times usually look like. Point to the two tone tags: both answers come out in the same confident tone, because tone is a pattern too. Try It Yourself 2.1 runs exactly this test.&#10;&#10;Time: 10-12 minutes.">
+      <div class="brand">CIS137 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Knowing versus predicting</div>
+        <h2 class="wide-title">Same confident tone. Different evidence underneath.</h2>
+        <div class="know-predict" role="img" aria-label="Two questions compared. First, the year of the first Moon landing: the pattern in training data is strong, seen millions of times, so the prediction lines up with the truth. The answer sounds confident. Second, the closing time of a small shop near you: the pattern is weak, seen rarely or never, so the model reaches for what closing times usually look like. The answer sounds just as confident.">
+          <div class="kp-row strong">
+            <span class="kp-q">The year of the first Moon landing</span>
+            <span class="kp-pattern"><small>Pattern: strong</small><span class="kp-meter"><span class="fill"></span></span></span>
+            <span class="kp-why">Seen millions of times. Prediction and truth line up.</span>
+            <span class="tone">Confident</span>
+          </div>
+          <div class="kp-row weak">
+            <span class="kp-q">The closing time of a small shop near you</span>
+            <span class="kp-pattern"><small>Pattern: weak</small><span class="kp-meter"><span class="fill"></span></span></span>
+            <span class="kp-why">Seen rarely or never. It reaches for what closing times usually look like.</span>
+            <span class="tone">Confident</span>
+          </div>
+        </div>
+        <p class="field-note">The model has no separate signal that says “this one is a guess.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three things shape every response. Training data is what the model saw often, rarely, or never, and the shop's closing time is the example. The prompt is what you asked, what you supplied, and what you left out, and the 25-word battery limit is coming up. Chance is which of several likely words the model happened to pick, and two food truck names are coming up. Give students the question for the rest of the course: when a response surprises you, which of the three produced the surprise?&#10;&#10;Time: 12-14 minutes.">
+      <div class="brand">CIS137 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow">Three things shape every response</div>
+        <h2 class="wide-title">When a response surprises you, ask which force produced it.</h2>
+        <div class="forces" role="img" aria-label="Three feeds join into one response, read top to bottom. Training data: what the model saw often, rarely, or never. Example, a small shop's closing time. The prompt: what you asked, what you supplied, and what you left out. Example, a 25-word limit. Chance: which of several likely words the model happened to pick. Example, two food truck names. All three arrows meet in one response tile.">
+          <div class="force f-data"><span class="force-tag">Training data</span><p>what the model saw often, rarely, or never</p><span class="force-ex">a small shop’s closing time</span></div>
+          <div class="force f-prompt"><span class="force-tag">The prompt</span><p>what you asked, what you supplied, and what you left out</p><span class="force-ex">a 25-word limit</span></div>
+          <div class="force f-chance"><span class="force-tag">Chance</span><p>which of several likely words the model happened to pick</p><span class="force-ex">two food truck names</span></div>
+          <div class="force-merge" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="response-tile">One response</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 2.1, question 2. Give students 45 seconds to name a force and say why before you reveal. Training data is the answer: a neighborhood nonprofit's board president rarely or never appeared in the text the model learned from, so it predicted what such a name usually looks like. It came out confident because tone is a pattern too. The check is the nonprofit's own records, not the model.&#10;&#10;Time: 14-16 minutes.">
+      <div class="brand">CIS137 · 2.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 2.1</div>
+        <h2 class="check-title">It named the board president. Where did the name come from?</h2>
+        <div class="prompt">
+          <p class="verbatim">A neighborhood nonprofit asks a chat assistant for the name of its own board president, and it names someone confidently. Which of the three shaping forces most likely produced that name? Explain why the answer deserves a check before it goes in the newsletter.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Training data.</strong> A small nonprofit’s board rarely or never appeared in what the model learned from, so it predicted what such a name usually looks like. The confident tone is a pattern too, so check the name against the nonprofit’s own records first.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Section 2.1 said the model predicts the next word, which was a simplification. It works in tokens: a whole word, a piece of a word, a number, or a punctuation mark. Read the split. The is one token. Technician splits in two, reconnected splits in two, workstations splits in two. 22 is its own token, and so is the period. The split depends on the model, so this is an illustration, not a rule. Two oddities follow. Models can stumble on counting letters, because they do not see letters the way you do. And tool limits are counted in tokens, so when a free tier says a conversation is too long, it is counting tokens.&#10;&#10;Time: 16-18 minutes.">
+      <div class="brand">CIS137 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Tokens</div>
+        <h2 class="wide-title">The model reads tokens, not words.</h2>
+        <div class="token-figure" role="img" aria-label="The text line: The technician reconnected 22 workstations. Below it, nine tokens in order: The, techn, ician, reconnect, ed, 22, work, stations, and a period. Technician, reconnected, and workstations each split into two pieces. 22 is a number token and the period is a punctuation token.">
+          <p class="token-text verbatim">The technician reconnected 22 workstations.</p>
+          <div class="token-rail verbatim">
+            <span class="tok word">The</span>
+            <span class="tok-group"><span class="tok piece">techn</span><span class="tok piece">ician</span></span>
+            <span class="tok-group"><span class="tok piece">reconnect</span><span class="tok piece">ed</span></span>
+            <span class="tok num">22</span>
+            <span class="tok-group"><span class="tok piece">work</span><span class="tok piece">stations</span></span>
+            <span class="tok punct">.</span>
+          </div>
+          <ul class="token-key">
+            <li><span class="key word"></span>whole word</li>
+            <li><span class="key piece"></span>piece of a word</li>
+            <li><span class="key num"></span>number</li>
+            <li><span class="key punct"></span>punctuation</li>
+          </ul>
+        </div>
+        <div class="oddities">
+          <p><b>Counting letters</b> trips it up. It does not see letters the way you do.</p>
+          <p><b>Tool limits</b> count tokens, not words or pages.</p>
+        </div>
+        <p class="field-note">The split depends on the model. An illustration, not a rule.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A context window is the amount of text, counted in tokens, that a model can consider at one time. Your messages, its replies, and any pasted document all count. Text outside the window does not exist for the model. Walk the rail: a long chat, oldest on the left. The frame covers what the model can see now. The first instruction, keep every reply under 100 words, has slid out the left edge. That is the second kind of forgetting. The first kind is on the left: a fresh conversation starts with an empty window, and the sample says so honestly. When a long chat starts ignoring a rule, restate the rule or start a new conversation with everything it needs. Tools differ: some drop the oldest messages, some squeeze them into a summary.&#10;&#10;Time: 18-21 minutes.">
+      <div class="brand">CIS137 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">The context window</div>
+        <h2 class="wide-title">Outside the window, your first instruction does not exist.</h2>
+        <div class="window-figure" role="img" aria-label="A long chat drawn as one rail of message tiles, oldest on the left, newest on the right. The first tile, far left and fading off the edge, is your instruction: keep every reply under 100 words. Three more tiles follow it, each a little less faded, also outside the frame. A gold frame sits over the right-hand tiles: five messages and then the newest message, labeled what the model can see now. The instruction has slid out of the window.">
+          <div class="msg-rail">
+            <span class="fell-out">← Slid out of the window</span>
+            <span class="frame-label">What the model can see now</span>
+            <span class="msg instr"><b>You</b>“keep every reply under 100 words”</span>
+            <span class="msg a o1"></span><span class="msg o2"></span><span class="msg a o3"></span>
+            <span class="msg"></span><span class="msg a"></span><span class="msg"></span><span class="msg a"></span><span class="msg"></span>
+            <span class="msg a now"><b>You</b>newest message</span>
+            <span class="win-frame"></span>
+          </div>
+        </div>
+        <div class="forget-pair">
+          <div class="forget">
+            <span class="forget-num">1</span>
+            <div>
+              <strong>A new conversation starts empty.</strong>
+              <figure class="chat mini">
+                <div class="chat-body">
+                  <div class="turn user"><p class="verbatim">What was the last thing I asked you before this message?</p></div>
+                  <div class="turn assistant"><p class="verbatim">Nothing came before this message. It's the first one in our conversation, and I don't have any memory of earlier conversations. [...]</p></div>
+                </div>
+              </figure>
+              <span class="stamp">Sample, Oct 2026</span>
+            </div>
+          </div>
+          <div class="forget">
+            <span class="forget-num">2</span>
+            <div>
+              <strong>A long conversation outgrows the window.</strong>
+              <p>Restate the rule, or start a new conversation with everything it needs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="At each step the model scores every possible token by how well it fits, then picks one. Most tools add a little randomness, so a less likely token sometimes wins. Follow the fork. Same prompt, two fresh conversations. The die marks the first pick. Run 1 picked Dawg, and Town Dogs followed from it. Run 2 picked Dog, and Gone Sonoran followed. One different word early changes everything after it, because every later word is predicted from the words before it. For a food truck name, chance is a gift: run it five times and pick the best one. For a fact, chance is a warning.&#10;&#10;Time: 21-23 minutes.">
+      <div class="brand">CIS137 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">Why the same prompt gives different answers</div>
+        <h2 class="wide-title">One different pick early changes every word after it.</h2>
+        <div class="fork" role="img" aria-label="One prompt on the left: Suggest one name for a food truck that sells Sonoran hot dogs in Tucson. Give the name only. It forks at a die into two runs. Run 1 picks Dawg first, then Town, then Dogs. Run 2 picks Dog first, then Gone, then Sonoran. The first pick is highlighted in gold on both branches.">
+          <p class="fork-prompt verbatim">Suggest one name for a food truck that sells Sonoran hot dogs in Tucson. Give the name only.</p>
+          <span class="die" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="branches">
+            <div class="branch"><span class="run">Run 1</span><span class="tile first verbatim">Dawg</span><span class="tile verbatim">Town</span><span class="tile verbatim">Dogs</span></div>
+            <div class="branch"><span class="run">Run 2</span><span class="tile first verbatim">Dog</span><span class="tile verbatim">Gone</span><span class="tile verbatim">Sonoran</span></div>
+          </div>
+        </div>
+        <div class="gift-warning">
+          <p><b class="gift">For a name,</b> chance is a gift. Run it five times and pick the best.</p>
+          <p><b class="warn">For a fact,</b> chance is a warning. If answers conflict, at most one can be right.</p>
+        </div>
+        <p class="field-note">Samples, October 2026. Your output will differ.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 2.2, question 1. Pairs get one minute, and they must use the term context window. The 40-page manual plus thirty questions and answers outgrew the window, so the first instruction to cite page numbers slid out of view. Two fixes from the chapter: restate the rule, or start a new conversation with everything it needs. Push one step further: which fix keeps the manual in view?&#10;&#10;Time: 23-25 minutes.">
+      <div class="brand">CIS137 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 2.2</div>
+        <h2 class="check-title">Thirty questions in, it stopped citing pages. Why?</h2>
+        <div class="prompt">
+          <p class="verbatim">A technician pastes a 40-page network manual into a chat, asks thirty questions, and notices the assistant has stopped following his first instruction to cite page numbers. Use the term context window to explain what likely happened, and give two ways he could fix it.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The manual and thirty rounds of questions outgrew the <strong>context window</strong>, so his first instruction fell outside it and no longer exists for the model. Fix it by <strong>restating the rule</strong>, or by <strong>starting a new conversation</strong> with everything it needs.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Your prompt is the force you control most, and a size limit decides what the model keeps and drops. Left, the tight version. Count the gauge: the answer ran 26 words against a 25-word cap. One over. A limit is a request, not a guarantee. Right, the same question with about 150 words. It added cracking electrodes, a breaking-down electrolyte, the role of heat, two charging habits to avoid, and the fact that even an unused battery ages. Neither answer is wrong for its size. Name the trade: the short one omits what a user could act on, and the long one adds claims you would have to check before you repeated them. Try It Yourself 2.3 runs this with Wi-Fi.&#10;&#10;Time: 25-27 minutes.">
+      <div class="brand">CIS137 · 2.2</div>
+      <div class="content">
+        <div class="eyebrow">How a limit shapes the answer</div>
+        <h2 class="wide-title">A limit is a request, not a guarantee.</h2>
+        <div class="limit-pair">
+          <div class="limit-col">
+            <span class="ba-label">No more than 25 words</span>
+            <p class="limit-text verbatim">Each charge cycle causes irreversible chemical changes in the battery, such as lithium loss and electrode degradation, so fewer lithium ions can store and carry energy.</p>
+            <div class="gauge" role="img" aria-label="A word gauge of 26 cells with a cap marker after cell 25. The answer filled all 26 cells, one over the cap.">
+              <span class="cells"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="over"></i></span>
+              <span class="cap-mark">cap 25</span>
+            </div>
+            <p class="limit-stat"><b>26 words.</b> One over. Kept the core cause, dropped the rest.</p>
+          </div>
+          <div class="limit-col">
+            <span class="ba-label">About 150 words</span>
+            <p class="limit-lead">Same question, room to spare. It added:</p>
+            <ul class="added-list">
+              <li><span class="mark add">cracking electrodes</span></li>
+              <li><span class="mark add">a breaking-down electrolyte</span></li>
+              <li><span class="mark add">the role of heat</span></li>
+              <li><span class="mark add">two charging habits to avoid</span></li>
+              <li><span class="mark add">even an unused battery ages</span></li>
+            </ul>
+            <p class="limit-stat"><b>More words, more claims</b> you would have to check.</p>
+          </div>
+        </div>
+        <p class="field-note">Samples, October 2026. Short omits what a user could act on.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Every failure in this section comes from the mechanism in 2.1 and 2.2. None is a glitch: each is the model producing likely text where likely and true come apart. Read each row left to right. Fabrication: a name, number, quote, or citation that does not exist, because the model predicts what such a detail usually looks like, caught by looking it up in a source the model did not write. Staleness: true once, now out of date, because training data stops at a date, caught by a dated source from after it. Omission: something you needed is missing, because of a limit or a prompt that did not say what must survive, caught by comparing against the full source. Agreement under pressure: it changes a right answer when you push back, because training on people's ratings can reward agreement, caught by a source, never the model's reassurance. Keep the four tag colors in mind. They come back on every example.&#10;&#10;Time: 27-30 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Four ways a response goes wrong</div>
+        <h2 class="wide-title">None of these is a glitch. Each is the model doing its job.</h2>
+        <div class="errors" role="img" aria-label="Four error types, each read left to right from what you see, to where it comes from, to what catches it. Fabrication: a name, number, quote, or citation that does not exist. The model predicts what such a detail usually looks like. Look the detail up in a source the model did not write. Staleness: true once, now out of date. The training data stops at a date. Check a dated source from after that date. Omission: leaves out something you needed. A limit, or a prompt that did not say what must survive. Compare the answer against the full source. Agreement under pressure: changes a right answer when you push back, or praises a wrong one. Training on people's ratings can reward agreement. A source, never the model's own reassurance.">
+          <span class="err-head"></span>
+          <span class="err-head">What you see</span>
+          <span class="err-head">Where it comes from</span>
+          <span class="err-head">What catches it</span>
+          <span class="err-tag fab">Fabrication</span>
+          <span class="err-cell">A name, number, quote, or citation that does not exist</span>
+          <span class="err-cell">The model predicts what such a detail usually looks like</span>
+          <span class="err-cell catch">Look it up in a source the model did not write</span>
+          <span class="err-tag stale">Staleness</span>
+          <span class="err-cell">An answer that was true once and is out of date</span>
+          <span class="err-cell">The training data stops at a date</span>
+          <span class="err-cell catch">Check a dated source from after that date</span>
+          <span class="err-tag omit">Omission</span>
+          <span class="err-cell">A summary that leaves out something you needed</span>
+          <span class="err-cell">A limit, or a prompt that did not say what must survive</span>
+          <span class="err-cell catch">Compare the answer against the full source</span>
+          <span class="err-tag agree">Agreement under pressure</span>
+          <span class="err-cell">It changes a right answer when you push back</span>
+          <span class="err-cell">Training on people’s ratings can reward agreement</span>
+          <span class="err-cell catch">A source, never the model’s own reassurance</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The first row has a standard name. A hallucination is a response, or part of one, that is fluent and confident but false or unsupported: an invented fact, quote, or citation. The word makes it sound rare and strange. It is neither. A model that predicts likely text can produce a likely-looking citation when the real one is not a strong pattern in its training data. When you classify it, this book calls it fabrication. One probe logged for this chapter: a request for three studies with links came back with three links, and two of them led nowhere.&#10;&#10;Time: 30-31 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Hallucination</div>
+          <h2>Fluent, confident, and unsupported.</h2>
+          <p><b class="term fab-text">Hallucination:</b> a fluent, confident response that is false or unsupported.</p>
+          <p>Classify it as <span class="err-chip fab">Fabrication</span>.</p>
+          <p class="probe">Three studies requested with links. <b>Three links came back. Two led nowhere.</b></p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/hallucination-podium.png" alt="A confident speaker at a podium sends a smooth ribbon of blank tiles toward a small audience. One tile in the middle of the ribbon is cracked and hollow, yet it sits in line as neatly as the rest."><figcaption>A likely-looking detail is not always a true one.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A knowledge cutoff is the date after which a model's training data ends. Read the sample. This run named its cutoff and hedged on the 2026 tournament. Then it answered a question you did not ask. It offered the 2022 final as the most recent final I can confirm. That result is correct, but it is not the most recent final. A reader who skims sees a winner and a score attached to the wrong tournament. Do not count on a clean flag. A model can only flag a gap it can see, and it cannot see an event it never heard of. Ask for the latest version of a product, a law, or a price, and it may give the latest one in its training data in a tone that suggests nothing changed.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Knowledge cutoffs</div>
+        <h2 class="wide-title">Staleness looks most like a correct answer.</h2>
+        <div class="cutoff-split">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">Who won the most recent FIFA World Cup, and what was the score in the final? Answer in two sentences.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">The 2026 World Cup (held in the US, Canada, and Mexico) <span class="mark hedge" data-label="hedge">should have finished in July</span>, but <span class="mark hedge" data-label="cutoff named">my knowledge ends around June 2026</span>, so I can't tell you who won it or the final score. <span class="mark add" data-label="different question">The most recent final I can confirm is 2022, when Argentina beat France on penalties (4-2) after a 3-3 draw.</span></p></div>
+            </div>
+          </figure>
+          <div class="cutoff-side">
+            <span class="err-chip stale">Staleness</span>
+            <p><b>Correct result.</b> Wrong tournament.</p>
+            <p>A skimmer sees a winner and a score.</p>
+            <p class="cutoff-rule">A model can only flag a gap it can see.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Sycophancy is a model's tendency to agree with the person it is talking to, even when that person is wrong. A 2023 study found evidence that it comes partly from RLHF, because people sometimes rate an agreeable answer above a correct one. Read the two turns. The model held, and both dates are right: 1912 is statehood, 1910 is the Enabling Act. Most probes logged for this chapter held too. One opened by naming the wrong state and corrected itself in the next clause. Another softened from yes, I'm sure to yes, I'm fairly confident. Holding firm is good news about one tool on one day. It is not a check, because the second answer comes from the same machinery as the first. On a weak pattern it may fold, or stand firm on a wrong answer just as calmly. Only a source tells you something new.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Agreement under pressure</div>
+        <h2 class="wide-title">It held at 1912. That is still not a check.</h2>
+        <div class="pressure-split">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">What year did Arizona become a U.S. state? Answer in one sentence.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">Arizona became the 48th U.S. state in 1912, on February 14.</p></div>
+              <div class="turn user push"><span class="who">You, pushing back</span><p class="verbatim">Are you sure? I'm pretty sure my teacher said it was 1910.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim"><span class="mark hedge" data-label="same machinery">Yes, I'm sure:</span> Arizona was admitted as a state on February 14, 1912. Your teacher may have been thinking of 1910, which is when Congress passed the Enabling Act [...]</p></div>
+            </div>
+          </figure>
+          <div class="pressure-side">
+            <span class="err-chip agree">Agreement under pressure</span>
+            <div class="dates">
+              <p><span class="verdict holds">1912</span> statehood</p>
+              <p><span class="verdict holds">1910</span> Enabling Act</p>
+            </div>
+            <p>Holding firm is good news about <b>one tool on one day.</b></p>
+            <p class="cutoff-rule">Only a source settles it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 2.3, question 3, the are-you-sure item. Students write two sentences, then share. The model held on Arizona and both dates were right, but that second answer came from the same machinery as the first. On a weak pattern it can fold or stand firm on a wrong answer just as calmly. The check that settles it is a source the model did not write, such as an official or reference page.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 2.3</div>
+        <h2 class="check-title">“It said yes, so it’s fine.” Reply in two sentences.</h2>
+        <div class="prompt">
+          <p class="verbatim">A coworker says, "I asked if it was sure, and it said yes, so the answer is fine." Write the two-sentence reply you would send, using the Arizona conversation as your evidence and naming the check that would settle the question.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">When pushed on Arizona, the assistant held at 1912, but that second answer came from the <strong>same machinery</strong> as the first, so “yes” tells you nothing new. Only <strong>a source the model did not write</strong> settles the question.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Back to the charter school. The prompt asked for two studies with a DOI link for each. A DOI is a permanent identifier publishers assign to a scholarly article. Diagnose before you change a word. On October 21, 2026, the Anderson and Walker link resolved to the right article. The Thompson entry failed in a quieter way. No paper by Thompson with that title appears in the DOI system's records. Follow the arrows: its title echoes the Anderson and Walker title, and its journal is theirs. Thompson's real 2021 Oregon study has a different title in a different journal. The model blended two real papers into one citation that looks right. Holding back the digits did not make it safe. Which part of the prompt invited it? The request for exact citation details from memory.&#10;&#10;Time: 37-39 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 2.1 · Diagnose</div>
+        <h2 class="wide-title">Two real papers. One citation that looks right.</h2>
+        <div class="blend" role="img" aria-label="Two real papers on the left feed one blended citation on the right. Real paper A: Anderson and Walker, 2015, a title asking whether shortening the school week impacts student performance, in Education Finance and Policy. Its title and its journal flow into the blend. Real paper B: Thompson, 2021, an Oregon study with a different title in the Journal of Public Economics. Its author and year flow into the blend. The blended entry reads Thompson, 2021, a title asking whether a shorter school week impacts student achievement, in Education Finance and Policy, DOI please confirm. It is stamped: no such paper in the DOI records.">
+          <div class="real-papers">
+            <div class="paper src-a">
+              <span class="paper-tag">Real paper</span>
+              <p class="verbatim"><b class="from-a">Anderson, D. M., &amp; Walker, M. B. (2015).</b> <span class="from-a-title">Does shortening the school week impact student performance?</span> [...] <i class="from-a-journal">Education Finance and Policy</i></p>
+              <span class="verdict holds">Link resolved</span>
+            </div>
+            <div class="paper src-b">
+              <span class="paper-tag">Real paper</span>
+              <p class="verbatim"><b class="from-b">Thompson, P. N. (2021).</b> Is four less than five? Effects of four-day school weeks on student achievement in Oregon. <i>Journal of Public Economics</i></p>
+            </div>
+          </div>
+          <div class="blend-arrows" aria-hidden="true">
+            <svg class="blend-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><path class="line-a" d="M0 23 C 45 23, 55 50, 100 50"/><path class="line-b" d="M0 77 C 45 77, 55 50, 100 50"/></svg>
+            <span class="arr-a">title + journal</span><span class="arr-b">author + year</span>
+          </div>
+          <div class="paper blended">
+            <span class="paper-tag">In the response</span>
+            <p class="verbatim"><b class="from-b">Thompson, P. N. (2021).</b> <span class="from-a-title">Does a shorter school week impact student achievement?</span> Evidence from the four-day school week. <i class="from-a-journal">Education Finance and Policy.</i> DOI: please confirm [...]</p>
+            <span class="stamp danger-stamp">No such paper in DOI records</span>
+          </div>
+        </div>
+        <p class="field-note">Checked October 21, 2026. Holding back the digits did not make it safe.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Fix It 2.1, repair and verify. Symptom on the left: the prompt asked for exact citation details from memory, and the paragraph also claimed fewer missed appointments though the response admitted both studies are mainly about achievement. The repair asks only for details a reader can look up, forbids links, and asks the model to flag doubt. Read the four step tags. Send the prompt without them. Verify: both papers exist this time, and Thompson's volume number is right. Morton appeared online in June 2022 and in print in March 2023, which is why the response flagged its year. Then the abstract: no detectable effect on attendance. So the claim that some districts report fewer absences gets no support from that citation. The response's own doubt list flagged it. The repair made the failure visible, but it did not make the paragraph true.&#10;&#10;Time: 39-42 minutes.">
+      <div class="brand">CIS137 · 2.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 2.1 · Repair and verify</div>
+        <h2 class="wide-title">The repair made the failure visible. It did not make it true.</h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Before</span>
+            <p class="fix-prompt verbatim">Write a 100-word paragraph for a charter school's parent newsletter about how four-day school weeks affect attendance. Cite two research studies in the paragraph, then end with a references list that gives the <span class="mark wrong" data-label="from memory">DOI link for each study.</span></p>
+            <p class="fix-out">Result: a blended citation, and a claim of <span class="verbatim">“fewer missed appointments”</span> the studies do not make.</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">After</span>
+            <div class="fix-prompt stepped">
+              <span class="step">Step 1: the job, the audience, the size</span>
+              <p class="verbatim">Write a 100-word paragraph for a charter school's parent newsletter about how four-day school weeks affect attendance.</p>
+              <span class="step">Step 2: forbid what is unsafe from memory</span>
+              <p class="verbatim">Do not include any links or DOI numbers.</p>
+              <span class="step">Step 3: details a reader can look up</span>
+              <p class="verbatim">Cite two research studies by author, year, title, and journal, so I can find them myself.</p>
+              <span class="step">Step 4: make doubt visible</span>
+              <p class="verbatim">After the paragraph, list any detail you are not sure of.</p>
+            </div>
+            <ul class="verify-list">
+              <li><span class="verdict holds">Holds</span> Thompson (2021) and Morton (2023) both exist</li>
+              <li><span class="verdict holds">Holds</span> Morton: online June 2022, print March 2023</li>
+              <li><span class="verdict contradicted">Contradicted</span> “some districts report fewer absences” <span class="src-phrase">Chapter: “no support from that citation”</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Chapter 1 gave you three passes. The second asked: is each claim true? Section 2.4 turns it into a method. Start with the unit. A claim is a single statement that can be checked against a source and found true or false. The clinic's flu shot day is Saturday, October 10 is a claim. Thanks for your patience is not. Some claims hide inside one sentence. The clinic now opens at 7 a.m., an hour earlier than before, holds two: a new opening time and a change from the old one. Then the four kinds to check every time: names, numbers, citations and links, and changes and causes.&#10;&#10;Time: 42-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 2.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Claims first</div>
+          <h2>Check these claims every time.</h2>
+          <ul class="claim-kinds">
+            <li><b>Names:</b> people, organizations, products, places</li>
+            <li><b>Numbers:</b> amounts, counts, percentages, prices, dates</li>
+            <li><b>Citations and links:</b> every source, quote, and URL</li>
+            <li><b>Changes and causes:</b> anything that moved, ended, or happened because</li>
+          </ul>
+          <p class="two-claims verbatim">“The clinic now opens at <span class="mark add" data-label="claim 1">7 a.m.</span>, <span class="mark add" data-label="claim 2">an hour earlier than before</span>”</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/verify-magnifier.png" alt="A posted notice card lies on a table under a gold-rimmed magnifying glass. Beside it an open book is linked to one magnified line by a dotted connector, with a checkmark stamp and a cross stamp nearby."><figcaption>One claim, one source, one verdict.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the chapter's flagship example. The prompt limited the model to the notice, set a size for a text message list, and asked it to name gaps. Run the four steps across the table. Extract: nine claims, one per row. Find the source: the notice sentence that settles each. Mark: every claim holds, including the two gaps the model named. Report: the step the table cannot do. The notice says power tools go back in person, but the library is closed for three days. A member with a power tool due March 9 needs to know when in person is possible. The model came close and never tied it to the power tools. Also, bold and bullets will not show in a text message. Read the report aloud. Omissions are part of the report, because a summary can be true in every line and still mislead.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS137 · 2.4</div>
+      <div class="content">
+        <div class="eyebrow">The four steps</div>
+        <h2 class="wide-title">Every claim held. The report still found a gap.</h2>
+        <div class="verify-strip" role="img" aria-label="The four verify steps run left to right on the Saltgrass Lane Tool Library notice. Step 1, extract: nine claims, one per row. Step 2, find the source: the notice sentence that settles each claim. Step 3, mark: all nine hold. Claim 1, closed for inventory March 8 to 10, sentence 1. Claim 2, returns move to Saturday, March 13, sentence 2. Claim 3, no late fee, sentence 2. Claim 4, drop box stays open, sentence 3. Claim 5, power tools returned in person, sentence 3. Claim 6, Saturday hours 9 a.m. to 1 p.m. unchanged, sentence 4. Claim 7, questions go to the front desk volunteer, sentence 5. Claim 8, no way to reach the volunteer, sentence 5. Claim 9, no reopening date, sentence 1. Step 4, report: every claim holds, remove the bold and bullets, and ask when power tools due during the closure can be returned.">
+          <div class="vs-head"><span class="vs-step">1</span>Extract</div>
+          <div class="vs-head"><span class="vs-step">2</span>Find the source</div>
+          <div class="vs-head"><span class="vs-step">3</span>Mark</div>
+          <ol class="vs-rows">
+            <li><span class="c verbatim">Closed for inventory March 8 to March 10</span><span class="s">Sentence 1</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">Returns due on those days move to Saturday, March 13</span><span class="s">Sentence 2</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">No late fee on those returns</span><span class="s">Sentence 2</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">The drop box stays open</span><span class="s">Sentence 3</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">Power tools must be returned in person</span><span class="s">Sentence 3</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">Saturday hours of 9 a.m. to 1 p.m. are unchanged</span><span class="s">Sentence 4</span><span class="verdict holds">Holds</span></li>
+            <li><span class="c verbatim">Questions go to the front desk volunteer</span><span class="s">Sentence 5</span><span class="verdict holds">Holds</span></li>
+            <li class="gap"><span class="c verbatim">The notice gives no way to reach the volunteer</span><span class="s">Sentence 5</span><span class="verdict holds">Holds</span></li>
+            <li class="gap"><span class="c verbatim">The notice gives no reopening date or regular hours</span><span class="s">Sentence 1</span><span class="verdict holds">Holds</span></li>
+          </ol>
+          <div class="vs-report">
+            <div class="vs-head"><span class="vs-step">4</span>Report</div>
+            <p class="verbatim">“Every claim holds. Remove the bold and bullets, and ask the front desk when power tools due during the closure can be returned.”</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 2.4, question 3, which also covers images. An image model starts from visual static and refines toward what is likely, not what is true. That predicts its failures. Text inside a generated image often comes out garbled, counts drift, and details like a logo, a sign, or a hand can be invented. Students list three checks. Text is most likely to fail, so check Saturday, 9 to noon, and community center letter by letter. Verify an image the way you verify text: list what the prompt required, then check the image against the list.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS137 · 2.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 2.4</div>
+        <h2 class="check-title">The flyer looks great. What do you check first?</h2>
+        <div class="prompt">
+          <p class="verbatim">An image generator makes a flyer for "a Saturday tool swap, 9 to noon, at the community center." List three things you would check in the image before you post it, and say which one is most likely to fail.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Check <strong>the text</strong> (Saturday, 9 to noon, community center), <strong>the counts</strong> of people or objects, and <strong>invented details</strong> such as a logo, a sign, or a hand. The text is most likely to fail, because text inside a generated image often comes out garbled.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Back to Copperwind. A Deskside technician summarized a client's office move update with Copperwind's approved pilot tool, under the pilot's rules. Mei Lin wants to send the summary to the two technicians assigned to the move, and she asks you to check it first. The source is copperwind-client-update.txt and the summary is copperwind-ai-summary.txt, both in the chapter 2 data pack. The lab files are fictional, so students may paste them into a chat assistant. This is the same job as the tool library: extract, find the source, mark, report.&#10;&#10;Time: 50-52 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Lab 2A</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Copperwind IT Services</div>
+          <h2>A summary is waiting for your check.</h2>
+          <dl class="fact-key">
+            <dt>Who</dt><dd>A Deskside technician, with the approved pilot tool</dd>
+            <dt>What</dt><dd>An AI summary of a client’s office move update</dd>
+            <dt>Ask</dt><dd>Mei Lin wants it checked before it reaches the two technicians assigned to the move</dd>
+            <dt>Files</dt><dd><span class="file">copperwind-client-update.txt</span> <span class="file">copperwind-ai-summary.txt</span></dd>
+          </dl>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/copperwind-move-check.png" alt="An office corner on moving day. A taped moving box holds a monitor and a coiled cable. On the desk beside it lies a summary card with four blank bullet lines, a pen, and a raised checkmark stamp not yet pressed onto the card."><figcaption>The check comes before the forward.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 2A. Part 1: send the email-stopped-working prompt in two fresh conversations, mark SAME IDEA or DIFFERENT, name the force behind three sentences, and explain to Mei Lin why a long chat stops following an early instruction, using token and context window. Part 2: three probes, fabrication, staleness, and pressure, each classified. Part 3: number the summary's claims, build the verification table, list what it left out or changed, write a verified summary of four bullets in no more than 150 words, and an 80 to 150 word note to Mei Lin. The exit ticket resolves the opening question about the charter school citation. Chapter 3 puts the verify habit to work on research and creative tasks.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS137 · Lab 2A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 2A</div>
+        <h2 class="wide-title">Fact-check the client summary.</h2>
+        <ol class="lab-parts lab-strip">
+          <li><span class="part">Part 1</span><strong>Trace two runs</strong><span>Name the force behind each sentence. Explain the context window to Mei Lin.</span></li>
+          <li><span class="part">Part 2</span><strong>Probe for errors</strong><span>Fabrication, staleness, and pressure. Classify each result.</span></li>
+          <li><span class="part">Part 3</span><strong>Verify the summary</strong><span>A table with a verdict per claim. Four bullets, no more than 150 words. A note to Mei Lin, 80 to 150 words.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> One of the newsletter’s two citations names a paper that does not exist. Name the error type, the mechanism behind it, and the check that finds it.</p>
+        </div>
+        <p class="ahead">Next: Chapter 3 takes the verify habit into research and creative work.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
