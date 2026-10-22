@@ -1,0 +1,1540 @@
+/* CIS137 Chapter 6: the version ledger
+   The chapter's method is a log: criteria first, one change per
+   version, a row for every run. So the room is a lab notebook. Faint
+   ledger ruling runs across every slide, a double gold margin rule
+   stands at the left edge, and version numerals climb the margin. The
+   brand glyph is a version tag. All of it is painted as background
+   layers so nothing positioned can overflow the slide or trap focus. */
+
+body {
+    /* Three roles keep one color each everywhere they appear:
+       the one change in support blue, pass in success green, fail in
+       danger red. Gold marks what to look at next. */
+    --change: var(--blue);
+    --change-tint: color-mix(in srgb, var(--blue) 14%, #fff);
+    --pass: var(--good);
+    --fail: var(--danger);
+    --margin-numerals: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 330'%3E%3Cg font-family='Avenir Next,Avenir,Arial,sans-serif' font-weight='900' font-size='26' fill='rgba(2,90,140,0.2)'%3E%3Ctext x='6' y='300'%3Ev1%3C/text%3E%3Ctext x='6' y='190'%3Ev2%3C/text%3E%3Ctext x='6' y='80'%3Ev3%3C/text%3E%3C/g%3E%3C/svg%3E");
+    --margin-numerals-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 330'%3E%3Cg font-family='Avenir Next,Avenir,Arial,sans-serif' font-weight='900' font-size='26' fill='rgba(255,200,69,0.2)'%3E%3Ctext x='6' y='300'%3Ev1%3C/text%3E%3Ctext x='6' y='190'%3Ev2%3C/text%3E%3Ctext x='6' y='80'%3Ev3%3C/text%3E%3C/g%3E%3C/svg%3E");
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image:
+        var(--margin-numerals),
+        linear-gradient(90deg, transparent 0 clamp(3.4rem, 4.6vw, 5.2rem), rgba(255, 200, 69, .55) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .14rem), transparent 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .42rem), rgba(255, 200, 69, .55) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .56rem), transparent 0),
+        repeating-linear-gradient(180deg, transparent 0 2.35rem, rgba(2, 90, 140, .09) 2.35rem 2.45rem),
+        linear-gradient(165deg, #f3f9fd, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left .55rem bottom 4.5rem, 0 0, 0 0, 0 0;
+    background-size: clamp(2.6rem, 3.6vw, 3.8rem) auto, 100% calc(100% - 4.4rem), auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image:
+        var(--margin-numerals-dark),
+        linear-gradient(90deg, transparent 0 clamp(3.4rem, 4.6vw, 5.2rem), rgba(255, 200, 69, .35) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .14rem), transparent 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .42rem), rgba(255, 200, 69, .35) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .56rem), transparent 0),
+        repeating-linear-gradient(180deg, transparent 0 2.35rem, rgba(255, 255, 255, .05) 2.35rem 2.45rem),
+        linear-gradient(165deg, #001a36, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image:
+        var(--margin-numerals),
+        linear-gradient(90deg, transparent 0 clamp(3.4rem, 4.6vw, 5.2rem), rgba(0, 46, 93, .3) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .14rem), transparent 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .42rem), rgba(0, 46, 93, .3) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .56rem), transparent 0),
+        repeating-linear-gradient(180deg, transparent 0 2.35rem, rgba(0, 46, 93, .08) 2.35rem 2.45rem),
+        linear-gradient(165deg, #ffd573, var(--gold));
+}
+
+/* The title field stays flat navy so the hero art blends without a
+   seam. Only the margin rule survives. */
+.slide.dark.title-slide {
+    background-image:
+        linear-gradient(90deg, transparent 0 clamp(3.4rem, 4.6vw, 5.2rem), rgba(255, 200, 69, .35) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .14rem), transparent 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .42rem), rgba(255, 200, 69, .35) 0 calc(clamp(3.4rem, 4.6vw, 5.2rem) + .56rem), transparent 0);
+    background-position: 0 0;
+    background-size: 100% calc(100% - 4.4rem);
+}
+
+/* Version tag glyph in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "v1";
+    padding: .08em .5em .08em .45em;
+    border: .12em solid currentColor;
+    border-left-width: .38em;
+    border-radius: .45em .25em .25em .45em;
+    font-size: .74em;
+    letter-spacing: .02em;
+    line-height: 1.15;
+    text-transform: none;
+}
+
+.dark .brand::before {
+    color: var(--gold);
+}
+
+/* ---------- Shared pieces ---------------------------------------------- */
+
+h2.wide-title,
+h2.check-title {
+    max-width: 30ch;
+    font-size: clamp(2rem, 3.5vw, 4rem);
+}
+
+.visual-split h2,
+.sheet-split h2,
+.loop-split h2,
+.stop-split h2 {
+    font-size: clamp(2.1rem, 3.7vw, 4.2rem);
+    max-width: 14ch;
+}
+
+.sheet-split h2 {
+    font-size: clamp(2rem, 3.2vw, 3.6rem);
+    max-width: 16ch;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.5rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+/* A version tag: the deck's one recurring object. */
+.vtag {
+    display: inline-block;
+    flex: none;
+    padding: .12rem .55rem .12rem .8rem;
+    border-radius: .2rem .4rem .4rem .2rem;
+    clip-path: polygon(.5rem 0, 100% 0, 100% 100%, .5rem 100%, 0 50%);
+    background: var(--navy);
+    color: var(--gold);
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+    line-height: 1.3;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.dark .vtag {
+    background: var(--gold);
+    color: #001a36;
+}
+
+/* The one change in a version: support blue, labeled with its version
+   so the tint never carries the meaning alone. */
+.change {
+    padding: 0 .15em;
+    border-radius: .15rem;
+    background: var(--change-tint);
+    border-bottom: .2rem solid var(--change);
+    color: #001a36;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.change[data-v="v2"]::after,
+.change[data-v="v3"]::after {
+    content: attr(data-v) " change";
+    display: inline-block;
+    margin-left: .35em;
+    padding: .02rem .4rem;
+    border-radius: .25rem;
+    background: var(--change);
+    color: #fff;
+    font-family: var(--body);
+    font-size: .62em;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    vertical-align: .12em;
+}
+
+/* Pass and fail chips: word plus glyph plus color. */
+.pf {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .12rem .6rem .12rem .4rem;
+    border-radius: 2rem;
+    color: #fff;
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.pf.pass {
+    background: var(--pass);
+}
+
+.pf.pass::before {
+    content: "\2713";
+}
+
+.pf.fail {
+    background: var(--fail);
+}
+
+.pf.fail::before {
+    content: "\2715";
+}
+
+/* ---------- Slide 2: targets as ledger rows ---------------------------- */
+
+.target-ledger {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-radius: .3rem;
+    box-shadow: .5rem .55rem 0 rgba(0, 46, 93, .08);
+}
+
+.target-ledger li {
+    display: grid;
+    grid-template-columns: 5rem 11rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(1rem, 1.8vw, 1.6rem);
+    border-bottom: .1rem solid rgba(2, 90, 140, .18);
+}
+
+.target-ledger li:last-child {
+    border-bottom: 0;
+}
+
+.target-ledger strong {
+    color: var(--blue);
+    font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+}
+
+.target-ledger p {
+    font-size: clamp(.98rem, 1.3vw, 1.3rem);
+}
+
+/* ---------- Slide 3: why first drafts fail ----------------------------- */
+
+.fail-reasons {
+    display: grid;
+    gap: .7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fail-reasons li {
+    display: grid;
+    gap: .25rem;
+    padding: .55rem .8rem;
+    border-left: .3rem solid rgba(2, 90, 140, .35);
+    background: rgba(255, 255, 255, .6);
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.fail-reasons li.third {
+    border-left-color: var(--gold);
+    background: #fff;
+    font-weight: 800;
+}
+
+.fix-where {
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .85rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.fix-where.before {
+    color: #8a5a00;
+}
+
+/* ---------- Slide 4: hope against criterion ---------------------------- */
+
+.hope {
+    color: color-mix(in srgb, var(--navy) 55%, #888);
+    text-decoration: underline wavy .08em color-mix(in srgb, var(--navy) 35%, #aaa);
+    text-underline-offset: .14em;
+}
+
+.demo-title {
+    line-height: 1.12;
+}
+
+.crit {
+    color: var(--blue);
+    box-shadow: inset 0 -.14em 0 var(--gold);
+}
+
+.traits {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .7rem 1.4rem;
+    margin: 0;
+    max-width: 60rem;
+}
+
+.traits dt {
+    color: var(--blue);
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    font-weight: 900;
+}
+
+.traits dd {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+}
+
+/* ---------- Slide 5: Criteria sheet ------------------------------------ */
+
+.sheet-split {
+    display: grid;
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    align-items: center;
+}
+
+.job-line {
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+}
+
+.job-line b {
+    color: var(--blue);
+}
+
+.crit-card {
+    padding-top: 1.4rem;
+    background: #fff;
+}
+
+.crit-table {
+    display: grid;
+}
+
+.crit-row {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1.25fr) minmax(0, 1.1fr) 5.4rem;
+    gap: .9rem;
+    align-items: start;
+    padding: .5rem .2rem;
+    border-bottom: .08rem solid rgba(2, 90, 140, .22);
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.32;
+}
+
+.crit-row.head {
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border-bottom-width: .14rem;
+}
+
+.crit-row > span:first-child {
+    font-weight: 900;
+    color: var(--navy);
+}
+
+.crit-row.accuracy {
+    background: color-mix(in srgb, var(--gold) 16%, #fff);
+}
+
+.acc-tag {
+    display: inline-block;
+    padding: 0 .4rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #001a36;
+    font-size: .72em;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.must {
+    font-weight: 900;
+    color: var(--navy);
+}
+
+.must::before {
+    content: "\25CF  ";
+    color: var(--gold);
+}
+
+.optional {
+    color: color-mix(in srgb, var(--navy) 60%, #888);
+}
+
+.optional::before {
+    content: "\25CB  ";
+}
+
+.good-enough {
+    margin-top: .8rem;
+    padding: .55rem .8rem;
+    border-left: .3rem solid var(--navy);
+    background: var(--mist);
+    font-size: clamp(.92rem, 1.15vw, 1.18rem);
+}
+
+/* ---------- Slide 6: score version 1 ----------------------------------- */
+
+.score-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 1fr);
+    gap: clamp(1.2rem, 2.6vw, 3rem);
+    align-items: center;
+}
+
+.score-split .turn.assistant {
+    max-width: 100%;
+}
+
+.chat-bar .stamp {
+    margin-left: auto;
+    transform: rotate(-2deg);
+    letter-spacing: .06em;
+}
+
+.scorecard {
+    display: grid;
+    gap: .45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.scorecard li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: .1rem .8rem;
+    align-items: center;
+    padding: .35rem 0;
+    border-bottom: .08rem solid rgba(2, 90, 140, .22);
+}
+
+.scorecard li > b {
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+}
+
+.scorecard li > span:last-child {
+    grid-column: 2;
+    font-size: clamp(.82rem, 1.02vw, 1.02rem);
+    color: color-mix(in srgb, var(--ink) 80%, #fff);
+}
+
+.scorecard .pf {
+    grid-row: span 2;
+    justify-self: start;
+}
+
+.scorecard li.total {
+    grid-template-columns: 1fr;
+    border-bottom: 0;
+    border-top: .2rem solid var(--navy);
+    padding-top: .5rem;
+}
+
+.scorecard li.total b {
+    font-size: clamp(1.6rem, 2.4vw, 2.5rem);
+    color: var(--navy);
+}
+
+.scorecard li.total span {
+    grid-column: 1;
+}
+
+/* ---------- Slide 8: the loop ring ------------------------------------- */
+
+.loop-split {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    align-items: center;
+}
+
+.loop-note {
+    color: rgba(255, 255, 255, .88);
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.loop-note b {
+    color: var(--gold);
+}
+
+.loop-ring {
+    position: relative;
+    width: min(100%, 44rem, 70vh);
+    aspect-ratio: 1;
+    justify-self: center;
+}
+
+/* The track is a dashed circle with an arrowhead, painted on the
+   container so it never takes focus. */
+.loop-ring::before {
+    position: absolute;
+    inset: 13%;
+    content: "";
+    border: .22rem dashed rgba(255, 255, 255, .35);
+    border-radius: 50%;
+}
+
+.loop-steps {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.loop-steps li {
+    --angle: calc(var(--i) * 51.4286deg - 90deg);
+    position: absolute;
+    left: calc(50% + 37% * cos(var(--angle)));
+    top: calc(50% + 37% * sin(var(--angle)));
+    display: grid;
+    justify-items: center;
+    gap: .2rem;
+    width: 9.5rem;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: clamp(.82rem, 1.05vw, 1.08rem);
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+}
+
+.loop-steps b {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: .16rem solid rgba(255, 255, 255, .6);
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.loop-steps li.lit b {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #001a36;
+    box-shadow: 0 0 0 .4rem rgba(255, 200, 69, .25);
+}
+
+.loop-steps li.lit {
+    color: var(--gold);
+}
+
+.loop-steps li.stop b {
+    border-color: var(--good);
+    background: var(--good);
+}
+
+.loop-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    justify-items: center;
+    gap: .45rem;
+    width: 44%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.hub-fails {
+    display: flex;
+    gap: .35rem;
+}
+
+.hub-fails i {
+    display: inline-flex;
+    align-items: center;
+    height: 1.9rem;
+    white-space: nowrap;
+    border-radius: .3rem;
+    background: var(--fail);
+    color: #fff;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.hub-fails i::before {
+    content: "\2715";
+    margin-right: .1rem;
+    font-size: .7em;
+}
+
+.hub-fails i {
+    padding: 0 .45rem;
+}
+
+.hub-fails i.lit {
+    outline: .2rem solid var(--gold);
+    outline-offset: .15rem;
+}
+
+.hub-why {
+    color: rgba(255, 255, 255, .9);
+    font-size: clamp(.8rem, 1vw, 1rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 9: version 3 prompt ---------------------------------- */
+
+.v3-prompt {
+    max-width: 78rem;
+}
+
+.v3-prompt .turn.user {
+    justify-self: stretch;
+    max-width: 100%;
+}
+
+.v3-prompt .stepped {
+    grid-template-columns: minmax(12rem, 19rem) 1fr;
+    gap: .45rem 1rem;
+}
+
+.result-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .8rem;
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.result-strip b {
+    color: var(--navy);
+}
+
+/* ---------- Slide 10: the Refinement Log ------------------------------- */
+
+.ledger {
+    display: grid;
+    background: #fff;
+    border-radius: .3rem;
+    box-shadow: .55rem .6rem 0 rgba(0, 46, 93, .1);
+}
+
+.ledger-row {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1.4fr) minmax(0, 1.25fr) minmax(0, .9fr);
+    gap: 1.1rem;
+    align-items: center;
+    padding: .7rem 1.2rem;
+    border-bottom: .08rem solid rgba(2, 90, 140, .22);
+    font-size: clamp(.95rem, 1.22vw, 1.25rem);
+    line-height: 1.3;
+}
+
+.ledger-row:last-child {
+    border-bottom: 0;
+}
+
+.ledger-row.head {
+    padding-block: .5rem;
+    background: var(--mist);
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.ledger-row.win {
+    background: color-mix(in srgb, var(--good) 8%, #fff);
+}
+
+/* Word count as a bar on the same 0-140 scale in every row, with the
+   120-word criterion drawn as a gold tick, so the drop to 97 reads
+   before the number does. */
+.words {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: .3rem;
+    font-size: .8em;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.words i {
+    position: relative;
+    flex: none;
+    width: 9rem;
+    height: .55rem;
+    border-radius: .3rem;
+    background: linear-gradient(90deg, var(--navy) calc(var(--w) / 140 * 100%), rgba(2, 90, 140, .15) 0);
+}
+
+.words i::after {
+    position: absolute;
+    top: -.25rem;
+    bottom: -.25rem;
+    left: calc(120 / 140 * 100%);
+    width: .18rem;
+    content: "";
+    background: var(--gold);
+}
+
+/* ---------- Slide 12: Fix It rows -------------------------------------- */
+
+.fix-rows {
+    align-items: start;
+}
+
+.fix-col {
+    display: grid;
+    gap: .6rem;
+    align-content: start;
+}
+
+.fix-col > .ba-label {
+    justify-self: start;
+}
+
+.mini-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .3rem .8rem;
+    align-items: center;
+    padding: .65rem .9rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .08);
+    border-left: .3rem solid rgba(255, 255, 255, .35);
+}
+
+.mini-row p {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+    line-height: 1.35;
+}
+
+.mini-row b {
+    grid-column: 2;
+    color: var(--gold);
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+}
+
+.mini-row.two-change {
+    border-left-color: var(--fail);
+}
+
+.mini-row.win {
+    border-left-color: var(--good);
+}
+
+.dark .change {
+    background: rgba(255, 255, 255, .92);
+}
+
+.change[data-v="1"] {
+    border-bottom-style: solid;
+}
+
+.change[data-v="2"] {
+    border-bottom-style: dashed;
+}
+
+.fix-diag {
+    display: grid;
+    gap: .35rem;
+    color: rgba(255, 255, 255, .9);
+    font-size: clamp(.92rem, 1.2vw, 1.2rem);
+}
+
+.fix-diag .ba-label {
+    justify-self: start;
+}
+
+/* ---------- Slide 13: fold the follow-ups ------------------------------ */
+
+.fold {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.15fr);
+    gap: clamp(.8rem, 1.8vw, 1.8rem);
+    align-items: center;
+}
+
+.fold-label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--blue);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.fold-chain {
+    display: grid;
+    gap: .5rem;
+}
+
+.chain-turn {
+    justify-self: end;
+    max-width: 95%;
+    padding: .5rem .8rem;
+    border-radius: .7rem .7rem .2rem .7rem;
+    background: var(--mist);
+    font-size: clamp(.88rem, 1.1vw, 1.14rem);
+    line-height: 1.35;
+}
+
+.move {
+    display: block;
+    color: var(--blue);
+    font-size: .72em;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.fold-arrow {
+    color: var(--gold);
+    font-size: clamp(2rem, 3.4vw, 3.4rem);
+    font-weight: 900;
+}
+
+.fold-card {
+    display: grid;
+    gap: .6rem;
+    padding: 1rem 1.2rem;
+    background: #fff;
+    border-left: .4rem solid var(--change);
+    border-radius: .3rem;
+    box-shadow: .5rem .55rem 0 rgba(0, 46, 93, .1);
+}
+
+.fold-card p {
+    font-size: clamp(.9rem, 1.14vw, 1.18rem);
+    line-height: 1.4;
+}
+
+.fold-result {
+    padding-top: .55rem;
+    border-top: .1rem dashed rgba(2, 90, 140, .35);
+}
+
+/* ---------- Slide 14: the 76-point swing ------------------------------- */
+
+.swing {
+    display: grid;
+    gap: .6rem;
+    max-width: 62rem;
+}
+
+.swing-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 3.4rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .1);
+}
+
+.swing-fill {
+    position: absolute;
+    inset: 0 24% 0 0;
+    border-radius: .3rem;
+    background: var(--gold);
+}
+
+.swing-bar b {
+    position: relative;
+    padding-left: 1.1rem;
+    color: #001a36;
+    font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+}
+
+.swing-what {
+    color: rgba(255, 255, 255, .85);
+    font-size: clamp(.95rem, 1.2vw, 1.2rem);
+}
+
+.swing-points {
+    display: grid;
+    gap: .4rem;
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.credit {
+    color: rgba(255, 255, 255, .7);
+    font-size: clamp(.8rem, 1vw, 1rem);
+}
+
+/* ---------- Slide 15: fair rules --------------------------------------- */
+
+.fair-rules {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .55rem 1.1rem;
+    margin: 0;
+}
+
+.fair-rules dt {
+    color: var(--blue);
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+    font-weight: 900;
+}
+
+.fair-rules dd {
+    margin: 0;
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+/* ---------- Slide 16: two tools ---------------------------------------- */
+
+.two-tools {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .9rem clamp(1rem, 2.4vw, 2.6rem);
+}
+
+.shared-prompt {
+    grid-column: 1 / -1;
+    padding: .7rem 1rem;
+    background: var(--mist);
+    border-radius: .6rem;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.4;
+}
+
+.shared-prompt .vtag {
+    margin-right: .6rem;
+}
+
+/* Two arrows down from the shared prompt, painted on the columns. */
+.tool-col {
+    position: relative;
+    display: grid;
+    gap: .45rem;
+    align-content: start;
+    padding: 1rem 1.1rem;
+    background: #fff;
+    border: .12rem solid rgba(0, 46, 93, .18);
+    border-radius: .8rem;
+    box-shadow: 0 .8rem 2rem rgba(0, 46, 93, .1);
+}
+
+.tool-col p {
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.4;
+}
+
+.tool-name {
+    justify-self: start;
+    padding: .1rem .6rem;
+    border-radius: .3rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.tool-score {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding-top: .45rem;
+    border-top: .08rem solid rgba(2, 90, 140, .22);
+}
+
+.tool-score b {
+    color: var(--navy);
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+}
+
+/* ---------- Slide 18: when to stop ------------------------------------- */
+
+.stop-split {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 3.5vw, 4rem);
+    align-items: center;
+}
+
+.stopwatch {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+}
+
+.dial {
+    position: relative;
+    width: min(18rem, 30vh);
+    aspect-ratio: 1;
+    border: .9rem solid rgba(255, 255, 255, .9);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, var(--navy) 0 66%, transparent 66.5%),
+        repeating-conic-gradient(from -1.5deg, rgba(255, 255, 255, .7) 0 3deg, transparent 3deg 30deg),
+        var(--navy);
+}
+
+.dial::before {
+    position: absolute;
+    top: -2.2rem;
+    left: 50%;
+    width: 2.2rem;
+    height: 1.4rem;
+    content: "";
+    border-radius: .3rem .3rem 0 0;
+    background: var(--gold);
+    transform: translateX(-50%);
+}
+
+.hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    width: .35rem;
+    height: 42%;
+    border-radius: .2rem;
+    background: var(--gold);
+    transform: translateX(-50%) rotate(18deg);
+    transform-origin: 50% 100%;
+}
+
+.stop-compare {
+    display: grid;
+    gap: .35rem;
+    color: rgba(255, 255, 255, .9);
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+}
+
+.stop-compare b {
+    color: var(--gold);
+    margin-right: .4rem;
+}
+
+.stop-rules {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding-left: 1.6rem;
+}
+
+.stop-rules li {
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.stop-rules li.lit {
+    color: var(--gold);
+    font-weight: 800;
+}
+
+/* ---------- Slide 19: library v3 --------------------------------------- */
+
+.v3-holds {
+    display: grid;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.v3-holds li {
+    padding-left: .9rem;
+    border-left: .3rem solid var(--gold);
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+}
+
+.v3-holds b {
+    color: var(--blue);
+}
+
+.slot-line {
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+}
+
+.slot {
+    padding: .05rem .4rem;
+    border: .12rem dashed var(--blue);
+    border-radius: .3rem;
+    background: #fff;
+    color: var(--navy);
+    font-family: var(--code);
+    font-size: .92em;
+}
+
+/* ---------- Slide 20: cold read ---------------------------------------- */
+
+.cold-read {
+    display: grid;
+    grid-template-columns: minmax(12rem, .55fr) auto minmax(0, 1.6fr);
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    align-items: center;
+}
+
+/* The card goes in sealed: an envelope with a flap painted on top. */
+.envelope {
+    position: relative;
+    display: grid;
+    gap: .4rem;
+    padding: 2.4rem 1rem 1rem;
+    background:
+        linear-gradient(160deg, transparent 49.5%, rgba(2, 90, 140, .25) 50%, transparent 51%) top left / 50% 2.2rem no-repeat,
+        linear-gradient(200deg, transparent 49.5%, rgba(2, 90, 140, .25) 50%, transparent 51%) top right / 50% 2.2rem no-repeat,
+        #fff;
+    border: .12rem solid rgba(0, 46, 93, .25);
+    border-radius: .3rem;
+    box-shadow: .45rem .5rem 0 rgba(0, 46, 93, .1);
+}
+
+.envelope .vtag {
+    justify-self: start;
+}
+
+.envelope b {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    line-height: 1.2;
+}
+
+.envelope span:last-child {
+    font-size: clamp(.82rem, 1vw, 1rem);
+}
+
+.cr-arrow {
+    color: var(--gold);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 900;
+}
+
+.bins {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.bin {
+    display: grid;
+    gap: .55rem;
+    align-content: start;
+    padding: 0 1rem 1rem;
+    border: .14rem solid var(--navy);
+    border-top: 0;
+    border-radius: 0 0 .7rem .7rem;
+    background: rgba(255, 255, 255, .75);
+}
+
+.bin-label {
+    justify-self: stretch;
+    margin: 0 -1.14rem .2rem;
+    padding: .3rem 1rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.readme-bin {
+    border-color: var(--blue);
+}
+
+.readme-bin .bin-label {
+    margin-inline: -1.14rem;
+    background: var(--blue);
+}
+
+.bin p {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: .4rem;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.38;
+}
+
+.bin p b {
+    color: var(--blue);
+}
+
+.bin p.sharp {
+    padding: .3rem;
+    background: color-mix(in srgb, var(--gold) 18%, #fff);
+}
+
+/* ---------- Slide 22: Copperwind library ------------------------------- */
+
+.library-ledger {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 1rem 1.6rem;
+}
+
+.lib-shelf {
+    display: grid;
+    gap: .55rem;
+    align-content: start;
+    padding: 1rem;
+    border-bottom: .5rem solid rgba(255, 255, 255, .55);
+}
+
+.lib-user {
+    color: var(--gold);
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.lib-card {
+    padding: .55rem .9rem;
+    border-radius: .25rem;
+    background: #fff;
+    color: #001a36;
+    border-top: .4rem solid var(--blue);
+    font-size: clamp(.95rem, 1.25vw, 1.25rem);
+    font-weight: 800;
+}
+
+.lib-card.muted {
+    background: rgba(255, 255, 255, .7);
+    font-weight: 600;
+}
+
+.lib-card.empty {
+    min-height: 6rem;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: var(--gold);
+    border: .2rem dashed var(--gold);
+    border-top-width: .4rem;
+    border-top-style: solid;
+}
+
+.lib-base {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+}
+
+.lib-base span {
+    padding: .4rem .9rem;
+    border: .12rem solid rgba(255, 255, 255, .5);
+    border-radius: .3rem;
+    color: #fff;
+    font-size: clamp(.86rem, 1.08vw, 1.1rem);
+    font-weight: 700;
+}
+
+/* ---------- Slide 23: lab handoff -------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.9rem, 1.8vw, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    padding: 1rem 1.1rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .07);
+}
+
+.lab-parts .part {
+    color: var(--gold);
+    font-size: clamp(.74rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    line-height: 1.2;
+}
+
+.lab-parts span:last-child {
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+}
+
+.ahead {
+    color: rgba(255, 255, 255, .85);
+    font-size: clamp(.95rem, 1.2vw, 1.25rem);
+}
+
+.slide.gold .prompt p {
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+}
+
+/* ---------- Laptop height ---------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .85rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.8rem, 3vw, 3.2rem);
+    }
+
+    .v3-prompt .turn {
+        font-size: .8rem;
+        line-height: 1.32;
+        padding: .45rem .7rem;
+    }
+
+    .v3-prompt .chat-body {
+        padding: .5rem;
+    }
+
+    .v3-prompt .step {
+        font-size: .68rem;
+        padding: .15rem .45rem;
+    }
+
+    .score-split .turn,
+    .crit-row,
+    .bin p,
+    .tool-col p,
+    .shared-prompt,
+    .fold-card p,
+    .chain-turn {
+        font-size: .8rem;
+    }
+
+    .crit-row {
+        padding: .3rem .2rem;
+    }
+
+    .ledger-row {
+        padding: .45rem 1rem;
+        font-size: .9rem;
+    }
+
+    .loop-ring {
+        width: min(100%, 26rem, 62vh);
+    }
+
+    .loop-steps li {
+        width: 7.5rem;
+        font-size: .76rem;
+    }
+
+    .loop-steps b {
+        width: 2rem;
+        height: 2rem;
+        font-size: .9rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------- */
+
+@media (max-width: 760px) {
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        /* No margin on a phone: the rule and numerals would cross the
+           text column, so only the ruling stays. */
+        background-size: 0 0, 0 0, auto, auto;
+        background-position: 0 0, 0 0, 0 0, 0 0;
+    }
+
+    .brand {
+        right: auto;
+        left: 1.25rem;
+    }
+
+    .slide.dark.title-slide {
+        background-size: 0 0;
+    }
+
+    .target-ledger li {
+        grid-template-columns: auto 1fr;
+    }
+
+    .target-ledger li p {
+        grid-column: 1 / -1;
+    }
+
+    .sheet-split,
+    .score-split,
+    .loop-split,
+    .stop-split,
+    .fold,
+    .two-tools,
+    .cold-read,
+    .bins,
+    .library-ledger,
+    .lab-parts {
+        grid-template-columns: 1fr;
+    }
+
+    .crit-row {
+        grid-template-columns: 1.6rem 1fr;
+        gap: .2rem .6rem;
+    }
+
+    .crit-row > span:nth-child(n + 3) {
+        grid-column: 2;
+    }
+
+    .crit-row.head {
+        display: none;
+    }
+
+    .crit-row > span:nth-child(3)::before {
+        content: "Check: ";
+        font-weight: 900;
+        color: var(--blue);
+    }
+
+    .crit-row > span:nth-child(4)::after {
+        content: " (must pass?)";
+        font-weight: 400;
+    }
+
+    .ledger-row {
+        grid-template-columns: auto 1fr;
+        gap: .3rem .7rem;
+    }
+
+    .ledger-row > span:nth-child(n + 3) {
+        grid-column: 2;
+    }
+
+    .ledger-row.head {
+        display: none;
+    }
+
+    .words i {
+        width: 6rem;
+    }
+
+    /* The ring becomes a numbered column on a phone. */
+    .loop-ring {
+        width: 100%;
+        aspect-ratio: auto;
+        display: grid;
+        gap: 1rem;
+    }
+
+    .loop-ring::before {
+        display: none;
+    }
+
+    .loop-steps,
+    .loop-hub {
+        position: static;
+        width: auto;
+        transform: none;
+    }
+
+    .loop-steps {
+        display: grid;
+        gap: .45rem;
+    }
+
+    .loop-steps li {
+        position: static;
+        width: auto;
+        transform: none;
+        grid-template-columns: 2.2rem 1fr;
+        justify-items: start;
+        align-items: center;
+        text-align: left;
+    }
+
+    .loop-steps b {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .v3-prompt .stepped {
+        grid-template-columns: 1fr;
+    }
+
+    .fold-arrow,
+    .cr-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .chain-turn {
+        max-width: 100%;
+    }
+
+    .dial {
+        width: 10rem;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .traits,
+    .fair-rules {
+        grid-template-columns: 1fr;
+        gap: .1rem;
+    }
+
+    .traits dd + dt,
+    .fair-rules dd + dt {
+        margin-top: .5rem;
+    }
+}

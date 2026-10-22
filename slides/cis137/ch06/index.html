@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 6 classroom presentation: Iterative Refinement.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M12 20h30l12 12-12 12H12z' fill='%23FFC845'/%3E%3Ccircle cx='20' cy='32' r='4' fill='%23002E5D'/%3E%3C/svg%3E">
+  <title>CIS137: Iterative Refinement</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Iterative Refinement" data-course="cis137"
+  data-chapter="ch06" data-palette="canvas-light">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's landscaping owner. She asks a chat assistant for a client email. The first draft is close, so she types make it better. The second draft is longer and friendlier, and it promises something her crews do not do. She tries twice more. Twenty minutes later she has four drafts and no way to say which one was best, or why. Next month she starts from a blank chat. Take two or three answers to the lede. Promise the payoff: by the end of class, everyone can name what she should have written down before her first try, and how to keep the win.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-ledger-hero.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 6 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Iterative Refinement</h1>
+        <p class="lede">Four drafts, twenty minutes, and no way to say which was best. What should she have written down first?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as the three columns of a log students will keep today. 6.1 is criteria written before the first run, then a score for every version. 6.2 is the refinement loop with one change per version, and a log that ties each gain or loss to its cause. 6.3 is the stop decision, made from fresh runs and from two tools, and a library a colleague can reuse. The chapter serves CLO 3 (demonstrate effective prompting strategies) and CLO 1 (evaluate AI-generated responses for accuracy). A first draft that misses is normal. A tenth draft you cannot explain is the problem.&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 6</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2 class="wide-title">Decide what good looks like. Change one thing. Write it down.</h2>
+        <ol class="target-ledger">
+          <li><span class="vtag">6.1</span><strong>Construct</strong><p>evaluation criteria for a prompt’s job before the first run, and score each version of the prompt against them</p></li>
+          <li><span class="vtag">6.2</span><strong>Investigate</strong><p>a weak prompt through the refinement loop, changing one thing per version, and relate each gain or loss in the Refinement Log to the change that caused it</p></li>
+          <li><span class="vtag">6.3</span><strong>Judge</strong><p>when a prompt is good enough from its scores in fresh runs and in two tools, and publish it in a library a colleague can reuse</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="First drafts fail for three reasons. The prompt leaves out something you know, so the model fills the gap with likely text, which is Chapter 2. The prompt asks for something the model handles poorly, and a strategy from the Prompt Strategy Checklist would help, which is Chapter 5. Or nobody decided what a good draft looks like, so no draft can pass. The first two you fix in the prompt. The third you fix before you write the prompt at all. Make it better shows the third failure. Better how? Shorter, warmer, more accurate? The model cannot tell, so it guesses, and you cannot score its guess either.&#10;&#10;Time: 4-6 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 6.1</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Why first drafts fail</div>
+          <h2>“Make it better” makes the model guess.</h2>
+          <ol class="fail-reasons">
+            <li><span class="fix-where in-prompt">Fix in the prompt</span>It leaves out something you know.</li>
+            <li><span class="fix-where in-prompt">Fix in the prompt</span>It asks for something the model handles poorly.</li>
+            <li class="third"><span class="fix-where before">Fix before the prompt</span>Nobody decided what a good draft looks like.</li>
+          </ol>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/make-it-better-desk.png" alt="A worried woman sits at a desk with four nearly identical drafts fanned in front of her, hand on her forehead. One blank page lies at the front edge of the desk."><figcaption>Without a target, no draft can win.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the move that fixes the third failure. Evaluation criteria are the checkable tests you write before the first run to decide whether an output does its job. Sounds professional is a hope. Under 120 words is a criterion, because you can count. So is the 60-day exception appears, because you can find it or not. Walk the four traits. Checkable: a count, a quote, or a yes or no. Tied to the job: from what the reader needs. Few: three to six, because ten turn every run into an audit. Ranked: mark the must-pass ones. Then the warning. A draft pulls your standards toward itself. Researchers called it criteria drift. If you change a criterion later, write it down as a dated change with a reason. Never edit criteria quietly so the latest draft passes.&#10;&#10;Time: 6-8 minutes.">
+      <div class="brand">CIS137 · 6.1</div>
+      <div class="content">
+        <div class="eyebrow">Evaluation criteria</div>
+        <h2 class="wide-title demo-title"><span class="hope">“Sounds professional”</span> is a hope. <span class="crit">“Under 120 words”</span> is a criterion.</h2>
+        <dl class="traits">
+          <dt>Checkable</dt><dd>Passes or fails on evidence you can point to.</dd>
+          <dt>Tied to the job</dt><dd>Comes from what the reader needs.</dd>
+          <dt>Few</dt><dd>Three to six. Ten turn every run into an audit.</dd>
+          <dt>Ranked</dt><dd>The must-pass criteria are marked.</dd>
+        </dl>
+        <p class="field-note">Write them before the first run. A draft pulls your standards toward itself.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The landscaping owner tries again, this time with a plan. She fills a Criteria sheet before she sends anything. The job: an email telling residential clients their irrigation timers switch to the winter schedule on November 1. Read the five rows. Four are must-pass. Point to criterion 2: every fact matches the fact list, with no added claim about the service. That is the accuracy check, and every Criteria sheet students write should carry one. Greetings and courtesy lines are allowed. Then her good enough line at the bottom: all four must-pass criteria pass in a fresh run and a re-run. That line tells her when to stop, before she has seen a single draft.&#10;&#10;Time: 8-10 minutes.">
+      <div class="brand">CIS137 · 6.1</div>
+      <div class="content sheet-split">
+        <div class="stack">
+          <div class="eyebrow">The Criteria sheet</div>
+          <h2>Write the sheet before you send anything.</h2>
+          <p class="job-line"><b>The job:</b> tell residential clients their irrigation timers switch to the winter schedule on November 1.</p>
+        </div>
+        <figure class="artifact-card crit-card">
+          <span class="card-tab">Criteria sheet</span>
+          <div class="crit-table" role="table" aria-label="Criteria sheet for the winter watering email">
+            <div class="crit-row head" role="row"><span role="columnheader">#</span><span role="columnheader">Criterion</span><span role="columnheader">How she checks it</span><span role="columnheader">Must pass?</span></div>
+            <div class="crit-row" role="row"><span role="cell">1</span><span role="cell" class="verbatim">The body runs under 120 words</span><span role="cell" class="verbatim">Count from the greeting through the last line before the sign-off</span><span role="cell" class="must">Yes</span></div>
+            <div class="crit-row accuracy" role="row"><span role="cell">2</span><span role="cell"><span class="verbatim">Every fact matches the fact list, with no added claim about the service.</span> <span class="acc-tag">accuracy</span></span><span role="cell" class="verbatim">Mark each sentence against the facts in the prompt, skipping greetings and thank-yous</span><span role="cell" class="must">Yes</span></div>
+            <div class="crit-row" role="row"><span role="cell">3</span><span role="cell" class="verbatim">The new-plantings exception survives</span><span role="cell" class="verbatim">Find the 60-day line</span><span role="cell" class="must">Yes</span></div>
+            <div class="crit-row" role="row"><span role="cell">4</span><span role="cell" class="verbatim">Ready to send, with no blanks or plac&#101;holders</span><span role="cell" class="verbatim">Look for square brackets</span><span role="cell" class="must">Yes</span></div>
+            <div class="crit-row" role="row"><span role="cell">5</span><span role="cell" class="verbatim">Plain words for a homeowner</span><span role="cell" class="verbatim">No term a client would have to look up</span><span role="cell" class="optional">No</span></div>
+          </div>
+          <p class="good-enough"><b>Good enough:</b> <span class="verbatim">All four must-pass criteria pass in a fresh run and a re-run.</span></p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Version 1 was a five-part prompt ending in Keep it friendly. Score it one criterion at a time, with the evidence. Criterion 1 fails: 133 words. Criterion 2 fails: your lawn and plants need less water, and newer plants are still getting established, are not in the facts. Criterion 3 passes: the 60-day line is there. Criterion 4 fails: Your Name and Company Name in square brackets. Criterion 5 passes. Score: 2 of 5, three must-pass criteria failed. The added reasons may even be true. That is not the test. Nobody at the company said them, and the email goes out under the company's name. Without criterion 2 written down first, those friendly lines would read as polish. Also point to the asterisks around November 1: some email programs show them as stray symbols.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS137 · 6.1</div>
+      <div class="content">
+        <div class="eyebrow">Score version 1</div>
+        <h2 class="wide-title">Version 1 scored 2 of 5. The friendly lines failed.</h2>
+        <div class="score-split">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <p class="verbatim">[...] As the weather cools down here in the Valley, <span class="mark add" data-label="not in facts">your lawn and plants need less water</span>, so on **November 1** we're switching every client's irrigation timer to our winter watering schedule. [...]</p>
+                <p class="verbatim">One small exception: any plants that went in during the last 60 days will stay on the summer schedule until your crew lead has a chance to check them. <span class="mark add" data-label="not in facts">Newer plants are still getting established</span>, and we want to make sure they're getting just the right amount of water before we cut back. [...]</p>
+                <p class="verbatim">Warm regards,<br><span class="mark wrong" data-label="blank">[Your Name]</span><br>Office Manager<br><span class="mark wrong" data-label="blank">[Company Name]</span><br>[...]</p>
+              </div>
+            </div>
+          </figure>
+          <ol class="scorecard" aria-label="Version 1 scored against five criteria">
+            <li><span class="pf fail">Fail</span><b>1 Under 120 words</b><span>133 words</span></li>
+            <li><span class="pf fail">Fail</span><b>2 No added claim</b><span>Two reasons nobody gave</span></li>
+            <li><span class="pf pass">Pass</span><b>3 Exception survives</b><span>The 60-day line is there</span></li>
+            <li><span class="pf fail">Fail</span><b>4 Ready to send</b><span>“[Your Name]”</span></li>
+            <li><span class="pf pass">Pass</span><b>5 Plain words</b><span>No jargon</span></li>
+            <li class="total"><b>2 of 5</b><span>three must-pass criteria failed</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 6.1, question 2. Give students 45 seconds to name the criterion and quote the evidence before you reveal. The November 1 switch is in the fact list. The free visit is not. That is criterion 2: every fact matches the fact list, with no added claim about the service. Push on why a nice offer still fails: nobody at the company said it, and the email goes out under the company's name. Students who name criterion 5 should test it: is there a word a client would have to look up?&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 6.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 6.1</div>
+        <h2 class="check-title">A free visit sounds generous. Does it pass?</h2>
+        <div class="prompt">
+          <p class="verbatim">Use the landscaping criteria to score this sentence from a draft: "Our crews will switch your timer on November 1, and this month's visit is free." Name the criterion it fails and quote the evidence.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">It fails <strong>criterion 2</strong>: every fact matches the fact list, with no added claim. The evidence is <span class="verbatim">“this month's visit is free,”</span> which is not in the facts. The November 1 switch is.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="With criteria in hand, improving a prompt becomes a loop instead of a hunch. Walk the ring clockwise from the top. Criteria, written before the first run. Run. Score, against every criterion. Diagnose: name the criterion that failed and its cause, and look in the Prompt Strategy Checklist for the fix. Change one thing. Run again. Stop when the criteria are met, and the good enough line says when. The lit step is where the owner sits now. Version 1 failed criterion 4 with Your Name in brackets. Her diagnosis: the prompt never said who signs, so the model left blanks. Each pass makes a new version, a numbered, saved copy that differs from the one before by a recorded change.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content loop-split">
+        <div class="stack">
+          <div class="eyebrow">The refinement loop</div>
+          <h2>Seven steps. One change per lap.</h2>
+          <p class="loop-note">Each lap makes a <b>version</b>: a numbered, saved copy with one recorded change.</p>
+        </div>
+        <div class="loop-ring" role="img" aria-label="The refinement loop drawn as a ring of seven steps, read clockwise from the top: one, Criteria. Two, Run. Three, Score. Four, Diagnose, which is lit. Five, Change one thing. Six, Run again. Seven, Stop when the criteria are met. In the center, version 1 fails criteria 1, 2, and 4, and criterion 4, blanks left to fill, is lit with its diagnosis: the prompt never said who signs.">
+          <ol class="loop-steps" aria-hidden="true">
+            <li style="--i: 0"><b>1</b>Criteria</li>
+            <li style="--i: 1"><b>2</b>Run</li>
+            <li style="--i: 2"><b>3</b>Score</li>
+            <li style="--i: 3" class="lit"><b>4</b>Diagnose</li>
+            <li style="--i: 4"><b>5</b>Change one thing</li>
+            <li style="--i: 5"><b>6</b>Run again</li>
+            <li style="--i: 6" class="stop"><b>7</b>Stop when the criteria are met</li>
+          </ol>
+          <div class="loop-hub" aria-hidden="true">
+            <span class="vtag">v1</span>
+            <span class="hub-fails"><i>1</i><i>2</i><i class="lit">4</i></span>
+            <span class="hub-why">Fails 4: “[Your Name]”. Nobody said who signs.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the chapter's flagship prompt, version 3, with the decision behind each part tagged. Read the step tags, not the wording. Step 4 holds the version 2 change: sign it The Office Team, and leave no blanks. That fixed criterion 4 and nothing else, 131 words, reasons still there, 3 of 5. Her diagnosis for version 3: the model treats friendly as a license to explain. The checklist strategy is negative constraints and guardrails. So Step 5 adds one sentence: use only the facts above, and do not add reasons, benefits, or watering advice of your own. Result: 97 words, every criterion met, 5 of 5. Send the prompt without the Step lines.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow">Version 3, one sentence at a time</div>
+        <h2 class="wide-title">Version 3 forbids what version 2 added.</h2>
+        <figure class="chat v3-prompt">
+          <div class="chat-bar">Version 3 prompt</div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <span class="step">Step 1: say whose voice the email speaks in</span>
+                <p class="verbatim">You are the office manager at a small landscaping company in Mesa, Arizona.</p>
+                <span class="step">Step 2: name the job and the reader</span>
+                <p class="verbatim">Write an email to our residential clients about the switch to our winter watering schedule.</p>
+                <span class="step">Step 3: hand over every fact the email may use</span>
+                <p class="verbatim">Facts: On November 1, we switch every client's irrigation timer to the winter schedule. [...] Plants that went in during the last 60 days stay on the summer schedule until your crew lead checks them. Questions go to the office at 480-555-0163.</p>
+                <span class="step">Step 4: set the tone and who signs, the version 2 change</span>
+                <p class="verbatim">Keep it friendly. <span class="change" data-v="v2">Sign it "The Office Team" and leave no blanks or plac&#101;holders to fill in.</span></p>
+                <span class="step">Step 5: forbid what version 2 added, the version 3 change</span>
+                <p class="verbatim"><span class="change" data-v="v3">Use only the facts above, and do not add reasons, benefits, or watering advice of your own.</span></p>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="result-strip"><span class="vtag">v3</span><b>97 words</b><span class="pf pass">5 of 5</span><span class="stamp">Sample, Oct 2026</span></p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is her Refinement Log, four fields per row: version, the one change, score against the criteria, keep or revert. Read it top to bottom. v1, first version, 2 of 5, failing 1, 2, and 4, kept as the base. v2 added who signs and no blanks, 3 of 5, failing 1 and 2, kept because criterion 4 is fixed. Point out that a total alone would hide that 1 and 2 still fail, so the log names what failed. v3 added use only the facts above, 5 of 5, kept. Now the bars. Version 3 cut the length from 131 words to 97 without any word limit, which suggests the length came from the added reasons. One change per row is what lets you see that. Her good enough line asks for a re-run, so she sent version 3 again in a fresh conversation: 88 words, all five met. She can stop.&#10;&#10;Time: 20-22 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow">The Refinement Log</div>
+        <h2 class="wide-title">Each row names one change, so each gain has one cause.</h2>
+        <div class="ledger" role="table" aria-label="Refinement Log for the winter watering email">
+          <div class="ledger-row head" role="row"><span role="columnheader">Version</span><span role="columnheader">The one change</span><span role="columnheader">Score against the criteria</span><span role="columnheader">Keep or revert</span></div>
+          <div class="ledger-row" role="row"><span role="cell"><span class="vtag">v1</span></span><span role="cell">First version</span><span role="cell"><b>2 of 5</b> (fails 1, 2, and 4)<span class="words" style="--w: 133"><i></i>133 words</span></span><span role="cell">Keep as the base</span></div>
+          <div class="ledger-row" role="row"><span role="cell"><span class="vtag">v2</span></span><span role="cell"><span class="change" data-v="v2">Added who signs, and no plac&#101;holders</span></span><span role="cell"><b>3 of 5</b> (fails 1 and 2)<span class="words" style="--w: 131"><i></i>131 words</span></span><span role="cell">Keep: criterion 4 fixed</span></div>
+          <div class="ledger-row win" role="row"><span role="cell"><span class="vtag">v3</span></span><span role="cell"><span class="change" data-v="v3">Added “use only the facts above,” with no reasons or advice</span></span><span role="cell"><b>5 of 5</b><span class="words" style="--w: 97"><i></i>97 words</span></span><span role="cell"><span class="pf pass">Keep</span></span></div>
+        </div>
+        <p class="field-note">Re-run of version 3 in a fresh conversation: 88 words, all five met.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 6.2, question 3. Ask students to commit to keep, revert, or something else before the reveal. Chapter 2 showed that the same prompt gives different answers from one run to the next. So a version can score better by chance, and a single run is a weak test of a small gain. When a gain is small or a score sits right at a limit, run the same version again in a fresh conversation before you mark it keep. That is exactly why the owner re-ran version 3.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 6.2</div>
+        <h2 class="check-title">One run, one word under the limit. Keep?</h2>
+        <div class="prompt">
+          <p class="verbatim">A new version scored one criterion higher than the last, in a single run, and its word count sits one word under the limit. Decide what you do before you mark it keep, and explain why.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Run the same version again in a <strong>fresh conversation</strong> first. Runs vary by chance, so one run is a weak test of a small gain, and a score sitting right at a limit can tip on the next run.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 6.1. A youth soccer league coordinator texts parents: because of the heat, Saturday games start at 7 a.m. instead of 9 a.m., and if the forecast drops below 100 degrees by Friday at 6 p.m., they switch back. Criteria: under 50 words, all four facts, the switch-back rule. Version 1 ran 64 words. Symptom: version 2 added two lines at once, a 45-word limit and no greeting, and ran 51 words, with re-runs at 50 and 51. Diagnose: ask students first, what question about her next version can this row not answer? Which line saved the words. Repair: go back to version 1 and add only no greeting and no sign-off. Call it v2a. Verify: 58 words twice, so dropping the greeting took only 6 words off 64. Her old v2 becomes v2b, v2a plus the limit, and the limit took about 7 more. The greeting is already gone, so the limit is the line to tighten. Version 3 changed only that line, 45 to 40, and ran 46 words, 3 of 3.&#10;&#10;Time: 24-28 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 6.1</div>
+        <h2 class="wide-title">Two changes in one row hide which one worked.</h2>
+        <div class="before-after fix-rows">
+          <div class="fix-col">
+            <span class="ba-label">Symptom</span>
+            <div class="mini-row two-change"><span class="vtag">v2</span><p><span class="change" data-v="1">Added “Keep it under 45 words”</span> and <span class="change" data-v="2">“No greeting and no sign-off”</span></p><b>51 words · 2 of 3 · Keep?</b></div>
+            <p class="fix-diag"><span class="ba-label">Diagnose</span> The 13 words it saved belong to both and to neither.</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">Repair and verify</span>
+            <div class="mini-row"><span class="vtag">v2a</span><p>Back to v1. Added only <span class="change" data-v="2">“No greeting and no sign-off”</span></p><b>58 words, twice · 6 saved</b></div>
+            <div class="mini-row"><span class="vtag">v2b</span><p>v2a plus <span class="change" data-v="1">“Keep it under 45 words”</span></p><b>50 and 51 · about 7 more</b></div>
+            <div class="mini-row win"><span class="vtag">v3</span><p>Changed only the limit, 45 to 40</p><b>46 words · 3 of 3</b></div>
+          </div>
+        </div>
+        <p class="field-note">One-change rows pointed to the fix the two-change row hid.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Everything so far used fresh runs. The other way is a follow-up, a new message in the same conversation. Four moves: narrow, expand, correct, restyle. A cybersecurity club officer asked for a 100-word post with four facts: Thursday, September 10, 3:30 p.m., Room B-114, no experience needed, and teams cracking a practice password list on club laptops. Then two follow-ups, shown on the left. Follow-ups are fast. The catch: the final post depends on all three turns, so nobody can put it on a card. Count the conversation as version 1, fold the follow-ups into one prompt as version 2, and run it fresh. The folded run kept the facts and passed the length, and still added a claim nobody gave: see how fast you can break in, plus an emoji. Turn 3's restyle let new additions back in, so the folded prompt has to block them. The rule for the library: explore in follow-ups, then fold the win into the prompt and confirm it fresh.&#10;&#10;Time: 28-31 minutes.">
+      <div class="brand">CIS137 · 6.2</div>
+      <div class="content">
+        <div class="eyebrow">Follow-ups or fresh runs</div>
+        <h2 class="wide-title">Fold the follow-ups into one prompt. Then run it fresh.</h2>
+        <div class="fold" role="img" aria-label="Left to right. Version 1 is a conversation: a first request for a post, then the follow-up Shorter: under 60 words, and take out anything I did not give you, then the follow-up Good, now make it sound more casual, for a social media post. An arrow folds all three turns into version 2, one prompt that carries the casual tone, the 60-word limit, the four facts, and Use only these facts. Its fresh run still ends with an added claim: see how fast you can break in.">
+          <div class="fold-chain">
+            <span class="fold-label"><span class="vtag">v1</span> one conversation</span>
+            <p class="chain-turn">First request: a 100-word post with four facts</p>
+            <p class="chain-turn verbatim"><span class="move">correct</span>Shorter: under 60 words. And take out anything I did not give you.</p>
+            <p class="chain-turn verbatim"><span class="move">restyle</span>Good. Now make it sound more casual, for a social media post.</p>
+          </div>
+          <span class="fold-arrow" aria-hidden="true">→</span>
+          <div class="fold-card">
+            <span class="fold-label"><span class="vtag">v2</span> one prompt, run fresh</span>
+            <p class="verbatim">Write a casual social media post, under 60 words, inviting students to the first meeting of our community college's cybersecurity club. Facts: Thursday, September 10, at 3:30 p.m. in Room B-114. No experience needed. [...] Use only these facts.</p>
+            <p class="fold-result verbatim">[...] Come hang out, learn something new, and <span class="mark add" data-label="not in facts">see how fast you can break in.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A prompt card records its last run with the tool and the date, because a prompt that works in one tool can behave differently in another. A team rarely uses one tool. A technician may run a card in whichever chat assistant is open. Researchers have measured how fragile this is. One 2023 study, Sclar and others, found that small formatting changes to a prompt moved one model's accuracy by up to 76 points on few-shot tasks. And how well a format worked for one model said little about how it would work for another. That is the research case for one change at a time, and for testing a card in more than one tool.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS137 · 6.3</div>
+      <div class="content">
+        <div class="eyebrow">One prompt, two tools</div>
+        <h2 class="wide-title">Small formatting changes moved accuracy by up to <span class="accent">76 points</span>.</h2>
+        <div class="swing" role="img" aria-label="A single bar marked 76 points, labeled: how far small formatting changes moved one model's accuracy on few-shot tasks, Sclar and others, 2023.">
+          <div class="swing-bar"><span class="swing-fill"></span><b>up to 76 points</b></div>
+          <p class="swing-what">One model’s accuracy on few-shot tasks, from formatting changes alone</p>
+        </div>
+        <ul class="swing-points">
+          <li>A format that worked for one model said little about another.</li>
+          <li>So the card records its last run: the tool and the date.</li>
+        </ul>
+        <p class="credit">Source: Sclar and others, 2023.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A comparison is fair only when the prompt is the one thing that stays the same. Walk the five rules. Same prompt, word for word: rewording it to suit a tool means you are testing two prompts. Same input, pasted the same way. Fresh conversations in both tools, so nothing earlier steers either one. Same day, because tools change without notice. Same criteria, scored the same way, and a second run of each when a result is close. The Two-Tool Comparison sheet holds the result: the scores side by side, the differences worth noting, and the lines that go on the card.&#10;&#10;Time: 33-35 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 6.3</div>
+      <div class="content visual-split reverse">
+        <figure class="visual-art print-frame"><img src="assets/two-pan-balance.png" alt="A level gold balance holds one identical index card on each pan. A round device stands behind one pan and a flat monitor behind the other."><figcaption>Hold the card still. Let only the tool move.</figcaption></figure>
+        <div class="stack">
+          <div class="eyebrow">A fair comparison</div>
+          <h2>Change the tool. Keep everything else.</h2>
+          <dl class="fair-rules">
+            <dt>Same prompt</dt><dd>Word for word.</dd>
+            <dt>Same input</dt><dd>Pasted the same way.</dd>
+            <dt>Fresh conversations</dt><dd>In both tools.</dd>
+            <dt>Same day</dt><dd>Tools change without notice.</dd>
+            <dt>Same criteria</dt><dd>Re-run each when a result is close.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is the VPN connection failure card from the v2 starter library, run word for word in two tools on the same day. Point to the shared prompt at the top, then the two responses. Both kept the three checks in order. Tool A ran 64 words, Tool B 65, both under 100. Neither promised a fix time. Both score 3 of 3. Then the small stuff. Both tools added the same example website to check 1: such as a news site. Tool A apologized in its greeting, Tool B thanked the reader. None of that breaks a criterion, but each one is an addition, so the card's Notes should tell a technician to read check 1 before sending. One comparison is one data point, and a looser prompt leaves each model more gaps to fill its own way.&#10;&#10;Time: 35-38 minutes.">
+      <div class="brand">CIS137 · 6.3</div>
+      <div class="content">
+        <div class="eyebrow">The VPN card in two tools</div>
+        <h2 class="wide-title">Same card, two tools: 64 words and 65.</h2>
+        <div class="two-tools" role="img" aria-label="One prompt, the VPN connection failure card, feeds two tools side by side. Tool A: 64 words, the three checks in order, no promised fix time, 3 of 3. Tool B: 65 words, the same three checks, no promised fix time, 3 of 3. Both added the phrase such as a news site to check 1.">
+          <p class="shared-prompt verbatim"><span class="vtag">same prompt</span>[...] Use only these checks, in this order: 1. Open any website to confirm the internet works without the VPN. [...] Format: under 100 words [...] Do not add any other troubleshooting steps, and do not promise when it will be fixed.</p>
+          <div class="tool-col">
+            <span class="tool-name">Tool A</span>
+            <p class="verbatim">Hi, sorry the VPN is giving you trouble. Let's try these in order:</p>
+            <p class="verbatim">1. Open any website, <span class="mark add">such as a news site</span>, to confirm your home internet is working without the VPN. [...]</p>
+            <p class="tool-score"><b>64 words</b><span class="pf pass">3 of 3</span></p>
+          </div>
+          <div class="tool-col">
+            <span class="tool-name">Tool B</span>
+            <p class="verbatim">[...] Thanks for reaching out about the VPN. Please try these checks in order:</p>
+            <p class="verbatim">1. Open any website, <span class="mark add">such as a news site</span>, to confirm your internet connection works without the VPN. [...]</p>
+            <p class="tool-score"><b>65 words</b><span class="pf pass">3 of 3</span></p>
+          </div>
+        </div>
+        <p class="field-note">Card Notes: read check 1 before you send. Samples, Oct 2026.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 6.3, question 1. Pairs get one minute. The rewording turns one test into two. If Tool B does better, nobody can say whether the tool or the new wording did it. The fix is the first fair-comparison rule: same prompt, word for word, plus the other four. If the prompt truly needs rewording to work, that is a new version, and it gets its own row in the log and its own run in both tools.&#10;&#10;Time: 38-40 minutes.">
+      <div class="brand">CIS137 · 6.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 6.3</div>
+        <h2 class="check-title">“So it understands.” What is being tested now?</h2>
+        <div class="prompt">
+          <p class="verbatim">A teammate compares two tools but rewords the prompt slightly for the second one "so it understands." Explain why the comparison no longer tests the tools, and what the teammate should do instead.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Now it tests <strong>two prompts</strong>, so any difference could come from the rewording, not the tool. Send the same prompt word for word, with the same input, in fresh conversations on the same day, and score both against the same criteria.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A prompt can always be a little better, and that is the trap. Good enough is the point where a prompt meets every must-pass criterion in a fresh run and a re-run, and another version is unlikely to repay the time it costs. Past that point, a quick human edit beats another version. Walk the four stop rules. The criteria are met in a fresh run and a re-run, the normal finish. Two versions in a row gained nothing. The remaining fix is faster by hand: the landscaping version 3 closes with thank you for being a valued client. Deleting it takes three seconds, version 4 would take ten minutes. Prompting cannot fix the failure: the facts are missing, or a person must decide. Say so and stop. Perfect is not on the list, because perfect has no criteria.&#10;&#10;Time: 40-42 minutes.">
+      <div class="brand">CIS137 · 6.4</div>
+      <div class="content stop-split">
+        <div class="stopwatch" role="img" aria-label="A stopwatch comparing two times for the same fix: three seconds to delete a line by hand, ten minutes to run version 4.">
+          <div class="dial" aria-hidden="true"><span class="hand"></span></div>
+          <p class="stop-compare"><span><b>3 seconds</b> delete the line by hand</span><span><b>10 minutes</b> run version 4</span></p>
+        </div>
+        <div class="stack">
+          <div class="eyebrow">When to stop</div>
+          <h2>Stop at good enough. Perfect has no criteria.</h2>
+          <ol class="stop-rules">
+            <li>The criteria are met in a fresh run and a re-run.</li>
+            <li>Two versions in a row gained nothing.</li>
+            <li class="lit">The remaining fix is faster by hand: <span class="verbatim">“Thank you for being a valued client!”</span></li>
+            <li>Prompting cannot fix the failure. Say so and stop.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Mei Lin's ask was a library the Deskside team can share, so a technician's good prompt does not live only in that technician's chat history. A card alone is not enough. Prompt library v3 holds three things. The cards, each with its Strategies used line filled. A Refinement Log for each card you refined, so a colleague can see what was tried and why. A README, the first page a colleague reads: what the library is for, who keeps it, which cards serve whom, how to run and check a card, what never goes into a prompt, and how to propose a change. Then templates. A reused prompt has fixed text and changing parts. Turn the changing parts into slots in braces. The VPN card's ticket became ticket text in braces. Edit outside the slots and you are running a new version, which deserves its own log row.&#10;&#10;Time: 42-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 6.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">What library v3 holds</div>
+          <h2>Cards, their logs, and a README.</h2>
+          <ul class="v3-holds">
+            <li><b>The cards</b> each with Strategies used filled</li>
+            <li><b>A Refinement Log</b> for each card you refined</li>
+            <li><b>A README</b> the first page a colleague reads</li>
+          </ul>
+          <p class="slot-line">Fixed text is what you refined. <code class="slot">{ticket text}</code> is what a colleague fills in.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/library-shelf.png" alt="A long tray holds a row of index cards with gold tabs, each backed by a ruled sheet. In front stands a folded sign showing a person and a pointing hand, and one of two figures reaches toward the sign."><figcaption>A card alone is not a library.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="How do you find what a stranger would not understand? Ask a fresh conversation to read the card cold, as a new teammate would. The prompt names the reader and the condition: a new Deskside technician with no one to ask. It asks for questions, not a rewrite, only questions the card does not already answer, one line each, no more than six. Here it ran on the shared mailbox access card. Sort each question by where its answer belongs. Questions 1 and 2 are card fixes: what goes in the slot, and what counts as written approval. Question 2 is the sharpest, because a requester who writes my manager said OK could slip past the rule. Questions 5 and 6 are README fixes, because which tool to use and who checks and sends apply to every card. Treat the list as leads. A real colleague who tries the card is the better test.&#10;&#10;Time: 44-47 minutes.">
+      <div class="brand">CIS137 · 6.4</div>
+      <div class="content">
+        <div class="eyebrow">The cold-read test</div>
+        <h2 class="wide-title">A cold read lists what a stranger would ask. Sort each one.</h2>
+        <div class="cold-read" role="img" aria-label="The shared mailbox access reply card goes into a fresh conversation that reads it as a new Deskside technician with no one to ask. Questions come out and sort into two bins. Card bin: question 1, what goes in the ticket text slot, and question 2, what counts as approved in writing, including a requester who just says my manager said OK. README bin: question 5, which tool to run it in, and question 6, who sends the reply and what must be checked first.">
+          <div class="envelope"><span class="vtag">card</span><b>Shared mailbox access reply</b><span>read cold by a new Deskside technician with no one to ask</span></div>
+          <span class="cr-arrow" aria-hidden="true">→</span>
+          <div class="bins">
+            <div class="bin card-bin">
+              <span class="bin-label">Card</span>
+              <p><b>1</b> <span class="verbatim">What goes in the `{ticket text}` slot [...]?</span></p>
+              <p class="sharp"><b>2</b> <span class="verbatim">What counts as "approved in writing" [...] or the requester just saying <span class="mark hedge">"my manager said OK"?</span></span></p>
+            </div>
+            <div class="bin readme-bin">
+              <span class="bin-label">README</span>
+              <p><b>5</b> <span class="verbatim">Which AI tool and model should the technician run it in [...]?</span></p>
+              <p><b>6</b> <span class="verbatim">After running it, who sends the reply, and what must be checked first?</span></p>
+            </div>
+          </div>
+        </div>
+        <p class="field-note">A model’s list is a lead, not proof the card is clear.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 6.4, question 2. Give students a minute to decide and write the line. The test from the cold read: does the answer apply to this card only, or to every card? Who reviews and who sends a reply is the same question for every card in the library, just like question 6 on the mailbox card. So it belongs on the README's first page, in How to use a card. Accept any line that names who checks the draft and who sends it, for every card. Students who put it on the card should ask: would I copy the same line onto all of them?&#10;&#10;Time: 47-49 minutes.">
+      <div class="brand">CIS137 · 6.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 6.4</div>
+        <h2 class="check-title">Send it, or have a senior tech look first?</h2>
+        <div class="prompt">
+          <p class="verbatim">A cold read of a printer-offline card returns "Should I send the reply or have a senior tech review it first?" Decide whether the answer goes on the card or in the README, and write the line.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The <strong>README</strong>. Who checks and sends a reply applies to every card, not only this one. The line goes under How to use a card, and it names who reviews each draft and who sends it.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Back to Copperwind. Mei Lin asked for a shared prompt library the Deskside team can use, so a technician's good prompt does not live only in that technician's chat history. Priya Sharma's outreach volunteers will run cards from it too, so v3 is Copperwind's shared prompt library with two kinds of user. The starter library v2 already holds three finished Deskside cards, including the VPN and shared mailbox cards students saw today. One slot is empty: Priya's newsletter prompt, refined from a fresh brief. That card finishes the library, and it is the lab.&#10;&#10;Time: 49-52 minutes.">
+      <div class="brand">CIS137 · 6.4</div>
+      <div class="content">
+        <div class="eyebrow">Copperwind</div>
+        <h2 class="wide-title">Priya’s newsletter card finishes Copperwind’s library.</h2>
+        <div class="library-ledger" role="img" aria-label="Copperwind's shared prompt library v3 as a ledger with two kinds of user. Deskside technicians: three finished cards from the v2 starter, including the VPN connection failure reply and the shared mailbox access reply. Outreach volunteers: Priya Sharma's newsletter card, an empty gold slot that you fill. Below both: a Refinement Log for each refined card, and a README for everyone.">
+          <div class="lib-shelf deskside">
+            <span class="lib-user">Deskside technicians</span>
+            <span class="lib-card">VPN connection failure reply</span>
+            <span class="lib-card">Shared mailbox access reply</span>
+            <span class="lib-card muted">One more starter card</span>
+          </div>
+          <div class="lib-shelf outreach">
+            <span class="lib-user">Priya Sharma’s outreach volunteers</span>
+            <span class="lib-card empty">Newsletter card: yours</span>
+          </div>
+          <div class="lib-base"><span>Refinement Log for each refined card</span><span>README for everyone</span></div>
+        </div>
+        <p class="field-note">Mei Lin’s ask: a good prompt should not live only in one chat history.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 6A. Part 1: write a privacy plan, fill the Criteria sheet for Priya's item before the first run, including an accuracy criterion and one for the caveat Priya says must survive, then run and log version 1. Part 2: at least two more versions, one change each, every one in a fresh conversation, one follow-up folded in or explained, and a re-run of the best version. Part 3: run the final version in a second tool, write the newsletter card with slots, assemble library v3 with a README and a cold read of it, and write a 100 to 150 word note to Mei Lin. Exit ticket: the seven steps in order, and what the landscaping owner should have written before her first draft. That resolves the opening question. Chapter 7 turns the same discipline on AI output itself: accuracy and bias.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS137 · Lab 6A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 6A</div>
+        <h2 class="wide-title">Finish the library, one logged version at a time.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Criteria first</strong><span>Privacy plan, Criteria sheet, version 1 scored and logged.</span></li>
+          <li><span class="part">Part 2</span><strong>Run the loop</strong><span>Two more versions, one change each. Fold in a follow-up. Re-run your best.</span></li>
+          <li><span class="part">Part 3</span><strong>Two tools and library v3</strong><span>Comparison sheet, newsletter card, README, a 100-150 word note to Mei Lin.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> List the seven steps of the refinement loop in order. Then name what the owner should have written before her first draft.</p>
+        </div>
+        <p class="ahead">Next: Chapter 7 turns the same discipline on AI output itself, with accuracy and bias.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
