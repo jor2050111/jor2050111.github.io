@@ -25,6 +25,7 @@ import html
 import os
 import re
 import sys
+from html.parser import HTMLParser
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CHAPTERS = os.path.expanduser(
@@ -47,6 +48,39 @@ PALETTE_DARK = {
 ALLOW_NUMBERS = {"55", "137", "1", "2", "3", "4", "5", "6", "7", "8",
                  "9", "10", "11", "12", "01", "02", "03", "04", "05",
                  "06", "07", "08", "09"}
+
+
+class _CopyText(HTMLParser):
+    """Collect visible text, skipping pre, code, and any element whose
+    class carries 'verbatim' (chapter quotes keep their own punctuation).
+    A regex cannot do this because verbatim paragraphs nest spans."""
+
+    SKIP = {"pre", "code", "script", "style"}
+
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+        self.stack = []  # True when the element (or an ancestor) is skipped
+
+    def handle_starttag(self, tag, attrs):
+        classes = dict(attrs).get("class", "") or ""
+        skipped = (tag in self.SKIP or "verbatim" in classes.split()
+                   or (self.stack and self.stack[-1]))
+        self.stack.append(bool(skipped))
+
+    def handle_endtag(self, tag):
+        if self.stack:
+            self.stack.pop()
+
+    def handle_data(self, data):
+        if not (self.stack and self.stack[-1]):
+            self.parts.append(data)
+
+
+def copy_text(fragment):
+    parser = _CopyText()
+    parser.feed(fragment)
+    return re.sub(r"\s+", " ", " ".join(parser.parts))
 
 
 def strip_tags(fragment):
@@ -152,10 +186,7 @@ def main():
         if "—" in s:
             errors.append(f"slide {i}: em dash")
         # Semicolons outside verbatim/code.
-        stripped = re.sub(r"<(pre|code)[^>]*>.*?</\1>", " ", s, flags=re.S)
-        stripped = re.sub(r"<[^>]*class=\"[^\"]*verbatim[^\"]*\"[^>]*>.*?</(p|div|span|blockquote|li)>",
-                          " ", stripped, flags=re.S)
-        if ";" in strip_tags(stripped):
+        if ";" in copy_text(s):
             warnings.append(f"slide {i}: semicolon in visible copy outside .verbatim")
     if last_end != 55:
         errors.append(f"notes end at minute {last_end}, expected 55")
