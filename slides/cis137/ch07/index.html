@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 7 classroom presentation: Accuracy and Bias.">
+  <meta name="theme-color" content="#001A36">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Cpath d='M18 52V30a14 14 0 0 1 28 0v22' fill='none' stroke='%23FFD573' stroke-width='6'/%3E%3Cpath d='M10 54h44' stroke='%23ffffff' stroke-width='4'/%3E%3C/svg%3E">
+  <title>CIS137: Accuracy and Bias</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Accuracy and Bias" data-course="cis137"
+  data-chapter="ch07" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the clinic story. The front desk at a veterinary clinic asked a chat assistant for a short first-visit page. The draft was warm, the length was right, and every sentence sounded like the clinic. One sentence said a first visit takes 30 to 45 minutes. The clinic books 30. Nobody noticed until a client complained, and the page had been live for a month. Take two or three answers to the lede. Then promise the payoff: by the end of class, everyone can show a colleague that an output is accurate and fair, with counts instead of impressions.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-inspection-station.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 7 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Accuracy and Bias</h1>
+        <p class="lede">The clinic’s page sounded right for a month. How would you have proved it wrong?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Part II taught students to build prompts that leave less room to guess. Part III asks the harder question: when the output comes back, how do you show a colleague it is accurate and fair? Read the three objectives as the stations of today's line. 7.1 is the Accuracy Audit, sections 7.1 and 7.2. 7.2 is the paired prompt test in 7.3. 7.3 is the Audit Report in 7.4. The chapter serves CLO 1 (evaluate AI responses for accuracy) and CLO 5 (apply ethical guidelines).&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 7</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Audit it, test it, then recommend.</h2>
+        <ol class="stations">
+          <li><span class="t-num">7.1</span><strong>Assess</strong><p>an AI response for accuracy with the Accuracy Audit: extract its claims, check each against a named source, and score the result in counts</p></li>
+          <li><span class="t-num">7.2</span><strong>Investigate</strong><p>an AI output for bias with the paired prompt test, varying one detail, and relate any difference in the responses to that detail or to chance</p></li>
+          <li><span class="t-num">7.3</span><strong>Recommend</strong><p>whether to use an AI output in an Audit Report a colleague can act on, and justify the recommendation with the audit’s counts and quoted findings</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is the clinic's prompt. Read the gold Step tags, which name the decision behind each line. Step 3 is the trap: it asks for three topics, what to bring, what happens during the exam, and how long the visit takes. Step 4 hands over facts for only the first topic. Now read the sample response. The gold marks show what the model filled in on its own: the lungs, the diet talk, and the 30 to 45 minutes. Read the tool's note at the bottom. It admits the guess, which is a good habit, and the guess is still wrong for this clinic. If the front desk pastes only the paragraph onto the website, the note never leaves the chat.&#10;&#10;Time: 4-7 minutes.">
+      <div class="brand">CIS137 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow">An audit, start to finish</div>
+        <h2 class="wide-title">Three topics asked. Facts supplied for one.</h2>
+        <figure class="chat clinic-chat">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <span class="step">Step 1: say who is asking and where the text will go</span>
+                <p class="verbatim">I work the front desk at a small veterinary clinic in Glendale, Arizona.</p>
+                <span class="step">Step 2: name the job and its length</span>
+                <p class="verbatim">Write a 120-word paragraph for our website titled "Your Pet's First Visit."</p>
+                <span class="step">Step 3: ask for three topics, though the facts below cover only the first</span>
+                <p class="verbatim">Tell new clients what to bring, what happens during the exam, and how long the visit takes.</p>
+                <span class="step">Step 4: hand over the facts you have</span>
+                <p class="verbatim">Facts: arrive 15 minutes early to fill out a new-client form; bring any past vaccine records; dogs come on a leash and cats come in a carrier.</p>
+                <span class="step">Step 5: set the voice</span>
+                <p class="verbatim">Plain, warm tone.</p>
+              </div>
+            </div>
+            <div class="turn assistant">
+              <span class="who">Assistant</span>
+              <p class="verbatim">We're so glad you chose us! Please arrive 15 minutes early to fill out our new-client form, and bring any past vaccine records you have. Dogs should come on a leash, and cats should arrive in a carrier so everyone stays safe and comfortable. During the exam, our veterinarian will gently check your pet from nose to tail, including weight, heart, <span class="mark add">lungs</span>, eyes, ears, teeth, and skin. <span class="mark add">Our team will also talk with you about diet, habits, and any concerns</span>, then recommend vaccines or care if needed. <span class="verbatim">Please ask us questions anytime; there are no silly ones!</span> <span class="mark add" data-label="never supplied">Most first visits take about 30 to 45 minutes</span>, so you'll have time to get to know us and feel right at home.</p>
+              <p class="verbatim tool-note">Note: You didn't give me the visit length or exam details, so I used a typical 30 to 45 minutes and a standard nose-to-tail checkup. Please adjust these to match your clinic.</p>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The Accuracy Audit runs four steps in this order: Extract, Check, Score, Report. Check joins Chapter 2's Find the source and Mark. Score is new, and so is the fourth verdict. Walk claim 11 down the line, gate by gate. Does the fact sheet say the visit leaves time to feel at home? No. Does it say otherwise? No. The sheet is silent, so ask the deciding question: could any record settle it? No record could settle a promise about how a client will feel. So it stops at Unverifiable. A claim some record could settle, even one you cannot reach today, stays Not in source. The fix differs. Not in source can be checked further or cut. Unverifiable can only be cut or rewritten as what it is, an opinion.&#10;&#10;Time: 7-10 minutes.">
+      <div class="brand">CIS137 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow">The Accuracy Audit</div>
+        <h2 class="wide-title">Every claim stops at exactly one of four gates.</h2>
+        <ol class="audit-steps" aria-label="The four steps of the Accuracy Audit, in order">
+          <li><strong>Extract</strong> every claim, one per line</li>
+          <li class="on"><strong>Check</strong> each against a named source</li>
+          <li><strong>Score</strong> in counts only</li>
+          <li><strong>Report</strong> in an Audit Report</li>
+        </ol>
+        <div class="gate-line" role="img" aria-label="Claim 11 from the clinic draft, the visit leaves time to get to know the team and feel at home, rides a conveyor through four gates in order. Gate one, Holds: does the fact sheet say so? No. Gate two, Contradicted: does the fact sheet say otherwise? No. Gate three, Not in source: the sheet is silent, could some other record settle it? No. Gate four, Unverifiable: no record could settle it. The claim stops here.">
+          <figure class="claim-card"><span class="claim-no">Claim 11</span><p class="verbatim">The visit leaves time to get to know the team and feel at home</p></figure>
+          <div class="gate passed"><span class="verdict holds">Holds</span><span class="gate-test">Does the fact sheet say so?</span><span class="gate-answer">No</span></div>
+          <div class="gate passed"><span class="verdict contradicted">Contradicted</span><span class="gate-test">Does the fact sheet say otherwise?</span><span class="gate-answer">No</span></div>
+          <div class="gate passed"><span class="verdict not-in-source">Not in source</span><span class="gate-test">Sheet is silent. Could some record settle it?</span><span class="gate-answer">No</span></div>
+          <div class="gate stop"><span class="verdict unverifiable">Unverifiable</span><span class="gate-test">No record could settle it.</span><span class="gate-answer">Stops here</span></div>
+        </div>
+        <p class="decider"><b>Could any record settle it?</b> Yes means Not in source. No means Unverifiable: cut it or rewrite it as an opinion.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Extract and Check come together in one table. Each claim gets its own line, one verdict, and the fact that decided it. Point to claim 10, the red row: about 30 to 45 minutes against fact 6, about 30 minutes. Contradicted. Three courtesy lines are not on the list: We're so glad you chose us, Please ask us questions anytime, and there are no silly ones. The phrase gently check your pet from nose to tail restates claim 6, so it folds into that claim. Then read the score as counts. A score of 8 of 11 hold, the chapter's own example, tells a colleague how many claims you checked and how many failed. The count keeps you honest, because you cannot report a claim you never extracted. Note what the audit did not check: payment, walk-ins, and emergencies. The audit scores what the output says. Omissions go to the report.&#10;&#10;Time: 10-13 minutes.">
+      <div class="brand">CIS137 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow">Extract, check, score</div>
+        <h2 class="wide-title">One draft, 11 claims, one verdict each.</h2>
+        <ol class="claim-board" role="img" aria-label="The clinic draft's 11 claims, each with a verdict and the fact that decided it. 1, arrive 15 minutes early to fill out a form: Holds, fact 3. 2, bring past vaccine records: Holds, fact 4. 3, dogs on a leash: Holds, fact 5. 4, cats in a carrier: Holds, fact 5. 5, leashes and carriers keep everyone safe and comfortable: Unverifiable. 6, the exam checks weight, heart, eyes, ears, teeth, and skin: Holds, fact 7. 7, the exam checks the lungs: Not in source, fact 7 lists no lungs. 8, the team talks about diet, habits, and concerns: Not in source. 9, the visit ends with vaccine recommendations: Holds, fact 7. 10, most first visits take about 30 to 45 minutes: Contradicted by fact 6, about 30 minutes. 11, time to get to know the team and feel at home: Unverifiable.">
+          <li><span class="n">1</span><span>New clients arrive 15 minutes early to fill out a form</span><span class="verdict holds">Holds</span><span class="why">Fact 3</span></li>
+          <li><span class="n">2</span><span>Bring any past vaccine records</span><span class="verdict holds">Holds</span><span class="why">Fact 4</span></li>
+          <li><span class="n">3</span><span>Dogs come on a leash</span><span class="verdict holds">Holds</span><span class="why">Fact 5</span></li>
+          <li><span class="n">4</span><span>Cats come in a carrier</span><span class="verdict holds">Holds</span><span class="why">Fact 5</span></li>
+          <li><span class="n">5</span><span>Leashes and carriers keep everyone safe and comfortable</span><span class="verdict unverifiable">Unverifiable</span><span class="why">A general claim no clinic record settles</span></li>
+          <li><span class="n">6</span><span>The exam checks weight, heart, eyes, ears, teeth, and skin</span><span class="verdict holds">Holds</span><span class="why">Fact 7</span></li>
+          <li><span class="n">7</span><span>The exam checks the lungs</span><span class="verdict not-in-source">Not in source</span><span class="why">Fact 7 lists no lungs</span></li>
+          <li><span class="n">8</span><span>The team talks with you about diet, habits, and concerns</span><span class="verdict not-in-source">Not in source</span><span class="why">No fact covers it</span></li>
+          <li><span class="n">9</span><span>The visit ends with vaccine recommendations</span><span class="verdict holds">Holds</span><span class="why">Fact 7, “ends with a vaccine plan”</span></li>
+          <li class="flag"><span class="n">10</span><span>Most first visits take about 30 to 45 minutes</span><span class="verdict contradicted">Contradicted</span><span class="why">Fact 6, “about 30 minutes”</span></li>
+          <li><span class="n">11</span><span>The visit leaves time to get to know the team and feel at home</span><span class="verdict unverifiable">Unverifiable</span><span class="why">A promise about how a client will feel</span></li>
+        </ol>
+        <div class="counts-board" aria-label="Score">
+          <span class="total"><b>11</b> claims checked</span>
+          <span class="verdict holds"><b>6</b> hold</span>
+          <span class="verdict contradicted"><b>1</b> contradicted</span>
+          <span class="verdict not-in-source"><b>2</b> not in source</span>
+          <span class="verdict unverifiable"><b>2</b> unverifiable</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Try It Yourself 7.1 as a sort. A credit union branch audited six claims, and its fact sheet mentions none of them. Ask students to sort before you click through. The definitions decide it: Not in source means the fact sheet is silent, but some other record could settle it. Unverifiable means no record could settle it. Claim 6 is the one to study. Most members sounds vague, which tempts people toward Unverifiable. But account-opening records could settle it, so it stays Not in source. The verdict turns on whether any record could settle the claim, not on how vague it sounds. Claims 2 and 4 are an opinion and a promise about feelings.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow">Try It Yourself 7.1 · Sort the verdicts</div>
+        <h2 class="wide-title">Vague is not the test. Could a record settle it?</h2>
+        <div class="bins">
+          <div class="bin nis">
+            <span class="verdict not-in-source">Not in source</span>
+            <p class="bin-test">The fact sheet is silent, but some other record could settle it.</p>
+            <ol>
+              <li><b>1</b><span class="verbatim">The branch has offered free notary service since 2019.</span></li>
+              <li><b>3</b><span class="verbatim">The drive-through stays open until 6 p.m. on Fridays.</span></li>
+              <li><b>5</b><span class="verbatim">The branch has two ATMs that take deposits.</span></li>
+              <li class="study"><b>6</b><span><span class="verbatim">Most members finish opening an account in under 20 minutes.</span><em>Account-opening records could settle it.</em></span></li>
+            </ol>
+          </div>
+          <div class="bin unv">
+            <span class="verdict unverifiable">Unverifiable</span>
+            <p class="bin-test">No record could settle it.</p>
+            <ol>
+              <li><b>2</b><span class="verbatim">Our tellers are the friendliest in the Valley.</span></li>
+              <li><b>4</b><span class="verbatim">You'll leave every visit feeling more confident about your money.</span></li>
+            </ol>
+          </div>
+        </div>
+        <p class="sample-tag">Sorted as the chapter’s sample run sorted them, October 2026.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 7.1, question 2. Give students one minute to write the rewrite before you reveal. The score names the counts: 10 claims checked, 8 hold, and the other two by their verdicts. The percentage hid two things: how many claims were checked, and what the two failures were. It also invites a comparison with other audits that checked different things. If time allows, ask what the two failures might be and why a manager would care which.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 7.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 7.1</div>
+        <h2 class="check-title">“About 80 percent accurate.” Rewrite it in counts.</h2>
+        <div class="prompt">
+          <p class="verbatim">A teammate reports an audit as "about 80 percent accurate." They checked 10 claims and 8 held. Rewrite the result as an Accuracy Audit score, and name the two things the percentage hid.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Score: <strong>10 claims checked, 8 hold</strong>, and the other two counted by verdict (contradicted, not in source, or unverifiable). The percentage hid how many claims were checked and what the two failures were.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="An audit tells you which claims failed. The cause tells you what to change, so a good audit names it. Most errors in AI output come from four causes. Walk the pipes in the illustration, top to bottom, in the same colors as the list. Training data: the model fills a gap with what is typical in the text it learned from, or repeats a common mistake. In 2021, TruthfulQA put 817 questions built around common misconceptions to the models of the day, and the largest models were generally the least truthful. The lesson is the mechanism, not the score: a model learns what people write, and people repeat myths. Prompt ambiguity, reasoning gaps, and dated knowledge each get a case on the next slide. The point of the picture: all four pour out as one fluent answer, so the cause never shows in the text.&#10;&#10;Time: 17-19 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 7.2</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Where errors come from</div>
+          <h2>An audit names what failed. The cause names the fix.</h2>
+          <ol class="causes">
+            <li class="c-data"><span class="cause-tile" aria-hidden="true">1</span><strong>Training data</strong><span>fills a gap with what is typical</span></li>
+            <li class="c-ambiguity"><span class="cause-tile" aria-hidden="true">2</span><strong>Prompt ambiguity</strong><span>the prompt reads two ways, and the model picks one</span></li>
+            <li class="c-reasoning"><span class="cause-tile" aria-hidden="true">3</span><strong>Reasoning gaps</strong><span>a count, date, or calculation step fails unseen</span></li>
+            <li class="c-dated"><span class="cause-tile" aria-hidden="true">4</span><strong>Dated knowledge</strong><span>the fact changed after the model’s knowledge cutoff</span></li>
+          </ol>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/four-pipes-one-tap.png" alt="Four pipes run in from the left, marked with an open book, a card with a question mark, a tangled knot, and a calendar page. They join into one tap that pours a single clear stream into a glass."><figcaption>Four causes pour into one fluent answer. The text never says which.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Route each failed claim left to right: the claim, its cause, the fix the cause points to. Row 1, training data: the clinic's 30 to 45 minutes. The tool said so itself, I used a typical 30 to 45 minutes. Fix: supply the facts. Row 2, prompt ambiguity: a tutoring center charges 40 dollars for a 50-minute session, and a parent wants 12 hours. The tool read clock hours, 14.4 sessions rounded to 15, for 600 dollars. If the center sells tutoring hours as sessions, the parent meant 12 sessions, 480 dollars. The math is right and the reading may not be. Row 3, reasoning gap: a splash pad notice for June 8 to 12, reopening June 13. The tool counted 50 words, a word counter gives 47. A model reads tokens, not words. Row 4, dated knowledge, on the next slide.&#10;&#10;Time: 19-22 minutes.">
+      <div class="brand">CIS137 · 7.2</div>
+      <div class="content">
+        <div class="eyebrow">Name the cause</div>
+        <h2 class="wide-title">Route each failed claim to its cause. The cause picks the fix.</h2>
+        <div class="routing" role="img" aria-label="Four failed claims routed left to right to a cause and a fix. Row one: most first visits take about 30 to 45 minutes, against fact 6, about 30 minutes. Cause: training data. Fix: supply the facts, and ground the prompt in a source. Row two: a total of 600 dollars for 12 hours, where the parent may have meant 12 sessions, 480 dollars. Cause: prompt ambiguity. Fix: define the term, or ask the model to ask. Row three: total 50 words, where a word counter gives 47. Cause: reasoning gap. Fix: check every number yourself, from the source. Row four: diesel at roughly 3.50 to 4.00 dollars, where the primary source gives 6.276 dollars. Cause: dated knowledge. Fix: check a primary source with a date.">
+          <span class="route-head">Failed claim</span><span></span><span class="route-head">Cause</span><span></span><span class="route-head">Fix</span>
+          <div class="route-claim"><span class="verbatim">“Most first visits take about 30 to 45 minutes”</span><span class="vs">Clinic fact 6: about 30 minutes</span></div>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-cause c-data"><span class="cause-tile" aria-hidden="true">1</span>Training data</span>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-fix">Supply the facts, and ground the prompt in a source</span>
+          <div class="route-claim"><span class="verbatim">“a total of $600 (15 × $40)”</span><span class="vs">The parent may mean 12 sessions: $480</span></div>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-cause c-ambiguity"><span class="cause-tile" aria-hidden="true">2</span>Prompt ambiguity</span>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-fix">Define the term, or ask the model to ask</span>
+          <div class="route-claim"><span class="verbatim">“Total: 50 words”</span><span class="vs">A word counter: 47</span></div>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-cause c-reasoning"><span class="cause-tile" aria-hidden="true">3</span>Reasoning gap</span>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-fix">Check every number yourself, from the source</span>
+          <div class="route-claim"><span class="verbatim">“roughly $3.50 to $4.00 per gallon”</span><span class="vs">Primary source: $6.276</span></div>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-cause c-dated"><span class="cause-tile" aria-hidden="true">4</span>Dated knowledge</span>
+          <span class="route-arrow" aria-hidden="true">→</span>
+          <span class="route-fix">Check a primary source with a date</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A trucking dispatcher updating next week's fuel budget asked for a current price. Read the response. The hedge is honest, and the pointer is good: the EIA, the U.S. Energy Information Administration, is the federal agency that publishes the weekly price. Its page, read on October 21, 2026, gave a U.S. average of 6.276 dollars a gallon for the week of October 19, 2026. That is more than 2 dollars above the top of the tool's range. A hedged claim is still a claim, so roughly 3.50 to 4.00 dollars is Contradicted by the primary source, and a budget built on it would run short. The page's own year-ago change puts the price a year earlier near 3.62 dollars, so the range matches prices from about a year earlier. That is dated knowledge.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS137 · 7.2</div>
+      <div class="content">
+        <div class="eyebrow">Dated knowledge</div>
+        <h2 class="wide-title">A hedged claim is still a claim.</h2>
+        <div class="diesel">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">I'm a dispatcher for a small trucking company in Phoenix and I'm updating our fuel budget for next week. What is the current U.S. average retail price of diesel per gallon? Answer in one sentence.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">I can't pull live prices, so I can't give you today's exact figure, but U.S. average retail diesel has recently been running <span class="mark wrong" data-label="contradicted">roughly $3.50 to $4.00 per gallon</span> (with Arizona and the West Coast typically higher than the national average), so check the EIA's weekly On-Highway Diesel Price page (updated Mondays) for the current number before you finalize your budget.</p></div>
+            </div>
+          </figure>
+          <div class="source-card">
+            <span class="src-label">Primary source · EIA weekly page</span>
+            <span class="big">$6.276</span>
+            <p>U.S. average per gallon, week of October 19, 2026. Read October 21, 2026.</p>
+            <span class="verdict contradicted">Contradicted</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 7.2, question 2. Students commit to a cause and write their one sentence before the reveal. The request could be read two ways, and the model picked one without saying so. That is prompt ambiguity, and the fix it points to is to define the term in the prompt. Accept any sentence that names round trip or there and back. Some students will suggest the other fix from the table, asking the model to ask when anything could mean two things. That is also correct.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS137 · 7.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 7.2</div>
+        <h2 class="check-title">They asked for there and back. They got one way.</h2>
+        <div class="prompt">
+          <p class="verbatim">A community theater's touring crew asks for "the drive time to Flagstaff and back" and gets the one-way time. Name the cause, and write the one sentence you would add to the prompt.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Prompt ambiguity.</strong> The request could be read two ways, and the model picked one without saying so. Define the term (say round trip), or ask the model to ask. Add: “If anything in the request could mean two things, ask before you answer.”</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="An output can pass an accuracy audit line by line and still treat people unequally. One wrong fact is an error. A pattern of the same kind of difference, tied to who a person is, is bias. Walk the four entry points left to right in the life of a system. Data: a 2018 facial analysis study, often called Gender Shades, found two widely used benchmark sets were mostly lighter-skinned faces, so a test on them could hide how a system does on darker-skinned faces. Labels: the people who marked examples, such as qualified applicant, brought their own judgments. Design: builders chose what counts as success. Use: a person applies the tool to a job it was not built for. NIST's March 2022 report, Special Publication 1270, says no AI system can reach zero risk of bias, and that bias comes from people too, including the person using the tool.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow">Where bias enters</div>
+        <h2 class="wide-title">Accurate line by line can still treat people unequally.</h2>
+        <p class="bias-def"><strong>Bias:</strong> a consistent tilt for or against some people, unrelated to the task.</p>
+        <ol class="lifecycle" role="img" aria-label="The life of an AI system read left to right, with four points where bias can enter. Data: the examples over-represent some people and under-represent others. Labels: the people who marked the examples brought their own judgments. Design: the builders chose what to measure, what to optimize, and what counts as success. Use: a person applies the tool to a job it was not built for, or trusts it where it is weak.">
+          <li><strong>Data</strong><span>The examples over-represent some people and under-represent others.</span></li>
+          <li><strong>Labels</strong><span>The people who marked the examples brought their own judgments.</span></li>
+          <li><strong>Design</strong><span>Builders chose what to measure, what to optimize, and what counts as success.</span></li>
+          <li><strong>Use</strong><span>A person applies the tool to a job it was not built for, or trusts it where it is weak.</span></li>
+        </ol>
+        <p class="field-note">Most bias shows up only when you compare responses.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The paired prompt test sends two prompts identical except for one detail, each in a fresh conversation, and compares them on the same criteria. Researchers call the same idea a counterfactual check. The design is older than AI. In a 2003 field experiment, two economists sent fictional resumes to real job ads in Boston and Chicago with only the name changed, and the name explained the callback gap. Here is the Tempe leasing office's prompt A. The circled name is the one varied detail: Claire Novak in A, Latoya Jefferson in B. Names can signal gender, ethnicity, or age to a model. Read Step 3: the office fixed the sign-off so it cannot differ. Then walk the five rules for a fair pair. Rule 5 matters most: one pair is a lead, not a finding.&#10;&#10;Time: 28-30 minutes.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow">The paired prompt test</div>
+        <h2 class="wide-title">Change one detail. Hold everything else still.</h2>
+        <div class="pair-split">
+          <figure class="chat">
+            <div class="chat-bar">Prompt A · fresh conversation</div>
+            <div class="chat-body">
+              <div class="turn user">
+                <span class="who">You</span>
+                <div class="stepped">
+                  <span class="step">Step 1: name the job, the reader, and the length</span>
+                  <p class="verbatim">You draft replies for the leasing office at an apartment community in Tempe, Arizona. Write a reply to the rental inquiry below, under 100 words.</p>
+                  <span class="step">Step 2: hand over every fact the reply may use</span>
+                  <p class="verbatim">Facts: a one-bedroom apartment is available December 1 for $1,350 a month. To apply, a renter needs proof of income and must pass a background check. Tours run Monday to Saturday, 10 a.m. to 5 p.m.</p>
+                  <span class="step">Step 3: fix the sign-off so it cannot differ</span>
+                  <p class="verbatim">Sign the reply "Leasing Office."</p>
+                  <span class="step">Step 4: paste the inquiry, where the one varied detail sits</span>
+                  <p class="verbatim">Inquiry: "Hi, my name is <span class="varied">Claire Novak</span>. I'm interested in the one-bedroom. Is it still available, and what do I need to apply?"</p>
+                </div>
+              </div>
+              <p class="swap">Prompt B: identical, with <span class="varied">Latoya Jefferson</span>, in its own fresh conversation.</p>
+            </div>
+          </figure>
+          <div class="stack">
+            <ol class="rules-list" aria-label="Five rules for a fair pair">
+              <li><span><strong>One detail varies.</strong> Write it down before you run.</span></li>
+              <li><span><strong>Everything else is identical,</strong> word for word.</span></li>
+              <li><span><strong>Fresh conversations</strong> for every run.</span></li>
+              <li><span><strong>Criteria first.</strong> Decide what you compare before you read.</span></li>
+              <li><span><strong>More than one pair.</strong> One pair is a lead, not a finding.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Prompt A and prompt B, side by side, the same day. Read across the two lanes. The dashed boxes mark the two wording differences. The office manager ran the pair a second time and scored all four replies on criteria she wrote before the first run. Read the table: available 2 of 2 and 2 of 2, both requirements and no others 2 of 2, the tour with the right hours 2 of 2, an added condition 0 of 2, lengths 67 and 66 against 68 and 68. The finding, in counts: no difference on any criterion in two pairs, and two repeated wording differences. A tight prompt with every fact supplied leaves a model little room to differ. A second test that day varied a writer's age, 26 or 62, and the recommendation also came back the same.&#10;&#10;Time: 30-33 minutes.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow">A pair at the leasing office</div>
+        <h2 class="wide-title">Four replies, same facts. Two wording differences.</h2>
+        <div class="lanes">
+          <figure class="chat">
+            <div class="chat-bar"><span class="lane-tag">A · <span class="varied">Claire Novak</span></span> <span class="stamp">Sample, Oct 2026</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><p class="verbatim">Hi Claire,<br><br>Thank you for your interest! Yes, the one-bedroom is still available for a December 1 move-in at $1,350 a month.<br><br>To apply, you'll need to provide proof of income and pass a background check.<br><br><span class="diff">We'd be happy to show you</span> the apartment. <span class="diff">Tours run</span> Monday through Saturday, 10 a.m. to 5 p.m. Let us know what day and time work best for you.<br><br>Leasing Office</p></div>
+            </div>
+          </figure>
+          <figure class="chat">
+            <div class="chat-bar"><span class="lane-tag">B · <span class="varied">Latoya Jefferson</span></span> <span class="stamp">Sample, Oct 2026</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><p class="verbatim">Hi Latoya,<br><br>Thank you for your interest! Yes, our one-bedroom apartment is still available for a December 1 move-in at $1,350 per month.<br><br>To apply, you'll need to provide proof of income and pass a background check.<br><br><span class="diff">We'd love to show you</span> the apartment. <span class="diff">Tours are available</span> Monday through Saturday, 10 a.m. to 5 p.m. Let us know what day and time work best for you.<br><br>Leasing Office</p></div>
+            </div>
+          </figure>
+        </div>
+        <table class="criteria">
+          <thead><tr><th scope="col">Criterion, set before the first run</th><th scope="col">Claire Novak (2 runs)</th><th scope="col">Latoya Jefferson (2 runs)</th></tr></thead>
+          <tbody>
+            <tr><td>Says the unit is available</td><td class="count">2 of 2</td><td class="count">2 of 2</td></tr>
+            <tr><td>Lists both requirements, and no others</td><td class="count">2 of 2</td><td class="count">2 of 2</td></tr>
+            <tr><td>Invites a tour with the right hours</td><td class="count">2 of 2</td><td class="count">2 of 2</td></tr>
+            <tr><td>Adds a condition not in the facts</td><td class="count">0 of 2</td><td class="count">0 of 2</td></tr>
+            <tr><td>Length in words</td><td class="count">67 and 66</td><td class="count">68 and 68</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 7.3, question 2. This one pairs directly with the leasing office. Pairs get one minute to write two sentences. The facts and requirements matched in all four runs, so the difference is wording. For a reply like this, an office could reasonably rule that wording may vary. But that ruling is the fairness decision itself, so a person with authority still makes it and writes it down. The audit only reports what changed. That sets up the next slide.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 7.3</div>
+        <h2 class="check-title">“Glad” in one reply, “happy” in another. Does it need a ruling?</h2>
+        <div class="prompt">
+          <p class="verbatim">A paired test of a credit union's loan-inquiry reply shows the same facts and requirements in four runs, with "We'd be glad to help" in one reply and "Happy to help" in another. Decide whether the difference needs a fairness decision, and justify your answer in two sentences.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Probably not a problem: the facts and requirements matched in all four runs, so only the wording changed. Still, ruling that wording may vary is itself the fairness decision, and a person with authority makes it and writes it down.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Are the happy and love difference and the Tours run and Tours are difference fair? Nothing in the data answers that. Fairness is a decision about which differences in how people are treated are acceptable for a given use, made by people and written down. It is not a setting in a tool. NIST's report lists many ways to measure fairness and warns that some can increase discrimination in some cases, so someone has to choose. Read the two rulings. The audit reports what changed. A person with the authority to decide says whether it is acceptable.&#10;&#10;Time: 35-37 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content visual-split reverse">
+        <figure class="visual-art print-frame"><img src="assets/fairness-balance.png" alt="A two-pan balance scale on a table holds one identical blank card in each pan. A hand reaches in from above and sets a small gold weight on one pan. A clipboard with a ruled sheet and a pen rests behind the scale."><figcaption>Someone has to choose, and write the choice down.</figcaption></figure>
+        <div class="stack">
+          <div class="eyebrow">Fairness is a decision</div>
+          <h2>Fairness is a decision a person writes down.</h2>
+          <p>It is not a setting in a tool. Ways to measure it can disagree.</p>
+          <ul class="decision-rows">
+            <li><b>A rental reply</b>Wording may vary. Facts, requirements, and invitations may not.</li>
+            <li><b>A hiring summary</b>Nothing about the applicant’s name may change the summary at all.</li>
+          </ul>
+          <p class="field-note">The audit reports what changed. A person with authority decides.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 7.1. A Phoenix trucking dispatcher tests a prompt that summarizes driver applications. Her criteria: the recommendation, the first reason, and any line asking for a check before hiring. Symptom: both summaries say interview, but the first reasons differ, experience for Daniel Kowalski and clean record for Rosa Delgado. She wants to tell the manager why, and her row cannot. Diagnose: compare the applicant lines word by word. The pair varied two details at once, the name and the years, 8 against 3. Repair: hold the years at 8 in both and vary only the name. One change. Verify: both now lead with experience, so the first-reason gap pointed to the years or to chance. But a new difference appeared, a check-before-hiring line in Rosa Delgado's run only. She ran the pair two more times. Interview 3 of 3 both ways. Experience first 3 of 3 both ways. The checks line 1 of 3 against 3 of 3. Six runs is small, so she reports a lead, not a verdict. A check before hiring is good practice, so the decision is whether every applicant gets the same checks.&#10;&#10;Time: 37-41 minutes.">
+      <div class="brand">CIS137 · 7.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 7.1 · Two drivers, two summaries</div>
+        <h2 class="wide-title">Vary two details and the row cannot say which one moved.</h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Before · two details varied</span>
+            <ul class="applicants">
+              <li><span class="varied">Daniel Kowalski</span> · <span class="varied">8 years</span> · Class A · Glendale, about 20 minutes from the yard</li>
+              <li><span class="varied">Rosa Delgado</span> · <span class="varied">3 years</span> · Class A · Glendale, about 20 minutes from the yard</li>
+            </ul>
+            <p class="fix-result">First reason: <b>Experience</b> and <b>Clean record</b>. The name, the years, or both?</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">After · only the name varies</span>
+            <ul class="applicants">
+              <li><span class="varied">Daniel Kowalski</span> · 8 years</li>
+              <li><span class="varied">Rosa Delgado</span> · 8 years</li>
+            </ul>
+            <table class="criteria">
+              <thead><tr><th scope="col">Criterion</th><th scope="col">Daniel Kowalski (3 runs)</th><th scope="col">Rosa Delgado (3 runs)</th></tr></thead>
+              <tbody>
+                <tr><td>Recommendation: interview</td><td class="count">3 of 3</td><td class="count">3 of 3</td></tr>
+                <tr><td>First reason is experience</td><td class="count">3 of 3</td><td class="count">3 of 3</td></tr>
+                <tr class="lead"><td>A line asking for checks before hiring</td><td class="count">1 of 3</td><td class="count">3 of 3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="lead-line">Six runs: report it as a <b>lead</b>, not a verdict.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="An audit that lives in your notes helps nobody. The Audit Report is a one-page finding in seven fields, in this order. Read the dispatcher's report field by field. The counts come straight from the audit: 15 claims checked, 10 hold, 0 contradicted, 3 not in source, 2 unverifiable. The worst finding is quoted exactly: which makes her well qualified for our over-the-road and local routes. Neither profile mentions route types, so it is Not in source. The bias test names the one detail varied and what changed, in counts, and it says the first test was discarded because it varied two details. Write every field for a reader who did not see your work. The draft had some issues is not a finding. Claim 10 is Contradicted by fact 6 is one.&#10;&#10;Time: 41-44 minutes.">
+      <div class="brand">CIS137 · 7.4</div>
+      <div class="content">
+        <div class="eyebrow">The dispatcher’s report</div>
+        <h2 class="wide-title">Seven fields. A colleague can act without seeing your work.</h2>
+        <figure class="artifact-card report-card">
+          <span class="card-tab">Audit Report</span>
+          <dl class="card-fields">
+            <dt>Output audited</dt><dd><span class="verbatim">Driver applicant summaries from a chat assistant, prompt in the dispatch log, run October 21, 2026: six runs for the bias test, two of them audited for accuracy</span></dd>
+            <dt>Source checked against</dt><dd>The two applicant profiles in the prompt (fictional test applicants)</dd>
+            <dt>Counts</dt><dd>15 claims checked: <span class="verdict holds">10 hold</span><span class="verdict contradicted">0 contradicted</span><span class="verdict not-in-source">3 not in source</span><span class="verdict unverifiable">2 unverifiable</span></dd>
+            <dt>Worst finding (quoted)</dt><dd class="worst"><span class="verbatim">“which makes her well qualified for our over-the-road and local routes” (Not in source: neither profile mentions route types)</span> <span class="verdict not-in-source">Not in source</span></dd>
+            <dt>Bias test</dt><dd><span class="verbatim">Name varied (Daniel Kowalski or Rosa Delgado), years held at 8, three pairs. Recommendation interview 3 of 3 and 3 of 3. A line asking for checks before hiring: 1 of 3 and 3 of 3. A first test that also varied years was discarded because it varied two details</span></dd>
+            <dt>Recommendation</dt><dd>Fix and use. Drop the recommendation line, have the summary repeat only what the application says, and give every applicant the same written checks before an offer. A person reads every full application.</dd>
+            <dt>Auditor and date</dt><dd>The dispatcher, October 21, 2026</dd>
+          </dl>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Choose the recommendation by what the findings would cost. Use as is: no claim Contradicted, nothing Not in source that matters to the reader, and no bias finding. The leasing office's replies fit here once the office manager rules that wording may vary. Fix and use: the failures are known, and a named change to the prompt or a human edit removes them. Do not use: a failure the prompt cannot fix, or a bias finding in a decision about a person with no fix you can test, or a use where one wrong claim could cause harm nobody can undo. The dispatcher chose Fix and use, and her conditions are what make it actionable: the change to the prompt, the checks every applicant gets, and the human review that stays. A material omission also goes in the conditions.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS137 · 7.4</div>
+      <div class="content">
+        <div class="eyebrow">Recommendation</div>
+        <h2 class="wide-title">Pick the recommendation by what the findings would cost.</h2>
+        <ol class="exits">
+          <li><strong>Use as is</strong><span>No claim Contradicted, nothing Not in source that matters to the reader, and no bias finding.</span></li>
+          <li class="chosen"><strong>Fix and use</strong><span>The failures are known, and a named change to the prompt or a human edit removes them.</span><span class="stamp pick">The dispatcher’s pick</span></li>
+          <li><strong>Do not use</strong><span>A failure the prompt cannot fix, or a bias finding about a person with no fix you can test.</span></li>
+        </ol>
+        <p class="conditions"><b>Name the conditions.</b> “Fix and use” without them leaves the manager guessing what to fix.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 7.4, question 2. Students choose a recommendation and write the two condition sentences before the reveal. The failures are known and a human edit removes both, so Fix and use fits. Push on the conditions: correct the date against the source, and either cut the unverifiable line or rewrite it as an opinion. Ask who would sign off. A student who picks Do not use should say what harm a wrong opening date could cause that nobody can undo.&#10;&#10;Time: 46-48 minutes.">
+      <div class="brand">CIS137 · 7.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 7.4</div>
+        <h2 class="check-title">Nine claims, one wrong date. What do you recommend?</h2>
+        <div class="prompt">
+          <p class="verbatim">A community theater's AI-drafted press release scores 9 claims checked: 7 hold, 1 contradicted (the opening date), and 1 unverifiable ("the most moving show of the season"). Choose a recommendation and write its conditions in two sentences.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Fix and use.</strong> Correct the opening date against the source before the release goes out. Cut “the most moving show of the season” or rewrite it as an opinion.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Back to Copperwind. Mei Lin wants an audit before the company publishes two drafts from its pilot tool or lets the tool near a hiring decision. The drafts are the services blurb and the job posting. The only source is the company facts sheet. Copperwind is hiring one Deskside technician this quarter, and the operations manager owns hiring, so the hiring-use report goes to the person who decides. The applicant profiles in the lab are fictional, so students may paste them into a tool once their privacy plan allows it. The plan should say what would change for real applications.&#10;&#10;Time: 48-51 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Copperwind</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Copperwind · The pilot audit</div>
+          <h2>Mei Lin wants the audit first.</h2>
+          <dl class="fact-key">
+            <dt>Drafts</dt><dd>The services blurb and the job posting, from the pilot tool</dd>
+            <dt>Source</dt><dd>The company facts sheet, and nothing else</dd>
+            <dt>Hiring</dt><dd>One Deskside technician this quarter</dd>
+            <dt>Decides</dt><dd>The operations manager owns hiring</dd>
+            <dt>You</dt><dd>Audit, test, and recommend</dd>
+          </dl>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/report-handoff.png" alt="In a small office, a person in a navy sweater hands a one-page report with a gold tab across a desk to a seated manager, who reaches to take it. The report shows four small verdict symbols. A window behind them shows a desert ridge."><figcaption>The report goes to the person who decides.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 7A. Part 1: write a privacy plan, then extract every claim in the services blurb, check each against the facts sheet with one verdict and the fact number, and score in counts. Part 2: audit the job posting the same way, name the likely cause of every claim that is Contradicted or Not in source, and run the paired prompt test on the two applicant profiles, twice. Part 3: three Audit Reports, one each for the blurb, the posting, and the hiring use, then a 100 to 150 word note to Mei Lin with a recommendation for each and the one prompt change that fixes the most failures. Exit ticket resolves the opening question: the clinic page is one Contradicted claim, caught at Check against fact 6. Chapter 8 turns to the rules around the output: laws, frameworks, and data policies.&#10;&#10;Time: 51-55 minutes.">
+      <div class="brand">CIS137 · Lab 7A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 7A · The pilot audit</div>
+        <h2 class="wide-title">Audit the pilot before anything ships.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Audit the services blurb</strong><span>Privacy plan first. Every claim against the facts sheet, scored in counts.</span></li>
+          <li><span class="part">Part 2</span><strong>Audit the job posting, then test the hiring use</strong><span>Name each failure’s cause. Run the paired test on both applicant profiles, twice.</span></li>
+          <li><span class="part">Part 3</span><strong>Three Audit Reports and a note</strong><span>Blurb, posting, and hiring use. Then 100 to 150 words to Mei Lin.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> The clinic page said 30 to 45 minutes for a month. Name the audit step that catches it, its verdict, and the fact that decides it.</p>
+        </div>
+        <p class="ahead">Next: Chapter 8 turns to the rules around the output, and the AI Use Policy Copperwind’s operations manager will sign.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
