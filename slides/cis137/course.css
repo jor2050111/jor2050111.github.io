@@ -371,6 +371,14 @@
     color: var(--good);
 }
 
+/* A stamp inside the pale chat bar keeps navy ink on every slide field,
+   because the dark-slide gold would land on the bar's light background. */
+.chat-bar .stamp,
+.dark .chat-bar .stamp {
+    margin-left: auto;
+    color: var(--navy);
+}
+
 /* ---------- Before and after ------------------------------------------ */
 
 /* The arrow is generated in the middle column so every chapter's

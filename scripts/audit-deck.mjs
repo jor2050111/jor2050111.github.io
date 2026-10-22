@@ -73,8 +73,13 @@ function add(level, where, message) {
 // Static checks on the HTML source.
 const deckPath = path.join("slides", deck, "index.html");
 const html = fs.readFileSync(deckPath, "utf8");
+// Verbatim chapter quotes and code may legitimately contain a word like
+// "placeholder", so the production-text scan skips those elements.
+const scanHtml = html
+    .replace(/<(pre|code)\b[^>]*>[\s\S]*?<\/\1>/gi, " ")
+    .replace(/<(\w+)\b[^>]*class="[^"]*\bverbatim\b[^"]*"[^>]*>[\s\S]*?<\/\1>/gi, " ");
 for (const token of PRODUCTION_TEXT) {
-    if (html.includes(token)) {
+    if (scanHtml.includes(token)) {
         add("error", "source", `Production text or machine path found: "${token}"`);
     }
 }
