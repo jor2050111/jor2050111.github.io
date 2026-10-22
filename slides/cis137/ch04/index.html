@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 4 classroom presentation: Prompt Basics and Prompt Types.">
+  <meta name="theme-color" content="#03488f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2303488F'/%3E%3Crect x='10' y='26' width='44' height='28' rx='3' fill='%23ffffff'/%3E%3Cpath d='M16 26l3-10q1-3 4-3h12q3 0 4 3l3 10z' fill='%23FFC845'/%3E%3Cpath d='M16 36h32M16 44h24' stroke='%2303488F' stroke-width='2'/%3E%3C/svg%3E">
+  <title>CIS137: Prompt Basics and Prompt Types</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Prompt Basics and Prompt Types" data-course="cis137"
+  data-chapter="ch04" data-palette="twilight-data">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's hook. One of Copperwind's Deskside technicians has a prompt that turns a tense password ticket into a calm, clear reply in seconds. She built it over a month of trial and error. It lives in her chat history, so when she is out sick, nobody else can find it. Ask the lede and take two answers. Promise the payoff: by the end of class, students can build a prompt from five named parts, pick the type that fits the job, and keep the prompt on a card a teammate can run.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-card-box.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 4 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Prompt Basics and Prompt Types</h1>
+        <p class="lede">Her best prompt lives in her chat history. Who else can run it?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Stay on the hook for one more minute. Mei Lin has seen the same pattern on both support teams. A good prompt is a work tool, and right now Copperwind keeps its best tools in places no one else can reach. Part I taught how AI tools work and how to check what they hand back. Part II teaches students to direct them, starting with the prompt itself. Today takes a prompt apart, and the lab puts the pieces on cards the whole Deskside team can share.&#10;&#10;Time: 2-4 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Chapter 4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Copperwind · Deskside</div>
+          <h2>A good prompt is a work tool. This one is locked away.</h2>
+          <p>A month of trial and error turned a tense password ticket into a calm reply.</p>
+          <p>When she is out sick, nobody else can find it.</p>
+          <p class="field-note">Today: build prompts from parts, then keep them on cards.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/locked-drawer.png" alt="A metal filing drawer on a help desk, shut with a gold padlock. Its key lies out of reach on the far side of the desk. Through a cutaway window one index card glows inside, and two coworkers stand outside looking at it."><figcaption>A prompt only one person can reach is not a team tool yet.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as actions. 4.1 is Apply: build a prompt from its five parts and label each one. 4.2 is Analyze: tell the five prompt types apart by the job each fits, and defend the choice. 4.3 is Apply: use examples and standing instructions for a recurring job, check the response part by part, and record the prompt as a card. The chapter serves CLO 3, demonstrate effective prompting strategies to improve AI outputs. Prerequisites are the prompt log, the three passes, and the verify habit from Chapters 1 to 3.&#10;&#10;Time: 4-6 minutes.">
+      <div class="brand">CIS137 · Chapter 4</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Build it, choose it, keep it.</h2>
+        <ol class="targets">
+          <li><span class="t-num">4.1</span><strong>Build</strong><p>a prompt from its five parts for a stated job, and label each part</p></li>
+          <li><span class="t-num">4.2</span><strong>Differentiate</strong><p>the five prompt types by the job each one fits, and justify the type you choose for a job against the other types</p></li>
+          <li><span class="t-num">4.3</span><strong>Use</strong><p>examples and standing instructions for a recurring job, check the response against each part of the prompt, and record the prompt as a prompt card</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Here is a front desk coordinator at a small dental office, in a hurry. Read the one-line prompt, then the sample. This run did not invent the details. It returned a template, and every bracket marks a fact the coordinator knew and did not say. Walk the tags. Each bracket is a missing Context fact. The emoji and bold labels are a missing Format line. The tip and the call line are things she never said, which a Constraints line would rule out. Whatever you leave out, the model fills with what is likely, and what is likely is not what you know about your own job. A template is not a text she can send.&#10;&#10;Time: 6-9 minutes.">
+      <div class="brand">CIS137 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">The bare prompt</div>
+        <h2 class="wide-title">Leave a fact out and the model hands back a bracket.</h2>
+        <div class="bare">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">Write a text message for our dental office's patients about the parking change.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <p class="verbatim">Here's a text you can customize:</p>
+                <p class="verbatim"><strong>Hi <span class="pm context">[Patient Name]</span>, this is <span class="pm context">[Office Name]</span>.</strong> We're updating our parking, effective <strong><span class="pm context">[date]</span></strong>.</p>
+                <p class="verbatim"><span class="pm format">🚗 <strong>What's changing:</strong></span> <span class="pm context">[e.g., Our back lot will be closed for repaving. / Patient parking is moving to the lot at [address].]</span></p>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim"><span class="pm constraints">⏰ <strong>Tip:</strong> Please allow a few extra minutes before your appointment to park and check in.</span></p>
+                <p class="verbatim"><span class="pm constraints">Questions? Call us at [phone number].</span> Thank you for your patience, and we look forward to seeing you!</p>
+              </div>
+            </div>
+          </figure>
+          <ul class="gap-key" aria-label="Which part would fill each gap">
+            <li><span class="part-tag context">Context</span><span>Every bracket: a fact she knew and did not say.</span></li>
+            <li><span class="part-tag format">Format</span><span>Emoji and bold labels do not belong in a text.</span></li>
+            <li><span class="part-tag constraints">Constraints</span><span>A tip and a call line she never said.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The five parts of a prompt are Role, Task, Context, Format, and Constraints. Each part answers one question the model would otherwise answer with a guess. Read each divider with its one-line test. Role: could you name the job title the model is playing? Task: does the prompt hold one verb and one deliverable? Context: could a stranger do the job with only these facts? Format: could you sketch the output's shape before you send? Constraints: does the prompt say what the model must not do? A prompt does not need all five every time, but students should know which ones they left out, and why. These five colors stay with these five parts for the rest of the deck.&#10;&#10;Time: 9-12 minutes.">
+      <div class="brand">CIS137 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">Five parts, five tests</div>
+        <h2 class="wide-title">Each part answers a question the model would otherwise guess.</h2>
+        <ol class="dividers" role="img" aria-label="Five card catalog dividers in order. Role: whose knowledge, habits, and voice to borrow. Test: could you name the job title the model is playing? Task: the one action and the one thing it produces. Test: does the prompt hold one verb and one deliverable? Context: the facts, audience, and situation it cannot guess. Test: could a stranger do the job with only these facts? Format: the shape of the output. Test: could you sketch the output's shape before you send? Constraints: the limits. Test: does the prompt say what the model must not do?">
+          <li class="divider role"><span class="part-tag role">Role</span><p>Whose knowledge, habits, and voice to borrow</p><p class="test">Could you name the job title the model is playing?</p></li>
+          <li class="divider task"><span class="part-tag task">Task</span><p>The one action and the one thing it produces</p><p class="test">Does the prompt hold one verb and one deliverable?</p></li>
+          <li class="divider context"><span class="part-tag context">Context</span><p>The facts, audience, and situation it cannot guess</p><p class="test">Could a stranger do the job with only these facts?</p></li>
+          <li class="divider format"><span class="part-tag format">Format</span><p>The shape of the output: length, layout, structure</p><p class="test">Could you sketch the output's shape before you send?</p></li>
+          <li class="divider constraints"><span class="part-tag constraints">Constraints</span><p>The limits: what must not happen and what must survive</p><p class="test">Does the prompt say what the model must not do?</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The same request rebuilt from all five parts. Read the stack top to bottom, then follow each color into the response. Context did the heavy lifting: it replaced every bracket in the first draft with a fact the coordinator supplied. Task produced the closing line about appointments next week. Format held: one message, 267 characters, no emojis. Constraints held: no added facts, no request to reply. It opened with Heads up in place of a greeting. Now the defect. The text never says who sent it. The Context part named no office, and the Constraint forbade adding facts, so the model could not fill the gap. That fails the Context test. One of three runs also sent two versions, which breaks one message.&#10;&#10;Time: 12-16 minutes.">
+      <div class="brand">CIS137 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">The same message, built from parts</div>
+        <h2 class="wide-title">Every bracket became a fact you supplied.</h2>
+        <div class="built" role="img" aria-label="Left, the five-part dental prompt as a color-coded stack: Role, front desk coordinator. Task, a text to patients with appointments next week. Context, the lot is repaved March 9 to 11, park free in the church lot on Cedar Avenue, entrance and hours unchanged. Format, one message under 300 characters, plain text, no emojis. Constraints, add no facts and do not ask patients to reply. Right, the sample response with the three Context sentences and the closing Task sentence underlined in their part colors, a Format meter reading 267 of 300 characters, Role and Constraints notes, and a flag: the text never says who sent it.">
+          <ol class="stack-parts">
+            <li class="role"><span class="part-tag role">Role</span><p class="verbatim">You are the front desk coordinator at a small family dental office.</p></li>
+            <li class="task"><span class="part-tag task">Task</span><p class="verbatim">Write a text message to patients who have appointments next week.</p></li>
+            <li class="context"><span class="part-tag context">Context</span><p class="verbatim">The office parking lot will be repaved Monday through Wednesday, March 9 to 11. On those days, patients can park free in the church lot across the street on Cedar Avenue. Our entrance and hours do not change.</p></li>
+            <li class="format"><span class="part-tag format">Format</span><p class="verbatim">Send one message, under 300 characters, in plain text with no emojis.</p></li>
+            <li class="constraints"><span class="part-tag constraints">Constraints</span><p class="verbatim">Do not add any facts that are not in this prompt, and do not ask patients to reply.</p></li>
+          </ol>
+          <div class="built-arrow" aria-hidden="true">→</div>
+          <div class="built-out">
+            <figure class="chat">
+              <div class="chat-bar">Response <span class="stamp">Sample, Oct 2026</span></div>
+              <div class="chat-body">
+                <div class="turn assistant"><p class="verbatim">Heads up: <span class="pm context">our parking lot will be repaved Monday through Wednesday, March 9 to 11.</span> <span class="pm context">On those days, you can park free in the church lot across the street on Cedar Avenue.</span> <span class="pm context">Our entrance and hours stay the same.</span> <span class="pm task">We look forward to seeing you at your appointment next week.</span></p></div>
+              </div>
+            </figure>
+            <div class="char-meter"><span class="part-tag format">Format</span><span class="meter-track"><span class="meter-fill" style="--n: 267"></span></span><span class="meter-read"><b>267</b> of 300 characters</span></div>
+            <ul class="held-chips"><li><span class="part-tag role">Role</span>plain office voice</li><li><span class="part-tag constraints">Constraints</span>no added facts, no reply request</li></ul>
+            <p class="flag"><b>Missing:</b> the text never says who sent it. No office in Context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Format and Constraints are easy to blur. Format is the shape the reader sees, such as one message, under 300 characters. Constraints are the rules about content and behavior, such as add no facts or do not ask patients to reply. The habit: if breaking the rule would make the output the wrong size or layout, it belongs in Format. If breaking it would make the output wrong or unsafe, it is a Constraint. Run the dental lines through the question at the top and let the class sort them aloud.&#10;&#10;Time: 16-18 minutes.">
+      <div class="brand">CIS137 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow">Format or Constraint?</div>
+        <h2 class="wide-title">Wrong size or layout is Format. Wrong or unsafe is a Constraint.</h2>
+        <div class="sorter" role="img" aria-label="A sorting question at the top: if the model broke this rule, what would go wrong? It forks into two drawers. Left drawer, Format, when the output would be the wrong size or layout: send one message, under 300 characters, in plain text with no emojis. Right drawer, Constraints, when the output would be wrong or unsafe: do not add any facts that are not in this prompt, and do not ask patients to reply.">
+          <p class="sort-q">If the model broke this rule, what would go wrong?</p>
+          <div class="drawer format">
+            <span class="part-tag format">Format</span>
+            <p class="drawer-test">Wrong size or layout</p>
+            <p class="drawer-card verbatim">Send one message, under 300 characters, in plain text with no emojis.</p>
+          </div>
+          <div class="drawer constraints">
+            <span class="part-tag constraints">Constraints</span>
+            <p class="drawer-test">Wrong or unsafe</p>
+            <p class="drawer-card verbatim">Do not add any facts that are not in this prompt</p>
+            <p class="drawer-card verbatim">do not ask patients to reply</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 4.1, question 1. Give students one minute to label each sentence with a part name before you reveal. Act as the scheduling coordinator is the Role. Draft an email to the coaches announcing the new field schedule is the Task. Three bullet points and under 120 words are Format, because breaking them changes the size or layout. The prompt never gives the schedule itself, so it fails the Context test: a stranger could not write the email from it. Expect the model to guess or hand back brackets, as the dental template did. If a student also names Constraints as absent, agree, and ask which gap breaks the email first.&#10;&#10;Time: 18-20 minutes.">
+      <div class="brand">CIS137 · 4.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 4.1</div>
+        <h2 class="check-title">Label the parts. Which one is missing?</h2>
+        <div class="prompt">
+          <p class="verbatim">Label each part in this prompt, then name the one part it leaves out: "Act as the scheduling coordinator for a youth sports league. Draft an email to the league's coaches announcing the new field schedule. Use three bullet points and keep it under 120 words."</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Role:</strong> the scheduling coordinator. <strong>Task:</strong> draft an email announcing the new field schedule. <strong>Format:</strong> three bullets, under 120 words. Missing: <strong>Context</strong>. The prompt never gives the schedule, so a stranger could not do the job, and the model will guess or return brackets.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A prompt type is the form a request takes, which tells the model what kind of response you want. Five types cover most of the work: instruction, question, completion, role play, and example-led, also called few-shot. The type is a choice, like choosing between an email and a phone call, and the five parts work inside any of them. Read what each one returns. Then the warning for each. Instruction: a missing Context part, which the model fills with guesses. Question: asking a question when you needed the thing. Completion: the model fills gaps with likely details. Role play: the model playing your side too. Example-led: it copies habits you did not mean to teach. In the chapter's runs, the first two caused the most trouble, because they are easy to mix up.&#10;&#10;Time: 20-23 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 4.2</div>
+      <div class="content visual-split reverse">
+        <figure class="visual-art print-frame"><img src="assets/type-dial.png" alt="A round selector dial on a desk with five pictograms around its rim: a pencil, a light bulb, a half-written page, two theater masks, and a fanned stack of matching cards. A gold pointer is turned toward the pencil, and a hand rests on the knob."><figcaption>Same job, five ways to ask. The job picks the type.</figcaption></figure>
+        <div class="stack">
+          <div class="eyebrow">Five prompt types</div>
+          <h2>Choose the type by what you need back.</h2>
+          <dl class="type-list">
+            <dt>Instruction</dt><dd>returns the finished thing itself.</dd>
+            <dt>Question</dt><dd>returns an explanation, so you understand.</dd>
+            <dt>Completion</dt><dd>returns a continuation in your voice.</dd>
+            <dt>Role play</dt><dd>returns turns in character, for practice.</dd>
+            <dt>Example-led</dt><dd>returns a new item that copies the examples.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Two types in action. Left, completion. A chat assistant needs one line of instruction in front, such as complete this message. The voice matched and it kept to two new sentences. But the coordinator never said what to bring, so the model picked likely items. Then it stated a gym rule nobody at the league gave. The rule sounds right and may even be true. When you stop mid-sentence, supply the facts first or check every item the model chose. Right, role play. The Cybersecurity Club president rehearses a $400 travel request with a treasurer. The model stayed in role and stopped where told. The line Do not answer for me is a Constraint, and it matters most in role play. Without it, a model may write both sides, and you get a script to read instead of a conversation to practice.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS137 · 4.2</div>
+      <div class="content">
+        <div class="eyebrow">Completion and role play</div>
+        <h2 class="wide-title">Completion fills the gaps. Role play needs a stop line.</h2>
+        <div class="two-types">
+          <figure class="chat">
+            <div class="chat-bar">Completion <span class="stamp">Sample, Oct 2026</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">Complete this message to families in the same voice. Add no more than two sentences.</p><p class="verbatim">Hi Hornets families! Saturday's practice moves indoors to the Desert Willow Elementary gym because the field is being reseeded. Same time, 9 a.m. Please bring</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim"><span class="mark add" data-label="guessed">indoor court shoes, a water bottle, and a positive attitude!</span> <span class="mark add" data-label="nobody said it">Outdoor cleats aren't allowed on the gym floor,</span> so please leave those at home. Thanks for your flexibility, and we can't wait to see everyone there!</p></div>
+            </div>
+          </figure>
+          <figure class="chat">
+            <div class="chat-bar">Role play <span class="stamp">Sample, Oct 2026</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">You are the treasurer of a community college's student government. I am the president of the college's Cybersecurity Club. I will ask you for $400 to send four members to a regional capture-the-flag competition. Stay in character. Ask me the two hardest questions a treasurer would ask about this request, then stop and wait for my answers. <span class="pm constraints">Do not answer for me.</span></p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">Thanks for coming in. [...] <strong>1. Where does the $400 go, line by line?</strong> [...] <strong>2. What does the student body get back for this money?</strong> [...] <span class="mark holds" data-label="stopped">I'll wait for your answers.</span></p></div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Fix It 4.1, the monitor ticket. Symptom: a Deskside technician typed what was on her mind, what would a good reply to this ticket look like. The response ran 40 lines and opened with a Markdown header, as if writing a help article, with a sample reply tucked inside a lesson and a Why this works section. Diagnose before changing a word: ask the class to name in one sentence what the model treated the first line as asking for. A question asks for an explanation, and the model answered the question it was asked. Repair: one change, the first line becomes an instruction with a Task. The ticket stays word for word. Verify: subject line to signature, five numbered steps, nothing before or after. Then read the last paragraph for promises. We're treating this as time-sensitive, and we'll get the second monitor sorted right after. Nobody at the help desk made either promise. The prompt still has no Constraints part, and adding one is the next change, in its own run.&#10;&#10;Time: 26-30 minutes.">
+      <div class="brand">CIS137 · 4.2</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 4.1 · The monitor ticket</div>
+        <h2 class="wide-title">Ask a question, get a lesson. Give an instruction, get the reply.</h2>
+        <p class="ticket verbatim"><b>Ticket:</b> "Since this morning my second monitor stays black. The laptop only sees one screen. I already unplugged the cable and plugged it back in. I have a client meeting at 2 p.m. and need both screens. Can someone help?"</p>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Before · question</span>
+            <p class="fix-prompt verbatim">What would a good reply to this ticket look like?</p>
+            <div class="doc-silhouette" role="img" aria-label="The response as a long help article: a header reading what a good reply looks like, a list, a sample reply section, and a why this works section, 40 lines in all.">
+              <span class="h verbatim"># What a good reply looks like</span><i></i><i></i><i class="short"></i>
+              <span class="h verbatim">## Sample reply</span><i></i><i></i><i></i><i class="short"></i>
+              <span class="h verbatim">## Why this works</span><i></i><i></i><i class="short"></i>
+            </div>
+            <p class="fix-stat"><b>40 lines</b> · a lesson to cut down</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">After · instruction</span>
+            <p class="fix-prompt verbatim"><span class="pm task">Write the reply to this ticket that I will send to the client.</span></p>
+            <div class="reply verbatim">
+              <p>Subject: Re: Second monitor not displaying – let's get you ready for 2 p.m.</p>
+              <p>Hi [Name], [...] Please try these in order [...]</p>
+              <p>Because of your 2 p.m. meeting, <span class="mark add" data-label="promise">we're treating this as time-sensitive.</span> [...] and <span class="mark add" data-label="promise">we'll get the second monitor sorted right after.</span></p>
+            </div>
+            <span class="sample-cap">Sample, Oct 2026</span>
+            <p class="fix-stat"><b>Subject to signature</b> · five numbered steps</p>
+          </div>
+        </div>
+        <p class="cost-line"><b>Still to fix:</b> two promises nobody made. The prompt has no Constraints part yet.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 4.2, question 1. Pairs get one minute to choose and to write the two sentences against instruction. The job is practice, which is what role play fits: the model plays the patron, and the volunteer answers in turn. An instruction returns a finished thing, here a script to read, not a conversation to rehearse. Push for the Constraint from the treasurer example: tell the model not to answer for the volunteer.&#10;&#10;Time: 30-32 minutes.">
+      <div class="brand">CIS137 · 4.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 4.2</div>
+        <h2 class="check-title">Practice for new volunteers. Which type?</h2>
+        <div class="prompt">
+          <p class="verbatim">A public library branch wants its new desk volunteers to practice telling a patron about a lost-item fee. Choose the prompt type, and justify your choice against the instruction type in two sentences.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Role play.</strong> The job is practice, and role play returns turns in character for the volunteer to answer. An instruction returns a finished script to read, not a conversation to rehearse. Add a stop line such as “Do not answer for me.”</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Zero-shot means asking for an output with no examples of it. Every prompt so far was zero-shot. Few-shot means a few finished examples, then the new case. It is the example-led type. A 2020 paper made it famous. Here is the owner of a small landscaping company. Left, zero-shot: correct and polite, 47 words, and it does not sound like her. Right, two texts the owner wrote herself, then Dana's facts kept apart from the examples, then use only these facts. The examples taught the shape: all done for today, clipped phrases with no we, a Heads up line, no Thanks. 38 words. It also signed the text Rosa, which is right only if Rosa is the one who sends it. Examples teach everything they contain. A 2022 study of classification and multiple-choice tasks found the shape of the examples drove results more than correct answers. A text message is a different task, so treat that as a reason to pick examples you would be glad to see copied.&#10;&#10;Time: 32-35 minutes.">
+      <div class="brand">CIS137 · 4.3</div>
+      <div class="content">
+        <div class="eyebrow">Zero-shot and few-shot</div>
+        <h2 class="wide-title">Two examples taught the shape, and a habit came with it.</h2>
+        <div class="shots" role="img" aria-label="Left, zero-shot: a one-line request with Dana's facts returns a polite 47-word text ending in an offer and Thanks. Right, few-shot: two example texts by the owner, to Marcus and to Joan, both signed Rosa, feed into the same facts for Dana. The response copies their clipped shape in 38 words, keeps a Heads up line, and signs Rosa.">
+          <div class="shot zero">
+            <span class="shot-tag">Zero-shot</span>
+            <p class="shot-prompt verbatim">Write a text message to a landscaping customer saying today's visit is done. Facts: the customer's name is Dana. We mowed and edged the front and back yards and trimmed the hedges. The drip line by the back fence is leaking.</p>
+            <p class="shot-out verbatim">Hi Dana, today's visit is done! We mowed and edged the front and back yards and trimmed the hedges. One thing to flag: the drip line by the back fence is leaking. <span class="mark add" data-label="offer">Let us know if you'd like us to take a look at repairing it.</span> Thanks!</p>
+            <p class="shot-count"><b>47</b> words · not her voice <span class="sample-cap">Sample, Oct 2026</span></p>
+          </div>
+          <div class="shot few">
+            <span class="shot-tag">Few-shot</span>
+            <div class="examples">
+              <p class="ex verbatim"><span class="part-tag format">Example 1</span> "Hi Marcus, all done for today. Mowed, edged, and blew off the patio. Heads up: one sprinkler head by the mailbox is cracked. Want us to swap it next visit? Rosa"</p>
+              <p class="ex verbatim"><span class="part-tag format">Example 2</span> "Hi Joan, finished up. Trimmed the oleanders and cleared the side yard. Your back gate wasn't latching, so we tied it shut for now. Rosa"</p>
+            </div>
+            <p class="shot-prompt verbatim"><span class="pm context">Now write one for this visit. Customer: Dana. [...]</span> <span class="pm constraints">Use only these facts.</span></p>
+            <p class="shot-out verbatim"><span class="mark holds" data-label="copied shape">Hi Dana, all done for today.</span> Mowed and edged the front and back yards and trimmed the hedges. Heads up: the drip line by the back fence is leaking. <span class="mark add" data-label="offer">Want us to take a look next visit?</span> <span class="mark hedge" data-label="only if Rosa sends it">Rosa</span></p>
+            <p class="shot-count"><b>38</b> words · her shape <span class="sample-cap">Sample, Oct 2026</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Now look at the offer. Dana's facts held no offer. The zero-shot version made a similar one, so the model leans toward an offer on its own, and Example 1 models one, so the examples may have reinforced it. The prompt already carried a Constraint, use only these facts, and it did not catch the offer, because an offer is not a fact. An added offer is a promise the crew may not want to make. Add one sentence at the end, do not offer any service or repair. The offer is gone, and the voice from the examples stayed, on this run. A Constraint works when it names the exact move you want to rule out. Connect it back to the monitor ticket's invented promises.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 4.3</div>
+      <div class="content">
+        <div class="eyebrow">Name the move</div>
+        <h2 class="wide-title">“Use only these facts” missed the offer. An offer is not a fact.</h2>
+        <div class="before-after offer">
+          <div class="fix-col">
+            <span class="ba-label">Use only these facts.</span>
+            <p class="offer-out verbatim">Hi Dana, all done for today. Mowed and edged the front and back yards and trimmed the hedges. Heads up: the drip line by the back fence is leaking. <span class="mark add" data-label="offer">Want us to take a look next visit?</span> Rosa</p>
+            <span class="sample-cap">Sample, Oct 2026</span>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">+ Do not offer any service or repair.</span>
+            <p class="offer-out verbatim">Hi Dana, all done for today. Mowed and edged the front and back yards and trimmed the hedges. Heads up: the drip line by the back fence is leaking. <del class="struck">Want us to take a look next visit?</del> Rosa</p>
+            <span class="sample-cap">Sample, Oct 2026</span>
+          </div>
+        </div>
+        <p class="lede">A Constraint works when it names the exact move you want to rule out.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Some rules should hold for every request in a conversation, and you can set them at the start. A volunteer at a public library branch's front desk opened this way, then asked patron questions in the same chat. The tool answered Ready. The first patron question got five steps, short sentences, and the desk line at the end. The second question, about making text bigger, followed every rule too. Then the two features that make a rule permanent. Custom instructions are saved in a tool's settings and added to every conversation. A system prompt is what the tool or app sends first, usually out of sight. The chapter's samples ran with a short one. Two limits. A long chat can push early rules out of view, so restate them. And custom instructions are stored with your account, so Chapter 1's rule applies: never save a client's name, an account number, or anything private there.&#10;&#10;Time: 37-40 minutes.">
+      <div class="brand">CIS137 · 4.3</div>
+      <div class="content">
+        <div class="eyebrow">Standing instructions</div>
+        <h2 class="wide-title">Type the rules once. They hold for the whole chat.</h2>
+        <div class="standing">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">For the rest of this conversation, follow these standing instructions. I volunteer at the front desk of a public library branch. Write every answer for patrons who are new to computers: short sentences, no jargon, no more than five numbered steps, and end by telling them they can ask at the desk for help. Reply only with the word Ready to this message.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">Ready.</p></div>
+              <div class="turn user"><span class="who">You</span><p class="verbatim">How do I attach a photo to an email on my phone?</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim"><span class="mark holds" data-label="5 steps">1. Open your email app [...] 5. Check that the photo shows in your email.</span> [...] <span class="mark holds" data-label="desk line">If you get stuck, you can ask at the desk for help.</span></p></div>
+            </div>
+          </figure>
+          <dl class="term-list">
+            <dt>Custom instructions</dt><dd>Saved text the tool adds to every conversation.</dd>
+            <dt>System prompt</dt><dd>The tool’s own instructions, sent first, usually unseen.</dd>
+            <dt>Stored with your account</dt><dd>Chapter 1’s rule applies. Nothing private goes in.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 4.3, question 2. Give students 90 seconds to write the rewrite. Custom instructions are stored with the account and added to every conversation, so Chapter 1's rule applies exactly as it does to a prompt. Never save a client's name, an account number, or anything private there. Keep the useful parts: where the coworker works and the kind of client. Drop the account number and the contact's name, which go in at send time only when the job needs them, and only if policy allows.&#10;&#10;Time: 40-42 minutes.">
+      <div class="brand">CIS137 · 4.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 4.3</div>
+        <h2 class="check-title">Saved in every chat. What has to go?</h2>
+        <div class="prompt">
+          <p class="verbatim">A coworker's custom instructions read: "I work at Copperwind. My main client is a property manager, account 44817, contact Lena Park." Apply Chapter 1's rule, and rewrite the instructions so they keep what is useful and drop what does not belong.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Custom instructions are stored with your account, so Chapter 1’s rule applies. Drop the account number and the contact’s name. Keep the useful part: <span class="verbatim">“I work at Copperwind. My main client is a property manager.”</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Chapter 1's three passes ask whether the response did what you asked. With named parts, you can ask a sharper question: what did each part contribute? Read the dental response against the prompt one row at a time. Role asked for a front desk coordinator, and the response used a plain, friendly office voice with no clinical terms. Task asked for one text, and it ended with the appointment line. Context: all four facts, nothing else. Format: one message, 267 characters, plain text, no emojis. Constraints: no added facts, no request to reply. The Context row held on the facts only, since the text never says who sent it. A part that the response obeyed may not have done any work, though. The next slide tests that.&#10;&#10;Time: 42-44 minutes.">
+      <div class="brand">CIS137 · 4.4</div>
+      <div class="content">
+        <div class="eyebrow">Read it back</div>
+        <h2 class="wide-title">Read the response against the prompt, one part at a time.</h2>
+        <div class="readback" role="table" aria-label="Five-row read-back of the dental text">
+          <div class="rb-row rb-head" role="row"><span role="columnheader">Part</span><span role="columnheader">What it asked</span><span role="columnheader">What the response did</span><span role="columnheader">Verdict</span></div>
+          <div class="rb-row" role="row"><span role="cell"><span class="part-tag role">Role</span></span><span role="cell" class="verbatim">Front desk coordinator at a dental office</span><span role="cell" class="verbatim">Plain, friendly office voice, no clinical terms</span><span role="cell"><span class="verdict holds">Held</span></span></div>
+          <div class="rb-row" role="row"><span role="cell"><span class="part-tag task">Task</span></span><span role="cell" class="verbatim">One text to patients with appointments next week</span><span role="cell" class="verbatim">One text, ending "We look forward to seeing you at your appointment next week"</span><span role="cell"><span class="verdict holds">Held</span></span></div>
+          <div class="rb-row" role="row"><span role="cell"><span class="part-tag context">Context</span></span><span role="cell" class="verbatim">Repaving dates, the church lot on Cedar Avenue, entrance and hours unchanged</span><span role="cell" class="verbatim">All four facts, nothing else</span><span role="cell"><span class="verdict holds">Held</span></span></div>
+          <div class="rb-row" role="row"><span role="cell"><span class="part-tag format">Format</span></span><span role="cell" class="verbatim">One message, under 300 characters, plain text, no emojis</span><span role="cell" class="verbatim">One message, 267 characters, plain text, no emojis</span><span role="cell"><span class="verdict holds">Held</span></span></div>
+          <div class="rb-row" role="row"><span role="cell"><span class="part-tag constraints">Constraints</span></span><span role="cell" class="verbatim">No added facts, no request to reply</span><span role="cell" class="verbatim">No added facts, no request to reply</span><span role="cell"><span class="verdict holds">Held</span></span></div>
+        </div>
+        <p class="field-note">Context held on the facts, but the text still never says who sent it.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The remove-one-part test. Remove one part, send the prompt fresh, and compare. Pull Format first. That version ran 281 characters, 14 more than the full run, so it still fit the 300-character limit. It added an opening, Hi, quick heads-up for your appointment next week, and a closing line, and it stayed one message with no emojis. On this run, removing Format changed almost nothing you can measure. Then put Format back and pull Constraints. This run added no facts and asked for no reply, even without the rule. So did the Constraints part buy nothing? Look back at the bare prompt's draft: it asked patients to call and added a tip. That is the failure this rule prevents. One run without the rule went fine, but the rule stays on the card because the next run may not.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS137 · 4.4</div>
+      <div class="content">
+        <div class="eyebrow">The remove-one-part test</div>
+        <h2 class="wide-title">Pull one part, send fresh, and compare.</h2>
+        <div class="pull" role="img" aria-label="Left, the five-part stack with the Format tab pulled out to the side, leaving a dashed gap. Right, two bars against a 300-character limit: the full prompt at 267 characters and the prompt without Format at 281, 14 more, still under the limit. Below, the response without Format, which added an opening and a closing line. A second test pulls Constraints: no facts were added on that run, and the rule stays because the bare prompt showed the failure.">
+          <div class="pull-stack">
+            <span class="part-tag role">Role</span>
+            <span class="part-tag task">Task</span>
+            <span class="part-tag context">Context</span>
+            <span class="slot-gap"><span class="part-tag format pulled">Format</span></span>
+            <span class="part-tag constraints">Constraints</span>
+          </div>
+          <div class="pull-result">
+            <div class="bars">
+              <div class="bar-row"><span class="bar-name">All five parts</span><span class="bar-track"><span class="bar-fill" style="--n: 267"></span><span class="cap-line"></span></span><b>267</b></div>
+              <div class="bar-row focus"><span class="bar-name">Without Format</span><span class="bar-track"><span class="bar-fill" style="--n: 281"></span><span class="cap-line"></span></span><b>281</b></div>
+              <p class="bar-axis">Characters · limit 300 · <b>+14</b>, still one message, no emojis</p>
+            </div>
+            <p class="pull-out verbatim"><span class="mark add" data-label="added">Hi! Quick heads-up for your appointment next week:</span> our parking lot will be repaved Monday through Wednesday, March 9 to 11. [...] <span class="mark add" data-label="added">We look forward to seeing you!</span></p>
+            <span class="sample-cap">Sample, Oct 2026</span>
+          </div>
+        </div>
+        <p class="field-note">Without Constraints: no added facts this run. The rule stays, because the bare prompt showed the failure.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A prompt card is a one-page record of a reusable prompt, and every card uses the same fields in this order: Name, Job, Prompt with the five parts labeled in brackets, Example input, Good output looks like, Strategies used, Last run, Notes. Strategies used stays blank until Chapter 5 fills it. Here is the dental prompt as a card. Point to the bracketed slots in the Context part. A card holds the parts that stay the same from job to job, and the slot shows where each new job's facts go. That slot is also how a card keeps Chapter 1's rule: client names and private details go in at send time, never into the card. On the Deskside cards in the lab, the slot reads paste the ticket.&#10;&#10;Time: 46-48 minutes.">
+      <div class="brand">CIS137 · 4.4</div>
+      <div class="content card-split">
+        <div class="stack">
+          <div class="eyebrow">The prompt card</div>
+          <h2>A card keeps what stays the same.</h2>
+          <p>Slots mark where each job’s facts go.</p>
+          <p class="slot-line"><span class="slot">[paste the ticket]</span></p>
+          <p class="field-note">Private details go in at send time, never onto the card.</p>
+        </div>
+        <figure class="artifact-card prompt-card">
+          <span class="card-tab">Prompt card</span>
+          <dl class="card-fields">
+            <dt>Name</dt><dd class="verbatim">Parking change text</dd>
+            <dt>Job</dt><dd class="verbatim">Tell patients with appointments next week about a parking change</dd>
+            <dt>Prompt</dt><dd class="verbatim"><span class="part-tag role">[Role]</span> You are the front desk coordinator at a small family dental office. <span class="part-tag task">[Task]</span> Write a text message to patients who have appointments next week. <span class="part-tag context">[Context]</span> <span class="slot">[office name]</span> <span class="slot">[paste the change: dates, where to park, what stays the same]</span> <span class="part-tag format">[Format]</span> Send one message, under 300 characters, in plain text with no emojis. <span class="part-tag constraints">[Constraints]</span> Do not add any facts that are not in this prompt, and do not ask patients to reply.</dd>
+            <dt>Example input</dt><dd class="verbatim">[office name] is the office's name. Lot repaved March 9 to 11. Park free in the church lot on Cedar Avenue. Entrance and hours unchanged.</dd>
+            <dt>Good output looks like</dt><dd class="verbatim">(1) every fact from the input and no others, (2) under 300 characters, (3) no request to reply</dd>
+            <dt>Strategies used</dt><dd class="verbatim blank">(blank until Chapter 5)</dd>
+            <dt>Last run</dt><dd class="verbatim">chat assistant, October 2026 (see the prompt log)</dd>
+            <dt>Notes</dt><dd class="verbatim">Opens with "Heads up:" and no greeting. Without [office name], the text does not say who sent it. [...] keep the Constraints line.</dd>
+          </dl>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 4.4, question 1. Students score each criterion before the reveal. Under 120 words: met, at 95. Names the deadline: met. Promises nothing the ticket did not ask for: not met, because a loaner laptop is an offer nobody asked for. The fix goes in the Constraints part, and the landscaping lesson says how: name the exact move, such as do not offer anything the ticket did not ask for.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS137 · 4.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 4.4</div>
+        <h2 class="check-title">95 words and a loaner laptop. Score it.</h2>
+        <div class="prompt">
+          <p class="verbatim">A card's "Good output looks like" field lists three criteria: a reply under 120 words, names the client's deadline, and promises nothing the ticket did not ask for. The response runs 95 words, names the deadline, and offers a loaner laptop. Score the response against each criterion, and name the part of the prompt you would change.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Under 120 words: <strong>met</strong> (95). Names the deadline: <strong>met</strong>. Promises nothing extra: <strong>not met</strong>, the loaner laptop is an offer. Change the <strong>Constraints</strong> part, and name the move it rules out.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Back to Copperwind. A prompt library is a shared set of prompt cards that a team keeps, runs, and improves. Mei Lin's ask is exactly this: a library the Deskside team can share, with a standard card and a log, so a technician's good prompt does not live only in that technician's chat history. Version 1 is small on purpose: three to five cards, each run once and read back against its prompt. The lab's tickets cover the six common Deskside types on the slide. The tickets are fictional, so students may paste them into a chat assistant. Chapter 5 adds the strategies behind each card, and Chapter 6 adds refinement logs and a README.&#10;&#10;Time: 50-52 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 4.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Mei Lin’s ask</div>
+          <h2>A good prompt should belong to the team.</h2>
+          <p><b class="accent">Library v1:</b> three to five cards, each run once and read back.</p>
+          <ul class="ticket-types" aria-label="Common Deskside tickets">
+            <li>password resets</li>
+            <li>VPN connection failures</li>
+            <li>printer offline</li>
+            <li>new-hire device setup</li>
+            <li>slow laptop</li>
+            <li>shared mailbox access</li>
+          </ul>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/team-card-box.png" alt="An open index card box in the middle of a shared team table seen from above. Several hands reach in from the edges to pull out or return ruled cards, one card is held up for everyone, and laptops and headsets sit around the table."><figcaption>A card in the shared box runs the same for anyone on the team.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Hand off Skills Lab 4A, the Deskside prompt library. Part 1: write a privacy plan in two columns before any prompt, fill a Prompt Anatomy card for one ticket, then assemble and send it. Part 2: three rows of the Prompt Type picker, one job sent as two types, a five-row read-back table, and a standing-instructions conversation. Part 3: library v1, three to five cards covering at least three of the six ticket types, at least one few-shot card with two examples students wrote, each run once and scored, then a 100 to 150 word note to Mei Lin. Exit ticket on paper or in the discussion. It resolves the opening question: her prompt in a chat history serves one person, and a card serves the team. Chapter 5 adds the strategies that raise output quality and fills the Strategies used field.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS137 · Lab 4A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 4A</div>
+        <h2 class="wide-title">Build the Deskside prompt library.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Plan, then build one prompt</strong><span>Privacy plan first. Five parts, each tested.</span></li>
+          <li><span class="part">Part 2</span><strong>Pick types and read back</strong><span>One job, two types. A five-row table. Standing rules.</span></li>
+          <li><span class="part">Part 3</span><strong>Library v1 and a note</strong><span>Three to five cards, one few-shot. A note to Mei Lin.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Name the five parts in order. Then say what a card gives a colleague that a chat history does not.</p>
+        </div>
+        <p class="ahead">Next: Chapter 5 adds the strategies behind each card.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

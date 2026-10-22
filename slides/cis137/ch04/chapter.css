@@ -1,0 +1,1375 @@
+/* CIS137 Chapter 4: the card catalog
+   Chapter 4 turns a prompt into a work tool a team can file and find,
+   so the room is a card catalog: five divider tabs along the top edge
+   (one per part of a prompt), faint card ruling, and a drawer front in
+   the corner. The brand glyph is a single card tab. All of it is
+   painted as background layers so nothing positioned can overflow the
+   slide or trap focus. */
+
+body {
+    /* The five parts keep one color each, everywhere they appear: tags,
+       stack rows, underlines in responses, and the card's labels. Each
+       color always sits beside the part's name, so color never carries
+       the meaning alone. */
+    --p-role: #1d5ea3;
+    --p-task: #ffc845;
+    --p-task-line: #e0a92e;
+    --p-context: #9a4a36;
+    --p-format: #7d7560;
+    --p-constraints: #001a36;
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36'%3E%3Cpath d='M0 36 8 6Q10 0 17 0h46q7 0 9 6l8 30z' fill='rgba(29,94,163,0.2)'/%3E%3Cpath d='M80 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(255,200,69,0.42)'/%3E%3Cpath d='M160 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(154,74,54,0.18)'/%3E%3Cpath d='M240 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(125,117,96,0.2)'/%3E%3Cpath d='M320 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(0,26,54,0.14)'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cg fill='none' stroke-width='4'%3E%3Crect x='10' y='10' width='300' height='180' rx='10' stroke='rgba(3,72,143,0.14)'/%3E%3Crect x='115' y='46' width='90' height='44' rx='4' stroke='rgba(3,72,143,0.18)'/%3E%3Cpath d='M128 118h64v20q0 12-12 12h-40q-12 0-12-12z' stroke='rgba(224,169,46,0.5)'/%3E%3C/g%3E%3C/svg%3E"),
+        repeating-linear-gradient(transparent 0 2.45rem, rgba(3, 72, 143, .045) 2.45rem 2.55rem),
+        linear-gradient(160deg, #f7fbfd, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left clamp(6rem, 12vw, 14rem) top 0, right -3rem bottom -3.5rem, 0 0, 0 0;
+    background-size: clamp(13rem, 19vw, 20rem) auto, clamp(14rem, 19vw, 20rem) auto, auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36'%3E%3Cpath d='M0 36 8 6Q10 0 17 0h46q7 0 9 6l8 30z' fill='rgba(255,255,255,0.16)'/%3E%3Cpath d='M80 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(255,200,69,0.4)'/%3E%3Cpath d='M160 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(154,74,54,0.45)'/%3E%3Cpath d='M240 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(217,209,189,0.25)'/%3E%3Cpath d='M320 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(0,26,54,0.45)'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cg fill='none' stroke-width='4'%3E%3Crect x='10' y='10' width='300' height='180' rx='10' stroke='rgba(255,255,255,0.12)'/%3E%3Crect x='115' y='46' width='90' height='44' rx='4' stroke='rgba(255,255,255,0.16)'/%3E%3Cpath d='M128 118h64v20q0 12-12 12h-40q-12 0-12-12z' stroke='rgba(255,200,69,0.4)'/%3E%3C/g%3E%3C/svg%3E"),
+        repeating-linear-gradient(transparent 0 2.45rem, rgba(255, 255, 255, .03) 2.45rem 2.55rem),
+        linear-gradient(160deg, #033a72, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36'%3E%3Cpath d='M0 36 8 6Q10 0 17 0h46q7 0 9 6l8 30z' fill='rgba(29,94,163,0.24)'/%3E%3Cpath d='M80 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(255,255,255,0.5)'/%3E%3Cpath d='M160 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(154,74,54,0.22)'/%3E%3Cpath d='M240 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(125,117,96,0.24)'/%3E%3Cpath d='M320 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(0,26,54,0.18)'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cg fill='none' stroke-width='4'%3E%3Crect x='10' y='10' width='300' height='180' rx='10' stroke='rgba(3,72,143,0.16)'/%3E%3Crect x='115' y='46' width='90' height='44' rx='4' stroke='rgba(3,72,143,0.2)'/%3E%3Cpath d='M128 118h64v20q0 12-12 12h-40q-12 0-12-12z' stroke='rgba(255,255,255,0.6)'/%3E%3C/g%3E%3C/svg%3E"),
+        repeating-linear-gradient(transparent 0 2.45rem, rgba(3, 72, 143, .05) 2.45rem 2.55rem),
+        linear-gradient(160deg, #ffd573, var(--gold));
+}
+
+/* The title field stays flat so the hero art blends without a seam. */
+.slide.dark.title-slide {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36'%3E%3Cpath d='M0 36 8 6Q10 0 17 0h46q7 0 9 6l8 30z' fill='rgba(255,255,255,0.16)'/%3E%3Cpath d='M80 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(255,200,69,0.4)'/%3E%3Cpath d='M160 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(154,74,54,0.45)'/%3E%3Cpath d='M240 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(217,209,189,0.25)'/%3E%3Cpath d='M320 36l8-30q2-6 9-6h46q7 0 9 6l8 30z' fill='rgba(0,26,54,0.45)'/%3E%3C/svg%3E");
+    background-position: left clamp(6rem, 12vw, 14rem) top 0;
+    background-size: clamp(13rem, 19vw, 20rem) auto;
+    background-repeat: no-repeat;
+}
+
+/* Card-tab glyph in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: 1.35em;
+    height: .8em;
+    background: currentColor;
+    clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+    opacity: .85;
+}
+
+.dark .brand::before {
+    background: var(--gold);
+}
+
+/* Titles that carry a full claim get a wider measure. */
+h2.wide-title,
+h2.check-title {
+    max-width: 30ch;
+    font-size: clamp(2rem, 3.5vw, 4rem);
+}
+
+.visual-split h2,
+.card-split h2 {
+    font-size: clamp(2.1rem, 3.7vw, 4.2rem);
+    max-width: 14ch;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.5rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.dark .accent {
+    color: var(--gold);
+}
+
+/* ---------- Part tags and part marks ---------------------------------- */
+
+/* A part tag is drawn as a catalog divider tab: flat bottom, slanted
+   top corners, the part's name always printed on it. */
+.part-tag {
+    display: inline-block;
+    padding: .2rem .7rem .15rem;
+    border-radius: .45rem .45rem 0 0;
+    background: var(--p-role);
+    color: #fff;
+    font-family: var(--body);
+    font-size: clamp(.68rem, .88vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.part-tag.task {
+    background: var(--p-task);
+    color: #001a36;
+}
+
+.part-tag.context {
+    background: var(--p-context);
+}
+
+.part-tag.format {
+    background: var(--p-format);
+}
+
+.part-tag.constraints {
+    background: var(--p-constraints);
+}
+
+.dark .part-tag.constraints,
+.dark .part-tag.role {
+    box-shadow: 0 0 0 .1rem rgba(255, 255, 255, .6);
+}
+
+/* Inline marks tie a sentence in a response or prompt to the part
+   that produced or governs it. */
+.pm {
+    padding: 0 .08em;
+    border-bottom: .2rem solid var(--p-role);
+    background: color-mix(in srgb, var(--p-role) 10%, transparent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.pm.task {
+    border-color: var(--p-task-line);
+    background: color-mix(in srgb, var(--p-task) 30%, transparent);
+}
+
+.pm.context {
+    border-color: var(--p-context);
+    background: color-mix(in srgb, var(--p-context) 11%, transparent);
+}
+
+.pm.format {
+    border-color: var(--p-format);
+    border-bottom-style: dashed;
+    background: color-mix(in srgb, var(--p-format) 12%, transparent);
+}
+
+.pm.constraints {
+    border-color: var(--p-constraints);
+    border-bottom-style: double;
+    border-bottom-width: .26rem;
+    background: color-mix(in srgb, var(--p-constraints) 8%, transparent);
+}
+
+/* ---------- Slide 3: targets as catalog cards ------------------------- */
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.targets li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .5rem;
+    padding: clamp(1.2rem, 1.9vw, 1.7rem) clamp(1rem, 1.8vw, 1.6rem);
+    background:
+        linear-gradient(var(--p-context), var(--p-context)) 0 4.6rem / 100% .08rem no-repeat,
+        repeating-linear-gradient(transparent 0 1.95rem, rgba(3, 72, 143, .12) 1.95rem 2.02rem) 0 4.6rem / 100% 100% no-repeat,
+        #fff;
+    border-radius: .2rem;
+    box-shadow: .45rem .5rem 0 rgba(3, 72, 143, .1);
+}
+
+.t-num {
+    position: absolute;
+    top: -1.5rem;
+    left: 1rem;
+    padding: .2rem .8rem;
+    border-radius: .45rem .45rem 0 0;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: clamp(.9rem, 1.2vw, 1.2rem);
+    font-weight: 900;
+}
+
+.targets strong {
+    font-size: clamp(1.25rem, 1.9vw, 1.85rem);
+    color: var(--navy);
+}
+
+.targets p {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+/* ---------- Slide 4: the bare prompt ---------------------------------- */
+
+.bare {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(16rem, .75fr);
+    gap: clamp(1rem, 2.4vw, 2.4rem);
+    align-items: center;
+}
+
+.bare .turn {
+    font-size: clamp(.84rem, 1.02vw, 1.08rem);
+}
+
+.chat-bar {
+    justify-content: flex-start;
+}
+
+.chat-bar .stamp,
+.dark .chat-bar .stamp {
+    color: var(--blue);
+    margin-left: auto;
+    text-transform: none;
+    letter-spacing: .04em;
+}
+
+.gap-key {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.gap-key li {
+    display: grid;
+    gap: 0;
+    justify-items: start;
+}
+
+.gap-key li > span:last-child {
+    width: 100%;
+    padding: .55rem .8rem;
+    background: rgba(255, 255, 255, .1);
+    border-top: .18rem solid rgba(255, 255, 255, .5);
+    font-size: clamp(.92rem, 1.15vw, 1.2rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 5: five dividers ------------------------------------ */
+
+.dividers {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.1vw, 1.1rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.divider {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    align-content: start;
+}
+
+.divider > .part-tag {
+    justify-self: start;
+    margin-left: .6rem;
+    font-size: clamp(.78rem, 1vw, 1.02rem);
+}
+
+.divider p {
+    padding: .8rem .95rem 0;
+    background: #fff;
+    border-top: .4rem solid var(--p-role);
+    font-size: clamp(.95rem, 1.2vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.divider p.test {
+    padding: .7rem .95rem 1rem;
+    border-top: .1rem dashed rgba(3, 72, 143, .3);
+    font-weight: 500;
+    font-size: clamp(.86rem, 1.05vw, 1.1rem);
+    box-shadow: .35rem .4rem 0 rgba(3, 72, 143, .08);
+}
+
+.divider p.test::before {
+    content: "Test: ";
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.divider.task p:first-of-type {
+    border-top-color: var(--p-task-line);
+}
+
+.divider.context p:first-of-type {
+    border-top-color: var(--p-context);
+}
+
+.divider.format p:first-of-type {
+    border-top-color: var(--p-format);
+}
+
+.divider.constraints p:first-of-type {
+    border-top-color: var(--p-constraints);
+}
+
+/* ---------- Slide 6: built from parts --------------------------------- */
+
+.built {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) auto minmax(0, 1fr);
+    gap: clamp(.7rem, 1.4vw, 1.4rem);
+    align-items: center;
+}
+
+.stack-parts {
+    display: grid;
+    gap: .4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stack-parts li {
+    display: grid;
+    grid-template-columns: 9.6rem 1fr;
+    align-items: center;
+    gap: .7rem;
+    padding: .45rem .8rem .45rem 0;
+    background: #fff;
+    border-left: .5rem solid var(--p-role);
+    box-shadow: .3rem .3rem 0 rgba(3, 72, 143, .08);
+}
+
+.stack-parts li > .part-tag {
+    justify-self: start;
+    margin-left: .55rem;
+    border-radius: .3rem;
+}
+
+.stack-parts p {
+    font-size: clamp(.8rem, .98vw, 1.02rem);
+    line-height: 1.32;
+}
+
+.stack-parts li.task {
+    border-left-color: var(--p-task-line);
+}
+
+.stack-parts li.context {
+    border-left-color: var(--p-context);
+}
+
+.stack-parts li.format {
+    border-left-color: var(--p-format);
+}
+
+.stack-parts li.constraints {
+    border-left-color: var(--p-constraints);
+}
+
+.built-arrow {
+    color: var(--gold);
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    font-weight: 900;
+    -webkit-text-stroke: .04rem var(--navy);
+}
+
+.built-out {
+    display: grid;
+    gap: .7rem;
+}
+
+.built-out .turn {
+    max-width: 100%;
+    font-size: clamp(.95rem, 1.2vw, 1.28rem);
+    line-height: 1.6;
+}
+
+.char-meter {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .7rem;
+}
+
+.char-meter .part-tag {
+    border-radius: .3rem;
+}
+
+.meter-track,
+.bar-track {
+    position: relative;
+    height: .9rem;
+    background: #fff;
+    border: .1rem solid rgba(3, 72, 143, .35);
+    border-radius: .2rem;
+}
+
+.meter-fill,
+.bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--n) / 300 * 100%);
+    background: var(--p-format);
+}
+
+.meter-read {
+    font-size: clamp(.85rem, 1.05vw, 1.08rem);
+    font-weight: 700;
+}
+
+.held-chips {
+    display: grid;
+    gap: .35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.held-chips li {
+    display: grid;
+    grid-template-columns: 8.6rem 1fr;
+    align-items: center;
+    gap: .6rem;
+    font-size: clamp(.85rem, 1.05vw, 1.08rem);
+    line-height: 1.3;
+}
+
+.held-chips .part-tag {
+    justify-self: start;
+    border-radius: .3rem;
+}
+
+.flag {
+    padding: .55rem .85rem;
+    border-left: .35rem solid var(--warning);
+    background: color-mix(in srgb, var(--warning) 14%, #fff);
+    color: var(--ink);
+    font-size: clamp(.9rem, 1.12vw, 1.15rem);
+}
+
+/* ---------- Slide 7: Format or Constraint sorter ---------------------- */
+
+.sorter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.6rem clamp(1.4rem, 3vw, 3rem);
+    max-width: 72rem;
+}
+
+.sort-q {
+    position: relative;
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: .7rem 1.3rem;
+    background: var(--gold);
+    color: #001a36;
+    border-radius: .3rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 800;
+}
+
+.sort-q::before,
+.sort-q::after {
+    position: absolute;
+    bottom: -2.2rem;
+    content: "\2199";
+    color: var(--gold);
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.sort-q::before {
+    left: 18%;
+}
+
+.sort-q::after {
+    right: 18%;
+    content: "\2198";
+}
+
+.drawer {
+    display: grid;
+    align-content: start;
+    gap: .7rem;
+    padding: 1.1rem 1.2rem 2.4rem;
+    position: relative;
+    background: rgba(255, 255, 255, .08);
+    border: .16rem solid rgba(255, 255, 255, .55);
+    border-top: .5rem solid var(--p-format);
+    border-radius: .3rem;
+}
+
+/* The drawer pull: a gold handle centered on the drawer front. */
+.drawer::after {
+    position: absolute;
+    bottom: .75rem;
+    left: 50%;
+    width: 4.5rem;
+    height: .9rem;
+    content: "";
+    border: .2rem solid var(--gold);
+    border-top-width: .1rem;
+    border-radius: 0 0 .6rem .6rem;
+    transform: translateX(-50%);
+}
+
+.drawer.constraints {
+    border-top-color: #fff;
+}
+
+.drawer > .part-tag {
+    justify-self: start;
+}
+
+.drawer-test {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+}
+
+.drawer-card {
+    padding: .6rem .85rem;
+    background: #fff;
+    color: var(--ink);
+    border-radius: .15rem;
+    font-family: var(--code);
+    font-size: clamp(.9rem, 1.12vw, 1.15rem);
+    line-height: 1.45;
+    box-shadow: .3rem .35rem 0 rgba(0, 0, 0, .18);
+}
+
+/* ---------- Slide 9: the five types ----------------------------------- */
+
+.type-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .55rem 1rem;
+    margin: 0;
+    align-items: baseline;
+}
+
+.type-list dt {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+}
+
+.type-list dt::before {
+    content: "";
+    width: .6rem;
+    height: .6rem;
+    border: .14rem solid var(--navy);
+    border-radius: 50%;
+}
+
+.type-list dt:first-of-type::before {
+    background: var(--gold);
+}
+
+.type-list dd {
+    margin: 0;
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 10: completion and role play ------------------------ */
+
+.two-types {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: start;
+}
+
+.two-types .turn {
+    font-size: clamp(.8rem, .98vw, 1.04rem);
+    line-height: 1.42;
+}
+
+/* ---------- Slide 11: Fix It 4.1 -------------------------------------- */
+
+.ticket {
+    max-width: 78rem;
+    padding: .55rem .9rem;
+    border-left: .35rem solid var(--blue);
+    background: #fff;
+    font-size: clamp(.84rem, 1.04vw, 1.08rem);
+    line-height: 1.4;
+}
+
+.fixit {
+    align-items: stretch;
+}
+
+.fix-col {
+    display: grid;
+    align-content: start;
+    gap: .6rem;
+    padding: clamp(.8rem, 1.3vw, 1.2rem);
+    background: #fff;
+    border-radius: .3rem;
+    box-shadow: .4rem .45rem 0 rgba(3, 72, 143, .1);
+}
+
+.fix-col > .ba-label {
+    justify-self: start;
+}
+
+.fix-prompt {
+    padding: .45rem .7rem;
+    background: var(--mist);
+    border-radius: .5rem .5rem .1rem .5rem;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.4;
+}
+
+.doc-silhouette {
+    display: grid;
+    gap: .32rem;
+    padding: .7rem .8rem;
+    border: .1rem solid rgba(3, 72, 143, .25);
+    background: color-mix(in srgb, var(--canvas) 60%, #fff);
+}
+
+.doc-silhouette .h {
+    font-family: var(--code);
+    font-size: clamp(.74rem, .9vw, .95rem);
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.doc-silhouette i {
+    display: block;
+    height: .4rem;
+    border-radius: .2rem;
+    background: rgba(3, 72, 143, .18);
+}
+
+.doc-silhouette i.short {
+    width: 60%;
+}
+
+.reply {
+    display: grid;
+    gap: .45rem;
+    padding: .7rem .85rem;
+    border: .1rem solid rgba(3, 72, 143, .25);
+    font-family: var(--code);
+    font-size: clamp(.78rem, .95vw, 1rem);
+    line-height: 1.5;
+}
+
+.reply p {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.fix-stat {
+    font-size: clamp(.86rem, 1.05vw, 1.08rem);
+}
+
+.fix-stat b {
+    color: var(--navy);
+}
+
+.cost-line {
+    padding: .5rem .9rem;
+    border-left: .35rem solid var(--warning);
+    background: color-mix(in srgb, var(--warning) 12%, #fff);
+    font-size: clamp(.95rem, 1.2vw, 1.22rem);
+}
+
+/* ---------- Slide 13: zero-shot and few-shot -------------------------- */
+
+.shots {
+    margin-top: 1.1rem;
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: start;
+}
+
+.shot {
+    position: relative;
+    display: grid;
+    gap: .6rem;
+    padding: 1.4rem clamp(.8rem, 1.3vw, 1.2rem) clamp(.8rem, 1.3vw, 1.2rem);
+    background: #fff;
+    border-radius: .2rem;
+    box-shadow: .4rem .45rem 0 rgba(3, 72, 143, .1);
+}
+
+.shot-tag {
+    position: absolute;
+    top: -1.35rem;
+    left: 1rem;
+    padding: .2rem .8rem;
+    border-radius: .45rem .45rem 0 0;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.shot.few .shot-tag {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.shot-prompt {
+    padding: .45rem .7rem;
+    background: var(--mist);
+    border-radius: .5rem .5rem .1rem .5rem;
+    font-size: clamp(.8rem, .98vw, 1.02rem);
+    line-height: 1.4;
+}
+
+.examples {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.ex {
+    display: grid;
+    align-content: start;
+    gap: .25rem;
+    padding: 0 .6rem .5rem;
+    border: .1rem solid color-mix(in srgb, var(--p-format) 55%, transparent);
+    border-top: .3rem solid var(--p-format);
+    font-size: clamp(.76rem, .92vw, .96rem);
+    line-height: 1.38;
+}
+
+.ex .part-tag {
+    justify-self: start;
+    margin-left: -.6rem;
+    border-radius: 0 0 .3rem 0;
+}
+
+.shot-out {
+    padding: .55rem .75rem;
+    border: .1rem solid rgba(3, 72, 143, .2);
+    background: color-mix(in srgb, var(--canvas) 55%, #fff);
+    border-radius: .5rem .5rem .5rem .1rem;
+    font-size: clamp(.84rem, 1.04vw, 1.1rem);
+    line-height: 1.55;
+}
+
+.shot-count {
+    font-size: clamp(.86rem, 1.05vw, 1.08rem);
+}
+
+.shot-count b {
+    color: var(--navy);
+    font-size: 1.7em;
+    line-height: 1;
+}
+
+/* ---------- Slide 14: the offer --------------------------------------- */
+
+.offer .fix-col {
+    color: var(--ink);
+}
+
+.offer .ba-label {
+    text-transform: none;
+    letter-spacing: .02em;
+    font-family: var(--code);
+}
+
+.offer-out {
+    font-size: clamp(1rem, 1.3vw, 1.35rem);
+    line-height: 1.55;
+}
+
+.struck {
+    color: var(--danger);
+    text-decoration: line-through .14rem;
+}
+
+.struck::after {
+    content: "removed";
+    display: inline-block;
+    margin-left: .35em;
+    padding: .05rem .4rem;
+    border-radius: .25rem;
+    background: var(--danger);
+    color: #fff;
+    font-size: .6em;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    vertical-align: .15em;
+}
+
+/* ---------- Slide 15: standing instructions --------------------------- */
+
+.standing {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(15rem, .75fr);
+    gap: clamp(1rem, 2.4vw, 2.4rem);
+    align-items: center;
+}
+
+.standing .turn {
+    font-size: clamp(.82rem, 1vw, 1.05rem);
+    line-height: 1.42;
+}
+
+.term-list {
+    display: grid;
+    gap: .2rem;
+    margin: 0;
+}
+
+.term-list dt {
+    color: var(--blue);
+    font-weight: 900;
+    font-size: clamp(1.02rem, 1.38vw, 1.4rem);
+}
+
+.term-list dd {
+    margin: 0 0 .8rem;
+    font-size: clamp(.95rem, 1.22vw, 1.25rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 17: read-back table --------------------------------- */
+
+.readback {
+    display: grid;
+    gap: .35rem;
+}
+
+.rb-row {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr) minmax(0, 1.15fr) 7rem;
+    gap: 1rem;
+    align-items: center;
+    padding: .5rem .9rem;
+    background: #fff;
+    box-shadow: .3rem .3rem 0 rgba(3, 72, 143, .07);
+    font-size: clamp(.9rem, 1.15vw, 1.2rem);
+    line-height: 1.3;
+}
+
+.rb-row > span:first-child .part-tag {
+    border-radius: .3rem;
+}
+
+.rb-head {
+    padding-block: .25rem;
+    background: transparent;
+    box-shadow: none;
+    color: var(--blue);
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+/* ---------- Slide 18: remove one part -------------------------------- */
+
+.pull {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+    gap: clamp(1.4rem, 3vw, 3rem);
+    align-items: center;
+}
+
+.pull-stack {
+    display: grid;
+    gap: .5rem;
+}
+
+.pull-stack > .part-tag,
+.slot-gap > .part-tag {
+    padding: .5rem .9rem;
+    border-radius: .3rem;
+    font-size: clamp(.82rem, 1.05vw, 1.08rem);
+}
+
+.slot-gap {
+    display: block;
+    border: .14rem dashed rgba(255, 255, 255, .7);
+    border-radius: .3rem;
+}
+
+.slot-gap .pulled {
+    display: block;
+    width: 70%;
+    transform: translateX(32%) rotate(-5deg);
+    box-shadow: .4rem .4rem 0 rgba(0, 0, 0, .3);
+    outline: .12rem solid var(--gold);
+}
+
+.pull-result {
+    display: grid;
+    gap: 1rem;
+}
+
+.bars {
+    display: grid;
+    gap: .55rem;
+}
+
+.bar-row {
+    display: grid;
+    grid-template-columns: 11rem 1fr 3.5rem;
+    gap: .8rem;
+    align-items: center;
+    font-size: clamp(.9rem, 1.15vw, 1.2rem);
+}
+
+.bar-row b {
+    color: #fff;
+    font-size: 1.3em;
+}
+
+.bar-track {
+    height: 1.5rem;
+    border-color: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .12);
+}
+
+.bar-fill {
+    background: rgba(255, 255, 255, .55);
+}
+
+.bar-row.focus .bar-fill {
+    background: var(--gold);
+}
+
+.bar-row.focus b {
+    color: var(--gold);
+}
+
+.cap-line {
+    position: absolute;
+    top: -.4rem;
+    right: 0;
+    bottom: -.4rem;
+    width: .2rem;
+    background: #fff;
+}
+
+.bar-axis {
+    font-size: clamp(.85rem, 1.05vw, 1.08rem);
+}
+
+.bar-axis b {
+    color: var(--gold);
+}
+
+.pull-out {
+    padding: .7rem .9rem;
+    background: #fff;
+    color: var(--ink);
+    border-radius: .5rem .5rem .5rem .1rem;
+    font-size: clamp(.9rem, 1.12vw, 1.18rem);
+    line-height: 1.6;
+}
+
+/* ---------- Slide 19: the prompt card --------------------------------- */
+
+.card-split {
+    display: grid;
+    grid-template-columns: minmax(0, .62fr) minmax(0, 1.38fr);
+    gap: clamp(1.5rem, 3.5vw, 4rem);
+    align-items: center;
+}
+
+/* The course card rules its header line at 3.1rem, so the first field
+   needs a fixed top inset to sit above that line at every size. */
+.prompt-card {
+    margin-top: 1.4rem;
+    padding-top: 1.75rem;
+}
+
+.prompt-card .card-fields dd {
+    font-size: clamp(.74rem, .9vw, .96rem);
+    line-height: 1.5;
+}
+
+.prompt-card .card-fields dt {
+    font-size: clamp(.64rem, .78vw, .82rem);
+}
+
+.prompt-card dd .part-tag {
+    padding: .05rem .4rem;
+    border-radius: .25rem;
+    font-size: .82em;
+}
+
+.slot {
+    padding: 0 .3em;
+    border: .12rem dashed var(--p-context);
+    border-radius: .25rem;
+    background: color-mix(in srgb, var(--p-context) 8%, #fff);
+    color: var(--p-context);
+    font-family: var(--code);
+    font-weight: 700;
+}
+
+.slot-line .slot {
+    font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+    padding: .2rem .6rem;
+}
+
+.card-fields dd.blank {
+    color: color-mix(in srgb, var(--ink) 55%, #fff);
+}
+
+/* ---------- Slide 21: Copperwind library ------------------------------ */
+
+.ticket-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ticket-types li {
+    padding: .3rem .75rem;
+    border: .12rem solid rgba(255, 255, 255, .55);
+    border-top: .3rem solid var(--gold);
+    background: rgba(255, 255, 255, .08);
+    font-size: clamp(.88rem, 1.1vw, 1.12rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 22: lab handoff ------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    gap: .6rem;
+    max-width: 66rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(14rem, 22rem) 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: .6rem 1rem .6rem 0;
+    background: #fff;
+    border-left: .45rem solid var(--navy);
+    box-shadow: .3rem .3rem 0 rgba(3, 72, 143, .08);
+}
+
+.lab-parts .part {
+    justify-self: start;
+    padding: .2rem .7rem;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 0 .4rem .4rem 0;
+    font-size: clamp(.78rem, 1vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1.02rem, 1.4vw, 1.4rem);
+    line-height: 1.2;
+}
+
+.lab-parts li > span:last-child {
+    font-size: clamp(.92rem, 1.15vw, 1.18rem);
+    line-height: 1.3;
+}
+
+.prompt.exit {
+    max-width: 66rem;
+    background: #fff;
+}
+
+.ahead {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.95rem, 1.2vw, 1.2rem);
+}
+
+/* ---------- Short laptop viewports ------------------------------------ */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .85rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.8rem, 3vw, 3.2rem);
+    }
+
+    .bare .turn,
+    .two-types .turn,
+    .standing .turn {
+        font-size: .78rem;
+        line-height: 1.35;
+        padding: .5rem .7rem;
+    }
+
+    .chat-body {
+        gap: .45rem;
+        padding: .55rem;
+    }
+
+    .stack-parts li {
+        padding-block: .3rem;
+    }
+
+    .stack-parts p,
+    .shot-prompt,
+    .ex,
+    .reply,
+    .ticket,
+    .fix-prompt {
+        font-size: .76rem;
+    }
+
+    .built-out .turn,
+    .shot-out {
+        font-size: .86rem;
+        line-height: 1.45;
+    }
+
+    .doc-silhouette {
+        gap: .2rem;
+        padding: .45rem .6rem;
+    }
+
+    .divider p {
+        font-size: .9rem;
+    }
+
+    .divider p.test {
+        font-size: .82rem;
+    }
+
+    .rb-row {
+        padding-block: .35rem;
+        font-size: .86rem;
+    }
+
+    .prompt-card .card-fields dd {
+        font-size: .72rem;
+        line-height: 1.4;
+    }
+
+    .prompt-card .card-fields {
+        gap: .4rem .9rem;
+    }
+
+    .targets {
+        margin-top: 1rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        background-size: 9rem auto, 10rem auto, auto, auto;
+        background-position: left 1rem top 0, right -2rem bottom 3rem, 0 0, 0 0;
+    }
+
+    .slide.dark.title-slide {
+        background-size: 9rem auto;
+        background-position: left 1rem top 0;
+    }
+
+    .brand {
+        right: auto;
+        left: 1.25rem;
+    }
+
+    .targets,
+    .bare,
+    .dividers,
+    .built,
+    .sorter,
+    .two-types,
+    .shots,
+    .examples,
+    .standing,
+    .pull,
+    .card-split {
+        grid-template-columns: 1fr;
+    }
+
+    .targets {
+        gap: 2.2rem;
+        margin-top: 1.6rem;
+    }
+
+    .divider {
+        margin-top: .4rem;
+    }
+
+    .built-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .stack-parts li {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+        padding: .5rem .7rem .5rem 0;
+    }
+
+    .stack-parts p {
+        padding-left: .7rem;
+    }
+
+    .sort-q::before,
+    .sort-q::after {
+        display: none;
+    }
+
+    .sorter {
+        gap: 1rem;
+    }
+
+    .shots {
+        gap: 2.2rem;
+        margin-top: 1rem;
+    }
+
+    .rb-row {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .rb-head {
+        display: none;
+    }
+
+    .rb-row > span:nth-child(2)::before {
+        content: "Asked: ";
+        font-weight: 900;
+    }
+
+    .rb-row > span:nth-child(3)::before {
+        content: "Did: ";
+        font-weight: 900;
+    }
+
+    .pull-stack {
+        max-width: 14rem;
+    }
+
+    .slot-gap .pulled {
+        transform: translateX(25%) rotate(-5deg);
+    }
+
+    .bar-row {
+        grid-template-columns: 1fr 3rem;
+    }
+
+    .bar-name {
+        grid-column: 1 / -1;
+    }
+
+    .lab-parts li {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+        padding: .7rem .9rem;
+    }
+
+    .lab-parts .part {
+        margin-left: -.9rem;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .type-list {
+        grid-template-columns: 1fr;
+        gap: .1rem;
+    }
+
+    .type-list dd {
+        margin-bottom: .5rem;
+    }
+}
+
+.sample-cap {
+    display: block;
+    margin-top: .35rem;
+    color: var(--blue);
+    font-size: .8em;
+    letter-spacing: .04em;
+    text-transform: none;
+}
+
+.dark .pull-result > .sample-cap {
+    color: var(--gold, #ffc72c);
+}
