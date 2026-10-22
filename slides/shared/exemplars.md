@@ -91,6 +91,11 @@ markup alone.
   scenes. The craft of building pages should feel physical.
 - CIS215 leans kinetic: flows, transformations, decision logic,
   charts, and code-to-result pairs. Data should feel like it moves.
+- CIS137 leans deliberative: prompt-and-response pairs rebuilt as
+  chat surfaces, three-pass reading marks, verdict stamps, before and
+  after comparisons, and the cards, checklists, and logs students
+  keep. Judgment should feel visible. No code: the prompt is the
+  code and the response is the result.
 - Crossing over is allowed when the teaching job calls for it. The
   content device stays true to the course even when the texture
   borrows.
