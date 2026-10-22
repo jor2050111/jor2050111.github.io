@@ -1,0 +1,603 @@
+/* CIS137 shared components
+   Linked after ../../shared/deck.css and before each chapter.css.
+   CIS137 teaches judgment about AI output, so its recurring objects are
+   the things students read and keep: a chat exchange, the three reading
+   passes, verdict chips, ruled artifact cards, rubber stamps, and
+   before-and-after pairs. Every color comes from the palette variables,
+   so one stylesheet serves all six palettes. Chapters may extend these
+   selectors but never redefine them. */
+
+/* ---------- Chat surface ---------------------------------------------- */
+
+/* A deliberately generic window: one dot, no logo, no vendor color. The
+   course never names a product on a slide, so the chrome must not hint
+   at one either. */
+.chat {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+    color: var(--ink);
+    background: #fff;
+    border: .12rem solid color-mix(in srgb, var(--navy) 22%, transparent);
+    border-radius: .9rem;
+    box-shadow: 0 1rem 2.4rem color-mix(in srgb, var(--navy) 16%, transparent);
+}
+
+.chat-bar {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .45rem .9rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-size: clamp(.7rem, .9vw, .86rem);
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.chat-bar::before {
+    content: "";
+    width: .62rem;
+    height: .62rem;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 .12rem color-mix(in srgb, var(--navy) 30%, transparent);
+}
+
+.chat-body {
+    display: grid;
+    gap: .75rem;
+    padding: clamp(.75rem, 1.3vw, 1.2rem);
+}
+
+/* The user turn leans right and the assistant turn leans left, the way
+   every chat tool lays them out, so position carries who spoke even
+   before the label is read. */
+.turn {
+    display: grid;
+    gap: .3rem;
+    max-width: 92%;
+    padding: .7rem .95rem;
+    border-radius: .8rem;
+    font-size: clamp(.9rem, 1.12vw, 1.2rem);
+    line-height: 1.42;
+}
+
+.turn p {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.turn p + p {
+    margin-top: .35rem;
+}
+
+.turn.user {
+    justify-self: end;
+    background: var(--mist);
+    border-bottom-right-radius: .2rem;
+}
+
+.turn.assistant {
+    justify-self: start;
+    background: color-mix(in srgb, var(--canvas) 70%, #fff);
+    border: .1rem solid color-mix(in srgb, var(--navy) 12%, transparent);
+    border-bottom-left-radius: .2rem;
+}
+
+.who {
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .84rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.turn.assistant .who {
+    color: var(--navy);
+}
+
+/* Reading marks. Each one pairs a line style with a meaning, and a
+   data-label tag spells the meaning out so color never carries it
+   alone. Gold means "look again", green means "checked and holds",
+   red means "wrong". */
+.mark {
+    padding: 0 .1em;
+    border-radius: .15rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.mark.add {
+    background: color-mix(in srgb, var(--gold) 26%, transparent);
+    border-bottom: .2rem solid var(--gold);
+}
+
+.mark.hedge {
+    border-bottom: .2rem dotted color-mix(in srgb, var(--gold) 70%, #000);
+}
+
+.mark.wrong {
+    color: var(--danger);
+    text-decoration: line-through .14rem;
+}
+
+.mark.holds {
+    border-bottom: .2rem solid var(--good);
+}
+
+.mark[data-label]::after {
+    content: attr(data-label);
+    display: inline-block;
+    margin-left: .35em;
+    padding: .05rem .4rem;
+    vertical-align: .12em;
+    border-radius: .25rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: .62em;
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.mark.add[data-label]::after,
+.mark.hedge[data-label]::after {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.mark.wrong[data-label]::after {
+    background: var(--danger);
+}
+
+.mark.holds[data-label]::after {
+    background: var(--good);
+}
+
+/* Step tags sit in a margin column beside the prompt line they explain,
+   because the chapter's [Step k] labels are notes to the writer and are
+   never sent to the model. */
+.stepped {
+    display: grid;
+    grid-template-columns: minmax(11rem, 18rem) 1fr;
+    gap: .55rem 1rem;
+    align-items: start;
+}
+
+.step {
+    padding: .3rem .55rem;
+    border-left: .3rem solid var(--gold);
+    background: color-mix(in srgb, var(--gold) 14%, #fff);
+    color: var(--navy);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* ---------- Three reading passes -------------------------------------- */
+
+.passes {
+    display: grid;
+    gap: clamp(.6rem, 1.2vw, 1rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: pass;
+}
+
+.passes li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .2rem .8rem;
+    align-items: start;
+    counter-increment: pass;
+}
+
+.passes li::before {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: clamp(2.2rem, 3vw, 3rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    content: counter(pass);
+    background: var(--navy);
+    color: var(--gold);
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+    font-weight: 900;
+}
+
+.dark .passes li::before {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+.passes strong {
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+    line-height: 1.2;
+}
+
+.passes span {
+    font-size: clamp(.86rem, 1.05vw, 1.08rem);
+    line-height: 1.35;
+}
+
+/* ---------- Verdict chips --------------------------------------------- */
+
+/* Four verdicts, four glyphs, four colors. The glyph and the word carry
+   the meaning, and the color only repeats it. */
+.verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .25rem .7rem .25rem .3rem;
+    border: .12rem solid currentColor;
+    border-radius: 2rem;
+    background: #fff;
+    font-size: clamp(.75rem, .95vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.verdict::before {
+    display: grid;
+    place-items: center;
+    width: 1.35em;
+    height: 1.35em;
+    border-radius: 50%;
+    color: #fff;
+    font-size: .95em;
+}
+
+.verdict.holds {
+    color: var(--good);
+}
+
+.verdict.holds::before {
+    content: "\2713";
+    background: var(--good);
+}
+
+.verdict.contradicted {
+    color: var(--danger);
+}
+
+.verdict.contradicted::before {
+    content: "\2715";
+    background: var(--danger);
+}
+
+.verdict.not-in-source {
+    color: color-mix(in srgb, var(--warning) 75%, #000);
+}
+
+.verdict.not-in-source::before {
+    content: "+";
+    background: var(--warning);
+}
+
+.verdict.unverifiable {
+    color: color-mix(in srgb, var(--navy) 70%, #777);
+}
+
+.verdict.unverifiable::before {
+    content: "?";
+    background: color-mix(in srgb, var(--navy) 70%, #777);
+}
+
+/* ---------- Artifact card --------------------------------------------- */
+
+/* The things students keep (prompt log, audit report, memo, policy) are
+   drawn as one ruled index card so the series reads as one habit. */
+.artifact-card {
+    position: relative;
+    margin: 0;
+    padding: clamp(1rem, 1.8vw, 1.6rem) clamp(1rem, 2vw, 1.8rem);
+    color: var(--ink);
+    background:
+        linear-gradient(var(--danger), var(--danger)) 0 3.1rem / 100% .1rem no-repeat,
+        repeating-linear-gradient(transparent 0 2.05rem, color-mix(in srgb, var(--blue) 22%, transparent) 2.05rem 2.15rem),
+        #fff;
+    background-position: 0 3.1rem, 0 3.1rem, 0 0;
+    border-radius: .3rem;
+    box-shadow: .6rem .7rem 0 color-mix(in srgb, var(--navy) 18%, transparent);
+}
+
+.card-tab {
+    position: absolute;
+    top: -1.55rem;
+    left: 1.4rem;
+    padding: .3rem .9rem;
+    border-radius: .45rem .45rem 0 0;
+    background: var(--gold);
+    color: #001a36;
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.card-fields {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .55rem 1.1rem;
+    margin: 0;
+}
+
+.card-fields dt {
+    padding-top: .15rem;
+    color: var(--blue);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.card-fields dd {
+    margin: 0;
+    font-family: var(--code);
+    font-size: clamp(.82rem, 1.05vw, 1.08rem);
+    line-height: 1.55;
+}
+
+/* ---------- Rubber stamp ---------------------------------------------- */
+
+.stamp {
+    display: inline-block;
+    padding: .2rem .65rem;
+    border: .18rem double currentColor;
+    border-radius: .35rem;
+    color: var(--blue);
+    font-size: clamp(.68rem, .85vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .14em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+    white-space: nowrap;
+}
+
+.dark .stamp {
+    color: var(--gold);
+}
+
+.stamp.verified {
+    color: var(--good);
+}
+
+/* ---------- Before and after ------------------------------------------ */
+
+/* The arrow is generated in the middle column so every chapter's
+   comparison reads left to right, from the failure to the repair. */
+.before-after {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+    align-items: center;
+}
+
+.before-after::before {
+    grid-column: 2;
+    grid-row: 1;
+    content: "\2192";
+    color: var(--gold);
+    font-size: clamp(2rem, 3.4vw, 3.4rem);
+    font-weight: 900;
+}
+
+.before-after > :first-child {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.before-after > :last-child {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.ba-label {
+    display: inline-block;
+    padding: .15rem .6rem;
+    border-radius: .3rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.68rem, .85vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.dark .ba-label {
+    background: var(--gold);
+    color: #001a36;
+}
+
+/* ---------- Framed illustrations (from the CIS215 framework) ---------- */
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(0, .94fr) minmax(21rem, 1.06fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+}
+
+.visual-split.reverse {
+    grid-template-columns: minmax(21rem, 1.06fr) minmax(0, .94fr);
+}
+
+.visual-art {
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: .25rem solid rgba(255, 255, 255, .75);
+    border-radius: 1.1rem;
+    box-shadow: 0 1.4rem 3.5rem color-mix(in srgb, var(--navy) 24%, transparent);
+}
+
+.visual-art img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* A white print taped to the slide: the frame says "evidence pinned up
+   for discussion", and the caption under it states the takeaway. */
+.visual-art.print-frame {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: visible;
+    padding: .65rem .65rem 0;
+    border: .12rem solid var(--navy);
+    border-radius: .18rem;
+    background: #fff;
+    box-shadow: .75rem .85rem 0 color-mix(in srgb, var(--navy) 26%, transparent);
+    transform: rotate(-.45deg);
+}
+
+.visual-art.print-frame::before {
+    position: absolute;
+    top: -.7rem;
+    left: 42%;
+    width: 5rem;
+    height: 1.2rem;
+    content: "";
+    background: color-mix(in srgb, var(--gold) 62%, transparent);
+    transform: rotate(1.5deg);
+}
+
+.visual-art.print-frame img {
+    height: auto;
+    aspect-ratio: 3 / 2;
+    border-radius: .08rem;
+}
+
+.visual-art.print-frame figcaption {
+    padding: .65rem .25rem .7rem;
+    color: #001a36;
+    font-size: clamp(.82rem, 1.05vw, 1.05rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+/* Title hero: full-height art on the right, blended into the dark field
+   so the headline keeps its contrast. */
+.title-slide .content {
+    width: min(100%, 90rem);
+    margin-left: 0;
+    padding-right: min(42vw, 42rem);
+}
+
+.title-art {
+    position: absolute;
+    inset: 0 0 0 auto;
+    z-index: 0;
+    width: min(55vw, 56rem);
+    margin: 0;
+    overflow: hidden;
+}
+
+.title-art::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy) 4%, color-mix(in srgb, var(--navy) 55%, transparent) 26%, transparent 58%);
+}
+
+.title-art img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The corner label must stay readable above any art. */
+.slide > .brand {
+    z-index: 3;
+}
+
+/* ---------- Check slides ---------------------------------------------- */
+
+/* Every CIS137 deck carries three or four predict-commit-reveal checks on
+   gold slides. The shared answer box inherits body size, and on a check
+   slide the answer is the payoff, so it reads at prompt size. The prompt
+   gets a navy rule on gold because the default gold rule disappears. */
+.slide .answer {
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+    line-height: 1.4;
+}
+
+.slide.gold .prompt {
+    max-width: 66rem;
+    border-left-color: var(--navy);
+}
+
+/* ---------- Phone --------------------------------------------------- */
+
+@media (max-width: 760px) {
+    .visual-split,
+    .visual-split.reverse,
+    .before-after {
+        grid-template-columns: 1fr;
+    }
+
+    /* Text first, art second, whatever order the desktop used. */
+    .visual-split .visual-art {
+        order: 2;
+    }
+
+    .before-after::before {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .before-after > :first-child {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .before-after > :last-child {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .stepped {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+
+    .stepped .step {
+        margin-top: .4rem;
+    }
+
+    .turn {
+        max-width: 100%;
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .title-art {
+        width: 100%;
+        opacity: .24;
+    }
+
+    .card-fields {
+        grid-template-columns: 1fr;
+        gap: .15rem;
+    }
+
+    .card-fields dd + dt {
+        margin-top: .5rem;
+    }
+}

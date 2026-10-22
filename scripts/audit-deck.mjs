@@ -243,6 +243,26 @@ for (const [width, height] of viewports) {
             await page.screenshot({ path: path.join(dir, `slide-${String(i).padStart(2, "0")}.png`), fullPage: isPhone });
         }
 
+        // Phone scroll-end state: the fixed nav must not cover the last content.
+        if (isPhone) {
+            const end = await page.evaluate(() => {
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const slide = document.querySelector(".slide.active");
+                const content = slide.querySelector(".content") || slide;
+                const nav = document.querySelector(".nav");
+                const cRect = content.getBoundingClientRect();
+                const nRect = nav ? nav.getBoundingClientRect() : null;
+                const covered = nRect && cRect.bottom > nRect.top + 2 && cRect.left < nRect.right && cRect.right > nRect.left;
+                return { covered: Boolean(covered), contentBottom: Math.round(cRect.bottom), navTop: nRect ? Math.round(nRect.top) : null };
+            });
+            if (end.covered) check.warnings.push(`phone scroll end: content bottom ${end.contentBottom} runs under the nav (top ${end.navTop}); add bottom padding`);
+            if (shots) {
+                const dir = path.join(outDir, vpName);
+                await page.screenshot({ path: path.join(dir, `slide-${String(i).padStart(2, "0")}-end.png`), fullPage: false });
+            }
+            await page.evaluate(() => window.scrollTo(0, 0));
+        }
+
         for (const e of check.errors) add("error", `${vpName} slide ${i}`, e);
         for (const w of check.warnings) add("warning", `${vpName} slide ${i}`, w);
         vpReport.slides.push({ slide: i, info: check.info, timeEnd: check.timeEnd, reveals: check.reveals });

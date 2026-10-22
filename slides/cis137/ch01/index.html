@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 1 classroom presentation: What Artificial Intelligence Is.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23FFC845' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23FFC845' stroke-width='2'/%3E%3Crect x='22' y='29' width='20' height='6' rx='2' fill='%23ffffff'/%3E%3C/svg%3E">
+  <title>CIS137: What Artificial Intelligence Is</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: What Artificial Intelligence Is" data-course="cis137"
+  data-chapter="ch01" data-palette="phoenix-classic">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's three breakfast examples. Your phone turned a mumbled voice note into text. Your email app moved a scam to Junk before you read it. Your map routed you around a stalled truck. None of them asked you to type a question. Take two or three answers to the lede: which of those decided something for you? Promise the payoff. By the end of class, everyone can sort any AI system with one question and hold a first conversation they can defend.&#10;&#10;Time: 0-3 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-morning-hero.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 1 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>What Artificial Intelligence Is</h1>
+        <p class="lede">You used AI before breakfast. Which part of it was deciding for you?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as actions students take today. 1.1 is sorting by where behavior comes from. 1.2 is placing milestones in three eras and using the AI winters to judge a claim. 1.3 is the first account, the first conversation, and the first prompt log entry. The chapter serves CLO 2 (differentiate the major types of AI) and CLO 4 (analyze the current state of AI). No prior experience is expected.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS137 · Chapter 1</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Sort, place, and talk.</h2>
+        <ol class="targets">
+          <li class="t-rules"><span class="t-num">1.1</span><strong>Differentiate</strong><p>rule-based systems, machine learning, and generative AI by where each one’s behavior comes from and what each can and cannot do</p></li>
+          <li class="t-learned"><span class="t-num">1.2</span><strong>Organize</strong><p>the milestones of AI into three eras by where each system’s behavior came from, and use the pattern of the AI winters to judge a current claim about AI</p></li>
+          <li class="t-generated"><span class="t-num">1.3</span><strong>Apply</strong><p>set up an account on a generative AI tool, hold a first conversation that follows the course’s safety rule, and record the exchange in a prompt log</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="This is the sorting question for the whole course. Artificial intelligence is a family of techniques, not one thing. Walk the trays left to right. Rules tray: a person wrote the rule in advance, the payroll rule is the example. Learned tray: nobody wrote the rule, the model studied labeled examples and learned to score new ones. Generated tray: the same kind of learned patterns, with a new job, making new content from a prompt. The spam filter sorts. The chat assistant makes.&#10;&#10;Time: 5-8 minutes.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">Where does the behavior come from?</div>
+        <h2 class="wide-title">One word, many machines. One question sorts them.</h2>
+        <div class="trays" role="img" aria-label="Three sorting trays read left to right. Tray one, rules: a card reading if hours over 40, pay 1.5 times rate. Its behavior comes from rules a person wrote. Tray two, learned: messages labeled junk and not junk feed a model that scores new ones. Its behavior comes from patterns learned from training data. Tray three, generated: a prompt goes in and a new page comes out. Its behavior comes from patterns learned from data, used to produce new content.">
+          <div class="tray rules">
+            <span class="type-tag rules">Rule-based system</span>
+            <div class="tray-object"><div class="rule-card verbatim">if hours &gt; 40, pay 1.5 × rate</div></div>
+            <p class="tray-source">Rules a person wrote</p>
+          </div>
+          <div class="tray-arrow" aria-hidden="true">→</div>
+          <div class="tray learned">
+            <span class="type-tag learned">Machine learning</span>
+            <div class="tray-object">
+              <div class="examples"><span>Junk</span><span>Not junk</span><span>Junk</span></div>
+              <span class="feed" aria-hidden="true">→</span>
+              <span class="model-disc">model</span>
+            </div>
+            <p class="tray-source">Patterns learned from training data</p>
+          </div>
+          <div class="tray-arrow" aria-hidden="true">→</div>
+          <div class="tray generated">
+            <span class="type-tag generated">Generative AI</span>
+            <div class="tray-object">
+              <span class="prompt-pill">prompt</span>
+              <span class="feed" aria-hidden="true">→</span>
+              <span class="new-page" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <p class="tray-source">Patterns learned from data, used to produce new content</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Teach the judgment test. A parking gate that opens for a paid ticket, payroll that pays time-and-a-half after 40 hours, and a library fine the day a book is overdue all follow rules but replace no judgment, so this book calls them not AI. A 1970s medical expert system turned doctors' knowledge into if-then rules and suggested a diagnosis. That is judgment encoded as rules, so it counts. Reasonable people draw the line in other places. In this course, apply the test and say why.&#10;&#10;Time: 8-10 minutes.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">The judgment test</div>
+        <h2 class="wide-title">Rules alone are not AI. Rules that replace a judgment are.</h2>
+        <div class="judgment-line" role="img" aria-label="A dividing line marked: the line this book draws. On the left, not AI: a parking gate, overtime payroll, and a library fine, all following rules that replace no judgment. On the right, AI: a 1970s medical expert system whose rules stand in for a diagnosis.">
+          <div class="side not-ai">
+            <span class="side-label">Not AI: rules, no judgment replaced</span>
+            <ul>
+              <li><b>Parking gate</b> opens when a paid ticket is scanned</li>
+              <li><b>Payroll</b> pays time-and-a-half after 40 hours</li>
+              <li><b>Library system</b> charges a fine the day a book is overdue</li>
+            </ul>
+          </div>
+          <div class="the-line"><span>the line this book draws</span></div>
+          <div class="side is-ai">
+            <span class="side-label">AI: rules stand in for a judgment</span>
+            <ul>
+              <li><b>1970s medical expert system</b> suggests a diagnosis from a list of symptoms</li>
+            </ul>
+          </div>
+        </div>
+        <p class="field-note">Apply the test and say why.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Here is the payroll question put to a chat assistant. Read the prompt, then the sample. The assistant drew the same line the chapter draws: a fixed rule written by hand, no learning, no judgment. Point to the two gold dotted marks. It opens with Generally no, and it closes by granting that some definitions could count older rule-based systems. Ask students to hold onto those hedges. Section 1.4 teaches a three-pass read, and hedges like these are where the second pass earns its keep.&#10;&#10;Time: 10-12 minutes.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">Ask the tool</div>
+        <h2 class="wide-title">The assistant drew the same line. Watch the hedges.</h2>
+        <figure class="chat">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user"><span class="who">You</span><p class="verbatim">Payroll software pays time-and-a-half for every hour over 40 in a week. Is that artificial intelligence? Answer in three sentences.</p></div>
+            <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim"><span class="mark hedge" data-label="hedge">Generally no.</span> Overtime pay is a fixed, hand-written rule (if hours &gt; 40, pay 1.5 × rate for the extra hours), so the software only does exactly what a programmer explicitly told it to do. AI usually implies a system that learns from data or handles ambiguity and judgment, which this deterministic calculation doesn't involve, <span class="mark hedge" data-label="hedge">though some definitions of "AI" are broad enough that older rule-based systems could loosely qualify.</span></p></div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 1.1, question 1. Give students 45 seconds to name both types and the question before you reveal. The scheduler follows a rule someone wrote: book the first open slot. The radiology program studied thousands of labeled images, so its behavior was learned. Push on the scheduler: by the judgment test it replaces no judgment, so this book calls it not AI. Students who call it rule-based AI should defend that with the test.&#10;&#10;Time: 12-15 minutes.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 1.1</div>
+        <h2 class="check-title">Two hospital programs. Which type is each?</h2>
+        <div class="prompt">
+          <p class="verbatim">A hospital’s scheduling program books the first open slot for every request. A radiology program flags X-rays that look like fractures after studying thousands of labeled images. Name the type of each, and name the one question that tells them apart.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The scheduler is a <strong>rule-based system</strong>. It replaces no judgment, so by this book’s test it is not AI. The radiology program is <strong>machine learning</strong>: it learned from labeled images. The question that tells them apart: where does the behavior come from?</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the chapter's three-step spam filter diagram. Read across each row, then down each column. Step 1, where the judgment comes from: a person writes a rule, the model studies millions of labeled messages, or a chat assistant reads the message and explains why. Step 2, a new scam: a new rule or it gets through, new labeled examples, or the assistant may catch it or be fooled. Step 3, the check: read the rule, look at the score and examples, verify every claim. Each step down, the human does less work up front and more work checking. That trade runs through the whole course.&#10;&#10;Time: 15-18 minutes.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content">
+        <div class="eyebrow">One job, built three ways</div>
+        <h2 class="wide-title">Each step down, the human does less work up front and more work checking.</h2>
+        <div class="spam-grid" role="img" aria-label="A three by three grid for a spam filter. Rows are rule-based, machine learning, and generative AI. Column one, where the judgment comes from: a person writes IF subject contains ACCOUNT SUSPENDED THEN Junk. The model studies millions of labeled messages, then scores new ones. A chat assistant reads the message and writes out why it looks like a scam. Column two, when a new scam appears: someone writes a new rule, or the scam gets through. The model needs new labeled examples, then it adapts. The assistant may catch it from the language, or may be fooled by it. Column three, how you check: read the rule that fired. Look at the score and the examples the message resembled. Read the explanation, then verify every claim in it. A side arrow shows work moving from up front to checking as you go down.">
+          <span class="sg-head sg-corner"></span>
+          <span class="sg-head">Step 1: where the judgment comes from</span>
+          <span class="sg-head">Step 2: a new kind of scam appears</span>
+          <span class="sg-head">Step 3: how you check the decision</span>
+          <span class="type-tag rules">Rule-based</span>
+          <span data-step="Step 1" class="sg-cell rules verbatim">a person writes: IF subject contains "ACCOUNT SUSPENDED" THEN Junk</span>
+          <span data-step="Step 2" class="sg-cell rules verbatim">someone writes a new rule, or the scam gets through</span>
+          <span data-step="Step 3" class="sg-cell rules verbatim">read the rule that fired</span>
+          <span class="type-tag learned">Machine learning</span>
+          <span data-step="Step 1" class="sg-cell learned verbatim">the model studies millions of labeled messages, then scores new ones</span>
+          <span data-step="Step 2" class="sg-cell learned verbatim">the model needs new labeled examples, then it adapts</span>
+          <span data-step="Step 3" class="sg-cell learned verbatim">look at the score and the examples the message resembled</span>
+          <span class="type-tag generated">Generative AI</span>
+          <span data-step="Step 1" class="sg-cell generated verbatim">a chat assistant reads the message and writes out why it looks like a scam</span>
+          <span data-step="Step 2" class="sg-cell generated verbatim">the assistant may catch it from the language, or may be fooled by it</span>
+          <span data-step="Step 3" class="sg-cell generated verbatim">read the explanation, then verify every claim in it</span>
+        </div>
+        <p class="work-scale"><span>More work up front</span><span>More work checking</span></p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Narrow AI is built for one job or a cluster of related jobs. The photo app that finds your dog cannot sort your mail. A chat assistant covers many topics, and a multimodal one handles images and audio too, so it can look general. It is not. Artificial general intelligence is the hypothetical system that could do any task it was handed, and no system meets that bar today. Give students the habit: when a product claims to be general or intelligent, ask what task it was built for and what it cannot do.&#10;&#10;Time: 18-20 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 1.1</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Narrow and general</div>
+          <h2>Every tool you can use today is narrow.</h2>
+          <p>A chat assistant covers many topics. It still cannot reliably:</p>
+          <ul class="locked-list">
+            <li>plan a long task on its own</li>
+            <li>check its own facts</li>
+            <li>learn a job it was never trained for</li>
+          </ul>
+          <p class="field-note">The photo app that finds your dog cannot sort your mail.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/narrow-toolbox.png" alt="A wide open toolbox with many drawers, each holding a different tool such as a brush, a magnifier, a camera, and a wrench. Three center drawers are shut with gold padlocks, and a small figure reaches up toward them."><figcaption>Many topics is not the same as general.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the timeline left to right, one lane per era, each in its type color. Rules era, 1950s into the 1990s: Turing's imitation game in 1950, the Dartmouth workshop in 1956, ELIZA's scripted conversations in 1966, and Deep Blue in 1997. Learning era, 2000s onward, accelerating in 2012 when AlexNet won ImageNet by a wide margin, then AlphaGo in 2016. Generating era: the transformer in 2017, and chat assistants reached the public in November 2022. Point to the two winters in the rules lane. The eras overlap, and none retires the one before it. Payroll still runs on rules.&#10;&#10;Time: 20-24 minutes.">
+      <div class="brand">CIS137 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">Milestones</div>
+        <h2 class="wide-title">Three eras, one question: where did the behavior come from?</h2>
+        <div class="timeline" role="img" aria-label="A timeline from 1950 to today in three lanes, read left to right. Rules era lane, 1950s into the 1990s: 1950 Turing test, 1956 Dartmouth workshop, 1966 ELIZA, a first AI winter in the 1970s, a second around 1990, then 1997 Deep Blue. Learning era lane, 2000s onward: 2012 AlexNet, 2016 AlphaGo. Generating era lane, 2017 onward: 2017 transformer, 2022 chat assistants become everyday tools.">
+          <div class="lane rules">
+            <span class="lane-name">Rules era</span>
+            <div class="lane-track">
+              <span class="band" style="--from: 0; --to: 50"></span>
+              <span class="event" style="--at: 0"><b>1950</b> Turing test</span>
+              <span class="event below" style="--at: 6"><b>1956</b> Dartmouth</span>
+              <span class="event" style="--at: 16"><b>1966</b> ELIZA</span>
+              <span class="winter" style="--from: 23; --to: 29"><b>1970s winter</b></span>
+              <span class="winter" style="--from: 37; --to: 42"><b>c. 1990 winter</b></span>
+              <span class="event" style="--at: 47"><b>1997</b> Deep Blue</span>
+            </div>
+          </div>
+          <div class="lane learned">
+            <span class="lane-name">Learning era</span>
+            <div class="lane-track">
+              <span class="band" style="--from: 50; --to: 76"></span>
+              <span class="event" style="--at: 62"><b>2012</b> AlexNet</span>
+              <span class="event below" style="--at: 66"><b>2016</b> AlphaGo</span>
+            </div>
+          </div>
+          <div class="lane generated">
+            <span class="lane-name">Generating era</span>
+            <div class="lane-track">
+              <span class="band" style="--from: 67; --to: 76"></span>
+              <span class="event end" style="--at: 67"><b>2017</b> Transformer</span>
+              <span class="event below end" style="--at: 72"><b>2022</b> Chat assistants go public</span>
+            </div>
+          </div>
+          <div class="axis"><span style="--at: 0">1950</span><span style="--at: 20">1970</span><span style="--at: 40">1990</span><span style="--at: 60">2010</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Twice, in the 1970s and again around 1990, funding and interest collapsed in an AI winter. Walk the loop with the 1980s expert systems as the case. A breakthrough: expert systems encode specialist knowledge as if-then rules and sell widely. Promises: human-level intelligence was close. Results lag: they cost a fortune to maintain and failed as soon as a case fell outside the rules. Money leaves: companies stopped buying them, and the market collapsed by the early 1990s. The pattern is a reading tool. When you see a claim about next year, ask which era's evidence it rests on and what happened the last time. Chapter 9 weighs whether today's era will see a winter.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS137 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow">AI winters</div>
+        <h2>Twice the promises outran the results.</h2>
+        <ol class="winter-loop" role="img" aria-label="A four-beat loop traced with 1980s expert systems. One, breakthrough: specialist knowledge encoded as if-then rules sells widely. Two, promises: human-level intelligence is close. Three, results lag: costly to maintain, failing outside the rules. Four, money leaves: companies stop buying, and the market collapses by the early 1990s. An arrow returns to the start.">
+          <li><strong>Breakthrough</strong><span>Expert systems encode specialist knowledge as if-then rules and sell widely.</span></li>
+          <li><strong>Promises</strong><span>Human-level intelligence is said to be close.</span></li>
+          <li><strong>Results lag</strong><span>They cost a fortune to maintain and fail outside the rules.</span></li>
+          <li><strong>Money leaves</strong><span>Companies stop buying. The market collapses by the early 1990s.</span></li>
+        </ol>
+        <p class="lede">Reading a claim about next year? Ask which era’s evidence it rests on.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 1.2, question 2. Ask students to commit in one sentence before the reveal. The trap is the word stunned: an impressive result is not the same as learning. Deep Blue searched about 200 million positions per second, using scoring rules a team programmed. That is brute search and programmed judgment. Learning ideas existed then, but they did not win until data and hardware caught up.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS137 · 1.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 1.2</div>
+        <h2 class="check-title">It stunned the world. Was it learning?</h2>
+        <div class="prompt">
+          <p class="verbatim">Deep Blue beat the world chess champion in 1997. Explain why it still belongs to the rules era even though the result stunned the world.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Deep Blue searched about <strong>200 million positions per second</strong> with scoring rules a team programmed. Its strength came from brute search and programmed judgment, not from learning.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The generating era put AI into five kinds of tools. Point to each surface. A chat assistant drafts, summarizes, explains, and answers, and it is the main tool of this course. An image generator makes a picture from a text prompt. A research tool answers with citations you can open and check, and Chapter 3 teaches it. AI inside the apps you already use is just there: keyboard autocomplete, meeting summaries, photo cleanup. Specialized tools write code, clone voices, or make video, and this course names them without teaching them. Most chat assistants are multimodal today, so the kinds blur in practice while the jobs stay distinct.&#10;&#10;Time: 28-31 minutes.">
+      <div class="brand">CIS137 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">The tool landscape</div>
+        <h2 class="wide-title">Five kinds of tools. The names change. The jobs do not.</h2>
+        <div class="tool-row">
+          <figure class="tool">
+            <div class="surface s-chat" aria-hidden="true"><i class="b-user"></i><i class="b-bot"></i><i class="b-bot short"></i></div>
+            <figcaption><strong>Chat assistant</strong>Drafts, summarizes, explains, answers.</figcaption>
+          </figure>
+          <figure class="tool">
+            <div class="surface s-image" aria-hidden="true"><span class="canvas-art"></span><span class="prompt-bar"></span></div>
+            <figcaption><strong>Image generator</strong>A picture from a text prompt.</figcaption>
+          </figure>
+          <figure class="tool">
+            <div class="surface s-research" aria-hidden="true"><i></i><i></i><i class="short"></i><span class="cite">1</span><span class="cite">2</span></div>
+            <figcaption><strong>Research tool</strong>Answers with citations you can open.</figcaption>
+          </figure>
+          <figure class="tool">
+            <div class="surface s-app" aria-hidden="true"><i></i><i class="short"></i><span class="suggest">Suggested</span></div>
+            <figcaption><strong>AI inside your apps</strong>Autocomplete, summaries, photo edits.</figcaption>
+          </figure>
+          <figure class="tool">
+            <div class="surface s-special" aria-hidden="true"><span>&lt;/&gt;</span><span class="wave"></span><span class="play"></span></div>
+            <figcaption><strong>Specialized tools</strong>Code, voices, video.</figcaption>
+          </figure>
+        </div>
+        <p class="field-note">Most chat assistants are multimodal today, so the kinds blur. The jobs stay distinct.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Most tools offer a free tier with limits: a cap on messages per day, a smaller or slower model, fewer features. This course needs only free tiers. Then the less obvious meaning of free. Read the dated sentence aloud. As of October 2026, many vendors' policies allow conversations to be used to train future models unless you turn that setting off, and some allow people at the vendor to review them. Walk the flow left to right. Chapter 8 teaches reading a policy itself. Until then, one rule covers you, which is the next slide.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS137 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow">What free means</div>
+        <h2>Free is not the same as private.</h2>
+        <div class="free-split">
+          <div class="meter-card">
+            <span class="meter-title">Free tier</span>
+            <div class="meter" role="img" aria-label="A message meter nearly full, with a cap marker at the end."><span class="fill"></span><span class="cap">cap</span></div>
+            <ul>
+              <li>a cap on messages per day</li>
+              <li>a smaller or slower model</li>
+              <li>fewer features</li>
+            </ul>
+          </div>
+          <ol class="data-flow" role="img" aria-label="What can happen to a prompt, left to right: your prompt is stored, may be reviewed by people at the vendor, and may become training data for the next model.">
+            <li class="you">Your prompt</li>
+            <li>Stored</li>
+            <li>May be reviewed</li>
+            <li class="last">May become training data</li>
+          </ol>
+        </div>
+        <p class="dated">As of October 2026, many vendors’ policies allow your conversations to be used to train future models unless you turn that setting off.</p>
+      </div>
+    </section>
+
+    <section class="slide pinboard" data-notes="The one rule before you type. Never enter a password, a student ID, or a Social Security number. Never enter personal information about you or anyone else: address, health, finances, phone number. Never enter a classmate's work or an employer's confidential data. The rule is strict on purpose, because the tool may store what you type, people may review it, and it may become training data. Later chapters refine the rule with a vendor's own policy in hand. Chapter 1 asks for no exceptions.&#10;&#10;Time: 33-35 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 1.3</div>
+      <div class="content visual-split reverse">
+        <figure class="visual-art print-frame"><img src="assets/bulletin-board.png" alt="A school hallway with a cork bulletin board on the wall. One blank note card is pinned at the center with a gold pushpin, and two students with backpacks walk past and look at it."><figcaption>Treat every prompt as a note on a public board.</figcaption></figure>
+        <div class="stack">
+          <div class="eyebrow">The one rule</div>
+          <h2 class="rule-title">If you would not post it on a public bulletin board, do not type it into an AI tool.</h2>
+          <ul class="never-list" aria-label="Never type these">
+            <li>a password</li>
+            <li>a student ID</li>
+            <li>a Social Security number</li>
+            <li>your address, health, finances, phone number</li>
+            <li>anyone else’s personal information</li>
+            <li>a classmate’s work</li>
+            <li>an employer’s confidential data</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 1.3, question 3. Pairs get one minute. The customer's email is personal information about someone else, and it may hold employer data too, so it fails the bulletin board test as written. Good answers either strip what identifies the customer and the account before anything goes in, check that the employer allows the tool, or skip the paste and draft from a summary the student writes. Ask which option they would defend to the customer.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 1.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 1.3</div>
+        <h2 class="check-title">Your manager says: paste it in.</h2>
+        <div class="prompt">
+          <p class="verbatim">Your manager asks you to paste a customer’s email into a chat assistant to draft a reply. Using the rule, say what you would do instead, or what you would have to remove and confirm before you did it.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The email is another person’s information, so it fails the bulletin board test. Remove the customer’s name, contact details, and account facts first, and confirm your employer allows the tool. Or skip the paste and draft from a summary you write yourself.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Your first prompt should ask for something you can check. Read the three gold tags, which are the decisions behind each line. Step 1 says who you are, so the model picks the right level. Step 2 names one task with a size and an audience, so you can tell whether it did it. Step 3 asks for a check, so the conversation has a next turn. Send the prompt without the Step lines. They are for you, not the model. Account steps live in the chapter: pick a roster tool, sign up with the syllabus email, answer age questions truthfully, and decline training use for now.&#10;&#10;Time: 37-40 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Your first conversation</div>
+        <h2 class="wide-title">Your first prompt asks for something you can check.</h2>
+        <figure class="chat first-prompt">
+          <div class="chat-bar">Chat assistant</div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <span class="step">Step 1: say who you are</span>
+                <p class="verbatim">I am a student in my first course about artificial intelligence.</p>
+                <span class="step">Step 2: one task, a size, an audience</span>
+                <p class="verbatim">Explain what a chat assistant is in four short sentences a new student can follow.</p>
+                <span class="step">Step 3: ask for a check</span>
+                <p class="verbatim">Then ask me one question to check whether I understood.</p>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="field-note">Send it without the Step tags. They are for you, not the model.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="This is the habit the whole course runs on. Run the three passes on the sample out loud. Pass 1, did it do what I asked: count four sentences, and the check question is there. Pass 2, is each claim true: a program you talk to, powered by a large language model trained on huge amounts of text, predicting a reply one piece at a time, all consistent with Section 1.1. Pass 3, what did it add: the warning in sentence four. Nobody asked whether the assistant could be wrong. It happens to be true, but generated text often adds things, and not all of them will be true. Chapter 2 is about that sentence. Under a minute, every response, for the rest of the book.&#10;&#10;Time: 40-43 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Read like a practitioner</div>
+        <h2 class="wide-title">Read every response in three passes.</h2>
+        <div class="reading">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">A chat assistant is a computer program that you talk to using everyday language, typing or speaking much as you would with a person. It is usually powered by a large language model, which is an AI system trained on huge amounts of text to learn patterns in how language works. When you send a message, it predicts and builds a helpful reply one piece at a time, based on your words and the conversation so far. It can answer questions, explain ideas, and help with writing, but it can also make mistakes, <span class="mark add" data-label="added">so its answers should be checked.</span></p><p class="verbatim"><strong>Check question:</strong> In your own words, why is it a good idea to double-check a chat assistant's answers?</p></div>
+            </div>
+          </figure>
+          <ol class="passes">
+            <li><strong>Did it do what I asked?</strong><span>Four sentences. The check question is there.</span></li>
+            <li><strong>Is each claim true?</strong><span>All four match Section 1.1.</span></li>
+            <li><strong>What did it add?</strong><span>A warning you never asked for. True this time.</span></li>
+          </ol>
+        </div>
+        <p class="field-note">Under a minute. Every response, for the rest of this book.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The spam filter question from Section 1.1, sent again on the same day. Same verdict, different words. Run the passes on run 2. Did it do what was asked: three sentences, yes. Is each claim true: improve over time holds only if someone retrains the model with more data. What did it add: a technique name students have not met, Naive Bayes, and a point about fixed-rule filters that matches the judgment test. It also dropped run 1's point about narrow AI. Two runs of one prompt never match word for word. That is why every sample is labeled, and why the log records what you got.&#10;&#10;Time: 43-45 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Same question, asked again</div>
+        <h2 class="wide-title">Two runs never match word for word.</h2>
+        <p class="asked verbatim"><span class="who">You, twice:</span> Is a spam filter artificial intelligence? Answer in three sentences.</p>
+        <div class="before-after runs">
+          <figure class="chat">
+            <div class="chat-bar">Run 1 <span class="answer-chip">Yes</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><p class="verbatim">Yes, a spam filter is a form of artificial intelligence, specifically a narrow application of machine learning. It learns patterns from examples of spam and legitimate email, such as suspicious words, sender behavior, and link characteristics, and then uses those patterns to classify new messages. While it isn't "intelligent" in a human-like or general sense, it fits the standard definition of AI because it performs a task that normally requires human judgment by learning from data.</p></div>
+            </div>
+          </figure>
+          <figure class="chat">
+            <div class="chat-bar">Run 2 <span class="answer-chip">Yes</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><p class="verbatim">Yes, a spam filter is a form of artificial intelligence, because it automatically makes decisions that would otherwise require human judgment, such as deciding whether an email is junk. Modern spam filters typically use machine learning, like <span class="mark add" data-label="added">Naive Bayes</span> classifiers or neural networks, to learn from examples of spam and legitimate messages and <span class="mark hedge" data-label="only if retrained">improve over time.</span> Simpler filters that only follow fixed rules (such as blocking specific keywords) are less clearly "AI," but they are still often grouped under the broader umbrella of AI applications.</p></div>
+            </div>
+          </figure>
+        </div>
+        <p class="field-note">Samples, October 2026. The log records what you got, not what the book got.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A prompt log is a plain text or Markdown file. Each entry holds the prompt, the tool, the date, the response, and your notes. Show the format from the chapter. Then land the rule: copy the prompt and the response exactly as they appeared. Do not fix the tool's wording and do not paraphrase. The log is evidence, and evidence you edited is no longer evidence. Every Skills Lab in the book is built from entries like this one. Ask students to start the file tonight with today's first prompt.&#10;&#10;Time: 45-47 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content log-split">
+        <div class="stack">
+          <div class="eyebrow">Your prompt log</div>
+          <h2>Evidence you edited is no longer evidence.</h2>
+          <ul class="checklist">
+            <li>Copy the prompt and the response exactly.</li>
+            <li>Do not fix the wording.</li>
+            <li>Record the tool and the date.</li>
+          </ul>
+        </div>
+        <figure class="artifact-card log-card">
+          <span class="card-tab">Prompt log</span>
+          <dl class="card-fields">
+            <dt>Entry</dt><dd class="verbatim">Prompt 1 (chat assistant, [date])</dd>
+            <dt>Prompt</dt><dd class="verbatim">I am a student in my first course about artificial intelligence. [...]</dd>
+            <dt>Response</dt><dd class="verbatim">A chat assistant is a computer program that you talk to [...]</dd>
+            <dt>Notes</dt><dd class="verbatim">Did what I asked. Four sentences and a question. Sentence four is the one to remember.</dd>
+          </dl>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 1.1. A classmate wanted a quick overview for a five-minute study group. Symptom: the one-line prompt returned 555 words under eight headings, formatted as a page, ending with an offer to write more. Every date matched the chapter's table, and it was still useless. Diagnose before you change a word: what did the prompt leave out? How much, for whom, and in what shape. Repair: five milestones, one per line, year first, for a student who has never studied AI, stop after five lines. Verify: five lines, all five years match. Then name the cost. The AI winters and the transformer paper are gone, because the tool chose which five. Chapter 4 turns this repair into a method.&#10;&#10;Time: 47-49 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 1.1</div>
+        <h2 class="wide-title">A constraint trades coverage for usability. You choose the trade.</h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Before</span>
+            <p class="fix-prompt verbatim">Tell me about the history of AI.</p>
+            <div class="doc-silhouette" role="img" aria-label="The response as a tall formatted page: a title, eight section headings with bullet lists, 555 words, ending with an offer to write more.">
+              <i class="t"></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i>
+            </div>
+            <p class="fix-stat"><b>555 words</b> · 8 headings · offered to write more</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">After</span>
+            <p class="fix-prompt verbatim">List five milestones in the history of artificial intelligence, one per line, with the year first. Write for a community college student who has never studied AI. Stop after five lines.</p>
+            <ol class="five-lines verbatim">
+              <li><b>1950:</b> Alan Turing proposed the "Turing Test," [...]</li>
+              <li><b>1956:</b> The term "artificial intelligence" was coined at a summer workshop at Dartmouth College, [...]</li>
+              <li><b>1997:</b> [...] Deep Blue computer beat world chess champion Garry Kasparov, [...]</li>
+              <li><b>2012:</b> A neural network called AlexNet won a major image-recognition contest by a huge margin, [...]</li>
+              <li><b>2022:</b> [...] was released to the public, [...]</li>
+            </ol>
+            <p class="fix-stat"><b>5 lines</b> · every year matches the table</p>
+          </div>
+        </div>
+        <p class="cost-line"><b>The cost:</b> the AI winters and the transformer paper are gone. You asked for five, and the tool chose which five.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Meet Copperwind IT Services, a fictional managed IT services provider in Phoenix. About 30 employees, two support teams called Deskside and Network Ops, roughly 40 client companies across the Valley. Copperwind is deciding how to use generative AI across its teams, and it has hired each student as its AI adoption assistant. Mei Lin leads the effort, and her first brief ships in the course data pack for Skills Lab 1A. Students return to Copperwind in every chapter, and each chapter supplies everything it needs.&#10;&#10;Time: 49-51 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Meet Copperwind</div>
+          <h2>Copperwind hired you to make these calls.</h2>
+          <dl class="fact-key">
+            <dt>Who</dt><dd>A fictional managed IT services provider in Phoenix</dd>
+            <dt>Size</dt><dd>About 30 employees, roughly 40 client companies</dd>
+            <dt>Teams</dt><dd>Deskside and Network Ops</dd>
+            <dt>Lead</dt><dd>Mei Lin leads the generative AI effort</dd>
+            <dt>You</dt><dd>The AI adoption assistant</dd>
+          </dl>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/copperwind-office.png" alt="A small IT services office. One group of desks has staff with laptops and headsets, another sits beside network equipment racks, one person works at a standing desk, and a wide window shows desert mountains at dusk."><figcaption>You return to Copperwind in every chapter.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Try It Yourself 1.5 as a prediction. Read the prompt aloud and stress its last sentence. Ask for a show of hands: will a four-sentence note add anything? Then reveal. The sample kept four sentences and still added things nobody supplied, plus a subject line and a greeting. Obeying the shape is not the same as obeying the facts. Mei Lin would send this note to thirty people, so every added phrase is now her claim.&#10;&#10;Time: 51-53 minutes.">
+      <div class="brand">CIS137 · 1.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict first · Try It Yourself 1.5</div>
+        <h2 class="check-title">Four sentences, no new facts. Will it add anything?</h2>
+        <div class="prompt">
+          <p class="verbatim">Copperwind IT Services is a managed IT services company in Phoenix with about 30 employees and two support teams, Deskside and Network Ops. Mei Lin is leading a pilot to see how the teams could use generative AI. Write a four-sentence note from Mei Lin to all staff announcing the pilot. Do not add any facts that are not in this message.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Yes. The sample kept four sentences and still added <span class="verbatim">“I'm excited,” “I'd welcome your questions and ideas from across the company,”</span> and <span class="verbatim">“Thank you in advance,”</span> plus a subject line. Obeying the shape is not the same as obeying the facts.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 1A. Part 1: classify the 12 systems in everyday-systems.txt, applying the judgment test to any rule-based candidate. Part 2: connect four milestones, at least one per era, to tools in use today, list five apps with AI features, and paste the Try It Yourself 1.4 prompt and response with tool and date. Part 3: sort Copperwind's 8 systems for Mei Lin, recommend a first pilot, and write and log a staff-note prompt. Exit ticket on paper or in the discussion: the three types and where each one's behavior comes from, then the one rule. That resolves the opening question. Chapter 2 opens the box: what a model does with your words, why it forgets, why it invents.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS137 · Lab 1A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 1A</div>
+        <h2 class="wide-title">Map the AI around you.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Classify 12 everyday systems</strong><span>By type, with the judgment test.</span></li>
+          <li><span class="part">Part 2</span><strong>Connect milestones and log a conversation</strong><span>Four milestones to tools you use. Paste your first logged exchange.</span></li>
+          <li><span class="part">Part 3</span><strong>Sort Copperwind’s 8 systems</strong><span>Recommend a first pilot to Mei Lin. Log your staff-note prompt.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Name the three types and where each one’s behavior comes from. Then state the one rule.</p>
+        </div>
+        <p class="ahead">Next: Chapter 2 opens the box. What a model does with your words, why it forgets, why it invents.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
