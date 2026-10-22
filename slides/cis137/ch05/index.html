@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 5 classroom presentation: Strategies That Make Prompts Work.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Crect x='10' y='22' width='44' height='20' rx='10' fill='none' stroke='%23FFC845' stroke-width='4'/%3E%3Ccircle cx='43' cy='32' r='6' fill='%23FFC845'/%3E%3C/svg%3E">
+  <title>CIS137: Strategies That Make Prompts Work</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Strategies That Make Prompts Work" data-course="cis137"
+  data-chapter="ch05" data-palette="golden-hour">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter’s two failures. A two-person landscaping crew in Mesa asked a chat assistant for a fall post and got a list of services the crew may not offer. A veterinary clinic asked one to answer a client’s text and got a confident yes that nobody at the clinic approved. Neither prompt had a typo. Ask the lede and take two answers. Promise the payoff: nine named strategies to fill a prompt with care, and two checklists that prove whether a change helped.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-tune-up-bench.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 5 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Strategies That Make Prompts Work</h1>
+        <p class="lede">The prompt had no typo. So why did the post list services the crew never offered?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as the work of today. 5.1 is applying named strategies and recording them in the prompt card’s Strategies used field. 5.2 is examining a weak prompt with the checklist and repairing it one change at a time. 5.3 is judging output against the Output Checklist and saying which strategy caused the difference between two runs. The chapter serves CLO 3 (demonstrate effective prompting strategies) and CLO 1 (evaluate AI responses for accuracy). It builds on Chapter 4’s five parts: Role, Task, Context, Format, Constraints.&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 5</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Apply, examine, judge.</h2>
+        <ol class="targets">
+          <li class="on"><span class="toggle" aria-hidden="true"></span><span class="t-verb"><span>5.1</span><strong>Apply</strong></span><p>named strategies from the Prompt Strategy Checklist to raise the quality of a prompt’s output, and record them in the prompt card’s Strategies used field</p></li>
+          <li class="on"><span class="toggle" aria-hidden="true"></span><span class="t-verb"><span>5.2</span><strong>Examine</strong></span><p>a weak prompt with the Prompt Strategy Checklist to find the missing strategy behind its worst failure, and repair it one change at a time</p></li>
+          <li class="on"><span class="toggle" aria-hidden="true"></span><span class="t-verb"><span>5.3</span><strong>Judge</strong></span><p>an output against the Output Checklist, and justify which strategy caused the difference between two runs</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Chapter 2 explained why this happens. A model fills every gap with likely text, and likely is not the same as true. The crew never said which services it offers, so the model drew the typical fall menu. The clinic never said what it approves, so the model answered yes. Point at the rolled blueprint on the floor: the plans existed, nobody handed them over. Today’s strategies are ways to hand over the plans, and the checklists are how you prove you did.&#10;&#10;Time: 4-6 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Chapter 5</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Two prompts, no typos</div>
+          <h2>A model that guesses writes the likely thing.</h2>
+          <ul class="hook-list">
+            <li><b>Landscaping crew, Mesa</b>A fall post listing services the crew may not offer.</li>
+            <li><b>Veterinary clinic</b>A confident yes that nobody at the clinic approved.</li>
+          </ul>
+          <p class="field-note">Nine strategies fill the gaps. Two checklists prove the fix.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/guessing-house.png" alt="A person at an easel confidently paints a large house with extra wings, a tower, and doors that open onto empty air. A rolled blueprint tied with a ribbon lies unopened on the floor beside them."><figcaption>Leave a gap and the model fills it with the likely answer.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A strategy is a named move you add to a prompt to raise the quality of what comes back, and each one has a test you can run before you send. Tips like be clear are not strategies, because you cannot check a prompt against them. Walk the board in order, one through nine. Each switch strengthens one of Chapter 4’s five parts, printed under its name. Then the key habit: you will not flip all nine on every prompt. A two-line reminder text needs none of the reasoning strategies. Run down the board, mark what the prompt uses and what it lacks, and add only what the job needs. The packet file prompt-strategy-checklist.md holds the same table with the tests.&#10;&#10;Time: 6-9 minutes.">
+      <div class="brand">CIS137 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow">The Prompt Strategy Checklist</div>
+        <h2 class="wide-title">A strategy is a move with a test you can run.</h2>
+        <ol class="board" aria-label="The Prompt Strategy Checklist, nine strategies in order, each with the prompt part it strengthens">
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">1</span><span class="sw-name">Specificity and context</span><span class="sw-part">Context</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">2</span><span class="sw-name">Examples (few-shot)</span><span class="sw-part">Format</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">3</span><span class="sw-name">Output structure</span><span class="sw-part">Format</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">4</span><span class="sw-name">Step-by-step reasoning request</span><span class="sw-part">Task</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">5</span><span class="sw-name">Decomposition</span><span class="sw-part">Task</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">6</span><span class="sw-name">Persona and audience framing</span><span class="sw-part">Role, Context</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">7</span><span class="sw-name">Grounding (supply the source, answer only from it)</span><span class="sw-part">Context, Constraints</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">8</span><span class="sw-name">Clarifying questions first</span><span class="sw-part">Task</span></li>
+          <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">9</span><span class="sw-name">Negative constraints and guardrails</span><span class="sw-part">Constraints</span></li>
+        </ol>
+        <div class="board-foot">
+          <p><strong>Not a strategy:</strong> “be clear.” You cannot test a prompt against it.</p>
+          <p class="field-note">Mark what the prompt uses. Add only what the job needs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 1 carries the most weight: the more the model knows, the less it invents. Left column, run 1, the one-line prompt. The sample listed six services from the typical fall menu plus a free estimate. The crew never said it offers any of them, and every item is a claim a homeowner would believe. Middle, the one change: the crew’s four facts, added and nothing else. Right column, run 2. The invented services and the free estimate are gone, and every service and date traces to the facts. Then the catch: the post runs about 80 words with emojis, and it adds a claim nobody supplied, so you’re not overwatering and wasting money. Facts fix what a post says, not its size, its voice, or what else it adds.&#10;&#10;Time: 9-12 minutes.">
+      <div class="brand">CIS137 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 1 · Specificity and context</div>
+        <h2 class="wide-title">The more the model knows, the less it invents.</h2>
+        <div class="snap">
+          <div class="run">
+            <div class="run-head">Run 1 · one line <span class="sample-tag">Sample, Oct 2026</span></div>
+            <p class="run-prompt verbatim">Write a social media post for our landscaping company about our fall services.</p>
+            <ul class="claims" aria-label="What run 1 claimed, all struck through">
+              <li class="dropped"><span class="verbatim">Leaf Removal &amp; Cleanup</span></li>
+              <li class="dropped"><span class="verbatim">Aeration &amp; Overseeding</span></li>
+              <li class="dropped"><span class="verbatim">Pruning &amp; Trimming</span></li>
+              <li class="dropped"><span class="verbatim">Bulb &amp; Perennial Planting</span></li>
+              <li class="dropped"><span class="verbatim">Mulching</span></li>
+              <li class="dropped"><span class="verbatim">Fall Fertilization</span></li>
+              <li class="dropped"><span class="verbatim">a free estimate</span></li>
+            </ul>
+            <span class="verdict not-in-source">Not in source: all seven</span>
+          </div>
+          <div class="plugs-col">
+            <p class="plugs-label">Plug in the crew’s facts</p>
+            <ol class="plugs">
+              <li class="verbatim">(1) fall overseeding with winter rye for Bermuda lawns, booking now for October 15 through November 15</li>
+              <li class="verbatim">(2) irrigation timer resets for cooler weather</li>
+              <li class="verbatim">(3) we are a two-person crew, so book early</li>
+              <li class="verbatim">(4) call or text 480-555-0186 to book</li>
+            </ol>
+            <p class="plugs-arrow" aria-hidden="true">→</p>
+          </div>
+          <div class="run">
+            <div class="run-head">Run 2 · plus facts <span class="sample-tag">Sample, Oct 2026</span></div>
+            <p class="run-prompt">Same line, plus the four facts. Nothing else changed.</p>
+            <ul class="claims" aria-label="What run 2 claimed">
+              <li><span class="verbatim">fall overseeding using winter rye</span><span class="verdict holds">Holds</span></li>
+              <li><span class="verbatim">October 15 through November 15</span><span class="verdict holds">Holds</span></li>
+              <li><span class="verbatim">irrigation timer resets</span><span class="verdict holds">Holds</span></li>
+              <li><span class="verbatim">so you're not overwatering and wasting money</span><span class="verdict not-in-source">Not in source</span></li>
+            </ul>
+            <p class="run-prompt">About 80 words, with emojis.</p>
+          </div>
+        </div>
+        <p class="snap-foot"><strong>Facts fix what a post says,</strong> not its size, its voice, or what else it adds.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="This is the chapter’s first flagship prompt. Read the four gold step tags, which are the decisions behind each part. Step 1 names who is asking and who will read it, strategy 6. Step 2 names the job and its size, strategy 3. Step 3 hands over every fact the model would otherwise invent, strategy 1. Step 4 forbids what you did not supply, strategy 9. Send it without the Step lines. The sample came back at 65 words by a word counter, inside the range, with every fact traceable and no prices, discounts, or services added. It still added one claim, so your yard gets just the water it needs. A guardrail stops only what it names. Now the hard question in the title: four switches flipped in one run. It cannot show which one did the work. Section 5.4 shows how to find out.&#10;&#10;Time: 12-15 minutes.">
+      <div class="brand">CIS137 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow">A fully specified prompt</div>
+        <h2 class="wide-title">Four switches at once. Which one did the work?</h2>
+        <div class="flagship">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant</div>
+            <div class="chat-body">
+              <div class="turn user">
+                <span class="who">You</span>
+                <div class="stepped">
+                  <span class="step">Step 1: say who is asking and who will read it</span>
+                  <p class="verbatim">I run a small landscaping company in Mesa, Arizona. The post is for our neighborhood social media page, which is read mostly by homeowners who already know us.</p>
+                  <span class="step">Step 2: name the job and its size</span>
+                  <p class="verbatim">Write a social media post of 60 to 80 words announcing our fall services.</p>
+                  <span class="step">Step 3: hand over every fact the model would otherwise invent</span>
+                  <p class="verbatim">Facts: (1) fall overseeding with winter rye for Bermuda lawns, booking now for October 15 through November 15, (2) irrigation timer resets for cooler weather, (3) we are a two-person crew, so book early, (4) call or text 480-555-0186 to book.</p>
+                  <span class="step">Step 4: forbid what you did not supply</span>
+                  <p class="verbatim">Do not add prices, discounts, or services that are not listed.</p>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <div class="flagship-side">
+            <ol class="board lit" aria-label="The nine strategies with this prompt’s switches. On: 1 specificity and context, 3 output structure, 6 persona and audience framing, 9 negative constraints and guardrails. Off: 2, 4, 5, 7, 8.">
+              <li class="sw on"><span class="toggle" aria-hidden="true"></span><span class="sw-num">1</span><span class="sw-name">Specificity and context</span><span class="sw-state">On</span></li>
+              <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">2</span><span class="sw-name">Examples (few-shot)</span><span class="sw-state">Off</span></li>
+              <li class="sw on"><span class="toggle" aria-hidden="true"></span><span class="sw-num">3</span><span class="sw-name">Output structure</span><span class="sw-state">On</span></li>
+              <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">4</span><span class="sw-name">Step-by-step reasoning request</span><span class="sw-state">Off</span></li>
+              <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">5</span><span class="sw-name">Decomposition</span><span class="sw-state">Off</span></li>
+              <li class="sw on"><span class="toggle" aria-hidden="true"></span><span class="sw-num">6</span><span class="sw-name">Persona and audience framing</span><span class="sw-state">On</span></li>
+              <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">7</span><span class="sw-name">Grounding</span><span class="sw-state">Off</span></li>
+              <li class="sw"><span class="toggle" aria-hidden="true"></span><span class="sw-num">8</span><span class="sw-name">Clarifying questions first</span><span class="sw-state">Off</span></li>
+              <li class="sw on"><span class="toggle" aria-hidden="true"></span><span class="sw-num">9</span><span class="sw-name">Negative constraints and guardrails</span><span class="sw-state">On</span></li>
+            </ol>
+            <div class="gauge" role="img" aria-label="Word-count gauge: the sample response ran 65 words, inside the 60 to 80 word range the prompt asked for.">
+              <p class="gauge-read"><strong>65 words</strong> in a 60 to 80 range</p>
+              <div class="gauge-track" style="--from: 25%; --to: 75%; --at: 37.5%"><span class="gauge-band"></span><span class="gauge-needle"></span></div>
+            </div>
+            <p class="added-line">Still added: <span class="verbatim">“so your yard gets just the water it needs”</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 2, examples. Some jobs need a house style that is hard to describe and easy to show. A library branch sends one-line text reminders. Left phone, no samples: it reads well, but it is 29 words with two exclamation points, it shortens the event’s name to Seed Swap, and it adds a promise the branch did not make, take new ones home. Right phone, the same request with two reminders the branch sent last month. The tool copied the order, the short day and time, the bars, and the plain ending, and it dropped the extra promise. Chapter 4 labels examples as Format, because they show the shape of the answer. Two or three samples are usually enough. Make them differ in the details you want varied and match in the shape you want kept.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 2 · Examples (few-shot)</div>
+        <h2 class="wide-title">Show the style. Two samples beat a paragraph of rules.</h2>
+        <div class="before-after fewshot">
+          <div class="fix-col">
+            <span class="ba-label">No samples</span>
+            <div class="phone">
+              <span class="phone-head">Library reminders</span>
+              <p class="sms verbatim"><span class="mark hedge" data-label="renamed">Seed Swap</span> this Thursday at 6 PM in the Community Room! Bring seeds in labeled envelopes to share and <span class="mark add" data-label="promise">take new ones home.</span> Free for all. See you there!</p>
+            </div>
+            <p class="thread-stat"><b>29 words</b> · two exclamation points · a promise nobody made</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">Two samples</span>
+            <div class="phone">
+              <span class="phone-head">Library reminders</span>
+              <p class="sms past verbatim">Tue 4pm | Teen Game Club | Room B | Free, no sign-up</p>
+              <p class="sms past verbatim">Sat 10am | Toddler Story Time | Children's area | Free, no sign-up</p>
+              <span class="sms-time">The new one, in the same style</span>
+              <p class="sms result verbatim">Thu 6pm | Seed Library Swap | Community room | Free, bring seeds in labeled envelopes</p>
+            </div>
+            <p class="thread-stat"><b>One line</b> · same order, same bars · the promise is gone</p>
+          </div>
+        </div>
+        <p class="sample-tag">Samples, October 2026. Your output will differ.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 5.1, question 2. Give students 45 seconds to decide and write one sentence of justification. Then reveal. The library result is the evidence: two samples did what a paragraph of style rules would struggle to do. Push students to name what the samples should share (the shape) and where they should differ (the details), so the model learns which parts to keep.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS137 · 5.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 5.1</div>
+        <h2 class="check-title">Describe the style, or show it?</h2>
+        <div class="prompt">
+          <p class="verbatim">A city recreation center wants its weekly class listings in one fixed style. Decide whether to describe the style in words or show two past listings, and justify your choice with the library reminder result.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Show <strong>two past listings</strong>. In the library run, two samples did what a paragraph of style rules would struggle to do. The tool copied the order, the short day and time, the bars, and the plain ending, and it dropped the extra promise.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 5.1, the build night update. Symptom: the robotics club secretary gave every fact, and the tool returned an email, with a subject line, bold markup, a greeting, and a signature block with fill-in brackets. Every fact is right. Now picture pasting it into the members’ group text. Diagnose with the class: list everything she must delete or retype, then ask which of the five parts would have told the tool where the message was going. Answer: Format, strategy 3. Repair: add a Format part and change nothing else. Verify: 24 words, under the 30-word limit, no subject, no bold, no signature, and the time, the room, and the glasses are all there. One more change the repair did not aim at: the added rule about the build area is gone, because 30 words left no room. Do not count that as proof that Format prevents additions. And a missing Format part does not always fail. A meeting-notes prompt came back as a table unasked. Check every time.&#10;&#10;Time: 19-23 minutes.">
+      <div class="brand">CIS137 · 5.2</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 5.1 · The build night update</div>
+        <h2 class="wide-title">Right content, wrong shape. Add a Format part, nothing else.</h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Before</span>
+            <p class="fix-step">Symptom: an email, bound for a group text</p>
+            <div class="email verbatim">
+              <p><span class="cut" data-label="delete">**Subject: Thursday Build Night Time Change**</span></p>
+              <p><span class="cut" data-label="delete">Hi everyone,</span></p>
+              <p>Quick update: this Thursday's build night has moved from 5:00 p.m. to <span class="cut">**</span>6:30 p.m.<span class="cut">**</span> We'll be in the same room as usual.</p>
+              <p>Please remember to bring your safety glasses, <span class="mark add" data-label="added rule">as you won't be able to work in the build area without them.</span></p>
+              <p>See you Thursday!</p>
+              <p><span class="cut" data-label="delete">[Your name] [Robotics Club]</span></p>
+            </div>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">After</span>
+            <p class="fix-step">Repair: the request, word for word, plus Format</p>
+            <p class="fix-prompt verbatim">[...] everyone should bring safety glasses. <span class="new-part">Format: one plain-text message for our club's group text, under 30 words, with no subject line and no bold or other formatting. Reply with the message only.</span></p>
+            <p class="fix-step">Verify: paste it as is</p>
+            <p class="sms result verbatim">Robotics club: Thursday's build night moved from 5 p.m. to 6:30 p.m. Same room as before. Please bring your safety glasses. See you there!</p>
+            <div class="gauge" role="img" aria-label="Word-count gauge: the repaired message ran 24 words, under the 30-word limit.">
+              <p class="gauge-read"><strong>24 words</strong> under a 30-word limit</p>
+              <div class="gauge-track" style="--from: 0%; --to: 75%; --at: 60%"><span class="gauge-band"></span><span class="gauge-needle"></span></div>
+            </div>
+          </div>
+        </div>
+        <p class="sample-tag fix-sample">Sample, Oct 2026. Your output will differ.</p>
+        <p class="field-note fix-foot">A missing Format part does not always fail. Check every time.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 4, the step-by-step reasoning request. A youth league assigns practice fields by three rules, and the coordinator asked the model to check each request against each rule, one rule at a time, each check on its own line. Request A is the trap. It starts well before 6:30, and only the end time breaks the rule. You can check that line yourself in ten seconds: 5:30 plus 75 minutes is 6:45. The B and C rows rebuild the sample’s cut lines from the rules, including the point that B ending at 6:30 and C starting at 6:30 do not overlap. Research found that asking for intermediate steps raised accuracy, 17.7 to 78.7 percent on one 2022 model’s math word problems, and the gain on today’s tools may be smaller. The benefit that matters more: lines you can verify. The limit: the steps are text the model produced, not a window into how it works.&#10;&#10;Time: 23-26 minutes.">
+      <div class="brand">CIS137 · 5.2</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 4 · Step-by-step reasoning request</div>
+        <h2 class="wide-title">Written checks give you lines you can verify.</h2>
+        <ul class="rules-key">
+          <li><b>Rule 1</b> Field 2 has no lights. End by 6:30 p.m.</li>
+          <li><b>Rule 2</b> Under age 8: 45 minutes. Older: 75.</li>
+          <li><b>Rule 3</b> One team per field at a time.</li>
+        </ul>
+        <div class="checks" role="img" aria-label="Each request checked against each rule, read row by row. Request A, U10 Hawks on Field 2 at 5:30 p.m.: rule 1 fails, because 5:30 plus 75 minutes is 6:45, past 6:30. Rule 2 passes, 75 minutes for an older team. Rule 3 passes. Result: not approvable as written. Request B, U7 Comets on Field 1 at 5:45 p.m.: rule 1 does not apply on Field 1. Rule 2 passes, 45 minutes. Rule 3 passes, B ends at 6:30 as C starts. Result: approve. Request C, U12 Rockets on Field 1 at 6:30 p.m.: rule 1 does not apply. Rule 2 passes, 75 minutes, ending at 7:45. Rule 3 passes. Result: approve.">
+          <span class="ck-head">Request</span><span class="ck-head">Rule 1</span><span class="ck-head">Rule 2</span><span class="ck-head">Rule 3</span><span class="ck-head">Result</span>
+          <span class="ck-req"><b>A · U10 Hawks</b>Field 2, 5:30 p.m.</span>
+          <span class="ck fail" data-rule="Rule 1:"><span>5:30 + 75 min = <b>6:45</b>, past 6:30</span></span>
+          <span class="ck pass" data-rule="Rule 2:"><span>75 minutes, older team</span></span>
+          <span class="ck pass" data-rule="Rule 3:"><span>No other request on Field 2</span></span>
+          <span class="ck-out no">Not approvable as written</span>
+          <span class="ck-req"><b>B · U7 Comets</b>Field 1, 5:45 p.m.</span>
+          <span class="ck na" data-rule="Rule 1:"><span>Field 1, rule does not apply</span></span>
+          <span class="ck pass" data-rule="Rule 2:"><span>45 minutes, under 8</span></span>
+          <span class="ck pass" data-rule="Rule 3:"><span>Ends 6:30 as C starts</span></span>
+          <span class="ck-out yes">Approve</span>
+          <span class="ck-req"><b>C · U12 Rockets</b>Field 1, 6:30 p.m.</span>
+          <span class="ck na" data-rule="Rule 1:"><span>Field 1, rule does not apply</span></span>
+          <span class="ck pass" data-rule="Rule 2:"><span>75 minutes, ends 7:45</span></span>
+          <span class="ck pass" data-rule="Rule 3:"><span>Starts as B ends</span></span>
+          <span class="ck-out yes">Approve</span>
+        </div>
+        <p class="sample-tag">Sample, Oct 2026. Your output will differ. Row A condensed from the sample. Rows B and C rebuilt from the rules, because the chapter cuts them.</p>
+        <p class="field-note">The steps are text the model produced, not a window into how it works.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Strategy 5, decomposition: splitting a job with several stages into separate prompts, one stage each, and checking each result before you feed it into the next. Walk the flow left to right. A volunteer coordinator has 40 survey comments. Prompt 1 groups them into themes. She checks the themes against the comments. Only then does Prompt 2 ask for a short memo from the themes she approved. One giant prompt would hide a bad theme inside a polished memo. Decomposition puts a checkpoint where the error would start.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS137 · 5.2</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 5 · Decomposition</div>
+        <h2 class="wide-title">Put a checkpoint where the error would start.</h2>
+        <ol class="stages" role="img" aria-label="Left to right: 40 survey comments go into prompt 1, which groups them into themes. A checkpoint follows, where you check the themes against the comments. Only approved themes go into prompt 2, which writes a short memo.">
+          <li class="stage"><b>Input</b><span>40 survey comments</span></li>
+          <li class="stage-arrow" aria-hidden="true">→</li>
+          <li class="stage"><b>Prompt 1</b><span>Group the comments into themes</span></li>
+          <li class="stage-arrow" aria-hidden="true">→</li>
+          <li class="stage checkpoint"><b>Check</b><span>The themes against the comments</span></li>
+          <li class="stage-arrow" aria-hidden="true">→</li>
+          <li class="stage"><b>Prompt 2</b><span>A short memo from the approved themes</span></li>
+        </ol>
+        <p class="versus"><span><b>One giant prompt</b> would hide a bad theme inside a polished memo.</span></p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 5.2, question 2. Pairs get one minute: what can you verify, and what can you not? Reveal. The written checks give you a line per rule per request, so you can test Request A in seconds. A one-line answer only gives a verdict to trust. The one thing the checks cannot prove is how the model reached its answer. The steps are text it produced, and a neat chain can still hold a wrong step, so verify each line like any other claim.&#10;&#10;Time: 28-30 minutes.">
+      <div class="brand">CIS137 · 5.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 5.2</div>
+        <h2 class="check-title">What can the written checks prove?</h2>
+        <div class="prompt">
+          <p class="verbatim">Analyze what the youth sports response's written checks let you verify that a one-line answer would not, and name the one thing the checks cannot prove.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">Each check is a line you can test in seconds: <strong>5:30 plus 75 minutes is 6:45</strong>, past the 6:30 cutoff. A one-line answer gives you only a verdict. The checks cannot prove how the model worked. They are text it produced, and a neat chain can still hold a wrong step.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 6, persona and audience framing. A persona is a Role described in enough detail, expertise, experience, and point of view, that it shapes what the model includes and how it sounds. Audience framing says who will read the result and what that reader needs. Read the response. The persona likely bought the calm voice and the plain words. The audience line likely bought the closing reassurance. This run has no persona-free version to compare, so call those likely causes, not proven ones. Every fact is there. Now read it a second time. Point to the two gold marks: won’t feel or remember anything is a medical claim the facts never made, and he’ll be in good hands is a promise. Strategy 9 handles additions like these in a few slides.&#10;&#10;Time: 30-32 minutes.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 6 · Persona and audience framing</div>
+        <h2 class="wide-title">The voice came out calm. So did two claims nobody supplied.</h2>
+        <figure class="chat persona">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user"><span class="who">You</span><p class="verbatim">You are a veterinary technician who has spent ten years calming nervous pet owners. Explain to a pet owner what will happen at her dog's first dental cleaning next week. She is anxious and has said she does not want medical jargon. Use only these facts: she drops the dog off at 8 a.m. and picks him up after 3 p.m., [...] Write four to six short sentences, spoken directly to her.</p></div>
+            <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">You'll drop him off at 8 a.m., and then our team takes it from there. During the cleaning he'll be under anesthesia, which just means he'll be asleep and <span class="mark add" data-label="medical claim">won't feel or remember anything.</span> A technician stays with him the whole time, watching his heart rate and breathing, so someone is always keeping an eye on him. You can pick him up after 3 p.m. He may be sleepy for the rest of the evening, so plan on a quiet night at home with him. It's completely normal to feel nervous, and <span class="mark add" data-label="promise">he'll be in good hands.</span></p></div>
+          </div>
+        </figure>
+        <p class="field-note">Calm voice, plain words: likely causes, not proven ones.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 7, grounding: supplying the source the answer must come from, telling the model to answer only from it, and saying what to do when the source is silent. It is the most checkable strategy for accuracy, because it turns is this true into is this in the source, and you can check that. Read the three moves. The third is the one people forget, and the next slide shows why it matters. Point at the turnstile: the book is the key, and only what matches a page gets through.&#10;&#10;Time: 32-34 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Strategy 7 · Grounding</div>
+          <h2>Is it in the source? That you can check.</h2>
+          <ol class="moves">
+            <li>Supply the source the answer must come from.</li>
+            <li>Tell the model to answer only from it.</li>
+            <li>Say what to do when the source is silent.</li>
+          </ol>
+          <p class="field-note">“Is this true?” becomes “is this in the source?”</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/grounding-turnstile.png" alt="A navy turnstile post with an open book slotted into its top like a key, a star printed on one page. A card with a matching star stands past the gate arm, and a card with a brown circle waits outside the closed arm."><figcaption>Only what is in the source gets through.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Trace the gate left to right. A client texted the front desk after her cat’s spay surgery: can my cat eat dinner tonight? The grounded prompt hands over the clinic’s after-care sheet, says answer only from it, and says what to do if the sheet is silent: say so and ask her to call 602-555-0117. Is feeding in the sheet? No. Cone, indoors, jumping, incision. So the reply takes the No exit. Compare the two replies below. Without the sheet, the tool said yes, half a portion, and a 24-hour rule. The advice may be sensible, but it is the tool’s advice sent in the clinic’s name. The grounded reply said the sheet is silent and sent her to someone who can answer. That is the right result even though it sounds less helpful. It still adds right away, a small promise check 4 will catch. And a run without the silent-source line invented a call back from a team member the clinic never offered.&#10;&#10;Time: 34-37 minutes.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow">Grounding, traced</div>
+        <h2 class="wide-title">The sheet was silent, so the reply said so.</h2>
+        <div class="gate-flow" role="img" aria-label="Left to right: the client’s question, can my cat eat dinner tonight, and the clinic’s after-care sheet go into a gate that asks: is it in the source? Two exits. Yes: answer from the sheet only. No, the exit taken here because the sheet never mentions feeding: say so and ask her to call the clinic at 602-555-0117.">
+          <div class="gate-in">
+            <p class="sms verbatim">"Can my cat eat dinner tonight?"</p>
+            <p class="sheet verbatim"><b>After-care sheet</b>Keep the cone on for 10 days. Keep your cat indoors and limit jumping for 10 days. Check the incision every day, and call us if you see redness, swelling, or discharge.</p>
+          </div>
+          <span class="gate-arrow" aria-hidden="true">→</span>
+          <div class="gate">In the source?</div>
+          <span class="gate-arrow" aria-hidden="true">→</span>
+          <ul class="exits">
+            <li class="idle"><b>Yes</b>Answer from the sheet only.</li>
+            <li class="taken"><b>No · this one</b>Say so. Ask her to call 602-555-0117.</li>
+          </ul>
+        </div>
+        <div class="replies">
+          <div class="reply">
+            <div class="reply-head">No source <span class="verdict not-in-source">Not in source</span></div>
+            <p class="verbatim">Yes, she can have a small meal tonight, about half of her normal portion of her regular food, [...]</p>
+          </div>
+          <div class="reply">
+            <div class="reply-head">Grounded <span class="sample-tag">Samples, Oct 2026</span></div>
+            <p class="verbatim">Our after-care sheet doesn't say anything about feeding after surgery, so we can't confirm whether your cat can have dinner tonight. Please call the clinic at <span class="nowrap">602-555-0117</span> and we'll get you an answer <span class="mark add" data-label="added">right away.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Strategy 8, clarifying questions first. Sometimes you do not know what the model needs until it asks. The coding club president told the tool to ask up to three questions, all at once, then stop. The trimmed sample shows questions two and three. The cut first question asked for the meeting’s day, time, and place, what members do there, and any sign-up link. All three questions point at facts only the president has. Answer them in the next message and you have built a strategy 1 prompt together. Use it when the job is new to you. Skip it when you already know the facts, because the questions cost a turn.&#10;&#10;Time: 37-38 minutes.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 8 · Clarifying questions first</div>
+        <h2 class="wide-title">Not sure what you need? Let it ask first.</h2>
+        <figure class="chat ask-first">
+          <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+          <div class="chat-body">
+            <div class="turn user"><span class="who">You</span><p class="verbatim">I am the president of a community college coding club. I need a half-page flyer to recruit new members. Before you write anything, ask me up to three questions whose answers would change the flyer the most. Ask them all at once, then stop and wait for my answers.</p></div>
+            <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim">[...] 2. <strong>Who are you trying to reach?</strong> Complete beginners with no experience, students already in CS/IT courses, or both? [...]</p><p class="verbatim">3. <strong>What's the vibe and the main hook?</strong> [...]</p><p class="verbatim">Send your answers and I'll write the flyer.</p></div>
+          </div>
+        </figure>
+        <p class="field-note">New job? Let it ask. Know the facts? Skip it. The questions cost a turn.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategy 9. A negative constraint tells the model what not to do. A guardrail is a negative constraint aimed at a specific harm you can name in advance: a price, a promise, medical or legal advice, a client’s name. Row 1 is the landscaping guardrail. It worked on what it named: no prices, discounts, or services. It still let a benefit through, so your yard gets just the water it needs, because a guardrail stops only what it names. Row 2 is the guardrail the veterinary prompt needed. Notice where it came from: the persona run showed an added medical claim and a promise, so the guardrail names both. Write guardrails from the failures you have seen.&#10;&#10;Time: 38-40 minutes.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow">Strategy 9 · Negative constraints and guardrails</div>
+        <h2 class="wide-title">A guardrail stops only what it names.</h2>
+        <div class="terms">
+          <p><b>Negative constraint:</b> tells the model what not to do.</p>
+          <p><b>Guardrail:</b> a negative constraint aimed at a harm you can name.</p>
+        </div>
+        <div class="guards">
+          <span class="g-head">The guardrail</span><span class="g-head">What it named</span><span class="g-head">What happened</span>
+          <p class="g-rail"><small>Landscaping post</small><span class="verbatim">Do not add prices, discounts, or services that are not listed.</span></p>
+          <p class="g-cell" data-col="What it named">Prices, discounts, services <span class="verdict holds">None added</span></p>
+          <p class="g-cell" data-col="What happened">A benefit got through: <span class="verbatim">“so your yard gets just the water it needs”</span> <span class="verdict not-in-source">Not in source</span></p>
+          <p class="g-rail"><small>Veterinary clinic</small><span class="verbatim">Do not add medical claims or promises beyond these facts.</span></p>
+          <p class="g-cell" data-col="What it named">Medical claims, promises</p>
+          <p class="g-cell" data-col="What happened">Written from the persona run’s two additions: <span class="verbatim">“won't feel or remember anything,” “he'll be in good hands”</span></p>
+        </div>
+        <p class="field-note">Write guardrails from the failures you have seen.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 5.3, question 2. Ask for a show of hands: send it or not? Then have each student write the one guardrail before you reveal. The sentence is a medical claim the clinic’s facts never made, and the response also promised he’ll be in good hands. The chapter’s guardrail names both harms. Accept close variants that name medical claims and promises, and push back on guardrails so broad they name nothing specific.&#10;&#10;Time: 40-42 minutes.">
+      <div class="brand">CIS137 · 5.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 5.3</div>
+        <h2 class="check-title">Could the clinic send it as written?</h2>
+        <div class="prompt">
+          <p class="verbatim">The veterinary technician response said "he won't feel or remember anything." Decide whether the clinic could send it as written, and write the one guardrail that would prevent claims like it.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Not as written.</strong> It is a medical claim the facts never made, and “he’ll be in good hands” is a promise. The guardrail: <span class="verbatim">“Do not add medical claims or promises beyond these facts.”</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Strategies are half the skill. The other half is proving a strategy helped, and for that you need one fixed test for every response, so two runs get the same test. Read the five checks in order. Each one gets Yes, Partly, or No, and the line you quoted to decide it. Then show where it came from: Chapter 1’s three passes. Checks 1 and 2 are the first pass, check 3 is the second, check 4 is the third. Check 5 is new, because a prompt that names an audience can miss it. The packet file output-checklist.md gives you the form.&#10;&#10;Time: 42-44 minutes.">
+      <div class="brand">CIS137 · 5.4</div>
+      <div class="content">
+        <div class="eyebrow">The Output Checklist</div>
+        <h2 class="wide-title">Score every response on five checks. Quote the line.</h2>
+        <div class="score-split">
+          <figure class="artifact-card scoresheet">
+            <span class="card-tab">Output Checklist</span>
+            <ol>
+              <li><div><strong>Did it do the task?</strong><span>The job, at the size the prompt asked for.</span></div><span class="boxes" aria-label="Mark Yes, Partly, or No"><i>Yes</i><i>Partly</i><i>No</i></span></li>
+              <li><div><strong>Right shape?</strong><span>The format the next step needs, ready to paste or send.</span></div><span class="boxes" aria-hidden="true"><i>Yes</i><i>Partly</i><i>No</i></span></li>
+              <li><div><strong>Every claim traceable?</strong><span>Every fact, name, or number matches your prompt or source.</span></div><span class="boxes" aria-hidden="true"><i>Yes</i><i>Partly</i><i>No</i></span></li>
+              <li><div><strong>Nothing added?</strong><span>No services, rules, promises, or details you did not supply.</span></div><span class="boxes" aria-hidden="true"><i>Yes</i><i>Partly</i><i>No</i></span></li>
+              <li><div><strong>Tone fits the audience?</strong><span>The voice suits the reader you named.</span></div><span class="boxes" aria-hidden="true"><i>Yes</i><i>Partly</i><i>No</i></span></li>
+            </ol>
+          </figure>
+          <ul class="pass-map" aria-label="Where the checks came from">
+            <li><b>Pass 1 · Did it do what I asked?</b><span>Checks 1 and 2</span></li>
+            <li><b>Pass 2 · Is each claim true?</b><span>Check 3</span></li>
+            <li><b>Pass 3 · What did it add?</b><span>Check 4</span></li>
+            <li class="new"><b>New in Chapter 5</b><span>Check 5, because a named audience can be missed</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Copperwind, the Deskside team, before it had a library. Lorena, an office manager at a client, says her front office printer shows offline again. Run 1 scores Yes on checks 1, 2, and 5: a short, friendly reply. Checks 3 and 4 fail. The causes it names trace to nothing the team wrote, and Yes, we can help today and in the next hour or two are promises no technician made. Diagnose with the strategy checklist: the gap is strategy 7, so the one change is grounding in the team’s three steps. Run 2: the steps match, the remote session moved to during business hours, check 3 passes, and check 4 is only Partly, on we’ll get you back to printing invoices soon. Grounding fixed the procedure but did not stop the promise. One more change, one guardrail sentence: all five pass. Because each run changed one thing, you can attribute each gain. Caution from Chapter 2: two runs differ by chance, so run a card more than once before the team relies on it.&#10;&#10;Time: 44-48 minutes.">
+      <div class="brand">CIS137 · 5.4</div>
+      <div class="content">
+        <div class="eyebrow">Copperwind · The repair method</div>
+        <h2 class="wide-title">One change per run, so you can say what helped.</h2>
+        <p class="ticket verbatim"><b>Ticket</b> Our front office printer says "offline" again and nobody can print invoices. We already turned it off and on. Can someone help today? - Lorena, office manager</p>
+        <div class="ladder" role="img" aria-label="Three runs left to right, one change between each, scored on the five Output Checklist checks in order. Run 1, no source: yes, yes, no, no, yes. Check 3 fails on the printer’s IP address changing or a stuck print job. Check 4 fails on yes, we can help today. Change one: add grounding, answer only from the Deskside team’s steps. Run 2, grounded: yes, yes, yes, partly, yes. Check 4 is partly on we’ll get you back to printing invoices soon. Change two: add a guardrail, do not promise a time, and do not add steps that are not in them. Run 3: all five checks pass.">
+          <div class="rung">
+            <span class="rung-name">Run 1 · no source</span>
+            <ol class="lights"><li class="y">Y</li><li class="y">Y</li><li class="n">N</li><li class="n">N</li><li class="y">Y</li></ol>
+            <span class="lights-key">Checks 1 to 5</span>
+            <p class="rung-quote"><b>Check 3 · No</b><span class="verbatim">“the printer's IP address changing or a stuck print job”</span></p>
+            <p class="rung-quote"><b>Check 4 · No</b><span class="verbatim">“Yes, we can help today.”</span></p>
+          </div>
+          <div class="change"><b>Grounding (7)</b><span class="verbatim">Answer only from the Deskside team's steps below.</span></div>
+          <div class="rung">
+            <span class="rung-name">Run 2 · grounded</span>
+            <ol class="lights"><li class="y">Y</li><li class="y">Y</li><li class="y">Y</li><li class="p">P</li><li class="y">Y</li></ol>
+            <span class="lights-key">Checks 1 to 5</span>
+            <p class="rung-quote"><b>Check 4 · Partly</b><span class="verbatim">“we'll get you back to printing invoices soon!”</span></p>
+          </div>
+          <div class="change"><b>Guardrail (9)</b><span class="verbatim">Do not promise a time, and do not add steps that are not in them.</span></div>
+          <div class="rung done">
+            <span class="rung-name">Run 3 · plus guardrail</span>
+            <ol class="lights"><li class="y">Y</li><li class="y">Y</li><li class="y">Y</li><li class="y">Y</li><li class="y">Y</li></ol>
+            <span class="lights-key">Checks 1 to 5</span>
+            <p class="rung-quote"><b>All five pass</b>The closing promise is gone.</p>
+          </div>
+        </div>
+        <p class="sample-tag">Samples, October 2026. Run a card more than once before the team relies on it.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 5.4, question 2. Give students a minute to write what the sheet can conclude and what runs they would design. Then reveal. The score rose, so the repaired prompt is better. The sheet cannot say why, because three changes landed in one run. To settle it, run one change at a time, each in a fresh conversation, and score each run. Then repeat a run, because chance alone can move a score between two runs.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS137 · 5.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 5.4</div>
+        <h2 class="check-title">Three changes, five checks. What do you know?</h2>
+        <div class="prompt">
+          <p class="verbatim">A teammate repaired a prompt by adding grounding, a word limit, and a persona at once, and the score rose from two checks to five. Analyze what the repair sheet can and cannot conclude about why, and describe the runs that would settle it.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">It can show the prompt got <strong>better</strong>, not <strong>why</strong>. Three changes in one run cannot be told apart. Settle it with one change per run, each in a fresh conversation, each scored. Then repeat a run, because two runs of one prompt differ by chance.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The evidence goes somewhere. The packet file prompt-repair-sheet.md records each repair in five fields: the weak prompt, the checklist diagnosis, the one change, the repaired prompt, and the result against the Output Checklist. One sheet block per run. Library v1 from Chapter 4 left the Strategies used field empty for this chapter. Library v2 is the same library with that field filled on every card, so a teammate can see why each prompt works. Read the printer card’s line aloud. Students who did not build v1 start from prompt-library-v1-starter.md, which holds three finished Deskside cards.&#10;&#10;Time: 50-53 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 5.4</div>
+      <div class="content visual-split">
+        <div class="stack">
+          <div class="eyebrow">Library v2</div>
+          <h2>Every card now says why it works.</h2>
+          <figure class="artifact-card v2-card">
+            <span class="card-tab">Prompt card · printer</span>
+            <dl class="card-fields">
+              <dt>Name</dt><dd>[...]</dd>
+              <dt>Job</dt><dd>[...]</dd>
+              <dt>Prompt</dt><dd>[...]</dd>
+              <dt>Example input</dt><dd>[...]</dd>
+              <dt>Good output looks like</dt><dd>[...]</dd>
+              <dt>Strategies used</dt><dd class="lit verbatim">Strategies used (Chapter 5): grounding (the Deskside printer steps, answer only from them), negative constraints and guardrails (no promised time)</dd>
+              <dt>Last run</dt><dd>[...]</dd>
+              <dt>Notes</dt><dd>[...]</dd>
+            </dl>
+          </figure>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/repaired-card-bench.png" alt="A blank index card slides off a wooden workbench with a paper tag tied to it by string. The tag shows a row of five toggle switches, three lit gold and two dark. Behind it stand a clipboard with three check marks and a round gauge with its needle in a gold band."><figcaption>A card leaves the bench with its strategies named.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 5A. Mei Lin has three weak marketing prompts for Copperwind’s small services page and a client email about its new backup service. Part 1: write a two-line privacy plan first, and decide about the one internal note in her file. Send Weak Prompt 1 as written, score it, add the one strategy for its worst failure, and score again. Part 2: diagnose Prompts 2 and 3 on all nine strategies, repair one change at a time, and stop at five passes or three changes. Then mark every claim in the backup-service email Holds, Contradicted, or Not in source. Part 3: library v2 with Strategies used on every card plus three new marketing cards, one single-strategy experiment, and a 120 to 180 word note to Mei Lin. Send each run in a fresh conversation. Exit ticket resolves the opening question. Answer: strategy 1 supplied the facts, strategy 9 forbade the rest, and check 4, nothing added, catches it. Chapter 6 turns the repair method into a loop.&#10;&#10;Time: 53-55 minutes.">
+      <div class="brand">CIS137 · Lab 5A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 5A</div>
+        <h2 class="wide-title">Repair Mei Lin’s three marketing prompts.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1</span><strong>Score and repair Weak Prompt 1</strong><span>Privacy plan first. One strategy, one change, two scores.</span></li>
+          <li><span class="part">Part 2</span><strong>Diagnose and repair Prompts 2 and 3</strong><span>Mark all nine strategies. Stop at five passes or three changes.</span></li>
+          <li><span class="part">Part 3</span><strong>Hand Mei Lin library v2</strong><span>Strategies used on every card. A note of 120 to 180 words.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> The fall post listed services the crew never offered. Name the two strategies that stopped it, and the check that catches it.</p>
+        </div>
+        <p class="ahead">Next: Chapter 6 turns the repair method into a loop, with criteria written before the first run.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
