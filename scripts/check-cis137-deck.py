@@ -37,7 +37,7 @@ VENDORS = [
     "ChatGPT", "OpenAI", "Gemini", "Google", "Copilot", "Microsoft",
     "Claude", "Anthropic", "Perplexity", "Midjourney", "DALL", "Stable "
     "Diffusion", "Grok", "Llama", "Meta AI", "Mistral", "Bing", "Siri",
-    "Alexa",
+    "Alexa", "NotebookLM", "OneDrive", "Adobe", "Firefly",
 ]
 PALETTE_DARK = {
     "phoenix-classic": "#002e5d", "midnight-gold": "#001a36",
