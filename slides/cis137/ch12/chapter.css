@@ -1,0 +1,1928 @@
+/* CIS137 Chapter 12: the marked trail
+   The chapter's rule is that a result nobody can retrace is a claim,
+   not evidence, so the room is a marked trail: painted rectangular
+   blazes on posts that a colleague can follow back from the headline
+   to the run. Background layers only: a trailhead post with two
+   stacked blazes in the top-left gutter, faint contour lines in the
+   top-right corner, and a winding dashed trail along the bottom edge.
+   The brand glyph is one blaze. Nothing is positioned, so nothing can
+   overflow the slide or trap focus. */
+
+body {
+    /* Gold is the trail: a blaze, a file or log line a colleague can
+       follow, an ASK line that marks a missing fact. Pale blue is the
+       tool's draft. Green and red stay with pass and fail. Neutral
+       grey-navy marks what nobody has answered or checked yet. */
+    --trail: var(--gold);
+    --draft: color-mix(in srgb, var(--mist) 55%, #fff);
+    --open: #5b6b7d;
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200'%3E%3Crect x='16' y='0' width='8' height='200' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='9' y='34' width='22' height='32' rx='2' fill='rgba(224,169,46,0.62)'/%3E%3Crect x='9' y='78' width='22' height='32' rx='2' fill='rgba(224,169,46,0.62)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='none' stroke='rgba(2,90,140,0.11)' stroke-width='2'%3E%3Cpath d='M200 104c32 0 58 17 58 42s-24 43-58 43-56-17-53-43 21-42 53-42z'/%3E%3Cpath d='M200 72c58 0 106 30 106 74s-44 78-106 78S86 192 94 146s48-74 106-74z'/%3E%3Cpath d='M202 40c82 0 150 42 150 106s-62 112-152 112S46 214 56 146 120 40 202 40z'/%3E%3Cpath d='M204 8c104 0 192 56 192 138s-80 148-196 148S6 236 18 146 98 8 204 8z'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 120'%3E%3Cpath d='M0 104C150 70 300 126 470 94S760 46 940 84s300 50 470 6 160-20 190-14' fill='none' stroke='rgba(2,90,140,0.26)' stroke-width='4' stroke-linecap='round' stroke-dasharray='14 12'/%3E%3Crect x='247' y='46' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='242' y='50' width='16' height='20' rx='2' fill='rgba(224,169,46,0.62)'/%3E%3Crect x='717' y='20' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='712' y='24' width='16' height='20' rx='2' fill='rgba(224,169,46,0.62)'/%3E%3Crect x='1187' y='58' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='1182' y='62' width='16' height='20' rx='2' fill='rgba(224,169,46,0.62)'/%3E%3C/svg%3E"), linear-gradient(165deg, #f4fafd, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left clamp(.6rem, 2vw, 2.4rem) top 0, right -7rem top -6rem, left bottom, 0 0;
+    background-size: clamp(1.7rem, 2.4vw, 2.9rem) auto, clamp(22rem, 34vw, 42rem) auto, 100% auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200'%3E%3Crect x='16' y='0' width='8' height='200' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='9' y='34' width='22' height='32' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='9' y='78' width='22' height='32' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='2'%3E%3Cpath d='M200 104c32 0 58 17 58 42s-24 43-58 43-56-17-53-43 21-42 53-42z'/%3E%3Cpath d='M200 72c58 0 106 30 106 74s-44 78-106 78S86 192 94 146s48-74 106-74z'/%3E%3Cpath d='M202 40c82 0 150 42 150 106s-62 112-152 112S46 214 56 146 120 40 202 40z'/%3E%3Cpath d='M204 8c104 0 192 56 192 138s-80 148-196 148S6 236 18 146 98 8 204 8z'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 120'%3E%3Cpath d='M0 104C150 70 300 126 470 94S760 46 940 84s300 50 470 6 160-20 190-14' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='4' stroke-linecap='round' stroke-dasharray='14 12'/%3E%3Crect x='247' y='46' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='242' y='50' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='717' y='20' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='712' y='24' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='1187' y='58' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='1182' y='62' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3C/svg%3E"), linear-gradient(165deg, #033a72, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200'%3E%3Crect x='16' y='0' width='8' height='200' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='9' y='34' width='22' height='32' rx='2' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='9' y='78' width='22' height='32' rx='2' fill='rgba(255,255,255,0.6)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='none' stroke='rgba(0,46,93,0.09)' stroke-width='2'%3E%3Cpath d='M200 104c32 0 58 17 58 42s-24 43-58 43-56-17-53-43 21-42 53-42z'/%3E%3Cpath d='M200 72c58 0 106 30 106 74s-44 78-106 78S86 192 94 146s48-74 106-74z'/%3E%3Cpath d='M202 40c82 0 150 42 150 106s-62 112-152 112S46 214 56 146 120 40 202 40z'/%3E%3Cpath d='M204 8c104 0 192 56 192 138s-80 148-196 148S6 236 18 146 98 8 204 8z'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 120'%3E%3Cpath d='M0 104C150 70 300 126 470 94S760 46 940 84s300 50 470 6 160-20 190-14' fill='none' stroke='rgba(0,46,93,0.22)' stroke-width='4' stroke-linecap='round' stroke-dasharray='14 12'/%3E%3Crect x='247' y='46' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='242' y='50' width='16' height='20' rx='2' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='717' y='20' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='712' y='24' width='16' height='20' rx='2' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='1187' y='58' width='6' height='46' fill='rgba(0,46,93,0.16)'/%3E%3Crect x='1182' y='62' width='16' height='20' rx='2' fill='rgba(255,255,255,0.6)'/%3E%3C/svg%3E"), linear-gradient(165deg, #ffd573, var(--gold));
+}
+
+/* The title keeps the trailhead post and the trail. The contour layer
+   would sit under the hero art and muddy the blend. */
+.slide.dark.title-slide {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200'%3E%3Crect x='16' y='0' width='8' height='200' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='9' y='34' width='22' height='32' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='9' y='78' width='22' height='32' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 120'%3E%3Cpath d='M0 104C150 70 300 126 470 94S760 46 940 84s300 50 470 6 160-20 190-14' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='4' stroke-linecap='round' stroke-dasharray='14 12'/%3E%3Crect x='247' y='46' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='242' y='50' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='717' y='20' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='712' y='24' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3Crect x='1187' y='58' width='6' height='46' fill='rgba(255,255,255,0.14)'/%3E%3Crect x='1182' y='62' width='16' height='20' rx='2' fill='rgba(255,200,69,0.55)'/%3E%3C/svg%3E");
+    background-position: left clamp(.6rem, 2vw, 2.4rem) top 0, left bottom;
+    background-size: clamp(1.7rem, 2.4vw, 2.9rem) auto, 100% auto;
+}
+
+/* One painted blaze in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: .66em;
+    height: 1em;
+    background: var(--blue);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 18'%3E%3Crect x='1' y='1' width='10' height='16' rx='1.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 18'%3E%3Crect x='1' y='1' width='10' height='16' rx='1.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.dark .brand::before {
+    background: var(--gold);
+}
+
+.slide.gold .brand::before {
+    background: var(--navy);
+}
+
+h2.wide-title,
+h2.check-title {
+    max-width: 32ch;
+    font-size: clamp(2rem, 3.3vw, 3.8rem);
+}
+
+/* Two-part titles break at the sentence or phrase seam on wide
+   screens. Phones drop the break and let the title balance itself. */
+h2.breaks {
+    max-width: 44ch;
+}
+
+.hl-label {
+    color: var(--blue);
+    font-size: .72em;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.trim {
+    font-weight: 500;
+}
+
+.nw {
+    white-space: nowrap;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.5vw, 1.4rem);
+}
+
+.lede-credit {
+    color: var(--mist);
+    font-size: clamp(.82rem, 1.1vw, 1.12rem);
+    font-weight: 700;
+    letter-spacing: .04em;
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.25rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: .7rem;
+    height: 1.1rem;
+    border-radius: .1rem;
+    background: var(--trail);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+/* Term lines: bold tinted term, then a short definition. */
+.term-line {
+    font-size: clamp(.98rem, 1.35vw, 1.45rem);
+}
+
+.term-line b {
+    margin-right: .55rem;
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.dark .term-line b {
+    color: var(--gold);
+}
+
+.side-tag,
+.facts-tag,
+.rule-tag {
+    display: inline-block;
+    justify-self: start;
+    padding: .2rem .6rem;
+    border-radius: .3rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.68rem, .9vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+.dark .side-tag,
+.dark .facts-tag {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.answer {
+    text-wrap: pretty;
+}
+
+.cap-note {
+    color: color-mix(in srgb, var(--ink) 70%, transparent);
+    font-size: clamp(.68rem, .85vw, .9rem);
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.dark .cap-note {
+    color: var(--mist);
+}
+
+/* ---------- Slide 2: targets as trail posts --------------------------- */
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.targets li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: clamp(1rem, 1.8vw, 1.7rem) clamp(1rem, 1.8vw, 1.7rem) clamp(1rem, 1.8vw, 1.7rem) clamp(3rem, 4.2vw, 4.6rem);
+    background: #fff;
+    border-radius: .3rem;
+    box-shadow: .45rem .5rem 0 rgba(0, 46, 93, .1);
+}
+
+/* The post runs the card's height and carries one blaze. */
+.targets li::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: clamp(1.15rem, 1.7vw, 1.9rem);
+    width: .45rem;
+    content: "";
+    background: color-mix(in srgb, var(--navy) 22%, transparent);
+}
+
+.targets li::after {
+    position: absolute;
+    top: clamp(1.1rem, 1.9vw, 1.8rem);
+    left: calc(clamp(1.15rem, 1.7vw, 1.9rem) - .48rem);
+    width: 1.4rem;
+    height: 2.1rem;
+    content: "";
+    border-radius: .15rem;
+    background: var(--trail);
+}
+
+.t-num {
+    color: var(--blue);
+    font-size: clamp(1.6rem, 2.6vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.targets strong {
+    color: var(--navy);
+    font-size: clamp(1.2rem, 1.8vw, 1.9rem);
+}
+
+.targets p {
+    font-size: clamp(.95rem, 1.3vw, 1.35rem);
+}
+
+/* ---------- Slide 3: two doors ---------------------------------------- */
+
+.doors {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(1rem, 2.2vw, 2.6rem);
+    align-items: stretch;
+}
+
+.door {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: clamp(.6rem, 1vw, 1.1rem);
+    padding: clamp(2.3rem, 3.2vw, 3.4rem) clamp(1.1rem, 1.8vw, 2rem) clamp(1rem, 1.6vw, 1.6rem);
+    border: .45rem solid color-mix(in srgb, var(--mist) 70%, transparent);
+    border-bottom: 0;
+    border-radius: 1.6rem 1.6rem 0 0;
+    background: rgba(255, 255, 255, .06);
+}
+
+/* A blaze painted on the lintel marks each door as a trail. */
+.door::before {
+    position: absolute;
+    top: .7rem;
+    left: 50%;
+    width: 1.1rem;
+    height: 1.5rem;
+    content: "";
+    border-radius: .12rem;
+    background: var(--trail);
+    transform: translateX(-50%);
+}
+
+.door-name {
+    color: var(--gold);
+    font-size: clamp(1.15rem, 1.75vw, 2rem);
+    font-weight: 900;
+    letter-spacing: -.02em;
+}
+
+.door-rows {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .55rem 1rem;
+    margin: 0;
+}
+
+.door-rows dt {
+    padding-top: .2rem;
+    color: var(--mist);
+    font-size: clamp(.68rem, .9vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.door-rows dd {
+    margin: 0;
+    font-size: clamp(.92rem, 1.25vw, 1.42rem);
+    line-height: 1.35;
+}
+
+.door-note {
+    color: var(--gold);
+    font-size: clamp(.92rem, 1.2vw, 1.3rem);
+    font-weight: 800;
+}
+
+.door-same {
+    align-self: center;
+    max-width: 7.5rem;
+    color: var(--white);
+    font-size: clamp(.72rem, .95vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.35;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* ---------- Slide 4: the four conditions ------------------------------ */
+
+.qualify-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, .8fr);
+    gap: clamp(1.4rem, 3vw, 3.4rem);
+    align-items: center;
+    margin-top: 1.4rem;
+}
+
+.checkboxes {
+    display: grid;
+    gap: clamp(.55rem, 1vw, 1rem);
+    margin: 0;
+    padding: 2.3rem 0 .4rem;
+    list-style: none;
+    counter-reset: box;
+}
+
+.checkboxes li {
+    display: grid;
+    grid-template-columns: 2.1rem 1fr;
+    gap: .9rem;
+    align-items: start;
+    counter-increment: box;
+    font-size: clamp(1.02rem, 1.5vw, 1.7rem);
+    line-height: 1.35;
+}
+
+/* Empty numbered boxes: a checklist the student fills, not a verdict. */
+.checkboxes li::before {
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    content: counter(box);
+    border: .2rem solid var(--navy);
+    border-radius: .25rem;
+    background: #fff;
+    color: var(--blue);
+    font-size: .95rem;
+    font-weight: 900;
+}
+
+.privacy-rule {
+    display: grid;
+    gap: .55rem;
+    padding: clamp(.9rem, 1.5vw, 1.5rem) clamp(1rem, 1.6vw, 1.6rem);
+    border-left: .45rem solid var(--navy);
+    background: rgba(255, 255, 255, .6);
+}
+
+.privacy-rule p {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.45vw, 1.6rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+/* ---------- Slide 5: proposals sorted --------------------------------- */
+
+.case-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .8rem;
+    font-size: clamp(.86rem, 1.15vw, 1.25rem);
+}
+
+.case-strip > span {
+    padding: .25rem .7rem;
+    border: .12rem solid color-mix(in srgb, var(--navy) 22%, transparent);
+    border-radius: .4rem;
+    background: #fff;
+}
+
+.case-strip > .case-name {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+}
+
+.case-strip > .cats {
+    display: inline-flex;
+    gap: .4rem;
+    border: 0;
+    padding: 0;
+    background: transparent;
+}
+
+.cats i {
+    padding: .15rem .55rem;
+    border: .12rem solid var(--blue);
+    border-radius: 1rem;
+    background: #fff;
+    color: var(--blue);
+    font-style: normal;
+    font-weight: 800;
+}
+
+.sheet-rail {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: .35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: field;
+}
+
+.sheet-rail li {
+    padding: .3rem .45rem;
+    border-top: .3rem solid color-mix(in srgb, var(--navy) 25%, transparent);
+    counter-increment: field;
+    color: color-mix(in srgb, var(--ink) 75%, transparent);
+    font-size: clamp(.66rem, .85vw, .95rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.sheet-rail li::before {
+    content: counter(field) " ";
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.sheet-rail li.lit {
+    border-top-color: var(--trail);
+    color: var(--navy);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
+}
+
+.proposals {
+    display: grid;
+    gap: clamp(.4rem, .7vw, .7rem);
+}
+
+.prop-head,
+.prop-row {
+    display: grid;
+    grid-template-columns: 2.4rem minmax(0, 1.65fr) minmax(0, 1fr);
+    gap: clamp(.6rem, 1.2vw, 1.4rem);
+    align-items: center;
+}
+
+.prop-head > span:first-child {
+    grid-column: 2;
+}
+
+.prop-head > span {
+    color: var(--blue);
+    font-size: clamp(.68rem, .88vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.prop-head .stamp {
+    margin-left: .8rem;
+    letter-spacing: .06em;
+    transform: rotate(-3deg) translateY(-.3rem);
+}
+
+.prop-head,
+.q-head {
+    padding-bottom: .3rem;
+}
+
+.field-num {
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 2.6rem;
+    border-radius: .15rem;
+    background: var(--trail);
+    color: #001a36;
+    font-weight: 900;
+}
+
+.draft {
+    padding: clamp(.45rem, .8vw, .85rem) clamp(.7rem, 1vw, 1.1rem);
+    border-radius: .55rem;
+    background: var(--draft);
+    color: #001a36;
+    font-size: clamp(.82rem, 1.1vw, 1.25rem);
+    line-height: 1.38;
+}
+
+.ruling {
+    display: grid;
+    gap: .3rem;
+}
+
+.ruling p {
+    font-size: clamp(.86rem, 1.12vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.rule-chip {
+    justify-self: start;
+    padding: .18rem .65rem;
+    border: .14rem solid currentColor;
+    border-radius: 1.2rem;
+    background: #fff;
+    font-size: clamp(.7rem, .9vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+
+.rule-chip.keep {
+    color: var(--navy);
+}
+
+.rule-chip.rewrite {
+    border-color: color-mix(in srgb, var(--gold) 80%, #000);
+    background: var(--gold);
+    color: #001a36;
+}
+
+.rule-chip.office {
+    color: var(--open);
+    border-style: dashed;
+}
+
+/* ---------- Slide 7: stepped Work Order prompt ------------------------ */
+
+.chat-bar {
+    font-size: clamp(.7rem, .95vw, 1.1rem);
+}
+
+.chat .who {
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+}
+
+.chat-bar .stamp {
+    transform: rotate(-2deg);
+    color: var(--blue);
+    letter-spacing: .06em;
+}
+
+.send-note {
+    margin-left: auto;
+    color: var(--blue);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.stepped-prompt {
+    max-width: 88rem;
+}
+
+.stepped-prompt .turn.user {
+    justify-self: stretch;
+    max-width: 100%;
+}
+
+.stepped-prompt .stepped {
+    grid-template-columns: minmax(11rem, 14vw) 1fr;
+}
+
+.stepped-prompt .turn {
+    font-size: clamp(.84rem, 1.18vw, 1.45rem);
+    line-height: 1.38;
+}
+
+.stepped-prompt .turn b {
+    color: var(--blue);
+}
+
+.stepped-prompt .step {
+    font-size: clamp(.7rem, .95vw, 1.12rem);
+}
+
+.stepped-prompt .verbatim p + p {
+    margin-top: .25rem;
+}
+
+/* ---------- Slide 8: the first run, ASK lines lit --------------------- */
+
+.run-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 2.3fr) minmax(13rem, .8fr);
+    gap: clamp(1rem, 2.2vw, 2.6rem);
+    align-items: center;
+}
+
+.runbook-chat .turn {
+    justify-self: stretch;
+    max-width: 100%;
+}
+
+.runbook {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.8rem);
+}
+
+.rb-col {
+    display: grid;
+    align-content: start;
+    gap: .35rem;
+}
+
+.runbook p {
+    font-size: clamp(.8rem, 1.08vw, 1.28rem);
+    line-height: 1.36;
+}
+
+.runbook p + p {
+    margin-top: 0;
+}
+
+.rb-head {
+    color: var(--navy);
+    font-weight: 900;
+    letter-spacing: .02em;
+}
+
+.ask-side {
+    display: grid;
+    gap: clamp(.7rem, 1.1vw, 1.2rem);
+    padding: clamp(1rem, 1.5vw, 1.6rem) clamp(1rem, 1.6vw, 1.7rem);
+    border-left: .4rem solid var(--trail);
+    background: rgba(255, 255, 255, .07);
+}
+
+.ask-side p {
+    font-size: clamp(1rem, 1.4vw, 1.6rem);
+    line-height: 1.32;
+}
+
+.ask-side .side-strong {
+    color: var(--gold);
+    font-weight: 800;
+}
+
+/* ---------- Slide 9: the scoring table -------------------------------- */
+
+.score-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 2.6fr) minmax(12rem, .75fr);
+    gap: clamp(1rem, 2.2vw, 2.6rem);
+    align-items: center;
+}
+
+.score-table,
+.readme-table,
+.toolkit-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    color: #001a36;
+}
+
+.score-table th,
+.readme-table th,
+.toolkit-table th {
+    padding: .5rem .75rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.66rem, .85vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.score-table td {
+    padding: clamp(.4rem, .7vw, .75rem) .75rem;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 14%, transparent);
+    font-size: clamp(.82rem, 1.1vw, 1.3rem);
+    line-height: 1.32;
+    vertical-align: middle;
+}
+
+.score-table td:first-child {
+    font-weight: 800;
+}
+
+.score-table tr.row-partly td {
+    background: color-mix(in srgb, var(--warning) 12%, #fff);
+}
+
+.score-table tr.row-fail td {
+    background: color-mix(in srgb, var(--danger) 10%, #fff);
+}
+
+/* Pass, Partly, Fail: each has a glyph and a word, so the color only
+   repeats the meaning. */
+.score {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .15rem .6rem .15rem .25rem;
+    border: .12rem solid currentColor;
+    border-radius: 2rem;
+    background: #fff;
+    font-size: clamp(.72rem, .92vw, 1.05rem);
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.score::before {
+    display: grid;
+    place-items: center;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.score.pass {
+    color: var(--good);
+}
+
+.score.pass::before {
+    content: "\2713";
+    background: var(--good);
+}
+
+.score.partly {
+    color: color-mix(in srgb, var(--warning) 75%, #000);
+}
+
+.score.partly::before {
+    content: "\00BD";
+    background: var(--warning);
+}
+
+.score.fail {
+    color: var(--danger);
+}
+
+.score.fail::before {
+    content: "\2715";
+    background: var(--danger);
+}
+
+.open-items {
+    display: grid;
+    gap: .7rem;
+}
+
+.open-items ul {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.open-items li {
+    display: grid;
+    grid-template-columns: 4.6rem 1fr;
+    gap: .7rem;
+    align-items: baseline;
+    font-size: clamp(.9rem, 1.2vw, 1.3rem);
+    line-height: 1.25;
+}
+
+.open-items li b {
+    color: var(--navy);
+    font-size: clamp(1.4rem, 2.2vw, 2.4rem);
+    font-weight: 900;
+    text-align: right;
+}
+
+/* ---------- Slide 10: the Refinement Log in the answer ---------------- */
+
+.answer p {
+    font-size: inherit;
+}
+
+.mini-log {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.6rem;
+    margin: .7rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mini-log li {
+    position: relative;
+    display: grid;
+    gap: .2rem;
+    padding: .5rem .7rem;
+    border-left: .35rem solid var(--trail);
+    background: #fff;
+    font-size: clamp(.85rem, 1.1vw, 1.2rem);
+    line-height: 1.3;
+}
+
+.mini-log li:not(:last-child)::after {
+    position: absolute;
+    top: 50%;
+    right: -1.3rem;
+    content: "\2192";
+    color: var(--navy);
+    font-weight: 900;
+    transform: translateY(-50%);
+}
+
+.mini-log b {
+    color: var(--blue);
+}
+
+/* ---------- Slide 11: the Verification Trail --------------------------- */
+
+.trail-split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, .95fr);
+    gap: clamp(1.6rem, 3.6vw, 4.4rem);
+}
+
+.pieces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pieces li {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .3rem .75rem .3rem .5rem;
+    border: .12rem solid color-mix(in srgb, var(--navy) 24%, transparent);
+    border-radius: .35rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.86rem, 1.15vw, 1.28rem);
+    font-weight: 800;
+}
+
+.pieces li::before {
+    flex: none;
+    width: .6rem;
+    height: .95rem;
+    content: "";
+    border-radius: .08rem;
+    background: var(--trail);
+}
+
+.pieces li.readme-piece {
+    flex-basis: 100%;
+    border-color: var(--navy);
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+}
+
+.pieces li.readme-piece b {
+    color: var(--gold);
+}
+
+.colleague-test {
+    max-width: none;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+}
+
+.colleague-test p {
+    font-size: clamp(1rem, 1.4vw, 1.55rem);
+    line-height: 1.32;
+}
+
+/* ---------- Slides 12 and 22: posts along a dashed trail -------------- */
+
+.walk,
+.habits {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.2vw, 1.4rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: post;
+}
+
+/* The trail line runs behind the blazes at their height. */
+.walk::before,
+.habits::before {
+    position: absolute;
+    top: 1.05rem;
+    left: 1rem;
+    right: 1rem;
+    content: "";
+    border-top: .3rem dashed color-mix(in srgb, var(--mist) 70%, transparent);
+}
+
+.walk li,
+.habits li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .3rem;
+    padding-top: 3.1rem;
+    counter-increment: post;
+}
+
+.walk li::before,
+.habits li::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 2.4rem;
+    content: counter(post);
+    border-radius: .15rem;
+    background: var(--trail);
+    color: #001a36;
+    font-weight: 900;
+}
+
+.walk b,
+.habits b {
+    color: var(--gold);
+    font-size: clamp(.95rem, 1.35vw, 1.55rem);
+    line-height: 1.15;
+}
+
+.walk span,
+.habits span {
+    font-size: clamp(.8rem, 1.05vw, 1.2rem);
+    line-height: 1.32;
+}
+
+.walk .file {
+    font-family: var(--code);
+    font-size: clamp(.74rem, .95vw, 1.08rem);
+    overflow-wrap: anywhere;
+}
+
+.trail-walk {
+    display: grid;
+    gap: clamp(.7rem, 1.2vw, 1.3rem);
+}
+
+.trail-end {
+    justify-self: end;
+    max-width: 52rem;
+    padding: .5rem .9rem;
+    border: .14rem dashed var(--mist);
+    border-radius: .4rem;
+    font-size: clamp(.86rem, 1.12vw, 1.25rem);
+    line-height: 1.3;
+}
+
+.trail-end b {
+    margin-right: .5rem;
+    color: var(--mist);
+    font-size: .82em;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.readme-table caption {
+    padding-bottom: .4rem;
+    color: var(--gold);
+    font-size: clamp(.68rem, .88vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.readme-table td {
+    padding: clamp(.35rem, .6vw, .65rem) .7rem;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 14%, transparent);
+    font-size: clamp(.76rem, 1vw, 1.15rem);
+    line-height: 1.3;
+    vertical-align: top;
+}
+
+.readme-table td:first-child {
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.readme-table code {
+    font-size: .92em;
+}
+
+/* What a person checked is the column the trail depends on. */
+.readme-table td.checked {
+    border-left: .3rem solid var(--trail);
+    background: color-mix(in srgb, var(--gold) 14%, #fff);
+}
+
+/* ---------- Slide 13: the Presentation outline ------------------------ */
+
+.outline-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(14rem, .85fr);
+    gap: clamp(1.4rem, 3vw, 3.4rem);
+    align-items: center;
+    margin-top: 1.4rem;
+}
+
+.outline-parts {
+    display: grid;
+    gap: clamp(.35rem, .7vw, .7rem);
+    margin: 0;
+    padding: 2.1rem 0 .3rem;
+    list-style: none;
+    counter-reset: part;
+}
+
+.outline-parts li {
+    display: grid;
+    grid-template-columns: 2.2rem minmax(10rem, 17rem) 1fr;
+    gap: .2rem .8rem;
+    align-items: baseline;
+    counter-increment: part;
+    font-size: clamp(.86rem, 1.15vw, 1.3rem);
+    line-height: 1.3;
+}
+
+.outline-parts li::before {
+    display: grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    content: counter(part);
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold);
+    font-weight: 900;
+}
+
+.outline-parts b {
+    color: var(--navy);
+}
+
+.outline-parts li.to-trail b {
+    justify-self: start;
+    border-bottom: .22rem solid var(--trail);
+}
+
+.trail-tag {
+    display: inline-block;
+    margin-left: .3rem;
+    padding: .05rem .45rem;
+    border-radius: .25rem;
+    background: var(--trail);
+    color: #001a36;
+    font-size: clamp(.62rem, .78vw, .85rem);
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.outline-parts li.limits {
+    margin: 0 -.6rem;
+    padding: .3rem .6rem;
+    border-radius: .3rem;
+    background: color-mix(in srgb, var(--mist) 45%, transparent);
+}
+
+.outline-why {
+    display: grid;
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+.outline-why p {
+    font-size: clamp(.98rem, 1.35vw, 1.5rem);
+    line-height: 1.32;
+}
+
+.outline-why b {
+    color: var(--blue);
+}
+
+/* ---------- Slide 14: questions placed against the trail -------------- */
+
+.facts-line {
+    font-size: clamp(.86rem, 1.15vw, 1.3rem);
+}
+
+.facts-line .facts-tag {
+    margin-right: .5rem;
+}
+
+.facts-line b {
+    color: var(--gold);
+}
+
+.questions {
+    display: grid;
+    gap: clamp(.35rem, .65vw, .7rem);
+}
+
+.q-head,
+.q-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+    gap: clamp(.8rem, 1.6vw, 1.8rem);
+    align-items: center;
+}
+
+.q-head > span {
+    color: var(--gold);
+    font-size: clamp(.68rem, .88vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.q-head .stamp {
+    margin-left: .8rem;
+    letter-spacing: .06em;
+    transform: rotate(-3deg) translateY(-.3rem);
+}
+
+.q-row > p:first-child {
+    padding: clamp(.35rem, .6vw, .65rem) clamp(.7rem, 1vw, 1.1rem);
+    border-radius: .5rem;
+    background: var(--draft);
+    color: #001a36;
+    font-size: clamp(.8rem, 1.08vw, 1.25rem);
+    line-height: 1.32;
+}
+
+.dest {
+    font-size: clamp(.8rem, 1.05vw, 1.2rem);
+    line-height: 1.3;
+}
+
+.dest b {
+    color: var(--gold);
+}
+
+.dest-chip {
+    display: inline-block;
+    margin-right: .4rem;
+    padding: .12rem .55rem;
+    border-radius: 1rem;
+    font-size: .88em;
+    font-weight: 900;
+}
+
+.dest-chip.answered {
+    background: var(--trail);
+    color: #001a36;
+}
+
+.dest-chip.open {
+    border: .12rem dashed var(--mist);
+    color: var(--mist);
+}
+
+/* ---------- Slide 15: Fix It ------------------------------------------ */
+
+.fix-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(.9rem, 1.8vw, 2rem);
+    align-items: start;
+}
+
+.fix-col {
+    display: grid;
+    align-content: start;
+    gap: clamp(.45rem, .8vw, .9rem);
+}
+
+.fix-col .ba-label {
+    justify-self: start;
+    font-size: clamp(.66rem, .9vw, 1.05rem);
+}
+
+.asked {
+    padding: clamp(.35rem, .6vw, .65rem) clamp(.7rem, 1vw, 1.1rem);
+    border-radius: .5rem;
+    background: var(--mist);
+    color: #001a36;
+    font-size: clamp(.78rem, 1.02vw, 1.18rem);
+    line-height: 1.35;
+}
+
+.headline {
+    padding: clamp(.6rem, 1vw, 1.1rem) clamp(.8rem, 1.1vw, 1.2rem);
+    border-radius: .55rem;
+    font-size: clamp(.95rem, 1.35vw, 1.6rem);
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.headline.before {
+    background: var(--draft);
+    color: #001a36;
+}
+
+.headline.after {
+    background: #fff;
+    border: .12rem solid color-mix(in srgb, var(--navy) 20%, transparent);
+    color: #001a36;
+}
+
+.log-card {
+    display: grid;
+    gap: .55rem;
+    padding: clamp(.7rem, 1.1vw, 1.2rem) clamp(.8rem, 1.1vw, 1.2rem);
+    border-left: .4rem solid var(--trail);
+    background: #fff;
+    box-shadow: .4rem .45rem 0 color-mix(in srgb, var(--navy) 12%, transparent);
+}
+
+.log-card p {
+    font-family: var(--code);
+    font-size: clamp(.74rem, .98vw, 1.12rem);
+    line-height: 1.42;
+}
+
+.repair {
+    padding: clamp(.5rem, .9vw, 1rem) clamp(.8rem, 1.1vw, 1.2rem);
+    border-left: .35rem solid var(--navy);
+    background: var(--mist);
+    color: #001a36;
+    font-size: clamp(.82rem, 1.1vw, 1.28rem);
+    line-height: 1.38;
+}
+
+.cost-line {
+    font-size: clamp(.92rem, 1.3vw, 1.5rem);
+}
+
+.cost-line b {
+    color: var(--navy);
+}
+
+/* ---------- Slide 17: reflection from memory vs from the log ---------- */
+
+.reflect {
+    align-items: stretch;
+}
+
+.reflect-card {
+    display: grid;
+    align-content: start;
+    gap: clamp(.5rem, .9vw, 1rem);
+    padding: clamp(.9rem, 1.4vw, 1.5rem) clamp(1rem, 1.5vw, 1.6rem);
+    border-radius: .6rem;
+    background: #fff;
+    color: #001a36;
+}
+
+.reflect-card p {
+    font-size: clamp(.86rem, 1.18vw, 1.38rem);
+    line-height: 1.5;
+}
+
+.reflect-card .tool-note {
+    font-size: clamp(.78rem, 1vw, 1.15rem);
+    color: color-mix(in srgb, #001a36 75%, transparent);
+}
+
+.reflect-card .cap-note {
+    color: color-mix(in srgb, #001a36 65%, transparent);
+}
+
+.reflect-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.reflect .ba-label {
+    background: var(--navy);
+    color: #fff;
+}
+
+.count {
+    padding: .12rem .6rem;
+    border: .14rem solid currentColor;
+    border-radius: 1rem;
+    font-size: clamp(.7rem, .92vw, 1.05rem);
+    font-weight: 900;
+}
+
+.count.bad {
+    color: var(--danger);
+}
+
+.count.good {
+    color: var(--good);
+}
+
+/* ---------- Slide 18: the Ethics Statement ---------------------------- */
+
+.ethics-card {
+    margin-top: 1.2rem;
+    padding-top: clamp(1.2rem, 1.8vw, 1.8rem);
+    background: #fff;
+}
+
+.ethics-rows {
+    display: grid;
+    gap: 0;
+    margin: 0;
+}
+
+.e-row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr) minmax(12rem, 15rem);
+    gap: .4rem 1.2rem;
+    align-items: center;
+    padding: clamp(.35rem, .65vw, .7rem) 0;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 12%, transparent);
+}
+
+.e-row:last-child {
+    border-bottom: 0;
+}
+
+.e-row dt {
+    display: grid;
+    gap: .05rem;
+}
+
+.e-row dt b {
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.3vw, 1.45rem);
+}
+
+.e-row dt span {
+    color: var(--blue);
+    font-size: clamp(.7rem, .9vw, 1rem);
+    font-weight: 700;
+}
+
+.e-row dd {
+    margin: 0;
+    font-size: clamp(.8rem, 1.06vw, 1.22rem);
+    line-height: 1.38;
+}
+
+.e-row.trimmed dd {
+    color: color-mix(in srgb, var(--ink) 60%, transparent);
+    font-style: italic;
+}
+
+.e-flag .verdict {
+    white-space: normal;
+    font-size: clamp(.7rem, .9vw, 1.02rem);
+}
+
+/* ---------- Slide 19: the court case ---------------------------------- */
+
+.case-split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, .95fr);
+    gap: clamp(1.6rem, 3.6vw, 4.4rem);
+}
+
+.case-card {
+    position: relative;
+    display: grid;
+    gap: clamp(.55rem, .9vw, 1rem);
+    margin: 1.4rem 0 0;
+    padding: clamp(1.2rem, 1.8vw, 1.9rem) clamp(1.1rem, 1.7vw, 1.8rem);
+    border-radius: .3rem;
+    background: #fff;
+    color: #001a36;
+    box-shadow: .6rem .7rem 0 rgba(0, 0, 0, .22);
+}
+
+.case-card p {
+    font-size: clamp(.86rem, 1.15vw, 1.3rem);
+    line-height: 1.38;
+}
+
+.case-card .case-name {
+    color: var(--blue);
+    font-size: clamp(.78rem, 1vw, 1.12rem);
+    font-weight: 800;
+}
+
+.case-card blockquote {
+    margin: 0;
+    padding: .4rem 0 .4rem 1rem;
+    border-left: .35rem solid var(--trail);
+    color: var(--navy);
+    font-size: clamp(1rem, 1.42vw, 1.62rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.case-card .award b {
+    color: var(--navy);
+}
+
+.case-card .cw-line {
+    padding-top: .5rem;
+    border-top: .12rem solid color-mix(in srgb, var(--navy) 14%, transparent);
+}
+
+.case-card .cw-line b {
+    color: var(--blue);
+}
+
+/* ---------- Slide 21: the Toolkit case -------------------------------- */
+
+.toolkit-case {
+    position: relative;
+    margin-top: 1.8rem;
+    padding: clamp(.6rem, .9vw, 1rem);
+    border: .4rem solid var(--navy);
+    border-radius: .9rem;
+    background: var(--navy);
+    box-shadow: .6rem .7rem 0 color-mix(in srgb, var(--navy) 18%, transparent);
+}
+
+/* The handle sits on the lid: the Toolkit is something you carry. */
+.case-handle {
+    position: absolute;
+    top: -1.7rem;
+    left: 50%;
+    width: 8rem;
+    height: 1.7rem;
+    border: .4rem solid var(--navy);
+    border-bottom: 0;
+    border-radius: .8rem .8rem 0 0;
+    transform: translateX(-50%);
+}
+
+.toolkit-table th {
+    background: var(--navy);
+}
+
+.toolkit-table td {
+    padding: clamp(.3rem, .55vw, .6rem) .75rem;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 12%, transparent);
+    font-size: clamp(.8rem, 1.05vw, 1.22rem);
+    line-height: 1.3;
+}
+
+.toolkit-table td:first-child {
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.toolkit-table td:nth-child(2) {
+    color: var(--blue);
+    white-space: nowrap;
+}
+
+.readme-line {
+    font-size: clamp(.86rem, 1.15vw, 1.3rem);
+    line-height: 1.4;
+}
+
+.readme-line .facts-tag {
+    display: table;
+    margin-bottom: .35rem;
+}
+
+/* ---------- Slide 22: five habits ------------------------------------- */
+
+.habits b {
+    font-size: clamp(1.05rem, 1.6vw, 1.9rem);
+}
+
+.habits span {
+    color: color-mix(in srgb, var(--white) 88%, transparent);
+    font-size: clamp(.86rem, 1.2vw, 1.38rem);
+}
+
+.resolve {
+    max-width: 62rem;
+    padding: .7rem 0 .7rem 1.1rem;
+    border-left: .45rem solid var(--trail);
+    font-size: clamp(1.05rem, 1.6vw, 1.85rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+/* ---------- Slide 23: the fork ---------------------------------------- */
+
+.fork-split {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
+    gap: clamp(1.6rem, 3.6vw, 4.4rem);
+}
+
+.signposts {
+    display: grid;
+    gap: clamp(.7rem, 1.2vw, 1.2rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Each next course is a pointed trail sign, gold like the blazes. */
+.signposts li {
+    display: grid;
+    gap: .2rem;
+    padding: clamp(.6rem, 1vw, 1rem) clamp(2.2rem, 3vw, 3rem) clamp(.6rem, 1vw, 1rem) clamp(.9rem, 1.3vw, 1.3rem);
+    background: var(--gold);
+    color: #001a36;
+    clip-path: polygon(0 0, calc(100% - 1.6rem) 0, 100% 50%, calc(100% - 1.6rem) 100%, 0 100%);
+}
+
+.signposts b {
+    font-size: clamp(1.15rem, 1.7vw, 1.9rem);
+    letter-spacing: -.01em;
+}
+
+.signposts span {
+    font-size: clamp(.86rem, 1.15vw, 1.3rem);
+    line-height: 1.3;
+}
+
+.last-line {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.45vw, 1.65rem);
+    font-weight: 800;
+    line-height: 1.32;
+}
+
+/* ---------- Slide 24: lab handoff ------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    grid-template-columns: minmax(10rem, 13rem) minmax(12rem, 16rem) 1fr;
+    gap: .2rem 1rem;
+    align-items: baseline;
+    padding: .65rem 1rem;
+    border-left: .4rem solid var(--trail);
+    background: rgba(255, 255, 255, .07);
+}
+
+.lab-parts .part {
+    color: var(--gold);
+    font-size: clamp(.72rem, .92vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1rem, 1.4vw, 1.55rem);
+    line-height: 1.2;
+}
+
+.lab-parts span:last-child {
+    font-size: clamp(.86rem, 1.12vw, 1.25rem);
+    line-height: 1.35;
+}
+
+.prompt.exit p {
+    font-size: clamp(1rem, 1.4vw, 1.5rem);
+}
+
+/* ---------- Gold check slides ----------------------------------------- */
+
+.slide.gold .prompt p {
+    font-size: clamp(1.05rem, 1.5vw, 1.55rem);
+}
+
+/* ---------- Laptop height --------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .75rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.7rem, 2.8vw, 3rem);
+    }
+
+    .stepped-prompt .turn {
+        padding: .45rem .7rem;
+        font-size: .82rem;
+        line-height: 1.3;
+    }
+
+    .stepped-prompt .chat-body {
+        padding: .45rem;
+    }
+
+    .stepped-prompt .stepped {
+        gap: .3rem .8rem;
+    }
+
+    .stepped-prompt .step {
+        font-size: .7rem;
+    }
+
+    .runbook p {
+        font-size: .8rem;
+        line-height: 1.3;
+    }
+
+    .chat-body {
+        padding: .5rem;
+    }
+
+    .draft,
+    .q-row > p:first-child {
+        padding: .3rem .6rem;
+        font-size: .8rem;
+    }
+
+    .ruling p,
+    .dest {
+        font-size: .82rem;
+    }
+
+    .sheet-rail li {
+        padding: .2rem .35rem;
+    }
+
+    .score-table td {
+        padding: .3rem .6rem;
+        font-size: .82rem;
+    }
+
+    .readme-table td,
+    .toolkit-table td {
+        padding: .25rem .6rem;
+        font-size: .78rem;
+    }
+
+    .walk li,
+    .habits li {
+        padding-top: 2.8rem;
+    }
+
+    .headline {
+        font-size: .95rem;
+        line-height: 1.42;
+    }
+
+    .log-card p,
+    .repair {
+        font-size: .78rem;
+    }
+
+    .reflect-card p {
+        font-size: .86rem;
+        line-height: 1.42;
+    }
+
+    .e-row {
+        padding: .25rem 0;
+    }
+
+    .e-row dd {
+        font-size: .8rem;
+        line-height: 1.32;
+    }
+
+    .targets p {
+        font-size: .95rem;
+    }
+
+    .checkboxes li {
+        font-size: 1.05rem;
+    }
+
+    .outline-parts li {
+        font-size: .86rem;
+    }
+
+    .case-card p {
+        font-size: .86rem;
+    }
+
+    .case-card blockquote {
+        font-size: 1rem;
+    }
+
+    .door {
+        padding-top: 2.2rem;
+    }
+
+    .door-rows dd {
+        font-size: .95rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    /* The trailhead post would sit under the text on a narrow gutter. */
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        background-position: left -6rem top 0, right -7rem top -4rem, left bottom, 0 0;
+    }
+
+    .slide.dark.title-slide {
+        background-position: left -6rem top 0, left bottom;
+    }
+
+    br.tb {
+        display: none;
+    }
+
+    .trail-split,
+    .case-split,
+    .fork-split,
+    .targets,
+    .doors,
+    .qualify-wrap,
+    .run-pair,
+    .runbook,
+    .score-wrap,
+    .mini-log,
+    .outline-wrap,
+    .q-head,
+    .q-row,
+    .fix-grid,
+    .walk,
+    .habits {
+        grid-template-columns: 1fr;
+    }
+
+    .door-same {
+        max-width: none;
+    }
+
+    .sheet-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .prop-head {
+        grid-template-columns: 1fr;
+    }
+
+    .prop-head > span:first-child {
+        grid-column: 1;
+    }
+
+    .prop-head > span:last-child {
+        display: none;
+    }
+
+    .prop-row {
+        grid-template-columns: 2.2rem 1fr;
+    }
+
+    .prop-row .ruling {
+        grid-column: 2;
+    }
+
+    .q-head > span:last-child {
+        display: none;
+    }
+
+    .mini-log li:not(:last-child)::after {
+        top: auto;
+        right: 50%;
+        bottom: -1.35rem;
+        transform: rotate(90deg);
+    }
+
+    .walk::before,
+    .habits::before {
+        top: 0;
+        bottom: 0;
+        left: .65rem;
+        right: auto;
+        border-top: 0;
+        border-left: .3rem dashed color-mix(in srgb, var(--mist) 70%, transparent);
+    }
+
+    .walk li,
+    .habits li {
+        padding: 0 0 0 2.6rem;
+        min-height: 2.6rem;
+    }
+
+    .trail-end {
+        justify-self: stretch;
+    }
+
+    .score-table,
+    .readme-table,
+    .toolkit-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .readme-table td:first-child,
+    .toolkit-table td:nth-child(2) {
+        white-space: normal;
+    }
+
+    /* Four columns do not fit a phone, so each README row becomes a
+       card and every cell carries its column name. */
+    .readme-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+    }
+
+    .readme-table tbody,
+    .readme-table tr,
+    .readme-table td {
+        display: block;
+    }
+
+    .readme-table tr + tr {
+        border-top: .3rem solid var(--navy);
+    }
+
+    .readme-table td::before {
+        display: block;
+        content: attr(data-label);
+        color: var(--blue);
+        font-size: .68rem;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .readme-table td.checked {
+        border-left: 0;
+        border-top: .3rem solid var(--trail);
+    }
+
+    /* The table turns into a white block on phones, so the caption gets
+       its own navy band instead of gold on white. */
+    .readme-table caption {
+        display: block;
+        width: 100%;
+        padding: .45rem .7rem;
+        background: var(--navy);
+        color: var(--gold);
+    }
+
+    .e-row {
+        grid-template-columns: 1fr;
+    }
+
+    .outline-parts li {
+        grid-template-columns: 2.2rem 1fr;
+    }
+
+    .outline-parts li span {
+        grid-column: 2;
+    }
+
+    .lab-parts li {
+        grid-template-columns: 1fr;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .send-note {
+        margin-left: 0;
+    }
+
+    .stepped-prompt .stepped {
+        grid-template-columns: 1fr;
+    }
+
+    .verdict,
+    .score,
+    .stamp {
+        white-space: normal;
+    }
+
+    .toolkit-case {
+        margin-top: 1.6rem;
+    }
+}

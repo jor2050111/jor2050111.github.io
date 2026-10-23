@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 12 classroom presentation: The AI Application Project.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cpath d='M30 10h4v46h-4z' fill='%23BCD0E6'/%3E%3Crect x='22' y='14' width='20' height='28' rx='2' fill='%23FFC845'/%3E%3Cpath d='M6 58q14-10 26-4t26-6' fill='none' stroke='%23ffffff' stroke-width='3' stroke-dasharray='5 4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>CIS137: The AI Application Project</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: The AI Application Project" data-course="cis137"
+  data-chapter="ch12" data-palette="canvas-light">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with Mei Lin’s Monday message. The pilot ends this quarter. She has to tell the owner what Copperwind adopts for the next year: which jobs get an AI tool, which tools, under what rules, and how anything new gets piloted. “Present it to me first,” she writes. Then read her line on the slide. Ask the room what makes a line defensible, and take two answers. Promise the payoff: by the end of class you can trace every line of a project to a run a person checked. This is the course’s last chapter. A literacy course would end with a reflection. This one ends with AI work delivered.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-marked-trail.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 12 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>The AI Application Project</h1>
+        <p class="lede"><span class="verbatim">“If I can't defend a line of it, it doesn't go to the owner.”</span> Can you defend every line?</p>
+        <p class="lede-credit">Mei Lin, Copperwind’s AI pilot lead</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as the project’s three moves. 12.1, design: the solution, built from a Requirements Sheet, Work Orders, and a Tool Survey, with its Verification Trail. 12.2, defend: the recommendation to a stakeholder, with evidence from the trail and an honest statement of its limits. 12.3, judge: the Ethics Statement. You already hold every tool it needs. Chapter 10 gave you the fair test, the Comparison Matrix, and the Tool Survey. Chapter 11 gave you the Requirements Sheet, the Work Order, and the Selection Decision. Part III gave you the Accuracy Audit, the AI Use Policy, and the Use Evaluation. The chapter serves CLO 1, 3, 4, 5, and 6.&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 12</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2 class="wide-title">Design it. Defend it. Judge it.</h2>
+        <ol class="targets">
+          <li><span class="t-num">12.1</span><strong>Design</strong><p>an AI solution for a scenario from a Requirements Sheet, Work Orders, and a Tool Survey, with its Verification Trail</p></li>
+          <li><span class="t-num">12.2</span><strong>Defend</strong><p>a recommendation to a stakeholder with evidence from the Verification Trail and an honest statement of its limits</p></li>
+          <li><span class="t-num">12.3</span><strong>Judge</strong><p>the solution’s privacy, ownership, bias, disclosure, and accountability in an Ethics Statement</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A capstone is the final project that pulls a course’s skills into one delivered piece of work for a real decision. This one has two doors, and they carry equal weight. The Copperwind capstone is Mei Lin’s year-ahead recommendation, and she carries it to the owner. Your own IT project can be a home lab, a club project, a course project, or a task at work. Both use the same artifacts and the same rubric. Pick the door where you have something at stake and data you are allowed to share. Then name the stakeholder: the one who decides first, then the others the result affects. For Copperwind, Mei Lin decides and the five Deskside technicians live with the result. For a home lab, it might be the roommate who shares the network. Ask two students to name theirs.&#10;&#10;Time: 4-6 minutes.">
+      <div class="brand">CIS137 · 12.1</div>
+      <div class="content">
+        <div class="eyebrow">Choose the scenario</div>
+        <h2 class="wide-title">Two doors, equal weight. Each names who decides.</h2>
+        <div class="doors" role="img" aria-label="Two door frames side by side, with same artifacts and same rubric written between them. Left door, the Copperwind capstone. Who decides: Mei Lin, who carries it to the owner. You deliver: the year-ahead recommendation, which jobs get an AI tool, which tools, under what rules, with a pilot plan. Lives with it: the five Deskside technicians. Mei Lin's note: present it to me first. Right door, your own IT project. Who decides: a supervisor, a club officer, a teammate, or your instructor. You deliver: a text deliverable a person can check, such as a runbook, a test plan, a build checklist, configuration notes, or a migration plan. Lives with it, on a home lab: the roommate who shares the network.">
+          <div class="door">
+            <span class="door-name">The Copperwind capstone</span>
+            <dl class="door-rows">
+              <dt>Who decides</dt><dd>Mei Lin, who carries it to the owner</dd>
+              <dt>You deliver</dt><dd>The year-ahead recommendation: which jobs get an AI tool, which tools, under what rules, with a pilot plan</dd>
+              <dt>Lives with it</dt><dd>The five Deskside technicians</dd>
+            </dl>
+            <p class="door-note">Mei Lin: <span class="verbatim">“Present it to me first.”</span></p>
+          </div>
+          <span class="door-same">Same artifacts. Same rubric.</span>
+          <div class="door">
+            <span class="door-name">Your own IT project</span>
+            <dl class="door-rows">
+              <dt>Who decides</dt><dd>A supervisor, a club officer, a teammate, or your instructor</dd>
+              <dt>You deliver</dt><dd>Text a person can check: a runbook, a test plan, a build checklist, configuration notes, or a migration plan</dd>
+              <dt>Lives with it</dt><dd>On a home lab, the roommate who shares the network</dd>
+            </dl>
+          </div>
+        </div>
+        <p class="term-line"><b>Stakeholder</b> Decides on your result, or has to live with it.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Your own project qualifies when four things hold. Read them as a checklist. It is a job you are doing now. Someone other than you will act on the result. The deliverable is text a person can check. At least two parts can go to an AI tool through a Work Order, while at least one part stays with a person. Then the privacy rule you have used all course: nothing identifying goes into a tool, and nothing you do not have the right to share. Quick Check 12.1, question 1 tests this on a classmate’s idea: use AI to make my resume better. Ask which box it fails first, and leave the rewrite for practice. Both worked examples in this chapter came through the second door: a student worker at a university housing office and the office manager of a small accounting firm.&#10;&#10;Time: 6-8 minutes.">
+      <div class="brand">CIS137 · 12.1</div>
+      <div class="content">
+        <div class="eyebrow">Your own IT project</div>
+        <h2 class="wide-title">Your own project qualifies when all four hold.</h2>
+        <div class="qualify-wrap">
+          <figure class="artifact-card qualify">
+            <span class="card-tab">Qualifies when</span>
+            <ol class="checkboxes">
+              <li>It is a job you are doing now.</li>
+              <li>Someone other than you will act on the result.</li>
+              <li>The deliverable is text a person can check.</li>
+              <li>At least two parts can go to an AI tool through a Work Order. At least one part stays with a person.</li>
+            </ol>
+          </figure>
+          <div class="privacy-rule">
+            <span class="rule-tag">The privacy rule, all course</span>
+            <p>Nothing identifying goes into a tool.</p>
+            <p>Nothing you do not have the right to share.</p>
+          </div>
+        </div>
+        <p class="term-line"><b>Capstone</b> The final project: course skills, one delivered piece of work.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="In the project, the Requirements Sheet does a second job: it is your definition of done. Seven fields, in order. When every must-pass criterion passes, you are done. When one fails, you are not, however good the output looks. A student worker at a university housing office sorts about 300 help emails a month, about 40 minutes each morning, into four categories. She asked a chat assistant to draft the sheet. It named no tool and kept the seven fields in order. Its best line is the no-AI option: inbox rules or a request form need no AI and send no resident data anywhere, so she keeps it and will test it. It also proposed things nobody gave it. At least 50 emails and 90 percent agreement become a count: at least 45 of 50 labels match my supervisor’s. Chapter 8 showed what FERPA covers, but whether these emails are education records is for the university’s privacy office to rule, and the draft itself says that office approves any tool first. Keep, rewrite, or cut each proposal. The sheet you keep is yours.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS137 · 12.1</div>
+      <div class="content">
+        <div class="eyebrow">Done means the Requirements Sheet passes</div>
+        <h2 class="wide-title breaks">A drafted sheet is a list of proposals.<br class="tb"> Keep, rewrite, or cut each one.</h2>
+        <div class="case-strip">
+          <span class="case-name">Housing office help desk</span>
+          <span><b>about 300</b> emails a month</span>
+          <span><b>about 40</b> minutes each morning</span>
+          <span class="cats"><i>Wi-Fi</i><i>Account</i><i>Hardware</i><i>Other</i></span>
+        </div>
+        <ol class="sheet-rail" aria-label="The Requirements Sheet's seven fields in order, with fields 5, 6, and 7 holding the three proposals below">
+          <li>The problem</li><li>Who is affected</li><li>Inputs</li><li>Output required</li><li class="lit">Must-pass criteria</li><li class="lit">Constraints</li><li class="lit">The no-AI option</li>
+        </ol>
+        <div class="proposals">
+          <div class="prop-head"><span>The draft proposed <span class="stamp">Sample, Oct 2026. Your output will differ.</span></span><span>She rules</span></div>
+          <div class="prop-row">
+            <span class="field-num">5</span>
+            <p class="draft verbatim">[...] Test this on a sample of at least 50 past emails (masked) [...] for example 90% or higher agreement.</p>
+            <div class="ruling"><span class="rule-chip rewrite">Rewrite as a count</span><p>“at least 45 of 50 labels match my supervisor’s”</p></div>
+          </div>
+          <div class="prop-row">
+            <span class="field-num">6</span>
+            <p class="draft verbatim">[...] Resident information is covered by university policy and student-records law (such as FERPA in the U.S.). [...]</p>
+            <div class="ruling"><span class="rule-chip office">Privacy office rules</span><p>Whether these are education records is not hers to decide.</p></div>
+          </div>
+          <div class="prop-row">
+            <span class="field-num">7</span>
+            <p class="draft verbatim">[...] shared inbox rules, filters on keywords like "Wi-Fi" or "password," or a request form with a required category dropdown. These need no AI and avoid sending resident data anywhere [...]</p>
+            <div class="ruling"><span class="rule-chip keep">Keep and test</span><p>The no-AI option doing its job.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 12.1, question 2. Give 60 seconds. Clear and accurate are judgments with no count behind them, so two stakeholders could score the same runbook differently. Each rewrite should be checkable with a count or a yes or no. Read two aloud and test them: could the office manager check this without asking the writer what it means? The chapter’s own runbook criteria in 12.2 are the model, and they come up next.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS137 · 12.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 12.1</div>
+        <h2 class="check-title">Turn “clear and accurate” into two checks.</h2>
+        <div class="prompt">
+          <p class="verbatim">A must-pass criterion reads "The runbook is clear and accurate." Rewrite it as two criteria a stakeholder could check with a count or a yes or no.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">“Clear and accurate” has no count behind it. Split it into checks a stakeholder can run, like the runbook’s own: <strong>It covers all four accounts</strong> (yes or no) and <strong>Under 250 words</strong> (a count). <strong>It&nbsp;names who does each step</strong> (yes or no) also works.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Building the solution is a loop you know: write a Work Order, run it, check the result, log it. Chapter 11’s Work Order has eight fields: Goal, Scope, Inputs, Deliverable and format, Acceptance criteria, Constraints, Review plan, and Log. The office manager of a small accounting firm took on an IT job of her own: a runbook for the quarterly rotation of the firm’s shared administrator passwords. Read the four gold tags. Step 1 sets the goal and fences the scope. Step 2 hands over the inputs. Step 3 names the deliverable and the checks. Step 4 sets the limits and says who reviews. Watch the ASK line in the constraints. The Log field stays out of the prompt, because the log is her job. You sit in the human-in-the-loop seat. The same order directs a tool that takes several steps on its own, because the checks do not change when the tool does more. At Copperwind, the same shape fits Job D in Mei Lin’s brief: the checklist a technician runs before sending an AI-drafted first reply.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow">The office manager’s Work Order</div>
+        <h2 class="wide-title breaks">You set the limits and the checks.<br class="tb"> The tool does the steps.</h2>
+        <figure class="chat stepped-prompt">
+          <div class="chat-bar">Chat assistant <span class="send-note">Send without the Step lines. The Log field stays with her.</span></div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <span class="step">Step 1: set the goal and fence the scope</span>
+                <div class="verbatim"><p><b>Goal:</b> Draft a runbook for the quarterly rotation of shared administrator passwords at a small accounting firm with 12 staff.</p><p><b>Scope:</b> Write the runbook only. Do not write any password, script, or command. Do not change the firm's rule that two people are present for every rotation.</p></div>
+                <span class="step">Step 2: hand over the inputs</span>
+                <p class="verbatim"><b>Inputs:</b> The shared administrator accounts are the firewall, the Wi-Fi controller, the backup server, and the office printer. The firm's password manager holds every credential. Rotation happens on the first Friday of January, April, July, and October, after 5 p.m. The office manager and the firm's outside IT contractor do it together.</p>
+                <span class="step">Step 3: name the deliverable and the checks it must pass</span>
+                <div class="verbatim"><p><b>Deliverable and format:</b> A numbered checklist in plain text, under 250 words, written for the office manager.</p><p><b>Acceptance criteria:</b> It covers all four accounts. It names who does each step. It includes a step to test each new credential before the rotation is closed. It adds no account, tool, or rule that is not listed here.</p></div>
+                <span class="step">Step 4: set the limits and say who reviews</span>
+                <div class="verbatim"><p><b>Constraints:</b> Never print a password or a command. <span class="mark add">If a step needs a fact I did not give you, write "ASK:" and the question instead of guessing.</span></p><p><b>Review plan:</b> The office manager checks every step against these inputs before the first rotation.</p></div>
+              </div>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Here is the sample response, trimmed where the brackets show. It is a numbered checklist with a header, and every step opens with who does it: OM for the office manager, IT for the outside contractor. Look at the three gold lines. Steps 3, 12, and 15 start with ASK. Each one marks a fact she never gave: who must be told, the fallback if a test fails, and where the rotation is recorded and who signs it off. Those three lines are the most useful part of the response. A runbook with a guessed fallback plan would read just as smoothly and fail on the night it mattered. She answers the three questions herself.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow">The office manager’s first run</div>
+        <h2 class="wide-title">The three ASK lines are the most useful part.</h2>
+        <div class="run-pair">
+          <figure class="chat runbook-chat">
+            <div class="chat-bar">Response <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <div class="runbook verbatim">
+                  <div class="rb-col">
+                    <p class="rb-head">QUARTERLY SHARED ADMIN PASSWORD ROTATION RUNBOOK</p>
+                    <p>For: Office Manager (OM). Partner: outside IT contractor (IT).</p>
+                    <p>[...]</p>
+                    <p>Rule: OM and IT are both present for every step.</p>
+                    <p>1. OM and IT: Confirm both are present and the start time is after 5 p.m.</p>
+                    <p>2. OM: Open the firm's password manager and confirm all four credentials are listed.</p>
+                    <p class="ask"><span class="mark add" data-label="never given">3. OM: ASK: Who must be told before rotation, and does any service lose access during it?</span></p>
+                    <p>4. IT: Rotate the firewall credential.</p>
+                  </div>
+                  <div class="rb-col">
+                    <p>5. OM and IT: Save the new firewall credential in the password manager. Test it by signing in. Record pass or fail.</p>
+                    <p>[...]</p>
+                    <p class="ask"><span class="mark add" data-label="never given">12. OM: ASK: What is the fallback if a test fails (for example, restoring the old credential)?</span></p>
+                    <p>13. OM: Confirm all four tests passed. Do not close the rotation until they have.</p>
+                    <p>14. OM and IT: Confirm the password manager shows only the new credentials.</p>
+                    <p class="ask"><span class="mark add" data-label="never given">15. OM: ASK: Where is the completed rotation recorded, and who signs it off?</span></p>
+                    <p>16. OM and IT: Close the rotation.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <div class="ask-side">
+            <span class="side-tag">Each ASK marks a fact she never gave</span>
+            <p>A guessed fallback plan would read just as smoothly.</p>
+            <p class="side-strong">It would fail on the night it mattered.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="She scored it against her acceptance criteria and the format and constraint lines, one at a time, with the evidence. Four pass. Read the Partly row: the header restates the two-person rule as every step, which is stricter than the firm’s every rotation. The tool restated a rule the firm never wrote that way. Read the Fail row: 263 words by a word counter, header included, against a limit of 250. Every score carries a quote or a count, so a colleague can check the scorer. Three things are open now: the three ASK answers, the two-person wording, and the length. Ask students what she should do with this draft. That is the next check.&#10;&#10;Time: 17-20 minutes.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow">Score every criterion, with evidence</div>
+        <h2 class="wide-title">Four pass, one partly, one fails. Each score shows its evidence.</h2>
+        <div class="score-wrap">
+          <table class="score-table">
+            <thead><tr><th scope="col">Criterion</th><th scope="col">Result</th><th scope="col">Evidence</th></tr></thead>
+            <tbody class="verbatim">
+              <tr><td>Covers all four accounts</td><td><span class="score pass">Pass</span></td><td>Steps 4-11 rotate and test each account in turn</td></tr>
+              <tr><td>Names who does each step</td><td><span class="score pass">Pass</span></td><td>Every step opens with OM, IT, or both</td></tr>
+              <tr><td>Tests each new credential before closing</td><td><span class="score pass">Pass</span></td><td>Steps 5, 7, 9, and 11 test, and step 13 says "Do not close the rotation until they have"</td></tr>
+              <tr class="row-partly"><td>Adds no account, tool, or rule</td><td><span class="score partly">Partly</span></td><td>The header restates the two-person rule as "every step," which is stricter than the firm's "every rotation"</td></tr>
+              <tr class="row-fail"><td>Under 250 words</td><td><span class="score fail">Fail</span></td><td>263 words by a word counter, header included</td></tr>
+              <tr><td>No password or command</td><td><span class="score pass">Pass</span></td><td>None appears</td></tr>
+            </tbody>
+          </table>
+          <div class="open-items">
+            <span class="side-tag">Still open after run 1</span>
+            <ul>
+              <li><b>3</b> ASK lines to answer</li>
+              <li><b>1</b> two-person wording to decide</li>
+              <li><b>263</b> words against 250</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 12.2, question 3. Pairs get 60 seconds to pick one and justify it with the failed check. Not as is: 263 words fails the limit she set herself. The chapter’s path is new versions, each logged. The three answers go into Inputs as version 2, she decides which two-person wording stands, and the length fix is version 3, each recorded in a Refinement Log. A pair that says fix and use it can defend that too, as long as the length fix is named and logged, because the failed check is the reason either way.&#10;&#10;Time: 20-22 minutes.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 12.2</div>
+        <h2 class="check-title">Use it as is, fix and use it, or run a new version?</h2>
+        <div class="prompt">
+          <p class="verbatim">The runbook draft passed four of its checks, partly passed one, and failed the word limit. Decide whether the office manager should use it as is, fix and use it, or run a new version, and justify your choice with the failed check.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">
+          <p><strong>Not as is.</strong> It fails the 250-word limit at 263 words, and three ASK lines still need answers. Her path is new versions, each logged in a Refinement Log:</p>
+          <ol class="mini-log" aria-label="Refinement Log: version 1 scored, version 2 adds the answers to Inputs, version 3 fixes the length">
+            <li><b>v1</b> Scored: four pass, one partly, one fail</li>
+            <li><b>v2</b> The three answers go into Inputs</li>
+            <li><b>v3</b> The length fix</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A result nobody can retrace is a claim, not evidence. The Verification Trail is the project’s evidence pack: the Requirements Sheet, the Work Orders, the prompt log, the Audit Reports, the Refinement Logs, and the Selection Decision. Its README says where each piece lives and what a person checked. The test is simple. Could a colleague start from your headline number and reach the run behind it without asking you a question? Point to the print: the finger starts at the one highlighted line and follows it back through the files to the log. That walk is what the README makes possible.&#10;&#10;Time: 22-24 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow">The Verification Trail</div>
+        <h2 class="wide-title breaks">A result nobody can retrace<br class="tb"> is a claim, not evidence.</h2>
+        <div class="visual-split trail-split">
+          <div class="stack">
+            <p class="term-line"><b>Verification Trail</b> The evidence pack a colleague can retrace.</p>
+            <ol class="pieces">
+              <li>Requirements Sheet</li><li>Work Orders</li><li>Prompt log</li><li>Audit Reports</li><li>Refinement Logs</li><li>Selection Decision</li>
+              <li class="readme-piece"><b>README</b> where each lives, what a person checked</li>
+            </ol>
+            <div class="prompt colleague-test">
+              <p><strong>The test:</strong> Could a colleague start from your headline number and reach the run behind it without asking you a question?</p>
+            </div>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/retracing.png" alt="A colleague at a desk follows a gold line with one finger, from a highlighted row on a one-page result, back through three file folders with gold tabs, to a highlighted entry in an open logbook."><figcaption>Every headline number should lead back to a run.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Walk one result back. Start at her number: the runbook draft failed the word limit at 263 words. The README row for Work Order 1 says where it lives, work-order-1-runbook.md in the project folder, and what she checked: all 16 steps against the inputs. The prompt log row points to entries 1 and 2, the prompt and the response pasted exactly with the tool and the date, and she confirmed each entry matches what she sent and received. That reaches the run. The README carries the most weight because it records what a person checked. Then the end of the trail: What nobody checked. Whether the contractor’s sign-in test works the same way on each of the four devices. Saying where the checking stopped makes the rest of the trail easier to trust.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS137 · 12.2</div>
+      <div class="content">
+        <div class="eyebrow">Walk the office manager’s result back</div>
+        <h2 class="wide-title">Start at the headline number. Reach the run without asking her.</h2>
+        <div class="trail-walk" role="img" aria-label="A dashed trail with five marked posts, read left to right. One, the headline number: 263 words against a 250-word limit. Two, the README row for Work Order 1. Three, the Work Order file, work-order-1-runbook.md, in the project folder. Four, the prompt log, prompt-log.md, entries 1 and 2. Five, the run: 16 steps, checked against the inputs. After the last post, a marked trail end: what nobody checked, whether the contractor's sign-in test works the same way on each of the four devices.">
+          <ol class="walk">
+            <li><b>Headline number</b><span>263 words against 250</span></li>
+            <li><b>README row</b><span>Work Order 1</span></li>
+            <li><b>The Work Order</b><span class="file">work-order-1-runbook.md</span></li>
+            <li><b>The prompt log</b><span class="file">prompt-log.md, entries 1-2</span></li>
+            <li><b>The run</b><span>16 steps, checked against the inputs</span></li>
+          </ol>
+          <p class="trail-end"><b>What nobody checked</b> Whether the contractor’s sign-in test works the same way on each of the four devices.</p>
+        </div>
+        <table class="readme-table">
+          <caption>Her Verification Trail README, two rows</caption>
+          <thead><tr><th scope="col">Piece</th><th scope="col">File name and where it lives</th><th scope="col">What it holds</th><th scope="col">What a person checked (who, when, against what)</th></tr></thead>
+          <tbody class="verbatim">
+            <tr><td data-label="Piece">Work Order 1</td><td data-label="File name and where it lives"><code>work-order-1-runbook.md</code>, in the project folder</td><td data-label="What it holds">The runbook Work Order and its scored first run</td><td data-label="What a person checked" class="checked">The office manager checked all 16 steps against the inputs: four checks pass, one partly, and the 250-word limit fails at 263 words</td></tr>
+            <tr><td data-label="Piece">Prompt log</td><td data-label="File name and where it lives"><code>prompt-log.md</code>, entries 1-2, in the project folder</td><td data-label="What it holds">The prompt and the response, pasted exactly, with the tool and the date</td><td data-label="What a person checked" class="checked">The office manager confirmed each entry matches what she sent and received</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The presentation is where a good project can undo itself. One line rounder than the log, and the person who decides stops trusting the rest. The Presentation outline keeps the talk tied to the trail, six parts in order. The recommendation comes first for the same reason it leads the Memo: a busy reader may hear only the opening. The limits protect the ask: a stakeholder who finds a gap you did not name will doubt the lines you did support. The two gold tags mark the parts that point into the trail. For Copperwind, Mei Lin is the audience and the owner is the person she must then convince, so the outline has to survive being retold. Plan for everyone in the room: describe what a slide shows out loud, and share your material ahead of time.&#10;&#10;Time: 26-28 minutes.">
+      <div class="brand">CIS137 · 12.3</div>
+      <div class="content">
+        <div class="eyebrow">The Presentation outline</div>
+        <h2 class="wide-title">Recommendation first. Limits before the ask.</h2>
+        <div class="outline-wrap">
+          <figure class="artifact-card outline-card">
+            <span class="card-tab">Presentation outline</span>
+            <ol class="outline-parts">
+              <li><b>Audience</b><span>who will hear it, what they decide, and what they already know</span></li>
+              <li><b>The recommendation first</b><span>what you recommend, in one or two sentences</span></li>
+              <li class="to-trail"><b>The evidence</b><span>three to five lines, each with its count and its source in the Verification Trail <i class="trail-tag">points into the trail</i></span></li>
+              <li class="limits"><b>The limits</b><span>what the log cannot support, such as numbers you did not collect and cases you did not test</span></li>
+              <li><b>The ask</b><span>one action, with who takes it</span></li>
+              <li class="to-trail"><b>Questions you expect</b><span>each with where its answer lives in the trail, or “Not answered yet” <i class="trail-tag">points into the trail</i></span></li>
+            </ol>
+          </figure>
+          <div class="outline-why">
+            <p><b>First:</b> a busy reader may hear only the opening.</p>
+            <p><b>Limits:</b> a gap you did not name makes them doubt the lines you did support.</p>
+            <p class="field-note">At Copperwind, the outline has to survive being retold to the owner.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Predict first, 30 seconds, no reveal: before you show where each question lands, ask the room which of the five questions her log can answer today. Take a show of hands for each, then walk the placements. The housing office student recommends extending her pilot one more month, with every label checked by a person. Her evidence: two fresh runs on the same 24 emails, names and room numbers removed, 21 and then 22 correct, about 10 minutes per run with her check, plus about 15 minutes to remove names first. She asked a chat assistant for the five questions her supervisor would ask. Fair questions. Now place each one against the trail. Question 1 turns her counts into roughly 88 to 92 percent, which she never wrote. She answers in counts and puts the small sample under The limits. Question 5 is answered if her ask names what the extra month will measure. Questions 2, 3, and 4 are Not answered yet. The log never says how the 24 were chosen, it has no by-hand time for those 24, and the privacy office has not approved real emails. She can time a by-hand sort before the talk. The other two go under The limits, stated plainly.&#10;&#10;Time: 28-31 minutes.">
+      <div class="brand">CIS137 · 12.3</div>
+      <div class="content">
+        <div class="eyebrow">Questions you expect</div>
+        <h2 class="wide-title">Place each question against the trail.</h2>
+        <p class="facts-line"><span class="facts-tag">Her evidence</span> 24 emails, names and room numbers removed · <b>21</b>, then <b>22</b> correct · about 10 minutes per run · 15 more to remove names</p>
+        <div class="questions">
+          <div class="q-head"><span>Her supervisor may ask <span class="stamp">Sample, Oct 2026. Your output will differ.</span></span><span>Where it lands</span></div>
+          <div class="q-row"><p class="verbatim">1. Is a sample of 24 emails, run twice, big enough to trust an accuracy of <span class="mark add" data-label="she never wrote">roughly 88–92%</span>?</p><p class="dest"><span class="dest-chip answered">Answer in counts</span> small sample under <b>The limits</b></p></div>
+          <div class="q-row"><p class="verbatim">2. Were those 24 emails representative of our real volume, including messy, multi-issue, or unclear ones?</p><p class="dest"><span class="dest-chip open">Not answered yet</span> under <b>The limits</b></p></div>
+          <div class="q-row"><p class="verbatim">3. Does the time saved actually beat doing the sorting by hand, given 10 minutes of checking plus 15 minutes of removing names and room numbers?</p><p class="dest"><span class="dest-chip open">Not answered yet</span> time a by-hand sort first</p></div>
+          <div class="q-row"><p class="verbatim">4. What happens to student privacy when real emails go in, and is the tool approved for that data?</p><p class="dest"><span class="dest-chip open">Not answered yet</span> under <b>The limits</b></p></div>
+          <div class="q-row"><p class="verbatim">5. What will we measure during the extra month to decide whether to adopt, change, or drop it?</p><p class="dest"><span class="dest-chip answered">Answered by The ask</span> if it names what to measure</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Fix It 12.1. She needs one headline for her results slide and asked for something punchy and confident. Symptom: it reads well, sounds sure, and every number comes from somewhere. Diagnose: put the headline beside the log and find the line each piece rests on. Three pieces have none. 88 to 92 percent turns two counts into a percentage and hides the 1 email the tool flagged unsure. The one confusion to watch is wrong, because Run 2 also put an Account email in Other. In about 10 minutes leaves out the 15 minutes of removing names. The tool’s own notes said so, but notes never reach the slide. Repair: one added sentence after make it punchy and confident, so any change is credited to it. The log excerpt stayed the same. Verify, piece by piece: 21 and 22 of 24 matches Run 1 and Run 2, and about 10 minutes per run matches the time line. The headline still leaves out the 15 minutes, so she adds the full cost, about 25 minutes per batch, to The evidence, with the 2 wrong labels per run beside it.&#10;&#10;Time: 31-35 minutes.">
+      <div class="brand">CIS137 · 12.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 12.1: the results slide</div>
+        <h2 class="wide-title breaks">Three pieces of the headline<br class="tb"> have no log line behind them.</h2>
+        <div class="fix-grid">
+          <div class="fix-col">
+            <span class="ba-label">Symptom</span>
+            <p class="asked"><span class="hl-label">She asked:</span> <span class="verbatim">[...] Write the one-line results headline for my results slide. Make it punchy and confident. [...]</span></p>
+            <p class="headline before verbatim"><span class="hl-label">Headline:</span> "AI sorted 24 help emails <span class="mark add" data-label="leaves out 15 min">in ~10 minutes</span> at <span class="mark wrong" data-label="no log line">88-92% accuracy</span>, with <span class="nw">Wi-Fi</span> vs. Hardware as <span class="mark wrong" data-label="wrong">the one confusion to watch</span>." <span class="trim">[...]</span></p>
+            <span class="cap-note">Captured Oct 2026. Your output will differ.</span>
+          </div>
+          <div class="fix-col log-col">
+            <span class="ba-label">Diagnose against her log</span>
+            <div class="log-card verbatim">
+              <p>[...]</p>
+              <p>Run 1: 21 correct, 2 wrong (both <span class="nw">Wi-Fi</span> emails labeled Hardware), 1 flagged unsure by the tool.</p>
+              <p>Run 2: 22 correct, 2 wrong (one <span class="nw">Wi-Fi</span> labeled Hardware, <span class="mark add" data-label="a second confusion">one Account labeled Other</span>), 0 flagged unsure.</p>
+              <p>Time per run, including my check: about 10 minutes. Removing names and room numbers first: about 15 minutes.</p>
+            </div>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">Repair: one added sentence</span>
+            <span class="cap-note">Added right after “Make it punchy and confident.” The log excerpt stays the same.</span>
+            <p class="repair verbatim">Build the headline only from the counts and times in the log, stated exactly as the log gives them, with no percentage and no word the log does not support.</p>
+            <span class="ba-label">Verify</span>
+            <p class="headline after verbatim"><span class="mark holds">21 and 22 of 24 help emails labeled correctly in two runs</span>, <span class="mark holds">about 10 minutes per run</span> <span class="trim">[...]</span></p>
+            <span class="cap-note">Sample, Oct 2026. Your output will differ.</span>
+          </div>
+        </div>
+        <p class="cost-line"><b>Into The evidence:</b> the full cost, about 25 minutes per batch, with the 2 wrong labels per run beside it.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 12.3, question 1. Everyone writes the line before you reveal. Near-perfect is a word with no count behind it. The rewrite states the counts as the log gives them, with no percentage. Then the second half: the 2 drafts with an invented step belong in the evidence and also under The limits. They were caught because a person checked every draft, and the log cannot say how often that would happen without the check. The dispatcher’s outline in the chapter made the same move with its 2 wrong arrival windows.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 12.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 12.3</div>
+        <h2 class="check-title breaks">Rewrite “near-perfect accuracy”<br class="tb"> from the counts.</h2>
+        <div class="prompt">
+          <p class="verbatim">A slide reads: "The tool handled our tickets with near-perfect accuracy." The log says 40 drafts were checked: 31 sent with light edits, 7 rewritten, and 2 caught with an invented step. Rewrite the line from the counts, and say which part of the outline the 2 belong in as well.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">For example: <strong>“Of 40 drafts checked, 31 went out with light edits, 7 were rewritten, and 2 were caught with an invented step.”</strong> The 2 also belong under <strong>The limits</strong>: a person caught them, and the log cannot show how often an error would get through without that check.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A reflection answers three questions: what AI did well, what it got wrong, and what you would do differently. Memory is a poor source for all three. On the left, the student gave a chat assistant no log. Her categories were Wi-Fi, Account, Hardware, and Other. The draft’s maintenance requests, roommate conflicts, and billing questions never happened, and neither did the misread RA. Its own last line admits it made them up. It ran 137 words, note included, against a 120-word request. On the right, the same request with the log excerpt pasted in. Every count holds, including the keyword rules’ 17 of 24, and it runs exactly 120 words. Its sharpest line: Run 2 flagged nothing unsure despite two errors. That is a weakness of current AI worth naming in any presentation: it can be wrong without warning. The last sentence is different in kind. What I would do differently is a decision, and the log cannot make it. A full reflection also says what changed for the people doing the work: sorting time turned into masking, checking, and logging time.&#10;&#10;Time: 37-39 minutes.">
+      <div class="brand">CIS137 · 12.4</div>
+      <div class="content">
+        <div class="eyebrow">Reflection from the log</div>
+        <h2 class="wide-title breaks">Write the reflection from the log,<br class="tb"> not from memory.</h2>
+        <div class="before-after reflect">
+          <div class="reflect-card">
+            <div class="reflect-head"><span class="ba-label">No log</span><span class="count bad">137 words against 120</span></div>
+            <p class="verbatim">[...] The AI performed well at identifying common categories, such as <span class="mark wrong" data-label="never happened">maintenance requests, roommate conflicts, and billing questions</span>, [...] It also misread housing-specific terms like <span class="mark wrong" data-label="never happened">"RA"</span> and "move-in window." [...]</p>
+            <p class="verbatim tool-note"><i>I made up the specific examples (categories, errors), so swap in the ones from your actual project.</i></p>
+            <span class="cap-note">Sample, Oct 2026. Your output will differ.</span>
+          </div>
+          <div class="reflect-card">
+            <div class="reflect-head"><span class="ba-label">Log pasted in</span><span class="count good">120 words, every count holds</span></div>
+            <p class="verbatim">[...] It got <span class="mark holds">21 of 24</span> correct in Run 1 and <span class="mark holds">22 of 24</span> in Run 2, compared with <span class="mark holds">17 of 24</span> for the keywords, which sent seven emails to Other. [...] <span class="mark holds" data-label="sharpest line">Run 2 flagged nothing unsure despite two errors.</span> [...]</p>
+            <span class="cap-note">Sample, Oct 2026. Your output will differ.</span>
+          </div>
+        </div>
+        <p class="field-note">“What I would do differently” is a decision. The log cannot make it.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The Ethics Statement pulls Chapters 3, 7, and 8 into one page for one project: five sections, in this order. It is not a promise of good intentions. Each line points to a file or a log entry a colleague could open. The student listed her facts and asked for a draft. Most of it is faithful. Bias names the gap honestly, which is what the section asks when no test was run: some residents write in Spanish, and she has not checked whether those emails land in Other more often. Three lines need her attention. So no identifying details were processed claims more than the facts. She removed names and room numbers, and an email can carry other identifiers, such as a phone number. Ownership names no license, because she never gave it the tool’s terms of use. And the last clause of Accountability is not in her facts. It may be true. It is still hers to write, because accountability is the one section a tool cannot answer for. The chapter’s sample trims Disclosure.&#10;&#10;Time: 39-42 minutes.">
+      <div class="brand">CIS137 · 12.4</div>
+      <div class="content">
+        <div class="eyebrow">The Ethics Statement</div>
+        <h2 class="wide-title">Five sections, in order. Every line points to a file.</h2>
+        <figure class="artifact-card ethics-card">
+          <span class="card-tab">Ethics Statement · sample, Oct 2026</span>
+          <dl class="ethics-rows">
+            <div class="e-row"><dt><b>Privacy</b><span>what went in, what did not, why</span></dt><dd class="verbatim">[...] my supervisor caught it before the first run, <span class="mark add">so no identifying details were processed.</span> [...]</dd><dd class="e-flag"><span class="verdict not-in-source">Claims more than the facts</span></dd></div>
+            <div class="e-row"><dt><b>Ownership</b><span>what you can claim, the licenses</span></dt><dd class="verbatim">I wrote the category definitions (Wi-Fi, Account, Hardware, Other) and the prompt. The tool wrote the labels for the 24 emails. [...]</dd><dd class="e-flag"><span class="verdict not-in-source">Names no license</span></dd></div>
+            <div class="e-row"><dt><b>Bias</b><span>tests run, or the risk named</span></dt><dd class="verbatim">I did not run a paired prompt test [...] Until that check is done, this is a known gap and a possible source of unfair sorting.</dd><dd class="e-flag"><span class="verdict holds">Names the gap honestly</span></dd></div>
+            <div class="e-row trimmed"><dt><b>Disclosure</b><span>who was told, where, how</span></dt><dd>[...] trimmed in the chapter’s sample</dd><dd class="e-flag"></dd></div>
+            <div class="e-row"><dt><b>Accountability</b><span>who answers for the result</span></dt><dd class="verbatim">[...] My supervisor approves the process, and <span class="mark add">I am responsible for the prompt, the category definitions, and the data preparation.</span></dd><dd class="e-flag"><span class="verdict not-in-source">Not in her facts</span></dd></div>
+          </dl>
+        </figure>
+        <span class="cap-note">Sample, Oct 2026. Your output will differ.</span>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Who answers when an AI tool is wrong? In Mata v. Avianca, two lawyers and their firm filed a court paper that cited opinions that did not exist. Its fake quotes and citations came from an AI chat tool, and they kept standing by the fake opinions after the court questioned them. The judge wrote that “there is nothing inherently improper about using a reliable artificial intelligence tool for assistance.” He also wrote the line on the slide. The court imposed a 5,000 dollar penalty and ordered letters to the client and to each judge falsely named as the author of a fake opinion. It is one federal trial court’s order in one case, read October 21, 2026. The rule it relied on first, Rule 11 of the Federal Rules of Civil Procedure, is about signing court papers, not about AI. That is the point for your Accountability section: it names a person or a role, never the tool. At Copperwind, it names the technician who sends each reply and the operations manager who signs the AI Use Policy.&#10;&#10;Time: 42-44 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 12.4</div>
+      <div class="content">
+        <div class="eyebrow">Case: who answers when an AI tool is wrong</div>
+        <h2 class="wide-title breaks">Accountability names a person<br class="tb"> or a role, never the tool.</h2>
+        <div class="visual-split case-split">
+          <figure class="case-card">
+            <span class="card-tab">Court order</span>
+            <p class="case-name"><i>Mata v. Avianca, Inc.</i>, No. 22-cv-1461 (S.D.N.Y. June 22, 2023)</p>
+            <p>Two lawyers filed a paper citing opinions that did not exist. The fakes came from an AI chat tool.</p>
+            <blockquote class="verbatim">“existing rules impose a gatekeeping role on attorneys to ensure the accuracy of their filings.”</blockquote>
+            <p class="award"><b>$5,000</b> penalty, plus letters to the client and to each judge falsely named.</p>
+            <p class="cw-line"><b>At Copperwind:</b> the technician who sends each reply, and the operations manager who signs the AI Use Policy.</p>
+          </figure>
+          <figure class="visual-art print-frame"><img src="assets/accountability.png" alt="A person signs a one-page document at the signature line, one hand steadying the page. A closed laptop sits apart on the desk."><figcaption>A person signs for the result. The tool cannot.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 12.4, question 1. Two minutes in pairs: critique first, then rewrite. A tool cannot answer for anything. Mata v. Avianca put the gatekeeping role on the attorneys who filed, under a rule about signing court papers, not about AI. The rewrite names a person or a role. Read two aloud and check that each one names who answers and what they check.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS137 · 12.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 12.4</div>
+        <h2 class="check-title">Critique it with the court case. Then rewrite it.</h2>
+        <div class="prompt">
+          <p class="verbatim">A student's Accountability section reads: "The AI tool is responsible for the accuracy of its outputs." Critique it using the court case in this section, and rewrite it for a home lab build checklist.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">A tool cannot answer for a result. In <i>Mata v. Avianca</i>, the court put the gatekeeping role on the attorneys who filed, under a rule about signing court papers. Name a person or a role, for example: <strong>“I answer for the accuracy of this build checklist. I check every step before I&nbsp;run&nbsp;it.”</strong></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The Toolkit is your personal AI toolkit, with a README. It is the course deliverable, and it is built to be used on Monday. Read the table by its last column: each item has a moment when you open it. The Tool Survey when you are choosing a tool, or a tool’s tier or policy changed. The Requirements Sheet and Work Order when a new job arrives, before any tool is named. The Ethics Statement when a project is about to be shared or used. The toolkit-starter folder in the chapter’s data pack holds a clean copy of every template. You copied it to toolkit-lastname in Try It Yourself 12.1, and every fill since then went into that copy. Your Comparison Matrices feed the Last tested line of each Tool Survey card. The README’s most practical line is Which tools I will use next week, and the home lab example sits under the case.&#10;&#10;Time: 46-48 minutes.">
+      <div class="brand">CIS137 · 12.4</div>
+      <div class="content">
+        <div class="eyebrow">Assembling the Toolkit</div>
+        <h2 class="wide-title">The Toolkit is built to be used on Monday.</h2>
+        <div class="toolkit-case">
+          <span class="case-handle" aria-hidden="true"></span>
+          <table class="toolkit-table">
+            <thead><tr><th scope="col">Item</th><th scope="col">Where you built it</th><th scope="col">Open it when</th></tr></thead>
+            <tbody class="verbatim">
+              <tr><td>Tool Survey</td><td>Chapter 10</td><td>You are choosing a tool, or a tool's tier or policy changed</td></tr>
+              <tr><td>Prompt library (v3, or the v2 starter)</td><td>Chapters 4-6</td><td>A job repeats and a tested prompt already exists</td></tr>
+              <tr><td>Requirements Sheet and Work Order</td><td>Chapter 11</td><td>A new job arrives, before any tool is named</td></tr>
+              <tr><td>Output Checklist and Audit Report</td><td>Chapters 5 and 7</td><td>Any output is about to be used</td></tr>
+              <tr><td>AI Use Policy</td><td>Chapter 8</td><td>You are unsure what may go into a tool</td></tr>
+              <tr><td>Use Evaluation and Selection Decision</td><td>Chapters 9 and 11</td><td>Someone asks whether to adopt</td></tr>
+              <tr><td>Ethics Statement</td><td>Chapter 12</td><td>A project is about to be shared or used</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="readme-line"><span class="facts-tag">README · Which tools I will use next week</span> <span class="verbatim">"A general assistant from my Tool Survey drafts the test plan for my VPN change. I check it with the Output Checklist."</span></p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="You started this course asking a chat assistant what it was. You finish it holding a Toolkit, and the Toolkit carries five habits of the human in the loop. Read them along the trail. Keep a log: the prompt log and the Verification Trail. Verify before you trust: the Output Checklist and the Accuracy Audit. Protect what is not yours to share: the privacy plan, the AI Use Policy, and the Privacy section of the Ethics Statement. Choose by criteria: the Requirements Sheet, the Comparison Matrix, and the Selection Decision. Know when to say no: the no-AI option and the no AI here decision. Now resolve the opening. Mei Lin said she would not carry a line she could not defend. She walks into the owner’s office with a recommendation she can defend, because every line traces to a run someone checked.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS137 · Course conclusion</div>
+      <div class="content">
+        <div class="eyebrow">Course conclusion</div>
+        <h2 class="wide-title">Five habits of the human in the loop.</h2>
+        <ol class="habits" role="img" aria-label="A dashed trail with five marked posts, read left to right. One, keep a log: the prompt log and the Verification Trail. Two, verify before you trust: the Output Checklist and the Accuracy Audit. Three, protect what is not yours to share: the privacy plan, the AI Use Policy, and the Privacy section of the Ethics Statement. Four, choose by criteria: the Requirements Sheet, the Comparison Matrix, and the Selection Decision. Five, know when to say no: the no-AI option and the no AI here decision.">
+          <li><b>Keep a log.</b><span>The prompt log and the Verification Trail</span></li>
+          <li><b>Verify before you trust.</b><span>The Output Checklist and the Accuracy Audit</span></li>
+          <li><b>Protect what is not yours to share.</b><span>The privacy plan, the AI Use Policy, the Ethics Statement’s Privacy section</span></li>
+          <li><b>Choose by criteria.</b><span>The Requirements Sheet, the Comparison Matrix, the Selection Decision</span></li>
+          <li><b>Know when to say no.</b><span>The no-AI option and the “no AI here” decision</span></li>
+        </ol>
+        <p class="resolve verbatim">Mei Lin will walk into the owner's office with a recommendation she can defend, because every line traces to a run someone checked.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The certificate goes further from here. CIS144 focuses on agentic systems and AI-driven data analytics: tools that take actions and work with data. CIS218 focuses on designing, integrating, and deploying AI solutions. Both build on the seat you now hold. Read the last line of the course aloud: a tool that acts on its own still needs someone to write the order, set the checks, and answer for the result. Every piece of the Toolkit is a file you can open next week, at school or on an IT project of your own.&#10;&#10;Time: 50-52 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Course conclusion</div>
+      <div class="content">
+        <div class="eyebrow">Where you go from here</div>
+        <h2 class="wide-title breaks">The trail forks.<br class="tb"> The seat you hold goes with you.</h2>
+        <div class="visual-split fork-split">
+          <div class="stack">
+            <ul class="signposts">
+              <li><b>CIS144</b><span>Agentic systems and AI-driven data analytics: tools that take actions and work with data</span></li>
+              <li><b>CIS218</b><span>Designing, integrating, and deploying AI solutions</span></li>
+            </ul>
+            <p class="last-line verbatim">A tool that acts on its own still needs someone to write the order, set the checks, and answer for the result.</p>
+          </div>
+          <figure class="visual-art print-frame"><img src="assets/trail-fork.png" alt="A dashed trail climbs from the foreground and forks toward two distant ridges. At the fork stands a post with two gold signs, one pointing down each path, and a packed toolkit case rests beside it."><figcaption>Either path, you carry the Toolkit.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 12A. Part 1, about 2 to 3 hours: copy toolkit-starter into toolkit-lastname, choose your option and read its brief, get instructor approval for an own project, write the privacy plan, fill the Requirements Sheet naming no tool, and fill a Tool Survey card for at least two tools. Part 2, about 4 to 6 hours: at least two Work Orders, each run twice in a fresh conversation and scored with counts. For Copperwind, choose two of Jobs A to D, and decide Job E without putting it into any tool. Then a Selection Decision for each job and the Verification Trail README, including What nobody checked. Part 3, about 4 to 5 hours: the Presentation outline and the presentation in the format your instructor sets, one claim tested against your log, a reflection of at most 200 words, the Ethics Statement, and the Toolkit with its README. Exit ticket: name one line of your project and the log entry behind it. That answers Mei Lin’s question.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS137 · Lab 12A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 12A</div>
+        <h2 class="wide-title">Deliver it to the person who decides.</h2>
+        <ol class="lab-parts">
+          <li><span class="part">Part 1 · 2-3 hours</span><strong>Define done</strong><span>Option and brief, privacy plan, Requirements Sheet, two Tool Survey cards.</span></li>
+          <li><span class="part">Part 2 · 4-6 hours</span><strong>Build the trail</strong><span>Two Work Orders, each run twice. Selection Decisions. The README. Copperwind: two of Jobs A-D, and Job E with no tool.</span></li>
+          <li><span class="part">Part 3 · 4-5 hours</span><strong>Present and reflect</strong><span>Outline and talk, one claim tested, reflection, Ethics Statement, Toolkit.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Name one line of your project and the log entry behind it.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>
