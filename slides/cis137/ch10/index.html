@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 10 classroom presentation: Surveying and Comparing AI Platforms.">
+  <meta name="theme-color" content="#002e5d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 54h48M8 40h48' stroke='%23ffffff' stroke-width='3'/%3E%3Cpath d='M16 34V10' stroke='%23FFC845' stroke-width='4'/%3E%3Cpath d='M16 11h22l-5 6 5 6H16' stroke='%23FFC845' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E">
+  <title>CIS137: Surveying and Comparing AI Platforms</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Surveying and Comparing AI Platforms" data-course="cis137"
+  data-chapter="ch10" data-palette="golden-hour">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter’s first scene. A Deskside technician at Copperwind tells you to just use the one everybody uses, because it’s the best. Another technician swears by a different one. Neither has tried both on the same ticket. Mei Lin has heard the argument three times this month, and she has a deadline. The pilot ends this quarter, and she must tell the owner which tools Copperwind adopts for next year, for which jobs, and why. Ask the lede out loud: best at which task, and by what count? Take two or three answers. Promise the payoff. By the end of class, everyone can survey tools by type, run a fair test, and score it in counts.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-test-lanes.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 10 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Surveying and Comparing AI Platforms</h1>
+        <p class="lede">“It’s the best.” Best at which task, and by what count?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as today’s three moves. All three sit at the Evaluate level. 10.1 judges one platform against six stated criteria, with evidence from a fair test. 10.2 defends a ranking with a Comparison Matrix built from the same prompt, inputs, and criteria, scored in counts. 10.3 assesses a Tool Survey card for currency and completeness, names the type of AI behind the tool, and decides when to test it again. The chapter serves CLO 6 (select appropriate AI solutions) and CLO 2 (differentiate the major types of AI). Chapters 7, 8, and 9 come with us: the Accuracy Audit, reading a data policy, and the pilot.&#10;&#10;Time: 2-3 minutes.">
+      <div class="brand">CIS137 · Chapter 10</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Judge, defend, assess.</h2>
+        <ol class="targets">
+          <li><span class="t-num">10.1</span><strong>Judge</strong><p>an AI platform against the six comparison criteria for a stated task, using evidence from a fair test</p></li>
+          <li><span class="t-num">10.2</span><strong>Defend</strong><p>a ranking of two or more platforms on one task with a Comparison Matrix built from the same prompt, inputs, and criteria, scored in counts</p></li>
+          <li><span class="t-num">10.3</span><strong>Assess</strong><p>a Tool Survey card for currency and completeness, classifying the tool by type of AI, and decide when the tool must be tested again</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="You are the AI adoption assistant, and this is Mei Lin’s ask. She wants a Comparison Matrix for three help desk tasks. Read them: a reply to a printer-offline ticket, a four-bullet summary of a short client update, and a plain explanation of two-step sign-in for a client’s staff. She wants every tool tested the same way, and she wants the scores in counts. Point to the print. Two technicians, two favorite tools, and one test sheet nobody touched. Their argument has no counts in it, so it cannot end. The same method works on your own IT projects.&#10;&#10;Time: 3-6 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Chapter 10</div>
+      <div class="content visual-split hook-split">
+        <div class="stack">
+          <div class="eyebrow">Copperwind · Deskside</div>
+          <h2>“Best” is not a score.</h2>
+          <figure class="artifact-card ask-card">
+            <span class="card-tab">Mei Lin’s ask</span>
+            <dl class="card-fields">
+              <dt>Task 1</dt><dd>A reply to a printer-offline ticket</dd>
+              <dt>Task 2</dt><dd>A four-bullet summary of a short client update</dd>
+              <dt>Task 3</dt><dd>A plain explanation of two-step sign-in</dd>
+              <dt>Rule</dt><dd>Every tool tested the same way. Scores in counts.</dd>
+            </dl>
+          </figure>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/hook-two-technicians.png" alt="Two help desk technicians at separate desks, each pointing at a different monitor that shows a different chat icon. On a small round table between them, a test sheet with empty check boxes and a pencil lies untouched."><figcaption>Two favorites, no shared test. Nothing to count yet.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A survey asks two questions about every tool. The first is the job. Chapter 1 sorted generative tools into five kinds, and this chapter gives them the names you write on a card, in the card’s order. A general assistant is a chat assistant built for any task, and most are multimodal now. A research tool answers with citations you can open, as Chapter 3 showed. An image or media tool makes or edits pictures, audio, or video. AI inside an office suite is the assistant built into the email, document, and spreadsheet apps a team already uses. A specialized tool is built for one job, such as writing code, transcribing calls, or sorting tickets. The second question comes from Chapter 1: where does its behavior come from? The answer tells you how it fails. Last, the term at the bottom. You compare platforms, not logos, because two people on the same tool with different plans may get different limits and different data terms.&#10;&#10;Time: 6-8 minutes.">
+      <div class="brand">CIS137 · 10.1</div>
+      <div class="content">
+        <div class="eyebrow">The landscape by type</div>
+        <h2 class="wide-title">Ask two type questions of every tool.</h2>
+        <div class="type-board" role="img" aria-label="Two questions, top to bottom. Question 1, which job: the five tool types in the card’s order, general assistant, research tool, image or media tool, AI inside an office suite, and specialized tool. Question 2, which AI is behind it, which tells you how it fails: a rule-based feature fails the same way every time and you can read the rule. A machine learning feature that sorts or predicts can be wrong in ways no rule explains. A generative feature can write a fluent sentence nobody said.">
+          <div class="q-row">
+            <p class="q-label"><span>Question 1</span><b>Which job?</b></p>
+            <ol class="type-tabs">
+              <li>General assistant</li>
+              <li>Research tool</li>
+              <li>Image or media tool</li>
+              <li>AI inside an office suite</li>
+              <li>Specialized tool</li>
+            </ol>
+          </div>
+          <div class="q-row">
+            <p class="q-label"><span>Question 2</span><b>Which AI is behind it?</b></p>
+            <ul class="fail-rows">
+              <li><b>Rule-based</b><span>Fails the same way every time. You can read the rule.</span></li>
+              <li><b>Machine learning</b><span>Sorts or predicts. Can be wrong in ways no rule explains.</span></li>
+              <li><b>Generative</b><span>Can write a fluent sentence nobody said.</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="term-line"><b>Platform</b> The product, its plans, data policy, and where it runs.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A plumbing contractor’s office manager asked a chat assistant to sort the six features in her scheduling software: rule-based, machine learning that sorts or predicts but does not generate, or generative AI, each with a one-sentence clue, and to say so if the description cannot tell. Read the bins. Every sort matches the clues in the descriptions. Item 2 is the useful one. The tool admits a keyword rule could do the same job, so the description alone cannot settle it. The vendor’s documentation can. Now apply Chapter 1’s judgment test: items 1 and 4 follow rules but replace no judgment, so by this book’s test they are not AI at all. The type of AI decides the check. Items 3 and 6 get the Accuracy Audit, because they can add claims. The category suggestion needs a count of wrong categories, the way a pilot counts errors. The chapter cuts the sample’s answer for item 5. Ask the room which bin it belongs in and which word in the description decides it.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS137 · 10.1</div>
+      <div class="content">
+        <div class="eyebrow">A plumbing contractor’s scheduling software</div>
+        <h2 class="wide-title">The type of AI decides the check.</h2>
+        <div class="bins" role="img" aria-label="A chat assistant’s sample sort of six scheduling features into three bins, left to right. Bin one, rule-based: item 1, sends we got your request to every customer who emails, and item 4, moves any invoice unpaid for 60 days to a follow up list. Both are not AI by the judgment test. Check: read the rule. Bin two, machine learning that sorts or predicts: item 2, suggests a job category from the customer’s description. The sample admits a keyword rule could do it, so the vendor’s documentation settles it. Check: count wrong categories. Bin three, generative AI: item 3, drafts a reply for the dispatcher to edit, and item 6, writes a summary of the technician’s notes. Check: the Accuracy Audit, because they can add claims. Item 5, predicts how long a job will take, is cut from the sample.">
+          <div class="bin rules">
+            <span class="bin-head">Rule-based</span>
+            <div class="bin-body">
+              <p class="ticket"><span class="n">1</span><span class="verbatim">Sends "We got your request" to every customer who emails us.</span></p>
+              <p class="ticket"><span class="n">4</span><span class="verbatim">Moves any invoice unpaid for 60 days to a "Follow up" list.</span></p>
+              <p class="bin-note">Not AI by the judgment test: rules, no judgment replaced.</p>
+            </div>
+            <span class="bin-check"><b>Check</b> Read the rule.</span>
+          </div>
+          <div class="bin learned">
+            <span class="bin-head">Machine learning (sorts/predicts)</span>
+            <div class="bin-body">
+              <p class="ticket"><span class="n">2</span><span class="verbatim">Suggests a job category (leak, drain, or water heater) from the customer's description.</span></p>
+              <p class="bin-note ambiguous"><span class="verbatim">"It could be a simple keyword rule, so the description can't fully confirm ML [...]"</span> The vendor’s documentation settles it.</p>
+            </div>
+            <span class="bin-check"><b>Check</b> Count wrong categories.</span>
+          </div>
+          <div class="bin generated">
+            <span class="bin-head">Generative AI</span>
+            <div class="bin-body">
+              <p class="ticket"><span class="n">3</span><span class="verbatim">Drafts a reply to a customer's email for our dispatcher to edit.</span></p>
+              <p class="ticket"><span class="n">6</span><span class="verbatim">Writes a summary of the technician's notes for the invoice.</span></p>
+            </div>
+            <span class="bin-check"><b>Check</b> Accuracy Audit. It can add claims.</span>
+          </div>
+        </div>
+        <p class="cut-row"><span class="ticket cut"><span class="n">5</span><span class="verbatim">Predicts how long a job will take from past jobs of the same kind.</span></span> <span class="cut-note">[...] The sample’s answer for item 5 is cut.</span> <span class="stamp">Sample, Oct 2026. Your output will differ.</span></p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="You record each platform on one card, and the set of cards is your Tool Survey: the index of every AI tool you use or might use. Read the eight fields in order. The gold tags mark the dates. Tier and cost and Data policy are vendor facts, and vendors change them without asking you, so each carries the date you checked and where you read it. Last tested carries the date of your own test. Copperwind’s survey starts with the tools Deskside might adopt. Yours starts with the tools your own IT project already uses. If you keep a home lab, that may be a general assistant you ask about server settings and the AI summary feature in your note app. Both get a card, because both see your work. Try It Yourself 10.1: pick one tool, predict whether its free tier trains on your input by default and what its next tier costs, then fill tool-survey-card-template.md from the vendor’s own pages. Leave Last tested as not yet.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS137 · 10.1</div>
+      <div class="content">
+        <div class="eyebrow">The Tool Survey card</div>
+        <h2 class="wide-title lines"><span class="tl">One card per tool.</span><span class="tl">Date every fact a vendor can change.</span></h2>
+        <div class="card-split">
+          <figure class="artifact-card survey-card">
+            <span class="card-tab">Tool Survey card · 8 fields</span>
+            <dl class="card-fields">
+              <dt>Name</dt><dd>the product and the tier you use</dd>
+              <dt>Type</dt><dd>general assistant, research tool, image or media tool, AI inside an office suite, or specialized tool</dd>
+              <dt>What it is for</dt><dd>the jobs you would give it</dd>
+              <dt>Tier and cost</dt><dd>the plan and its price <span class="date-tag">date checked</span></dd>
+              <dt>Data policy</dt><dd>two lines, and where you read it <span class="date-tag">date read</span></dd>
+              <dt>Access</dt><dd>how you sign in, and any age or district rule</dd>
+              <dt>Last tested</dt><dd>the task and the matrix score <span class="date-tag">date run</span></dd>
+              <dt>Notes</dt><dd>what to watch, what it gets wrong, and when to test again</dd>
+            </dl>
+          </figure>
+          <div class="card-aside">
+            <p class="term-line stacked"><b>Tool Survey</b> Your set of cards, one per tool.</p>
+            <p class="aside-note"><span class="date-tag">dated</span> A vendor can change it without asking you.</p>
+            <p class="aside-note">Your home lab counts too. A general assistant and a note app’s AI summary both see your work, so both get a card.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 10.1, question 1. Give students 45 seconds to classify both features and name each check before you reveal. The $500 flag is the plumbing contractor’s invoice rule in a new store: a fixed threshold triggers a fixed action. It fails the same way every time, and you can read the rule. The reorder suggestion learns from last year’s sales and predicts, so it can be wrong in ways no rule explains. Count its misses. Push anyone who calls the flag AI: which judgment does it replace? The manager still makes the call.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 10.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 10.1</div>
+        <h2 class="check-title lines"><span class="tl">A $500 flag and a reorder tip.</span><span class="tl">Which AI, which check?</span></h2>
+        <div class="prompt">
+          <p class="verbatim">A museum gift shop's point-of-sale system flags any sale over $500 for a manager's approval, and it also suggests which items to reorder from last year's sales. Classify each feature by the type of AI behind it, and name the check each one needs.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">The $500 flag is <strong>rule-based</strong>: a fixed threshold triggers a fixed action. Check it by reading the rule. It replaces no judgment, so by this book’s test it is not AI. The reorder tip is <strong>machine learning that predicts</strong> from past sales. Count its wrong suggestions, the way a pilot counts errors.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="“Which tool is best?” has no answer until you name the task and the tests. The Comparison Matrix uses six criteria, always in this order, and each one is there because a tool can win on the others and still fail a team. Walk the lane post by post. Then point to the two tags. Capability and accuracy come from runs. Cost, privacy, accessibility, and integration come from reading pages and trying the tool. That split comes back in 10.3. The next three slides take the posts two at a time, each with one case where a tool failed.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content">
+        <div class="eyebrow">The six criteria, always in this order</div>
+        <h2 class="wide-title lines"><span class="tl">A tool can win five</span><span class="tl">and still fail a team on the sixth.</span></h2>
+        <ol class="lane-six" role="img" aria-label="One test lane with six checkpoint posts, left to right. Post 1, capability: did it do the task? From runs. Post 2, accuracy on your task: the Accuracy Audit counts. From runs. Post 3, cost: the tier and price on the date checked. From reading. Post 4, privacy and data policy: what it keeps, and whether it trains on your input. From reading. Post 5, accessibility: a screen reader, a keyboard, and the devices your people use. From reading and trying the tool. Post 6, integration: it fits where the work happens. From reading and trying the tool.">
+          <li class="run"><b>Capability</b><span>Did it do the task?</span><i class="src run">Run</i></li>
+          <li class="run"><b>Accuracy on your task</b><span>The Accuracy Audit counts</span><i class="src run">Run</i></li>
+          <li class="read"><b>Cost</b><span>Tier and price on the date checked</span><i class="src read">Read</i></li>
+          <li class="read"><b>Privacy and data policy</b><span>What it keeps, whether it trains on your input</span><i class="src read">Read</i></li>
+          <li class="read"><b>Accessibility</b><span>Screen reader, keyboard, the devices your people use</span><i class="src read">Read</i></li>
+          <li class="read"><b>Integration</b><span>Fits where the work happens</span><i class="src read">Read</i></li>
+        </ol>
+        <p class="src-key"><span><i class="src run">Run</i> comes from sending the prompt.</span> <span><i class="src read">Read</i> comes from reading pages and trying the tool.</span></p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Capability asks whether the tool did the task. A museum gift shop manager wanted a tool to read a photo of a handwritten inventory sheet. The free tier she tried would not take the photo, so the tool scored a fail before anyone checked a word. Score capability with the task’s own checks, the way Chapter 5’s Output Checklist scores a response: right task, right shape. Accuracy on your task asks how many of the tool’s claims hold, counted with the Accuracy Audit from Chapter 7. On your task is the point. A small accounting firm read that one tool tops a public test of reasoning. Then it audited ten of the tool’s drafted client letters against its own records and found 3 contradicted dates. Chapter 9 drew this line: a benchmark is someone else’s test.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content">
+        <div class="eyebrow">Posts 1 and 2 · capability and accuracy</div>
+        <h2 class="wide-title lines"><span class="tl">Did it do the task?</span><span class="tl">Then count what holds on your task.</span></h2>
+        <div class="stories">
+          <article class="story">
+            <p class="post-tag"><span class="post-dot">1</span>Capability · a museum gift shop</p>
+            <div class="refuse" role="img" aria-label="A photo of a handwritten inventory sheet goes to the free tier, and the tool refuses it: it would not take the photo.">
+              <span class="photo-sheet" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span class="flow-arrow" aria-hidden="true">→</span>
+              <span class="tier-box">Free tier<b>✕ Would not take the photo</b></span>
+            </div>
+            <p>Task: read a photo of a handwritten inventory sheet.</p>
+            <p class="result"><span class="stamp fail">Fail</span> before anyone checked a word</p>
+          </article>
+          <article class="story">
+            <p class="post-tag"><span class="post-dot">2</span>Accuracy on your task · an accounting firm</p>
+            <div class="bench-vs" role="img" aria-label="On the left, a podium: the tool tops a public test of reasoning. On the right, the firm’s own audit: ten drafted letters audited, 3 contradicted dates found.">
+              <span class="podium">Tops a public test of reasoning</span>
+              <span class="vs" aria-hidden="true">vs</span>
+              <span class="letters" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+            <p>Its own audit: ten drafted client letters against its own records.</p>
+            <p class="result"><span class="verdict contradicted">3 contradicted dates</span></p>
+          </article>
+        </div>
+        <p class="field-note">A benchmark is someone else’s test. Your counts come from your work.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Cost is the tier and its price on the date you checked, times the people who need it. Copperwind’s pilot tool quotes $30 per user per month. For five Deskside technicians, that is $150 a month. Write the date beside the number, because prices move. Privacy and data policy asks what the tool keeps and whether it trains on your input, from your reading of the data policy in Chapter 8. A university housing office handles records that FERPA may cover. A free tier that trains on chats by default fails this criterion for that office, however good its drafts are. The same vendor’s business tier may pass. That is why the card’s Name field holds the tier, not only the product.&#10;&#10;Time: 19-21 minutes.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content">
+        <div class="eyebrow">Posts 3 and 4 · cost and privacy</div>
+        <h2 class="wide-title">Score the tier, not the brand.</h2>
+        <div class="cp-split">
+          <div class="price-tag" role="img" aria-label="A price tag for Copperwind’s pilot tool: 30 dollars per user per month, times 5 Deskside technicians, equals 150 dollars a month, with a blank date tag that says write the date checked.">
+            <span class="pt-head"><span class="post-dot">3</span>Cost · Copperwind’s pilot tool</span>
+            <span class="pt-line"><b>$30</b> per user per month</span>
+            <span class="pt-line"><b>× 5</b> Deskside technicians</span>
+            <span class="pt-line total"><b>$150</b> a month</span>
+            <span class="date-tag blank">date checked: write it</span>
+          </div>
+          <div class="fork" role="img" aria-label="Privacy for a university housing office with records FERPA may cover. One vendor splits into two tiers. The free tier trains on chats by default, so it fails for this office. The business tier may promise not to train, so it may pass.">
+            <span class="pt-head"><span class="post-dot">4</span>Privacy · a university housing office</span>
+            <div class="fork-body">
+              <span class="fork-root">One vendor</span>
+              <div class="branches">
+                <p class="branch"><b>Free tier</b><span>Trains on chats by default</span><span class="stamp fail">Fails here</span></p>
+                <p class="branch"><b>Business tier</b><span>May promise not to train</span><span class="stamp">May pass</span></p>
+              </div>
+            </div>
+            <span class="fork-foot">Records FERPA may cover</span>
+          </div>
+        </div>
+        <p class="term-line"><b>Tier</b> One plan level, with its own price, limits, data terms.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Accessibility, as a selection criterion, asks whether the people who must use the tool can use it: with a screen reader, with only a keyboard, and on the devices they have. A city animal shelter’s volunteer coordinator uses a screen reader. One tool gave her an unlabeled send button that her screen reader announced only as “button.” A tool she cannot operate scores zero for her, whatever its accuracy. The bar for keyboard use is WCAG 2.2, the W3C’s standard for accessible web content, a W3C Recommendation dated December 12, 2024, read October 21, 2026. Success Criterion 2.1.1 begins with the line on the slide and then lists narrow exceptions. You can test the basics yourself in five minutes. Many vendors also publish an Accessibility Conformance Report, and Section508.gov explains how buyers should read one. Integration asks whether the tool fits where the work happens. A car dealership’s service desk writes every repair note in its service system. A browser tool means copying each note out and each draft back in. Every paste costs a minute and invites a privacy slip, such as a customer’s phone number pasted along with the note. An assistant inside the suite may win on integration while it loses on accuracy, and the matrix keeps both findings in view.&#10;&#10;Time: 21-23 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content visual-split access-split">
+        <div class="stack">
+          <div class="eyebrow">Posts 5 and 6 · accessibility and integration</div>
+          <h2>Can your people use it where the work happens?</h2>
+          <div class="sr-line">
+            <span class="post-dot">5</span>
+            <p>An animal shelter’s coordinator uses a screen reader. The send button had no label.</p>
+            <span class="speech" aria-label="Her screen reader announced only: button"><span class="verbatim">“button”</span></span>
+          </div>
+          <blockquote class="wcag"><span class="verbatim">“All functionality of the content is operable through a keyboard interface”</span> [...]<cite>WCAG 2.2, Success Criterion 2.1.1 · W3C, December 12, 2024</cite></blockquote>
+          <div class="copy-loop" role="img" aria-label="Integration at a car dealership: each repair note is copied out of the service system into a browser tool, and each draft is pasted back. Every paste costs a minute and invites a privacy slip.">
+            <span class="post-dot">6</span>
+            <span class="loop-who">A car dealership’s service desk:</span>
+            <span class="loop-step">Service system</span><span class="loop-arrow" aria-hidden="true">⇄</span><span class="loop-step">Browser tool</span>
+            <span class="loop-cost">Every paste: a minute, and a privacy slip waiting</span>
+          </div>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/access-unlabeled-button.png" alt="A person wearing headphones types at a keyboard, facing a monitor. The screen shows a chat window with clear icons for a paperclip, a microphone, and a gear, and one blank button with no label, outlined in gold."><figcaption>A tool she cannot operate scores zero for her.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Could a chat assistant just hand you the criteria? Here is what one said when asked for at most eight criteria for a small help desk team that drafts first replies, with no products named. It is a sensible list. Accuracy, integration, privacy, and cost all appear. Three of its items (grounding, review controls, and tone, which the chapter cuts) are checks you could run inside capability for this task. One criterion is missing from all eight lines: accessibility. A list that leaves out the people who cannot use the tool will pick a tool some of your team cannot use. Treat the tool’s list as a lead. The six criteria stay fixed, so a matrix for one task can sit beside a matrix for another. Try It Yourself 10.2 asks you to write the How you check it line for all six on your own task, each a test with a pass or a count.&#10;&#10;Time: 23-25 minutes.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content">
+        <div class="eyebrow">Criteria a tool suggests</div>
+        <h2 class="wide-title">The tool’s list is a lead. It left out accessibility.</h2>
+        <div class="suggest">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">I am choosing an AI tool for a small IT help desk team that drafts first replies to client tickets. List the criteria I should compare tools on, one line each, at most eight. Do not name any products.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <ol class="crit-list verbatim">
+                  <li><b>Draft accuracy:</b> How often replies are technically correct [...]</li>
+                  <li><b>Ticketing integration:</b> Native or easy connection to your help desk/PSA system [...]</li>
+                  <li><b>Knowledge grounding:</b> Ability to draw on your own documentation [...]</li>
+                  <li class="gap">[...]</li>
+                  <li value="5"><b>Data privacy and security:</b> Handling of client data, retention and training policies [...]</li>
+                  <li><b>Human review controls:</b> Draft-only mode, approval steps [...]</li>
+                  <li><b>Cost and scalability:</b> Per-seat or usage pricing [...]</li>
+                  <li class="gap">[...]</li>
+                </ol>
+              </div>
+            </div>
+          </figure>
+          <ol class="post-map" role="img" aria-label="The six criteria mapped against the tool’s list. Capability: covered by lines 3 and 6, grounding and review controls, plus tone, which the chapter cuts. Accuracy on your task: line 1. Cost: line 7. Privacy and data policy: line 5. Accessibility: missing from all eight lines. Integration: line 2.">
+            <li><b>Capability</b><span class="cover">lines 3, 6, tone</span></li>
+            <li><b>Accuracy on your task</b><span class="cover">line 1</span></li>
+            <li><b>Cost</b><span class="cover">line 7</span></li>
+            <li><b>Privacy and data policy</b><span class="cover">line 5</span></li>
+            <li class="missing"><b>Accessibility</b><span class="cover">missing from all eight</span></li>
+            <li><b>Integration</b><span class="cover">line 2</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 10.2, question 2. Give pairs 60 seconds, and make them commit to matrix or column before you reveal. The cell itself is one column, because the matrix never adds columns into a score. But staff would paste client tax records, so privacy is a must-pass for this firm, and a must-pass failure decides alone. Strong capability and accuracy do not buy it back. Score the tier, not the brand: a tier that does not train on chats may pass where this one fails. Section 10.3 names this habit when it reads a row.&#10;&#10;Time: 25-27 minutes.">
+      <div class="brand">CIS137 · 10.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 10.2</div>
+        <h2 class="check-title lines"><span class="tl">Strong counts, but it trains on chats.</span><span class="tl">Out, or one column?</span></h2>
+        <div class="prompt">
+          <p class="verbatim">A small accounting firm's tool passes capability and accuracy, but it trains on chats by default and the firm's staff would paste client tax records. Decide whether the tool fails the matrix or only one column, and justify your answer.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">It fails one column, <strong>privacy</strong>, and that column decides alone. Staff would paste client tax records, so privacy is a must-pass: the tool is out for this task. Its capability and accuracy counts stay in the matrix but do not buy it back. A tier that does not train may pass.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Chapter 6 compared one prompt in two tools with five rules: the same prompt, the same input, fresh conversations, the same day, and the same criteria. The fair test keeps all five and turns them into a record a manager can check. Read the start line: same task, same prompt, same inputs, same criteria. Then each lane: a fresh conversation, the same day. Then the finish: counts. The record goes on a Comparison Matrix, rows for tools and the six criteria as columns. One matrix covers one task. A tool that wins the printer reply may lose the summary. The same holds on your own IT project: a matrix comparing two assistants on a test plan for a VPN change uses one prompt, your own change notes as the input, and the same six columns.&#10;&#10;Time: 27-29 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">The fair test</div>
+        <h2 class="wide-title lines"><span class="tl">One start line, two fresh lanes,</span><span class="tl">scored in counts.</span></h2>
+        <div class="fairtest" role="img" aria-label="A shared start line holds the same task, the same prompt, the same inputs, and the same criteria. Two lanes leave it. Lane A: Tool A in a fresh conversation, the same day. Lane B: Tool B in a fresh conversation, the same day. Both lanes end at the same finish: counts, checks passed and claims that hold.">
+          <div class="start">
+            <span class="start-label">Start line</span>
+            <span class="same">Same task</span><span class="same">Same prompt</span><span class="same">Same inputs</span><span class="same">Same criteria</span>
+          </div>
+          <div class="lanes">
+            <p class="lane"><b>Tool A</b><span class="chip">Fresh conversation</span><span class="chip">Same day</span><span class="finish">Counts</span></p>
+            <p class="lane"><b>Tool B</b><span class="chip">Fresh conversation</span><span class="chip">Same day</span><span class="finish">Counts</span></p>
+          </div>
+        </div>
+        <div class="terms">
+          <p class="term-line"><b>Fair test</b> Same task, prompt, inputs, criteria. Fresh conversations. Counts.</p>
+          <p class="term-line"><b>Comparison Matrix</b> Rows are tools. Columns are the six criteria. One task.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Try It Yourself 10.3 starts here. Read Task 1, the printer-offline ticket, and its four checks on the right. Ask everyone to predict which check a tool is most likely to fail, and write it down. Then read the prompt. The gold tags are the four decisions behind it, and you send the prompt without the Step lines. Step 3 hands over the only steps the reply may use. Step 4 sets the limits the checks will score. Capability is checks passed out of 4. Accuracy comes from the Accuracy Audit against the ticket and the steps.&#10;&#10;Time: 29-31 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">Task 1 · the printer-offline ticket</div>
+        <h2 class="wide-title">The prompt hands over the steps. The checks score the limits.</h2>
+        <div class="task1">
+          <figure class="chat stepped-prompt">
+            <div class="chat-bar">Chat assistant · send without the Step lines</div>
+            <div class="chat-body">
+              <div class="turn user">
+                <span class="who">You</span>
+                <div class="stepped">
+                  <span class="step">Step 1: name the writer and the reader</span>
+                  <p class="verbatim">You are a Deskside support technician at a managed IT services company. The reader is an office worker at a client company, not a technical person.</p>
+                  <span class="step">Step 2: name the job and paste the input exactly</span>
+                  <p class="verbatim">Write a first reply to this ticket: "The printer by the front window shows offline on my computer, but the person at the next desk can still print to it. I need to print shipping labels before the 2 p.m. pickup."</p>
+                  <span class="step">Step 3: hand over the only steps the reply may use</span>
+                  <p class="verbatim">Use only these Deskside steps, in this order: (1) Check that the printer's network cable is plugged in, or that its screen shows a Wi-Fi connection. (2) On one office computer, open the printer list, remove the printer, and add it again. (3) If it still shows offline, reply to this ticket, and a technician will connect remotely during business hours.</p>
+                  <span class="step">Step 4: set the shape and the limits the checks will score</span>
+                  <p class="verbatim">Format: under 100 words, plain text, the three steps numbered, signed "Deskside Support." Do not promise a time, and do not add any other steps.</p>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <div class="checks">
+            <span class="checks-head">The four checks</span>
+            <ol>
+              <li>Only the three Deskside steps, in order. No other step.</li>
+              <li>Promises no time, not even the 2&nbsp;p.m. pickup.</li>
+              <li>Runs under 100 words.</li>
+              <li>Signed “Deskside Support.”</li>
+            </ol>
+            <p class="checks-foot">Capability = checks passed out of 4</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Same prompt, same day, fresh conversations. Both replies pass all four checks. Each uses the three steps word for word, in order, promises no time, and is signed correctly. Tool A runs 74 words and Tool B runs 75, counting its subject line. The difference shows up in the audit. Tool A adds a claim: the printer itself is likely fine. The ticket says a coworker can print, which holds. That the printer is fine is a guess nobody at Deskside made, and it could lead the reader to skip step 1. Mark it Not in source. Tool B’s thank-you line is courtesy, not a claim. Check the predictions from the last slide: nobody failed a check, and the gap came from the audit.&#10;&#10;Time: 31-33 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">Same prompt, same day, fresh conversations</div>
+        <h2 class="wide-title lines"><span class="tl">Both pass 4 of 4.</span><span class="tl">The audit finds one added guess.</span></h2>
+        <div class="reply-pair">
+          <div class="reply">
+            <figure class="chat">
+              <div class="chat-bar">Tool A <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+              <div class="chat-body">
+                <div class="turn assistant"><span class="who">Assistant</span>
+                  <div class="verbatim">
+                    <p>Hello,</p>
+                    <p>Since your coworker can still print, <span class="mark add" data-label="not in source">the printer itself is likely fine.</span> Please try these steps in order:</p>
+                    <p>1. Check that the printer's network cable is plugged in, [...]<br>2. On one office computer, open the printer list, [...]<br>3. If it still shows offline, reply to this ticket, [...]</p>
+                    <p>Deskside Support</p>
+                  </div>
+                </div>
+              </div>
+            </figure>
+            <p class="tally"><span class="verdict holds">4 of 4 checks</span><span class="count">74 words</span><span class="verdict not-in-source">1 not in source</span></p>
+          </div>
+          <div class="reply">
+            <figure class="chat">
+              <div class="chat-bar">Tool B <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+              <div class="chat-body">
+                <div class="turn assistant"><span class="who">Assistant</span>
+                  <div class="verbatim">
+                    <p>Subject: Re: Printer by front window showing offline</p>
+                    <p>Hello,</p>
+                    <p><span class="mark courtesy" data-label="courtesy, not a claim">Thank you for reporting this.</span> Please try these steps in order:</p>
+                    <p>1. Check that the printer's network cable is plugged in, [...]<br>2. On one office computer, open the printer list, [...]<br>3. If it still shows offline, reply to this ticket, [...]</p>
+                    <p>Deskside Support</p>
+                  </div>
+                </div>
+              </div>
+            </figure>
+            <p class="tally"><span class="verdict holds">4 of 4 checks</span><span class="count">75 words, with subject</span><span class="verdict holds">no added claim</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="One run is a lead. The results were close, so each tool got a second fresh run of the same prompt. Tool A came back at 71 words with the guess again, now stated flatly. Tool B came back at 64 words with no added claim. Two runs each, the same pattern. Read the two rows. Two rules keep a matrix honest. Counts, never a leaderboard: each cell holds a count or a short finding with its evidence, and you never add the columns into one score, because a privacy fail is not offset by three extra holds. Runs and readings stay apart, and the header shows which is which. Why do the last four cells carry no finding? Tool A and Tool B are two models from the same vendor, run through the textbook author’s command-line test setup, not two chat apps. Your matrix compares roster tools from different vendors, so all six columns will carry findings. The finding says nothing about the summary or the sign-in task.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">The Task 1 matrix</div>
+        <h2 class="wide-title">Two runs each, same pattern. Counts, never a total.</h2>
+        <div class="run2">
+          <p class="run-card"><span class="run-label">Run 2 · Tool A · 71 words</span><span class="stamp">Sample, Oct 2026. Your output will differ.</span><span class="verbatim run-text">Hello,<br>Since your coworker can still print, <span class="mark add" data-label="stated flatly">the printer itself is working.</span> [...]</span></p>
+          <p class="run-card"><span class="run-label">Run 2 · Tool B · 64 words</span><span>No added claim.</span></p>
+        </div>
+        <div class="matrix-wrap">
+          <table class="matrix" aria-label="Task 1 Comparison Matrix: two rows, six criteria, no total column">
+            <thead>
+              <tr class="group"><th scope="col"></th><th scope="colgroup" colspan="2" class="g-run"><i class="src run">Run</i> From runs</th><th scope="colgroup" colspan="4" class="g-read"><i class="src read">Read</i> From reading pages and trying the tool</th></tr>
+              <tr><th scope="col">Tool</th><th scope="col">Capability</th><th scope="col">Accuracy on your task</th><th scope="col">Cost</th><th scope="col">Privacy and data policy</th><th scope="col">Accessibility</th><th scope="col">Integration</th></tr>
+            </thead>
+            <tbody class="verbatim">
+              <tr><th scope="row">Tool A</th><td data-label="Capability">4 of 4 checks, both runs</td><td data-label="Accuracy on your task">5 claims checked, 4 hold, 1 not in source, both runs</td><td data-label="Cost">Same vendor and setup as Tool B</td><td data-label="Privacy and data policy">Same as Tool B</td><td data-label="Accessibility">Not tested (command line)</td><td data-label="Integration">Not tested (command line)</td></tr>
+              <tr><th scope="row">Tool B</th><td data-label="Capability">4 of 4 checks, both runs</td><td data-label="Accuracy on your task">3 claims checked, 3 hold, both runs</td><td data-label="Cost">Same vendor and setup as Tool A</td><td data-label="Privacy and data policy">Same as Tool A</td><td data-label="Accessibility">Not tested (command line)</td><td data-label="Integration">Not tested (command line)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="field-note">On Task 1, Tool B ranks ahead by one Not in source claim, repeated in two runs.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A filled matrix still needs judgment. Three habits turn it into a decision. A must-pass failure decides alone: some criteria a team cannot live without, such as privacy for client records or accessibility for a teammate who uses a screen reader. A tool that fails one is out for that task. A small gap is a lead: one claim or one check apart, in one run each, is not a ranking, so run again, as the Task 1 runs did. Say what the matrix cannot see: three tasks on one day say nothing about a year of tickets, a busy Monday, or a vendor’s next update. Chapter 9’s pilot measures those, in counts and minutes, on your own work. The matrix answers which tool, for this task, today. The Use Evaluation from Chapter 9 answers whether the use is worth it. Mei Lin needs both.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">Reading a row</div>
+        <h2 class="wide-title lines"><span class="tl">A matrix answers</span><span class="tl">“which tool, for this task, today.”</span></h2>
+        <div class="habits">
+          <article class="habit">
+            <div class="mini gate" role="img" aria-label="A lane closed by a gate at a must-pass post."><span class="mini-post">Must-pass</span><span class="gate-bar" aria-hidden="true"></span></div>
+            <b>A must-pass failure decides alone.</b>
+            <p>Privacy for client records. A screen reader for a teammate. Strong counts elsewhere do not buy it back.</p>
+          </article>
+          <article class="habit">
+            <div class="mini gap" role="img" aria-label="Two lanes finish one claim apart, and an arrow loops both back to the start line for another run."><span class="lane-a" aria-hidden="true"></span><span class="lane-b" aria-hidden="true"></span><span class="again">↺ Run again</span></div>
+            <b>A small gap is a lead.</b>
+            <p>One claim or one check apart, in one run each, is not a ranking.</p>
+            <p class="traced">Task 1: one Not in source claim apart after one run, so each tool ran again.</p>
+          </article>
+          <article class="habit">
+            <div class="mini fog" role="img" aria-label="A lane that runs into fog: what the matrix cannot see."><span class="fog-band">Out of view</span></div>
+            <b>Say what the matrix cannot see.</b>
+            <p>A year of tickets. A busy Monday. A vendor’s next update.</p>
+          </article>
+        </div>
+        <p class="field-note">The Use Evaluation answers “is the use worth it.” Mei Lin needs both.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Fix It 10.1. A Deskside technician builds the matrix for Task 3, the two-step sign-in explanation, runs it in Tool A and Tool B, each in a fresh conversation on the same day, and scores both rows. Symptom: Tool B looks far worse. It says the system sends a short code to your phone, and the facts say We do not use text-message codes. That is the contradicted claim. It also leaves out the start date, the backup codes, and the standing promise. He writes Tool A for sign-in explanations in his note to Mei Lin. Diagnose before you touch the matrix: list what the two rows had in common and what differed. The task, the day, the fresh conversations, and the checks were the same. The prompts were not. Tool A’s prompt carried the facts. Tool B’s did not, so Tool B wrote what two-step sign-in usually looks like, and the usual version includes text codes. Repair one thing: Tool B gets Tool A’s prompt, word for word, in a fresh conversation. Verify: 134 words, 4 of 4 checks, 8 claims, 7 hold, 1 not in source. Tool A’s reply to the same prompt scored 4 of 4 with 9 claims, 7 holding, one Unverifiable promise, and one Not in source gloss. Now the rows compare tools. Tool B is ahead by one claim, in one run each, which is a lead, so the next step is a second run of each.&#10;&#10;Time: 37-41 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 10.1 · the sign-in row</div>
+        <h2 class="wide-title lines"><span class="tl">The column measured the prompts,</span><span class="tl">not the tools.</span></h2>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Symptom · diagnose</span>
+            <table class="mini-rows">
+              <tr><th scope="row">Tool A</th><td>4 of 4 checks</td><td>9 claims, 7 hold, 1 not in source, 1 unverifiable</td></tr>
+              <tr class="worse"><th scope="row">Tool B</th><td>2 of 4 checks</td><td>8 claims, 2 hold, 1 contradicted, 5 not in source</td></tr>
+            </table>
+            <div class="clash"><p><span class="verbatim">“<span class="mark wrong" data-label="contradicted">sends a short code to your phone</span>”</span> <span class="stamp">Sample, Oct 2026. Your output will differ.</span></p><p><span class="clash-vs">vs the facts:</span> <span class="verbatim fact">“We do not use text-message codes.”</span></p></div>
+            <div class="prompt-diff">
+              <p><span class="who-tag">Both prompts</span><span class="verbatim">Explain two-step sign-in to the office staff [...] Keep it under 150 words.</span></p>
+              <p class="only-a"><span class="who-tag">Only Tool A’s</span><span><b>Facts:</b> the date, the app, no text codes, the backup codes, support hours, the promise</span></p>
+            </div>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">Repair · verify</span>
+            <p class="one-change">One change: Tool B gets Tool A’s prompt, word for word, in a fresh conversation.</p>
+            <table class="mini-rows">
+              <tr><th scope="row">Tool A</th><td>4 of 4 checks</td><td>9 claims, 7 hold, 1 unverifiable, 1 not in source</td></tr>
+              <tr class="better"><th scope="row">Tool B</th><td>4 of 4 checks</td><td>134 words, 8 claims, 7 hold, 1 not in source</td></tr>
+            </table>
+            <p class="note-flip"><span class="old">Tool A for sign-in explanations</span><span class="new">Tool B slightly ahead on this task, one run each.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 10.3, question 2. Give 60 seconds to critique and rewrite. A total of 23 against 21 hides which criterion decided, and it lets strong counts on one column buy back a fail on another. A privacy fail is not offset by three extra holds. The rewrite keeps each cell a count or a short finding with its evidence, and it says which came from runs. Accept any top line that does that. The model answer uses the Task 1 rows.&#10;&#10;Time: 41-43 minutes.">
+      <div class="brand">CIS137 · 10.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 10.3</div>
+        <h2 class="check-title">“23 points to 21.” What does the total hide?</h2>
+        <div class="prompt">
+          <p class="verbatim">A teammate adds the six columns into one total and reports "Tool A: 23 points, Tool B: 21 points." Critique the report, and rewrite the top line of it in counts and findings.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">A total hides which criterion decided, and it lets strong counts buy back a fail. A privacy fail is not offset by three extra holds. Keep each cell a count or a finding, for example: “Task 1: both 4 of 4 checks in two runs. Tool B ahead by one Not in source claim.”</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A matrix is true on the day you ran it. Vendors change their plans, prices, data terms, and models without asking you, sometimes monthly. A card that was right in March can mislead a colleague in October. Even names move: a vendor can rename a product, and its old plans page can redirect to the new name. So the survey needs two habits: dates on every fact, and a rule for when to test again. Read Tool A’s Last tested line from the starter survey. It says which task, which date, and which matrix score. Then the review date: Copperwind’s starter survey reviews every three months. Between reviews, five events mean the fair test again right away. Read each with its reason. Your own project works the same way. A home lab card might read: build checklist for a home lab server, from my own setup notes, 12 steps checked, 11 hold, 1 contradicted (a port number).&#10;&#10;Time: 43-45 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 10.4</div>
+      <div class="content visual-split current-split">
+        <div class="stack">
+          <div class="eyebrow">Keeping the survey current</div>
+          <h2 class="lines"><span class="tl">A matrix is true</span><span class="tl">on the day you ran it.</span></h2>
+          <p class="last-tested"><span class="lt-label">Tool A’s card</span><span class="verbatim"><b>Last tested:</b> Task 1 (printer-offline first reply), October 21, 2026. Capability 4 of 4 checks in both runs. Accuracy 5 claims checked, 4 hold, 1 not in source, in both runs</span></p>
+          <ol class="triggers">
+            <li><b>The model or plan changes.</b> The scores came from the old one.</li>
+            <li><b>The data policy or terms change.</b> The privacy cell may flip.</li>
+            <li><b>The task changes.</b> A new ticket type is a new matrix.</li>
+            <li><b>Someone reports a failure.</b> One report is a lead.</li>
+            <li><b>Last tested passes the review period.</b> Copperwind’s: three months.</li>
+          </ol>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/currency-survey-card.png" alt="A ruled index card pinned to a wall with a gold pushpin, a blank price tag twisting on a string from its corner, beside a tear-off calendar whose pages fly away."><figcaption>Every fact on a card ages. Date it, and set a review.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Can a chat assistant review a card for you? It can see what is missing. It cannot see what changed at a vendor last week. A teammate’s card went out with a four-step prompt: Step 1 gives today’s date, Step 2 names the survey and the job, Step 3 asks for one line per item, and Step 4 tells the tool not to fill in any missing fact. Read the flags. It found the undated data policy line, the stale price, the empty Notes, and the sharpest gap: the card’s only test was a summary, not the job the tool is for. Its cut first line also flagged the name Tool C, which is fair, since a real card names the product. It flagged possibly out of date by counting months from the dates on the card, which is all it can do. It cannot tell you whether the price changed. Only the vendor’s page can. Try It Yourself 10.5 sorts each flag COMPLETE or CURRENT. The data policy flag lands in CURRENT here because the fix needs the vendor’s policy page and a date. Let students argue that one. The Tool Survey goes in your Toolkit, which Chapter 12 assembles.&#10;&#10;Time: 45-48 minutes.">
+      <div class="brand">CIS137 · 10.4</div>
+      <div class="content">
+        <div class="eyebrow">Asking a tool to check a card</div>
+        <h2 class="wide-title lines"><span class="tl">A tool can see what is missing,</span><span class="tl">not what changed.</span></h2>
+        <div class="review">
+          <div class="card-col">
+            <p class="today"><span class="date-tag">Today is October 21, 2026.</span></p>
+            <figure class="artifact-card toolc-card">
+              <span class="card-tab">Tool C · a teammate’s card</span>
+              <dl class="card-fields verbatim">
+                <dt>Name</dt><dd>Tool C (research tool, free plan)</dd>
+                <dt>Type</dt><dd>research tool</dd>
+                <dt>What it is for</dt><dd>finding sources for client-facing explainers</dd>
+                <dt>Tier and cost</dt><dd>Free. Paid plan $20 a month <span class="date-tag">(checked March 4, 2026)</span></dd>
+                <dt>Data policy</dt><dd>Keeps your search history.</dd>
+                <dt>Access</dt><dd>Personal email sign-in</dd>
+                <dt>Last tested</dt><dd>Task 2 (four-bullet summary), <span class="date-tag">March 12, 2026</span>, 3 of 4 checks passed</dd>
+                <dt>Notes</dt><dd class="empty"></dd>
+              </dl>
+            </figure>
+          </div>
+          <div class="sort-col">
+            <p class="sort-head">How we sort its flags <span class="stamp">Sample, Oct 2026. Your output will differ.</span></p>
+            <div class="flag-bin current">
+              <span class="bin-label"><span class="date-tag">Current</span> needs the vendor’s page and today’s date</span>
+              <p class="flag"><b>Tier and cost</b><span class="verbatim">The $20/month price was checked March 4, 2026, which is about 7.5 months ago. [...]</span></p>
+              <p class="flag"><b>Data policy</b><span class="verbatim">"Keeps your search history" is vague and has no source or date. [...]</span></p>
+            </div>
+            <div class="flag-bin complete">
+              <span class="bin-label"><span class="fix-tag">Complete</span> fix it now</span>
+              <p class="flag"><b>Tier and cost</b><span class="verbatim">The card also doesn't say which tier the team actually uses [...]</span></p>
+              <p class="flag"><b>Last tested</b><span class="verbatim">Only one task was tested, a four-bullet summary, which is not source-finding [...]</span></p>
+              <p class="flag"><b>Notes</b><span class="verbatim">Empty. [...]</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 10.4, question 1. Students commit to now or next review and name the trigger before you reveal. Two triggers fire. The vendor’s new plan can change the plan, the terms, or both, so the privacy cell may flip. And a data policy line read 11 months ago is past a review period like Copperwind’s three months. The office handles records FERPA may cover, so privacy is a must-pass and cannot wait for the next review.&#10;&#10;Time: 48-50 minutes.">
+      <div class="brand">CIS137 · 10.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 10.4</div>
+        <h2 class="check-title lines"><span class="tl">Read 11 months ago. New plan last week.</span><span class="tl">Test now or later?</span></h2>
+        <div class="prompt">
+          <p class="verbatim">A university housing office's card for its general assistant shows a data policy line read 11 months ago, and the vendor announced a new plan last week. Decide whether the tool gets the fair test again now or at the next review, and justify your answer with the re-test triggers.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Now.</strong> Two triggers fire. A new plan can change the terms, so the privacy cell may flip. A policy line read 11 months ago is past a review period like Copperwind’s three months. For records FERPA may cover, privacy is a must-pass, so it cannot wait.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 10A, the Help Desk Comparison Matrix. Work in skills-lab-10a-worksheet.md, and read fair-test-tasks.txt in full first. Part 1: write the privacy plan in two columns, start a Tool Survey card for at least two roster tools from the vendors’ own pages, and fill the checks table for all three tasks. Part 2: one prompt per task, sent word for word to every tool in fresh conversations on the same day. You may reuse the chapter’s prompts for Tasks 1 and 3, and you write Task 2’s yourself. Score in counts, and run again any pair within one claim or one check. Then fill the four reading cells, including the keyboard-only and screen reader tests. Part 3: the What the matrix shows lines, finished cards with Last tested and two re-test triggers, one card for your own IT project, and the 150 to 200 word note to Mei Lin. The lab files are fictional, so you may paste them once your privacy plan allows it. Exit ticket: rewrite the technician’s claim for one task, with the counts behind it. That resolves the opening. Chapter 11 starts from the other end: define the problem before you name a tool, and decide when the answer is no AI at all.&#10;&#10;Time: 50-55 minutes.">
+      <div class="brand">CIS137 · Lab 10A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 10A · the Help Desk Comparison Matrix</div>
+        <h2 class="wide-title">Score each task in counts. Then write Mei Lin.</h2>
+        <ol class="lab-lanes" role="img" aria-label="Three lab parts as three lanes to one finish. Part 1, foundation: a privacy plan, a Tool Survey card per tool, and the checks for three tasks. Part 2, application: one prompt per task, the fair test on every tool, counts, a second run when results are close, and the reading cells. Part 3, extension: what each matrix shows, finished cards with re-test triggers, and the note to Mei Lin, 150 to 200 words.">
+          <li><span class="part">Part 1</span><b>Foundation</b><span>Privacy plan. A Tool Survey card per tool. Checks for all three tasks.</span></li>
+          <li><span class="part">Part 2</span><b>Application</b><span>The fair test on every tool. Counts. Run close results again.</span></li>
+          <li><span class="part">Part 3</span><b>Extension</b><span>What each matrix shows. Re-test triggers. The note to Mei Lin, 150 to 200 words.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Rewrite “It’s the best” for one task, with the counts that back it.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

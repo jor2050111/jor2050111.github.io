@@ -1,0 +1,2310 @@
+/* CIS137 Chapter 10: the test lanes
+   The chapter compares tools with a fair test, so the room is a proving
+   ground: six checkpoint posts along the top edge (the six criteria, in
+   order), a dated tag hanging from the first post (every vendor fact
+   carries its date), and parallel lanes leaving one start line in the
+   corner (one prompt, every tool). The brand glyph is a checkpoint post.
+   All of it is painted as background layers so nothing positioned can
+   overflow the slide or trap focus. */
+
+body {
+    /* Runs and readings keep one color each wherever the matrix split
+       appears: runs in navy, readings in canyon. Gold tags mean "this
+       fact carries a date". Green and red stay reserved for pass,
+       holds, fail, and contradicted. */
+    --runs: var(--navy);
+    --reads: var(--blue);
+    --dated: var(--gold);
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 104'%3E%3Cpath d='M0 88h360' stroke='rgba%280%2C46%2C93%2C0.12%29' stroke-width='2' fill='none'/%3E%3Cg stroke='rgba%280%2C46%2C93%2C0.16%29' stroke-width='4' fill='none' stroke-linecap='round'%3E%3Cpath d='M50 86V40'/%3E%3Cpath d='M105 86V40'/%3E%3Cpath d='M160 86V40'/%3E%3Cpath d='M215 86V40'/%3E%3Cpath d='M270 86V40'/%3E%3Cpath d='M325 86V40'/%3E%3C/g%3E%3Cg fill='rgba%28224%2C169%2C46%2C0.6%29'%3E%3Crect x='43' y='30' width='14' height='10' rx='1'/%3E%3Crect x='98' y='30' width='14' height='10' rx='1'/%3E%3Crect x='153' y='30' width='14' height='10' rx='1'/%3E%3Crect x='208' y='30' width='14' height='10' rx='1'/%3E%3Crect x='263' y='30' width='14' height='10' rx='1'/%3E%3Crect x='318' y='30' width='14' height='10' rx='1'/%3E%3C/g%3E%3Cg fill='none' stroke='rgba%28124%2C54%2C38%2C0.35%29' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M43 44 33 60'/%3E%3Cpath d='M22 66l9-8h6l9 8v30H22z'/%3E%3Ccircle cx='34' cy='66' r='2.6'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130'%3E%3Cg stroke='rgba%280%2C46%2C93%2C0.12%29' stroke-width='2.5' fill='none'%3E%3Cpath d='M36 24h364'/%3E%3Cpath d='M36 70h364'/%3E%3Cpath d='M36 116h364'/%3E%3C/g%3E%3Cg stroke='rgba%28124%2C54%2C38%2C0.16%29' stroke-width='2' stroke-dasharray='14 10' fill='none'%3E%3Cpath d='M56 47h344'/%3E%3Cpath d='M56 93h344'/%3E%3C/g%3E%3Cpath d='M30 18v104' stroke='rgba%28224%2C169%2C46%2C0.55%29' stroke-width='7' fill='none'/%3E%3C/svg%3E"), linear-gradient(160deg, #fffaf0, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left clamp(6rem, 12vw, 14rem) top 0, right -1rem bottom -.4rem, 0 0;
+    background-size: clamp(14rem, 20vw, 22rem) auto, clamp(16rem, 24vw, 28rem) auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 104'%3E%3Cpath d='M0 88h360' stroke='rgba%28255%2C255%2C255%2C0.12%29' stroke-width='2' fill='none'/%3E%3Cg stroke='rgba%28255%2C255%2C255%2C0.16%29' stroke-width='4' fill='none' stroke-linecap='round'%3E%3Cpath d='M50 86V40'/%3E%3Cpath d='M105 86V40'/%3E%3Cpath d='M160 86V40'/%3E%3Cpath d='M215 86V40'/%3E%3Cpath d='M270 86V40'/%3E%3Cpath d='M325 86V40'/%3E%3C/g%3E%3Cg fill='rgba%28255%2C200%2C69%2C0.5%29'%3E%3Crect x='43' y='30' width='14' height='10' rx='1'/%3E%3Crect x='98' y='30' width='14' height='10' rx='1'/%3E%3Crect x='153' y='30' width='14' height='10' rx='1'/%3E%3Crect x='208' y='30' width='14' height='10' rx='1'/%3E%3Crect x='263' y='30' width='14' height='10' rx='1'/%3E%3Crect x='318' y='30' width='14' height='10' rx='1'/%3E%3C/g%3E%3Cg fill='none' stroke='rgba%28255%2C200%2C69%2C0.4%29' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M43 44 33 60'/%3E%3Cpath d='M22 66l9-8h6l9 8v30H22z'/%3E%3Ccircle cx='34' cy='66' r='2.6'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130'%3E%3Cg stroke='rgba%28255%2C255%2C255%2C0.10%29' stroke-width='2.5' fill='none'%3E%3Cpath d='M36 24h364'/%3E%3Cpath d='M36 70h364'/%3E%3Cpath d='M36 116h364'/%3E%3C/g%3E%3Cg stroke='rgba%28255%2C255%2C255%2C0.08%29' stroke-width='2' stroke-dasharray='14 10' fill='none'%3E%3Cpath d='M56 47h344'/%3E%3Cpath d='M56 93h344'/%3E%3C/g%3E%3Cpath d='M30 18v104' stroke='rgba%28255%2C200%2C69%2C0.4%29' stroke-width='7' fill='none'/%3E%3C/svg%3E"), linear-gradient(160deg, #033a72, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 104'%3E%3Cpath d='M0 88h360' stroke='rgba%280%2C46%2C93%2C0.14%29' stroke-width='2' fill='none'/%3E%3Cg stroke='rgba%280%2C46%2C93%2C0.18%29' stroke-width='4' fill='none' stroke-linecap='round'%3E%3Cpath d='M50 86V40'/%3E%3Cpath d='M105 86V40'/%3E%3Cpath d='M160 86V40'/%3E%3Cpath d='M215 86V40'/%3E%3Cpath d='M270 86V40'/%3E%3Cpath d='M325 86V40'/%3E%3C/g%3E%3Cg fill='rgba%280%2C46%2C93%2C0.28%29'%3E%3Crect x='43' y='30' width='14' height='10' rx='1'/%3E%3Crect x='98' y='30' width='14' height='10' rx='1'/%3E%3Crect x='153' y='30' width='14' height='10' rx='1'/%3E%3Crect x='208' y='30' width='14' height='10' rx='1'/%3E%3Crect x='263' y='30' width='14' height='10' rx='1'/%3E%3Crect x='318' y='30' width='14' height='10' rx='1'/%3E%3C/g%3E%3Cg fill='none' stroke='rgba%28124%2C54%2C38%2C0.4%29' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M43 44 33 60'/%3E%3Cpath d='M22 66l9-8h6l9 8v30H22z'/%3E%3Ccircle cx='34' cy='66' r='2.6'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130'%3E%3Cg stroke='rgba%280%2C46%2C93%2C0.14%29' stroke-width='2.5' fill='none'%3E%3Cpath d='M36 24h364'/%3E%3Cpath d='M36 70h364'/%3E%3Cpath d='M36 116h364'/%3E%3C/g%3E%3Cg stroke='rgba%280%2C46%2C93%2C0.1%29' stroke-width='2' stroke-dasharray='14 10' fill='none'%3E%3Cpath d='M56 47h344'/%3E%3Cpath d='M56 93h344'/%3E%3C/g%3E%3Cpath d='M30 18v104' stroke='rgba%280%2C46%2C93%2C0.3%29' stroke-width='7' fill='none'/%3E%3C/svg%3E"), linear-gradient(160deg, #ffd573, var(--gold));
+}
+
+/* The title field keeps only the post strip so the hero lanes are the
+   only lanes on that slide. */
+.slide.dark.title-slide {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 104'%3E%3Cpath d='M0 88h360' stroke='rgba%28255%2C255%2C255%2C0.12%29' stroke-width='2' fill='none'/%3E%3Cg stroke='rgba%28255%2C255%2C255%2C0.16%29' stroke-width='4' fill='none' stroke-linecap='round'%3E%3Cpath d='M50 86V40'/%3E%3Cpath d='M105 86V40'/%3E%3Cpath d='M160 86V40'/%3E%3Cpath d='M215 86V40'/%3E%3Cpath d='M270 86V40'/%3E%3Cpath d='M325 86V40'/%3E%3C/g%3E%3Cg fill='rgba%28255%2C200%2C69%2C0.5%29'%3E%3Crect x='43' y='30' width='14' height='10' rx='1'/%3E%3Crect x='98' y='30' width='14' height='10' rx='1'/%3E%3Crect x='153' y='30' width='14' height='10' rx='1'/%3E%3Crect x='208' y='30' width='14' height='10' rx='1'/%3E%3Crect x='263' y='30' width='14' height='10' rx='1'/%3E%3Crect x='318' y='30' width='14' height='10' rx='1'/%3E%3C/g%3E%3Cg fill='none' stroke='rgba%28255%2C200%2C69%2C0.4%29' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M43 44 33 60'/%3E%3Cpath d='M22 66l9-8h6l9 8v30H22z'/%3E%3Ccircle cx='34' cy='66' r='2.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-position: left clamp(6rem, 12vw, 14rem) top 0;
+    background-size: clamp(14rem, 20vw, 22rem) auto;
+}
+
+/* Checkpoint post glyph in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: 1.15em;
+    height: 1.2em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 21V3'/%3E%3Cpath d='M8 4h11l-2.6 3.4L19 11H8'/%3E%3Cpath d='M4 21h8'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 21V3'/%3E%3Cpath d='M8 4h11l-2.6 3.4L19 11H8'/%3E%3Cpath d='M4 21h8'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.dark .brand::before {
+    background: var(--gold);
+}
+
+/* ---------- Shared type and small parts ------------------------------- */
+
+h2.wide-title,
+h2.check-title {
+    max-width: 32ch;
+    font-size: clamp(2rem, 3.4vw, 3.9rem);
+}
+
+.visual-split h2 {
+    font-size: clamp(2.1rem, 3.6vw, 4.1rem);
+    max-width: 15ch;
+}
+
+/* Two-part titles break at the sentence or clause boundary, never at
+   the box width, so each part is its own block line. */
+.slide h2.lines {
+    max-width: none;
+}
+
+h2.lines .tl {
+    display: block;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.5vw, 1.4rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.18rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.term-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .3rem .8rem;
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+.term-line b {
+    padding: .1rem .55rem;
+    border-radius: .25rem;
+    background: color-mix(in srgb, var(--gold) 45%, #fff);
+    color: #001a36;
+    font-weight: 900;
+}
+
+.dark .term-line b {
+    background: var(--gold);
+}
+
+.term-line.stacked {
+    display: grid;
+    gap: .35rem;
+}
+
+.term-line.stacked b {
+    justify-self: start;
+}
+
+/* Runs and readings chips. A play glyph means the cell came from sending
+   the prompt. Ruled lines mean it came from reading pages. */
+.src {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    justify-self: start;
+    padding: .16rem .55rem;
+    border-radius: .3rem;
+    color: #fff;
+    font-size: clamp(.66rem, .82vw, .86rem);
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: .07em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.src.run {
+    background: var(--runs);
+}
+
+.src.run::before {
+    content: "\25B6";
+    font-size: .72em;
+}
+
+.src.read {
+    background: var(--reads);
+}
+
+.src.read::before {
+    content: "\2261";
+}
+
+.dark .src.run {
+    box-shadow: 0 0 0 .12rem rgba(255, 255, 255, .75);
+}
+
+/* The dated tag: the motif's paper tag with a punched hole. It marks
+   every fact a vendor can change. */
+.date-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: .12rem .6rem .12rem 1.25rem;
+    background: color-mix(in srgb, var(--dated) 42%, #fff);
+    color: #001a36;
+    clip-path: polygon(.75rem 0, 100% 0, 100% 100%, .75rem 100%, 0 50%);
+    font-family: var(--body);
+    font-size: clamp(.66rem, .82vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .05em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: .08em;
+}
+
+.date-tag::before {
+    position: absolute;
+    top: 50%;
+    left: .55rem;
+    width: .34rem;
+    height: .34rem;
+    content: "";
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 .08rem #b8860b;
+    transform: translateY(-50%);
+}
+
+.date-tag.blank {
+    background: #fff;
+    box-shadow: inset 0 0 0 .14rem var(--dated);
+}
+
+.post-dot {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 1.7em;
+    height: 1.7em;
+    border-radius: .25rem .25rem 0 0;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: clamp(.8rem, 1vw, 1rem);
+    font-weight: 900;
+    box-shadow: inset 0 .25rem 0 var(--gold);
+}
+
+.dark .post-dot {
+    background: var(--gold);
+    color: #001a36;
+    box-shadow: inset 0 .25rem 0 #fff;
+}
+
+/* A failed criterion. Red is reserved for fail and contradicted. */
+.stamp.fail {
+    color: var(--danger);
+}
+
+/* A neutral mark for courtesy text that makes no claim. */
+.mark.courtesy {
+    border-bottom: .2rem dashed color-mix(in srgb, var(--navy) 45%, transparent);
+}
+
+.mark.courtesy[data-label]::after {
+    background: color-mix(in srgb, var(--navy) 70%, #777);
+}
+
+.chat-bar {
+    justify-content: flex-start;
+    font-size: clamp(.7rem, .95vw, 1.05rem);
+}
+
+.chat-bar .stamp {
+    margin-left: auto;
+    transform: rotate(-2deg);
+    color: var(--blue);
+    letter-spacing: .06em;
+}
+
+.chat .who {
+    font-size: clamp(.66rem, .85vw, 1rem);
+}
+
+.artifact-card {
+    margin-top: 1.6rem;
+}
+
+/* ---------- Slide 2: targets at the start line ------------------------ */
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 0;
+    padding: 0 0 1.1rem;
+    list-style: none;
+    background: linear-gradient(var(--gold), var(--gold)) left bottom / 100% .4rem no-repeat;
+}
+
+.targets li {
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    background: #fff;
+    border-top: .45rem solid var(--navy);
+    border-radius: .2rem;
+    box-shadow: .45rem .5rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.t-num {
+    color: var(--blue);
+    font-size: clamp(1.6rem, 2.6vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.targets strong {
+    color: var(--navy);
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+}
+
+.targets p {
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+/* ---------- Slide 3: Mei Lin's ask ------------------------------------- */
+
+.hook-split {
+    grid-template-columns: minmax(0, 1fr) minmax(21rem, 1fr);
+}
+
+/* Each row is one ruled line tall, starting just above the red margin
+   rule, so the writing sits on the card's lines at every size. */
+.ask-card {
+    padding-top: .95rem;
+}
+
+.ask-card .card-fields {
+    gap: 0 1.1rem;
+}
+
+.ask-card .card-fields dt,
+.ask-card .card-fields dd {
+    padding-top: 0;
+    line-height: 2.15rem;
+}
+
+.ask-card .card-fields dd {
+    font-family: var(--body);
+    font-size: clamp(.92rem, 1.2vw, 1.25rem);
+    font-weight: 700;
+}
+
+.ask-card .card-fields dd:last-child {
+    color: var(--blue);
+    font-weight: 900;
+}
+
+/* ---------- Slide 4: two type questions -------------------------------- */
+
+.type-board {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.q-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.q-label {
+    display: grid;
+    gap: .15rem;
+}
+
+.q-label span {
+    color: var(--gold);
+    font-size: clamp(.72rem, .9vw, .9rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.q-label b {
+    font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+    line-height: 1.15;
+}
+
+.type-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: tab;
+}
+
+.type-tabs li {
+    display: grid;
+    gap: .2rem;
+    padding: .55rem .8rem .7rem;
+    border-top: .4rem solid var(--gold);
+    border-radius: .2rem .2rem .5rem .5rem;
+    background: #fff;
+    color: #001a36;
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+    font-weight: 800;
+    line-height: 1.2;
+    counter-increment: tab;
+}
+
+.type-tabs li::before {
+    content: counter(tab);
+    color: var(--blue);
+    font-size: .8em;
+    font-weight: 900;
+}
+
+.fail-rows {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fail-rows li {
+    display: grid;
+    align-content: start;
+    gap: .3rem;
+    padding: .8rem 1rem;
+    border-left: .35rem solid var(--gold);
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .08);
+}
+
+.fail-rows b {
+    color: var(--gold);
+    font-size: clamp(1.02rem, 1.4vw, 1.4rem);
+}
+
+.fail-rows span {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+    line-height: 1.32;
+}
+
+/* ---------- Slide 5: sorting bins ------------------------------------- */
+
+.bins {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(.8rem, 1.6vw, 1.4rem);
+}
+
+.bin {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    border: .14rem solid color-mix(in srgb, var(--navy) 25%, transparent);
+    border-radius: .3rem .3rem .9rem .9rem;
+    background: #fff;
+    box-shadow: .4rem .45rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.bin-head {
+    padding: .45rem .8rem;
+    background: color-mix(in srgb, var(--mist) 70%, #fff);
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, 1.02rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.bin-body {
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+    padding: .7rem;
+}
+
+.ticket {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .55rem;
+    align-items: start;
+    padding: .45rem .6rem;
+    border: .1rem dashed color-mix(in srgb, var(--navy) 35%, transparent);
+    border-radius: .3rem;
+    background: color-mix(in srgb, var(--canvas) 55%, #fff);
+    font-size: clamp(.84rem, 1.05vw, 1.1rem);
+    line-height: 1.3;
+}
+
+.ticket .n {
+    display: grid;
+    place-items: center;
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: .9em;
+    font-weight: 900;
+}
+
+.bin-note {
+    font-size: clamp(.8rem, .98vw, 1.02rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--blue);
+}
+
+.bin-note.ambiguous {
+    padding: .4rem .6rem;
+    border-left: .25rem dotted color-mix(in srgb, var(--gold) 70%, #000);
+    background: color-mix(in srgb, var(--gold) 14%, #fff);
+    color: #001a36;
+    font-weight: 600;
+}
+
+.bin-check {
+    padding: .5rem .8rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.84rem, 1.05vw, 1.1rem);
+    font-weight: 800;
+}
+
+.bin-check b {
+    margin-right: .4rem;
+    color: var(--gold);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.cut-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem 1rem;
+    font-size: clamp(.84rem, 1.05vw, 1.1rem);
+}
+
+.ticket.cut {
+    display: inline-grid;
+    opacity: .75;
+}
+
+.cut-note {
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.cut-row .stamp {
+    margin-left: auto;
+}
+
+/* ---------- Slide 6: the Tool Survey card ----------------------------- */
+
+.card-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(14rem, 1fr);
+    gap: clamp(1.4rem, 3vw, 3rem);
+    align-items: start;
+}
+
+.survey-card .card-fields {
+    gap: .42rem 1.1rem;
+}
+
+.survey-card .card-fields dd {
+    font-family: var(--body);
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.5;
+}
+
+.card-aside {
+    display: grid;
+    gap: 1.1rem;
+    padding-top: 1.8rem;
+}
+
+.aside-note {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+/* ---------- Slide 8: six checkpoint posts on one lane ------------------ */
+
+.lane-six {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(.6rem, 1.2vw, 1.1rem);
+    margin: 0;
+    padding: 3.2rem 0 0 1.1rem;
+    list-style: none;
+    counter-reset: post;
+}
+
+/* The lane: two painted lines with a dashed center, and a gold start
+   line at its left end. */
+.lane-six::before {
+    position: absolute;
+    top: 1.15rem;
+    left: 0;
+    right: 0;
+    height: 1.1rem;
+    content: "";
+    border-top: .14rem solid rgba(255, 255, 255, .45);
+    border-bottom: .14rem solid rgba(255, 255, 255, .45);
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .4) 0 1.2rem, transparent 1.2rem 2rem) center / 100% .14rem no-repeat;
+}
+
+.lane-six::after {
+    position: absolute;
+    top: .7rem;
+    left: 0;
+    width: .45rem;
+    height: 2rem;
+    content: "";
+    background: var(--gold);
+}
+
+.lane-six li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .4rem;
+    padding: .9rem .85rem 1rem;
+    border-top: .35rem solid var(--runs);
+    border-radius: .3rem;
+    background: #fff;
+    color: #001a36;
+    counter-increment: post;
+}
+
+.lane-six li.read {
+    border-top-color: var(--reads);
+}
+
+/* Each card hangs from its checkpoint post on the lane. */
+.lane-six li::before {
+    position: absolute;
+    top: -2.45rem;
+    left: 1rem;
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.5rem;
+    content: counter(post);
+    border-radius: .25rem .25rem 0 0;
+    background: var(--gold);
+    color: #001a36;
+    font-size: .9rem;
+    font-weight: 900;
+}
+
+.lane-six li::after {
+    position: absolute;
+    top: -.95rem;
+    left: 1.7rem;
+    width: .3rem;
+    height: .95rem;
+    content: "";
+    background: var(--gold);
+}
+
+.lane-six b {
+    font-size: clamp(1rem, 1.3vw, 1.36rem);
+    line-height: 1.15;
+    color: var(--navy);
+}
+
+.lane-six span {
+    font-size: clamp(.84rem, 1.02vw, 1.08rem);
+    line-height: 1.3;
+}
+
+.src-key {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .7rem;
+    font-size: clamp(.86rem, 1.1vw, 1.12rem);
+}
+
+.src-key span {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.src-key span + span {
+    margin-left: 1rem;
+}
+
+/* ---------- Slide 9: capability and accuracy -------------------------- */
+
+.stories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 2.4rem);
+}
+
+.story {
+    display: grid;
+    align-content: start;
+    gap: .75rem;
+    padding: 1rem 1.2rem 1.15rem;
+    border-top: .35rem solid var(--runs);
+    border-radius: .35rem;
+    background: #fff;
+    box-shadow: .4rem .45rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.story p {
+    font-size: clamp(.92rem, 1.2vw, 1.22rem);
+}
+
+.post-tag {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.refuse,
+.bench-vs {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    min-height: 6.2rem;
+    padding: .7rem .9rem;
+    border-radius: .35rem;
+    background: color-mix(in srgb, var(--canvas) 70%, #fff);
+}
+
+/* A photo of a handwritten sheet: ruled lines, slightly tilted. */
+.photo-sheet {
+    display: grid;
+    flex: none;
+    gap: .35rem;
+    align-content: center;
+    width: 4.4rem;
+    height: 5rem;
+    padding: .55rem;
+    border: .3rem solid #fff;
+    background: color-mix(in srgb, var(--mist) 60%, #fff);
+    box-shadow: 0 .2rem .6rem color-mix(in srgb, var(--navy) 25%, transparent);
+    transform: rotate(-5deg);
+}
+
+.photo-sheet i {
+    height: .16rem;
+    border-radius: .1rem;
+    background: var(--blue);
+}
+
+.photo-sheet i:nth-child(2n) {
+    width: 70%;
+}
+
+.flow-arrow,
+.vs {
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2vw, 2rem);
+    font-weight: 900;
+}
+
+.vs {
+    font-size: clamp(.9rem, 1.2vw, 1.2rem);
+    text-transform: uppercase;
+}
+
+.tier-box {
+    display: grid;
+    gap: .25rem;
+    padding: .55rem .8rem;
+    border: .14rem solid var(--navy);
+    border-radius: .4rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.78rem, .95vw, .98rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.tier-box b {
+    color: var(--danger);
+    font-size: 1.1em;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.podium {
+    display: grid;
+    flex: 0 1 11rem;
+    place-items: center;
+    min-height: 4.6rem;
+    padding: .5rem .7rem;
+    border-radius: .3rem .3rem 0 0;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.8rem, 1vw, 1.04rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    box-shadow: inset 0 .35rem 0 var(--gold);
+}
+
+/* Ten client letters, three with a contradicted date. */
+.letters {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .4rem;
+}
+
+.letters i {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border: .12rem solid color-mix(in srgb, var(--navy) 45%, transparent);
+    border-radius: .15rem;
+    background:
+        linear-gradient(color-mix(in srgb, var(--navy) 40%, transparent), color-mix(in srgb, var(--navy) 40%, transparent)) 18% 32% / 62% .12rem no-repeat,
+        linear-gradient(color-mix(in srgb, var(--navy) 40%, transparent), color-mix(in srgb, var(--navy) 40%, transparent)) 18% 62% / 44% .12rem no-repeat,
+        #fff;
+}
+
+.result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .8rem;
+    font-weight: 800;
+}
+
+/* ---------- Slide 10: cost and privacy -------------------------------- */
+
+.cp-split {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr);
+    gap: clamp(1.2rem, 3vw, 3rem);
+    align-items: stretch;
+}
+
+.pt-head {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--navy);
+    font-size: clamp(.86rem, 1.1vw, 1.12rem);
+    font-weight: 900;
+}
+
+/* A price tag: punched hole at the left, the arithmetic on its face. */
+.price-tag {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: 1.1rem 1.4rem 1.2rem 1.6rem;
+    border: .14rem solid var(--navy);
+    border-radius: 1.4rem .6rem .6rem 1.4rem;
+    background: #fff;
+    box-shadow: .4rem .45rem 0 color-mix(in srgb, var(--navy) 10%, transparent);
+}
+
+.pt-line {
+    font-size: clamp(.95rem, 1.25vw, 1.3rem);
+}
+
+.pt-line b {
+    display: inline-block;
+    min-width: 3.2em;
+    color: var(--navy);
+    font-size: 1.25em;
+    font-weight: 900;
+}
+
+.pt-line.total {
+    padding-top: .45rem;
+    border-top: .18rem solid var(--navy);
+}
+
+.pt-line.total b {
+    color: var(--blue);
+}
+
+.price-tag .date-tag {
+    justify-self: start;
+    margin-top: .3rem;
+}
+
+.fork {
+    display: grid;
+    align-content: start;
+    gap: .7rem;
+    padding: 1.1rem 1.3rem;
+    border-radius: .4rem;
+    background: #fff;
+    border-top: .35rem solid var(--reads);
+}
+
+.fork-body {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.fork-root {
+    position: relative;
+    padding: .55rem .8rem;
+    border-radius: .35rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.86rem, 1.08vw, 1.1rem);
+    font-weight: 900;
+}
+
+.branches {
+    position: relative;
+    display: grid;
+    gap: .6rem;
+    padding-left: 1rem;
+    border-left: .2rem solid var(--navy);
+}
+
+.branch {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(7rem, auto) minmax(0, 1fr) auto;
+    gap: .3rem .8rem;
+    align-items: center;
+    padding: .55rem .75rem;
+    border-radius: .3rem;
+    background: color-mix(in srgb, var(--canvas) 70%, #fff);
+    font-size: clamp(.88rem, 1.12vw, 1.15rem);
+}
+
+.branch::before {
+    position: absolute;
+    top: 50%;
+    left: -1rem;
+    width: 1rem;
+    height: .2rem;
+    content: "";
+    background: var(--navy);
+}
+
+.branch b {
+    color: var(--navy);
+}
+
+.fork-foot {
+    justify-self: start;
+    color: var(--blue);
+    font-size: clamp(.8rem, 1vw, 1.02rem);
+    font-weight: 800;
+}
+
+/* ---------- Slide 11: accessibility and integration -------------------- */
+
+.access-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(19rem, .85fr);
+    gap: clamp(1.6rem, 3.5vw, 4rem);
+}
+
+.access-split .stack {
+    gap: clamp(.6rem, 1.2vw, 1.1rem);
+}
+
+.access-split h2 {
+    max-width: 24ch;
+    font-size: clamp(1.9rem, 2.9vw, 3.3rem);
+}
+
+.sr-line {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: .8rem;
+    align-items: center;
+}
+
+.sr-line p {
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+}
+
+/* What her screen reader said, as a speech bubble. */
+.speech {
+    position: relative;
+    padding: .45rem .9rem;
+    border: .14rem solid var(--navy);
+    border-radius: 1rem 1rem 1rem .2rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.4rem);
+    font-weight: 900;
+}
+
+.wcag {
+    margin: 0;
+    padding: .55rem .9rem;
+    border-left: .35rem solid var(--navy);
+    background: #fff;
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.wcag cite {
+    display: block;
+    margin-top: .25rem;
+    color: var(--blue);
+    font-size: .82em;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.copy-loop {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem .7rem;
+}
+
+.loop-who {
+    color: var(--navy);
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    font-weight: 800;
+}
+
+.loop-step {
+    padding: .3rem .7rem;
+    border: .12rem solid var(--navy);
+    border-radius: .3rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.84rem, 1.05vw, 1.08rem);
+    font-weight: 800;
+}
+
+.loop-arrow {
+    color: var(--blue);
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    font-weight: 900;
+}
+
+.loop-cost {
+    flex-basis: 100%;
+    padding-left: 2.6rem;
+    color: var(--blue);
+    font-size: clamp(.84rem, 1.05vw, 1.08rem);
+    font-weight: 800;
+}
+
+/* ---------- Slide 12: the tool's list against the six posts ------------ */
+
+.suggest {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 1fr);
+    gap: clamp(1.2rem, 2.6vw, 2.6rem);
+    align-items: start;
+}
+
+.suggest .turn {
+    max-width: 100%;
+    font-size: clamp(.84rem, 1.05vw, 1.12rem);
+    line-height: 1.36;
+}
+
+.crit-list {
+    display: grid;
+    gap: .2rem;
+    margin: 0;
+    padding-left: 1.6rem;
+}
+
+.crit-list li {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.crit-list li.gap {
+    list-style: none;
+}
+
+.post-map {
+    display: grid;
+    gap: .45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: post;
+}
+
+.post-map li {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+    gap: .7rem;
+    align-items: center;
+    padding: .5rem .7rem;
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .1);
+    counter-increment: post;
+    font-size: clamp(.88rem, 1.12vw, 1.15rem);
+}
+
+.post-map li::before {
+    display: grid;
+    place-items: center;
+    height: 1.6rem;
+    content: counter(post);
+    border-radius: .25rem .25rem 0 0;
+    background: var(--gold);
+    color: #001a36;
+    font-weight: 900;
+}
+
+.cover {
+    padding: .12rem .55rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .9);
+    color: #001a36;
+    font-size: .85em;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.post-map li.missing {
+    background: transparent;
+    border: .16rem dashed rgba(255, 255, 255, .7);
+}
+
+.post-map li.missing .cover {
+    background: transparent;
+    border: .12rem dashed #fff;
+    color: #fff;
+}
+
+/* ---------- Slide 14: the fair test ----------------------------------- */
+
+.fairtest {
+    display: grid;
+    grid-template-columns: minmax(13rem, 18rem) minmax(0, 1fr);
+    align-items: stretch;
+}
+
+.start {
+    display: grid;
+    align-content: center;
+    gap: .45rem;
+    padding: 1rem 1.2rem;
+    border-right: .6rem solid var(--gold);
+    border-radius: .4rem 0 0 .4rem;
+    background: var(--navy);
+    color: #fff;
+}
+
+.start-label {
+    color: var(--gold);
+    font-size: clamp(.72rem, .9vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.same {
+    padding: .3rem .6rem;
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .12);
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+    font-weight: 800;
+}
+
+.lanes {
+    display: grid;
+    gap: .8rem;
+    padding: .7rem 0;
+}
+
+.lane {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .55rem .8rem;
+    padding: .8rem 1rem;
+    border-top: .16rem solid color-mix(in srgb, var(--navy) 35%, transparent);
+    border-bottom: .16rem solid color-mix(in srgb, var(--navy) 35%, transparent);
+    background:
+        repeating-linear-gradient(90deg, color-mix(in srgb, var(--navy) 28%, transparent) 0 1.2rem, transparent 1.2rem 2rem) center / 100% .14rem no-repeat,
+        rgba(255, 255, 255, .55);
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+}
+
+.lane b {
+    min-width: 4.4rem;
+    padding: .25rem .6rem;
+    border-radius: .25rem;
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+}
+
+.lane .chip {
+    font-family: var(--body);
+    padding: .2rem .6rem;
+    border: .12rem solid var(--navy);
+    border-radius: 1rem;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.lane .finish {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    margin-left: auto;
+    padding: .25rem .7rem;
+    border: .14rem solid var(--navy);
+    border-radius: .25rem;
+    background: #fff;
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.lane .finish::before {
+    width: .8rem;
+    height: .8rem;
+    content: "";
+    background: repeating-conic-gradient(var(--navy) 0 25%, #fff 0 50%) 0 0 / .4rem .4rem;
+    box-shadow: 0 0 0 .1rem var(--navy);
+}
+
+.terms {
+    display: grid;
+    gap: .5rem;
+}
+
+/* ---------- Slide 15: Task 1 prompt and checks ------------------------- */
+
+.task1 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.85fr) minmax(14rem, .9fr);
+    gap: clamp(1rem, 2.2vw, 2.2rem);
+    align-items: start;
+}
+
+.stepped-prompt .turn {
+    max-width: 100%;
+    font-size: clamp(.82rem, 1vw, 1.08rem);
+    line-height: 1.38;
+}
+
+.stepped-prompt .stepped {
+    grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
+    gap: .45rem .9rem;
+}
+
+.checks {
+    display: grid;
+    gap: .55rem;
+    padding: 1rem 1.1rem;
+    border-radius: .4rem;
+    background: rgba(255, 255, 255, .08);
+    border: .14rem solid rgba(255, 255, 255, .3);
+}
+
+.checks-head {
+    color: var(--gold);
+    font-size: clamp(.74rem, .92vw, .94rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.checks ol {
+    display: grid;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.checks li {
+    display: grid;
+    grid-template-columns: 1.3rem minmax(0, 1fr);
+    gap: .6rem;
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+    line-height: 1.3;
+}
+
+.checks li::before {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: .15rem;
+    content: "";
+    border: .16rem solid var(--gold);
+    border-radius: .15rem;
+}
+
+.checks-foot {
+    padding-top: .5rem;
+    border-top: .12rem solid rgba(255, 255, 255, .3);
+    color: var(--gold);
+    font-size: clamp(.86rem, 1.08vw, 1.1rem);
+    font-weight: 800;
+}
+
+/* ---------- Slide 16: the two replies --------------------------------- */
+
+.reply-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.2vw, 2.2rem);
+    align-items: start;
+}
+
+.reply {
+    display: grid;
+    gap: .6rem;
+}
+
+.reply .turn {
+    max-width: 100%;
+    font-size: clamp(.84rem, 1.05vw, 1.14rem);
+    line-height: 1.38;
+}
+
+.reply .turn p + p {
+    margin-top: .45rem;
+}
+
+.tally {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem .6rem;
+}
+
+.count {
+    padding: .2rem .65rem;
+    border: .12rem solid var(--navy);
+    border-radius: 2rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.75rem, .95vw, .95rem);
+    font-weight: 900;
+}
+
+/* ---------- Slide 17: second runs and the matrix ---------------------- */
+
+.run2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(.8rem, 1.6vw, 1.6rem);
+}
+
+.run-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .35rem .8rem;
+    padding: .55rem .9rem;
+    border-left: .35rem solid var(--runs);
+    border-radius: .3rem;
+    background: #fff;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+}
+
+.run-label {
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.run-text {
+    flex-basis: 100%;
+}
+
+.run-card {
+    row-gap: .55rem;
+}
+
+.run-card .stamp,
+.clash .stamp {
+    margin-left: auto;
+    transform: rotate(-1.5deg);
+}
+
+.matrix-wrap {
+    overflow-x: auto;
+}
+
+.matrix {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: .4rem;
+    font-size: clamp(.78rem, .98vw, 1.04rem);
+    line-height: 1.3;
+}
+
+.matrix caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.matrix th,
+.matrix td {
+    padding: .45rem .6rem;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 18%, transparent);
+    text-align: left;
+    vertical-align: top;
+}
+
+.matrix thead th {
+    color: var(--navy);
+    font-weight: 900;
+}
+
+.matrix tr.group th {
+    padding: .35rem .6rem;
+    border-bottom: 0;
+    color: #fff;
+    font-size: .9em;
+    letter-spacing: .04em;
+}
+
+.matrix tr.group th:first-child {
+    background: transparent;
+}
+
+.matrix th.g-run {
+    background: var(--runs);
+    border-radius: .3rem .3rem 0 0;
+}
+
+.matrix th.g-read {
+    background: var(--reads);
+    border-radius: .3rem .3rem 0 0;
+    border-left: .4rem solid #fff;
+}
+
+.matrix th.g-run .src,
+.matrix th.g-read .src {
+    margin-right: .4rem;
+    background: rgba(255, 255, 255, .2);
+}
+
+.matrix tbody th {
+    color: var(--navy);
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+/* The gap between runs and readings runs down the whole table. */
+.matrix tr > :nth-child(4) {
+    border-left: .4rem solid color-mix(in srgb, var(--reads) 30%, #fff);
+}
+
+.matrix tr.group > :nth-child(3) {
+    border-left: .4rem solid #fff;
+}
+
+.matrix tbody td:nth-child(n+4) {
+    color: color-mix(in srgb, var(--ink) 70%, #fff);
+}
+
+/* ---------- Slide 18: three habits for reading a row -------------------- */
+
+.habits {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.2vw, 2.2rem);
+}
+
+.habit {
+    display: grid;
+    align-content: start;
+    gap: .6rem;
+}
+
+.habit b {
+    color: var(--gold);
+    font-size: clamp(1.05rem, 1.45vw, 1.5rem);
+    line-height: 1.2;
+}
+
+.habit p {
+    font-size: clamp(.9rem, 1.15vw, 1.18rem);
+}
+
+.habit p.traced {
+    padding-left: .6rem;
+    border-left: .25rem solid var(--gold);
+    color: var(--gold);
+    font-weight: 800;
+}
+
+/* Each mini lane is painted, not positioned outside its box. */
+.mini {
+    position: relative;
+    height: 5.4rem;
+    overflow: hidden;
+    border-top: .14rem solid rgba(255, 255, 255, .45);
+    border-bottom: .14rem solid rgba(255, 255, 255, .45);
+    background:
+        linear-gradient(var(--gold), var(--gold)) left .9rem center / .4rem 70% no-repeat,
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .35) 0 1rem, transparent 1rem 1.7rem) center / 100% .12rem no-repeat;
+}
+
+.mini-post {
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    padding: .2rem .55rem;
+    border-radius: .25rem .25rem 0 0;
+    background: var(--gold);
+    color: #001a36;
+    font-size: .8rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transform: translate(-50%, -110%);
+}
+
+.gate-bar {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    width: 44%;
+    height: .7rem;
+    background: repeating-linear-gradient(45deg, #fff 0 .6rem, var(--danger) .6rem 1.2rem);
+    transform: translateY(15%);
+}
+
+.mini.gap .lane-a,
+.mini.gap .lane-b {
+    position: absolute;
+    left: 1.8rem;
+    height: .7rem;
+    border-radius: 0 .4rem .4rem 0;
+    background: var(--gold);
+}
+
+.mini.gap .lane-a {
+    top: 1.1rem;
+    width: 62%;
+}
+
+.mini.gap .lane-b {
+    bottom: 1.1rem;
+    width: 58%;
+    background: #fff;
+}
+
+.again {
+    position: absolute;
+    top: 50%;
+    right: .6rem;
+    padding: .1rem .45rem;
+    border-radius: .25rem;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: .9rem;
+    font-weight: 900;
+    transform: translateY(-50%);
+}
+
+.mini.fog {
+    background:
+        linear-gradient(90deg, transparent 35%, rgba(255, 255, 255, .6) 80%),
+        linear-gradient(var(--gold), var(--gold)) left .9rem center / .4rem 70% no-repeat,
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .35) 0 1rem, transparent 1rem 1.7rem) center / 100% .12rem no-repeat;
+}
+
+.fog-band {
+    position: absolute;
+    top: 50%;
+    right: .8rem;
+    padding: .2rem .55rem;
+    border: .12rem dashed var(--navy);
+    border-radius: .25rem;
+    color: var(--navy);
+    font-size: .8rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+}
+
+/* ---------- Slide 19: Fix It 10.1 ------------------------------------- */
+
+.fixit {
+    align-items: start;
+}
+
+.fix-col {
+    display: grid;
+    align-content: start;
+    gap: .6rem;
+}
+
+.fix-col .ba-label {
+    justify-self: start;
+}
+
+.mini-rows {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: clamp(.8rem, 1vw, 1.06rem);
+    line-height: 1.3;
+}
+
+.mini-rows th,
+.mini-rows td {
+    padding: .35rem .55rem;
+    border-bottom: .1rem solid color-mix(in srgb, var(--navy) 18%, transparent);
+    text-align: left;
+    vertical-align: top;
+}
+
+.mini-rows th {
+    color: var(--navy);
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.mini-rows tr.worse td {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.mini-rows tr.better td {
+    color: var(--good);
+    font-weight: 800;
+}
+
+.clash {
+    display: grid;
+    gap: .55rem;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+}
+
+.clash p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .3rem .6rem;
+    font-size: inherit;
+}
+
+.clash-vs {
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.clash .fact {
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.prompt-diff {
+    display: grid;
+    gap: .4rem;
+}
+
+.prompt-diff p {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+    gap: .7rem;
+    align-items: start;
+    padding: .45rem .65rem;
+    border-radius: .3rem;
+    background: color-mix(in srgb, var(--mist) 55%, #fff);
+    font-size: clamp(.82rem, 1.02vw, 1.08rem);
+    line-height: 1.32;
+}
+
+.prompt-diff p.only-a {
+    background: color-mix(in srgb, var(--gold) 35%, #fff);
+    border-left: .3rem solid var(--gold);
+}
+
+.who-tag {
+    color: var(--navy);
+    font-size: .78em;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.one-change {
+    padding: .55rem .8rem;
+    border-left: .35rem solid var(--navy);
+    background: #fff;
+    font-size: clamp(.92rem, 1.18vw, 1.2rem);
+    font-weight: 800;
+}
+
+.note-flip {
+    display: grid;
+    gap: .35rem;
+    padding: .55rem .8rem;
+    border-radius: .3rem;
+    background: #fff;
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+}
+
+.note-flip::before {
+    content: "Note to Mei Lin";
+    color: var(--blue);
+    font-size: .78em;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.note-flip .old {
+    color: color-mix(in srgb, var(--ink) 60%, #fff);
+    text-decoration: line-through .12rem;
+}
+
+.note-flip .new {
+    color: var(--navy);
+    font-weight: 900;
+}
+
+/* ---------- Slide 21: keeping it current ------------------------------ */
+
+.current-split {
+    grid-template-columns: minmax(0, 1.12fr) minmax(19rem, .88fr);
+    gap: clamp(1.6rem, 3.5vw, 4rem);
+}
+
+.current-split .stack {
+    gap: clamp(.6rem, 1.2vw, 1.1rem);
+}
+
+.current-split h2 {
+    max-width: 18ch;
+    font-size: clamp(1.9rem, 3.1vw, 3.5rem);
+}
+
+/* Tool A's Last tested line as the tag tied to its post. */
+.last-tested {
+    position: relative;
+    display: grid;
+    gap: .3rem;
+    padding: .7rem 1rem .75rem 2.1rem;
+    background: color-mix(in srgb, var(--dated) 30%, #fff);
+    clip-path: polygon(1.2rem 0, 100% 0, 100% 100%, 1.2rem 100%, 0 50%);
+    font-size: clamp(.86rem, 1.08vw, 1.12rem);
+    line-height: 1.38;
+}
+
+.last-tested::before {
+    position: absolute;
+    top: 50%;
+    left: .75rem;
+    width: .5rem;
+    height: .5rem;
+    content: "";
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 .1rem #b8860b;
+    transform: translateY(-50%);
+}
+
+.lt-label {
+    color: var(--blue);
+    font-size: .8em;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.triggers {
+    display: grid;
+    gap: .35rem;
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.triggers li {
+    font-size: clamp(.88rem, 1.12vw, 1.16rem);
+    line-height: 1.3;
+}
+
+.triggers li::marker {
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.triggers b {
+    color: var(--navy);
+}
+
+/* ---------- Slide 22: a tool reviews a card ---------------------------- */
+
+.review {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+    gap: clamp(1.2rem, 2.6vw, 2.6rem);
+    align-items: start;
+}
+
+.card-col {
+    display: grid;
+    gap: .2rem;
+}
+
+.today {
+    margin-bottom: .1rem;
+}
+
+.today .date-tag {
+    font-size: clamp(.74rem, .95vw, .98rem);
+}
+
+.toolc-card .card-fields {
+    gap: .3rem .9rem;
+}
+
+.toolc-card .card-fields > :nth-child(-n+2) {
+    padding-bottom: .45rem;
+}
+
+.toolc-card .card-fields dd {
+    font-size: clamp(.78rem, .98vw, 1.02rem);
+    line-height: 1.42;
+}
+
+.toolc-card dd.empty::after {
+    display: inline-block;
+    width: 70%;
+    height: 1em;
+    content: "";
+    border-bottom: .12rem dashed color-mix(in srgb, var(--navy) 40%, transparent);
+}
+
+.sort-col {
+    display: grid;
+    gap: .7rem;
+}
+
+.sort-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem .8rem;
+    color: var(--gold);
+    font-size: clamp(.78rem, .98vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.flag-bin {
+    display: grid;
+    gap: .4rem;
+    padding: .65rem .8rem;
+    border-radius: .4rem;
+    background: rgba(255, 255, 255, .08);
+    border: .14rem solid rgba(255, 255, 255, .3);
+}
+
+.flag-bin.current {
+    border-color: var(--dated);
+}
+
+.bin-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .3rem .6rem;
+    font-size: clamp(.8rem, 1vw, 1.04rem);
+    font-weight: 800;
+}
+
+.fix-tag {
+    padding: .12rem .6rem;
+    border: .14rem solid #fff;
+    border-radius: .25rem;
+    font-size: clamp(.66rem, .82vw, .86rem);
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.flag {
+    display: grid;
+    grid-template-columns: minmax(6.4rem, auto) minmax(0, 1fr);
+    gap: .7rem;
+    font-size: clamp(.8rem, 1vw, 1.04rem);
+    line-height: 1.32;
+}
+
+.flag b {
+    color: var(--gold);
+}
+
+/* ---------- Slide 24: the lab ----------------------------------------- */
+
+.lab-lanes {
+    display: grid;
+    gap: .6rem;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    list-style: none;
+    border-left: .5rem solid var(--gold);
+}
+
+.lab-lanes li {
+    display: grid;
+    grid-template-columns: 5.4rem minmax(9rem, 13rem) minmax(0, 1fr);
+    gap: .9rem;
+    align-items: center;
+    padding: .7rem 1rem;
+    border-top: .14rem solid rgba(255, 255, 255, .35);
+    border-bottom: .14rem solid rgba(255, 255, 255, .35);
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .25) 0 1rem, transparent 1rem 1.7rem) center bottom .2rem / 100% .1rem no-repeat;
+}
+
+.lab-lanes .part {
+    padding: .2rem .5rem;
+    border-radius: .25rem;
+    background: var(--gold);
+    color: #001a36;
+    font-size: .85rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.lab-lanes b {
+    font-size: clamp(1.05rem, 1.45vw, 1.5rem);
+}
+
+.lab-lanes span:last-child {
+    font-size: clamp(.92rem, 1.2vw, 1.24rem);
+    line-height: 1.32;
+}
+
+.prompt.exit {
+    max-width: 62rem;
+}
+
+/* ---------- Laptop height ---------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .8rem;
+    }
+
+    h2.wide-title,
+    h2.check-title {
+        font-size: clamp(1.7rem, 2.8vw, 3rem);
+    }
+
+    .visual-split h2,
+    .access-split h2,
+    .current-split h2 {
+        font-size: clamp(1.7rem, 2.7vw, 3rem);
+    }
+
+    .stepped-prompt .turn {
+        font-size: .8rem;
+        line-height: 1.3;
+        padding: .45rem .65rem;
+    }
+
+    .stepped-prompt .chat-body {
+        padding: .45rem;
+    }
+
+    .stepped-prompt .stepped {
+        gap: .3rem .7rem;
+    }
+
+    .stepped-prompt .step {
+        font-size: .72rem;
+    }
+
+    .checks li {
+        font-size: .88rem;
+    }
+
+    .reply .turn,
+    .suggest .turn {
+        font-size: .82rem;
+        line-height: 1.3;
+        padding: .5rem .7rem;
+    }
+
+    .reply .chat-body,
+    .suggest .chat-body {
+        padding: .5rem;
+        gap: .5rem;
+    }
+
+    .ticket,
+    .bin-note,
+    .bin-check {
+        font-size: .82rem;
+    }
+
+    .bin-body {
+        padding: .5rem;
+        gap: .4rem;
+    }
+
+    .survey-card .card-fields dd,
+    .toolc-card .card-fields dd {
+        font-size: .8rem;
+        line-height: 1.32;
+    }
+
+    .survey-card .card-fields,
+    .toolc-card .card-fields {
+        gap: .25rem .8rem;
+    }
+
+    .lane-six span,
+    .story p,
+    .triggers li,
+    .last-tested,
+    .wcag,
+    .sr-line p,
+    .flag,
+    .habit p,
+    .prompt-diff p,
+    .mini-rows,
+    .matrix {
+        font-size: .82rem;
+    }
+
+    .refuse,
+    .bench-vs {
+        min-height: 4.6rem;
+        padding: .45rem .7rem;
+    }
+
+    .photo-sheet {
+        width: 3.4rem;
+        height: 3.9rem;
+    }
+
+    .mini {
+        height: 4.2rem;
+    }
+
+    .fix-col {
+        gap: .45rem;
+    }
+
+    .mini-rows th,
+    .mini-rows td,
+    .matrix th,
+    .matrix td {
+        padding: .28rem .45rem;
+    }
+
+    .one-change,
+    .note-flip,
+    .clash {
+        font-size: .86rem;
+    }
+
+    .flag-bin {
+        padding: .45rem .65rem;
+        gap: .3rem;
+    }
+
+    .sort-col {
+        gap: .5rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    /* The post strip shrinks into the top-left corner, clear of the
+       corner label on the right. */
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        background-size: 7rem auto, 12rem auto, auto;
+        background-position: left 1rem top 0, right -1rem bottom 3.2rem, 0 0;
+    }
+
+    .slide.dark.title-slide {
+        background-size: 7rem auto;
+        background-position: left 1rem top 0;
+    }
+
+    /* Keep the first field below the card's red margin rule. */
+    .artifact-card:not(.ask-card) .card-fields > dt:first-child {
+        padding-bottom: 1.2rem;
+    }
+
+    .ask-card .card-fields dd + dt {
+        margin-top: 0;
+    }
+
+    .run-card .stamp {
+        margin-left: 0;
+    }
+
+    .targets,
+    .hook-split,
+    .type-tabs,
+    .fail-rows,
+    .bins,
+    .card-split,
+    .lane-six,
+    .stories,
+    .cp-split,
+    .access-split,
+    .suggest,
+    .fairtest,
+    .task1,
+    .reply-pair,
+    .run2,
+    .habits,
+    .current-split,
+    .review {
+        grid-template-columns: 1fr;
+    }
+
+    .q-row {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .lane-six {
+        gap: 1.9rem;
+        padding: 2.4rem 0 0 0;
+    }
+
+    .lane-six::before,
+    .lane-six::after {
+        display: none;
+    }
+
+    .lane-six li::after {
+        display: none;
+    }
+
+    .lane-six li::before {
+        top: -1.5rem;
+        left: .6rem;
+    }
+
+    .bench-vs,
+    .refuse {
+        flex-wrap: wrap;
+    }
+
+    .letters {
+        flex-basis: 100%;
+    }
+
+    .branch {
+        grid-template-columns: 1fr;
+    }
+
+    .fork-body {
+        grid-template-columns: 1fr;
+    }
+
+    .sr-line {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .sr-line .speech {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .start {
+        border-right: 0;
+        border-bottom: .6rem solid var(--gold);
+        border-radius: .4rem .4rem 0 0;
+    }
+
+    .lane .finish {
+        margin-left: 0;
+    }
+
+    .prompt-diff p,
+    .flag {
+        grid-template-columns: 1fr;
+        gap: .2rem;
+    }
+
+    .lab-lanes li {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+    }
+
+    .lab-lanes .part {
+        justify-self: start;
+    }
+
+    .cut-row .stamp {
+        margin-left: 0;
+    }
+
+    .post-map li {
+        grid-template-columns: 1.8rem minmax(0, 1fr);
+    }
+
+    /* The matrix turns into one labeled card per tool on a phone, and
+       each cell carries its column name. */
+    .matrix,
+    .matrix tbody,
+    .matrix tr,
+    .matrix th,
+    .matrix td {
+        display: block;
+    }
+
+    .matrix thead tr:last-child {
+        display: none;
+    }
+
+    .matrix tr.group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .3rem;
+        padding: .4rem;
+    }
+
+    .matrix tr.group th:first-child {
+        display: none;
+    }
+
+    .matrix tr.group th {
+        border-radius: .3rem;
+        border-left: 0;
+    }
+
+    .matrix tbody tr {
+        padding: .3rem 0 .5rem;
+        border-top: .2rem solid var(--navy);
+    }
+
+    .matrix td {
+        border-left: 0;
+    }
+
+    .matrix tr > :nth-child(4) {
+        border-left: 0;
+    }
+
+    .matrix td::before {
+        display: block;
+        content: attr(data-label);
+        color: var(--navy);
+        font-size: .78em;
+        font-weight: 900;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .matrix td:nth-child(n+4)::before {
+        color: var(--reads);
+    }
+
+    .post-map .cover {
+        grid-column: 2;
+        justify-self: start;
+        white-space: normal;
+    }
+
+    .loop-cost {
+        padding-left: 0;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .chat-bar .stamp {
+        margin-left: 0;
+        white-space: normal;
+    }
+
+    .stamp {
+        white-space: normal;
+    }
+}
