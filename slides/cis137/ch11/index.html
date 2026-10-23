@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS137 Chapter 11 classroom presentation: Matching AI Tools to Scenarios.">
+  <meta name="theme-color" content="#002E5D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23002E5D'/%3E%3Crect x='6' y='44' width='52' height='10' rx='1' fill='%23FFC845'/%3E%3Cpath d='M12 44v5M20 44v3M28 44v5M36 44v3M44 44v5M52 44v3' stroke='%23002E5D' stroke-width='2'/%3E%3Cpath d='M27 23l17 15' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='19' r='8' fill='%23FFC845'/%3E%3C/svg%3E">
+  <title>CIS137: Matching AI Tools to Scenarios</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="../course.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+<body data-deck-title="CIS137: Matching AI Tools to Scenarios" data-course="cis137"
+  data-chapter="ch11" data-palette="phoenix-classic">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Open with the chapter's first page. Mei Lin's pilot ends this quarter. Before it does, she has to tell Copperwind's owner what the company adopts for the next year: which jobs get an AI tool, which tools, and under what rules. A Deskside technician has an answer ready before she asks. We already have the pilot tool. Use it for everything. Take two or three reactions to the lede. Promise the payoff. By the end of class, everyone can define a job before naming a tool, direct a tool through a job with a written brief, and decide with a measured pilot. Sometimes the decision is no AI here, and that is a finished answer, not a failure.&#10;&#10;Time: 0-2 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">Phoenix College · CIS137</div>
+      <div class="title-art"><img src="assets/title-cutting-table.png" alt=""></div>
+      <div class="content">
+        <div class="eyebrow">Chapter 11 · 55 minutes</div>
+        <div class="rule"></div>
+        <h1>Matching AI Tools to Scenarios</h1>
+        <p class="lede"><span class="verbatim">“Use it for everything.”</span> Does one tool fit every job?</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three objectives as the three tools students keep. 11.1 is the Requirements Sheet: judge whether a problem needs an AI tool at all, from a sheet written before any tool is named. 11.2 is the Work Order: justify the tool from the Tool Survey and direct it through the job with acceptance criteria that validate the result. 11.3 is the Selection Decision: recommend adopt, extend the pilot, decline, or no AI here from a measured pilot. All three verbs sit at the Evaluate level. The chapter serves CLO 6 (select appropriate AI solutions to address specific problems), CLO 3 (effective prompting strategies), and CLO 1 (evaluate AI-generated responses for accuracy). Chapters 9 and 10 come with us: the pilot, the Use Evaluation, the fair test, and the Tool Survey.&#10;&#10;Time: 2-4 minutes.">
+      <div class="brand">CIS137 · Chapter 11</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>Judge, justify, recommend.</h2>
+        <ol class="targets">
+          <li><span class="t-num">11.1</span><strong>Judge</strong><p>whether a stated problem needs an AI tool at all, from a Requirements Sheet written before any tool is named</p><span class="t-tool">The Requirements Sheet</span></li>
+          <li><span class="t-num">11.2</span><strong>Justify</strong><p>the tool chosen for a scenario from the Tool Survey, with a Work Order that directs it through the job and acceptance criteria that validate the result</p><span class="t-tool">The Work Order</span></li>
+          <li><span class="t-num">11.3</span><strong>Recommend</strong><p>adopt, extend the pilot, decline, or no AI here in a Selection Decision backed by a measured pilot</p><span class="t-tool">The Selection Decision</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="It is the fastest answer in the building, and it starts in the wrong place. Most teams pick tools this way: the familiar tool first, the problem second. This chapter reverses the order. Point to Mei Lin's list. Five jobs: the morning inbox, the Monday stand-up notes, the owner's data question, Priya Sharma's next flyer, and a client's disputed invoice. Each one gets a Requirements Sheet first, then a tool or no tool, then a measured result. Ask the room to guess which of the five, if any, should get no AI tool at all. Write two guesses on the board. The status table in 11.3 tests some of them, and the lab decides the invoice.&#10;&#10;Time: 4-6 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · Chapter 11</div>
+      <div class="content visual-split text-wide">
+        <div class="stack">
+          <div class="eyebrow">Mei Lin’s pilot ends this quarter</div>
+          <h2>The fastest answer starts in the wrong place.</h2>
+          <blockquote class="tech-quote">
+            <p class="verbatim">“We already have the pilot tool. Use it for everything.”</p>
+            <cite>A Deskside technician</cite>
+          </blockquote>
+          <div class="job-list">
+            <span class="list-head">Mei Lin’s list: five jobs</span>
+            <ul>
+              <li>the morning inbox</li>
+              <li>the Monday stand-up notes</li>
+              <li>the owner’s data question</li>
+              <li>Priya Sharma’s next flyer</li>
+              <li>a client’s disputed invoice</li>
+            </ul>
+          </div>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/one-tool-five-jobs.png" alt="An oversized blue wrench lies across five job cards of different shapes: a tall card with an inbox tray, a wide card with a bulleted list, a round card with a bar chart, a triangle with a framed flower, and a square card with a receipt and a padlock. The wrench fits none of them."><figcaption>Measure each job before you reach for a tool.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is the technician's idea asked of a chat assistant, the way many tool choices start. Read the prompt, then the first sentence of the sample. It named a type in its first sentence. In the paragraph the chapter cuts, it went on to name products, all in 84 words. Now count what it needed to know and never asked. How many tickets arrive? What do requesters type into them? Which tools does the company already approve, and what do those tools keep? Who reads the sorted result? Product names and prices from a tool's memory belong nowhere until you check them, and then they go on a dated Tool Survey card from Chapter 10. To be fair, the cut paragraph ends with good advice: a human review step for anything marked urgent. The answer may suit some company. It cannot be shown to suit yours, because it never learned what yours needs.&#10;&#10;Time: 6-8 minutes.">
+      <div class="brand">CIS137 · 11.1</div>
+      <div class="content">
+        <div class="eyebrow">The tool-first question</div>
+        <h2 class="wide-title">It picked a type<br> before it asked a single question.</h2>
+        <div class="first-pair">
+          <figure class="chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">What kind of AI tool is best for sorting the support tickets that land in my small IT company's inbox each morning? Answer in under 100 words.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span><p class="verbatim"><span class="mark note" data-label="type first">A large language model (LLM)-based classifier is your best fit.</span> Unlike rigid rule-based filters, it reads the ticket's actual wording, so it can categorize (hardware, network, account access), assign urgency, and flag outages even when customers describe problems vaguely.</p><p class="verbatim">[...]</p></div>
+            </div>
+          </figure>
+          <div class="never-asked">
+            <span class="list-head">Four questions it never asked</span>
+            <ol>
+              <li>How many tickets arrive?</li>
+              <li>What do requesters type into them?</li>
+              <li>Which tools does the company already approve, and what do those tools keep?</li>
+              <li>Who reads the sorted result?</li>
+            </ol>
+            <p class="count-chip"><b>84 words.</b> The cut paragraph names products.</p>
+          </div>
+        </div>
+        <p class="field-note">It may suit some company. It cannot be shown to suit yours.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A Requirements Sheet is a one-page definition of a job, written before any tool is named, so the problem can choose the tool. Read the seven fields in order on Deskside's morning inbox, the first of Mei Lin's scenarios. Two fields do work no earlier tool did. What never goes in brings the AI Use Policy section of the same name to the top of the job, before anyone pastes anything: client names, requester names, signatures, or a password a requester typed. The no-AI option is the way a person would do the job with no AI tool, priced in minutes, so every tool has a baseline to beat. Here it is about 15 minutes a morning by hand, and no data leaves Copperwind. If no tool beats it, the sheet has made the decision. Point to the urgency rule in must-pass. Urgent means the person cannot work at all right now. It comes back three times today. The same sheet fits a home lab: my server rebuild steps live in my head, so a rebuild takes a whole weekend. Its no-AI option is writing the checklist from your last rebuild notes, in about an hour.&#10;&#10;Time: 8-11 minutes.">
+      <div class="brand">CIS137 · 11.1</div>
+      <div class="content">
+        <div class="eyebrow">The Requirements Sheet</div>
+        <h2 class="wide-title">Seven fields, written before any tool is named.</h2>
+        <figure class="artifact-card req-card">
+          <span class="card-tab">Requirements Sheet</span>
+          <dl class="card-fields">
+            <dt class="head">Field</dt><dd class="head">Deskside morning triage</dd>
+            <dt>1 The problem</dt><dd class="verbatim">Technicians open the morning's tickets in the order they arrived, so an urgent lockout can wait behind a printer question.</dd>
+            <dt>2 Who is affected</dt><dd class="verbatim">The 5 Deskside technicians, and every client waiting on a first reply inside the 30-minute target</dd>
+            <dt>3 Inputs</dt><dd class="verbatim">In: ticket subjects and first lines. <span class="chalk" data-label="never goes in">Never: client names, requester names, signatures, or a password a requester typed</span></dd>
+            <dt>4 Output required</dt><dd class="verbatim">A table of ticket number, category, and urgency, for the technician on the morning shift</dd>
+            <dt>5 Must-pass criteria</dt><dd class="verbatim">Every ticket gets one of Deskside's six categories or "other." <span class="chalk" data-label="the urgency rule">Urgency follows Deskside's rule: urgent means the person cannot work at all right now.</span> Nothing is added.</dd>
+            <dt>6 Constraints</dt><dd class="verbatim">Cost: no new spending before the owner approves. Privacy: only a tool on the AI Use Policy's approved list. Time: done in a few minutes, before the first-reply clock matters. Accessibility: a plain table a screen reader can read</dd>
+            <dt>7 The no-AI option</dt><dd class="verbatim"><span class="chalk" data-label="baseline to beat">A technician reads and sorts by hand, about 15 minutes a morning by Deskside's estimate, and no data leaves Copperwind</span></dd>
+          </dl>
+        </figure>
+        <dl class="term-row">
+          <div><dt>Requirements Sheet</dt><dd>A one-page job definition, written before naming any tool.</dd></div>
+          <div><dt>No-AI option</dt><dd>The job done by hand, priced in minutes.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Scenario alignment is matching what a scenario requires to what a tool does well and is allowed to do, line by line, from the Requirements Sheet and the Tool Survey. Walk the pins left to right. What never goes in points to the Data policy line. Output required points to Last tested: did it produce this shape on your task? Cost points to Tier and cost, with the date checked. Privacy points to Data policy plus the AI Use Policy's Approved tools section. Accessibility points to Access and Notes, plus the accessibility column of the Comparison Matrix. Time points to Last tested until your own pilot gives you minutes. Then the last row. Alignment can end with no match. When every candidate fails a must-pass line, or the no-AI option beats them all on cost and risk, the aligned answer is no AI here. Try It Yourself 11.1 asks students to write the card field beside each Constraints line on their own sheet.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS137 · 11.1</div>
+      <div class="content">
+        <div class="eyebrow">Scenario alignment</div>
+        <h2 class="wide-title">Each sheet line points to<br> a field on the Tool Survey card.</h2>
+        <div class="align" role="img" aria-label="Six rows read left to right, each pinning a Requirements Sheet line to the Tool Survey card field that answers it. Inputs, what never goes in: Data policy, what it keeps and whether it trains on your input. Output required: Last tested, did it produce this shape on your task. Constraints, cost: Tier and cost, with the date checked. Constraints, privacy: Data policy, plus the AI Use Policy's Approved tools section. Constraints, accessibility: Access and Notes, plus the accessibility column of its Comparison Matrix. Constraints, time: Last tested, until your own pilot gives you minutes. A last row: when every candidate fails a must-pass line, or the no-AI option beats them all, the aligned answer is no AI here.">
+          <div class="align-head"><span>Requirements Sheet line</span><span>Where the Tool Survey card answers it</span></div>
+          <div class="align-row"><span class="sheet-line">Inputs: what never goes in</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Data policy</b> <span class="verbatim">(what it keeps, and whether it trains on your input)</span></span></div>
+          <div class="align-row"><span class="sheet-line">Output required</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Last tested</b> <span class="verbatim">(did it produce this shape on your task?)</span></span></div>
+          <div class="align-row"><span class="sheet-line">Constraints: cost</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Tier and cost</b> with the date checked</span></div>
+          <div class="align-row"><span class="sheet-line">Constraints: privacy</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Data policy</b> plus the AI Use Policy’s Approved tools section</span></div>
+          <div class="align-row"><span class="sheet-line">Constraints: accessibility</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Access</b> and <b>Notes</b> plus the accessibility column of its Comparison Matrix</span></div>
+          <div class="align-row"><span class="sheet-line">Constraints: time</span><span class="pin-line" aria-hidden="true"></span><span class="survey-field"><b>Last tested</b> until your own pilot gives you minutes</span></div>
+          <div class="align-row no-match"><span class="sheet-line">Every candidate fails a must-pass line</span><span class="pin-line" aria-hidden="true"></span><span class="outcome chosen">No AI here</span></div>
+        </div>
+        <p class="term-line"><b>Scenario alignment</b> Matching a job’s needs to a tool, line by line.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 11.1, question 2. Pairs get 60 seconds to name two fields and write one sentence for each before you reveal. The job handles customers' home addresses, so the first field is Data policy: what the tool keeps and whether it trains on your input. That answers the sheet's what never goes in and privacy lines, and the privacy row also sends you to the approved list. The second is Last tested: someone using a tool at home is not a test, so check whether it produced the required output on this task. Accept Tier and cost or Access when the student ties it to a sheet line in one sentence. The point is that the sheet's lines pick the fields, not the nephew.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS137 · 11.1</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 11.1</div>
+        <h2 class="check-title">“The one my nephew uses.”<br> Which card fields first?</h2>
+        <div class="prompt">
+          <p class="verbatim">A plumbing contractor's office manager says the right tool is "the one my nephew uses." The job handles customers' home addresses. Using scenario alignment, name the two Tool Survey card fields you would check first, and justify each in one sentence.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Data policy</strong>: home addresses put the job on the sheet’s privacy and What never goes in lines, so check what the tool keeps and whether it trains on your input. <strong>Last tested</strong>: someone using it is not a test, so check whether it produced the required output on this task. Tier and cost or Access also works as the second field when the sentence ties it to a sheet line.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="A one-line prompt suits a one-step job. Many IT jobs have several steps: plan the checks, draft them, check the draft, and fix what failed. An agent-style tool is an AI tool that works through several steps of a job on your behalf, such as reading your files, drafting, and revising. A person sets the goal and accepts or rejects the result. Chapter 9 defined an agent as a system that takes actions toward a goal. This chapter puts you in the manager's seat, not the builder's. The brief you hand such a tool is a Work Order. Read the eight fields in order. Then point to the blue chips: Goal holds the Task, Inputs holds the Context, Deliverable and format holds the Format, and the Constraints field holds the Constraints. A Role line can open the Goal when the voice matters. Acceptance criteria come from the Requirements Sheet's must-pass criteria, each paired with the checklist that runs it: the Output Checklist or the Accuracy Audit. The same Work Order governs a script or a router change on your own projects. This book prints no code, and reviewing code or configuration a tool wrote belongs to CIS144 and CIS218.&#10;&#10;Time: 15-17 minutes.">
+      <div class="brand">CIS137 · 11.2</div>
+      <div class="content">
+        <div class="eyebrow">The Work Order</div>
+        <h2 class="wide-title">The five parts of a prompt sit inside eight fields.</h2>
+        <div class="wo-split">
+          <figure class="artifact-card wo-card">
+            <span class="card-tab">Work Order</span>
+            <ol class="wo-fields">
+              <li class="wo-head" aria-hidden="true"><span>Field</span><span>What it holds</span><span>Prompt part</span></li>
+              <li><b>Goal</b><span>what the finished job does, and for whom</span><span class="parts"><i class="part">Role, optional</i><i class="part">Task</i></span></li>
+              <li><b>Scope</b><span>what the tool may touch, and what it may not</span></li>
+              <li><b>Inputs</b><span>what you paste or upload, after your privacy check</span><span class="parts"><i class="part">Context</i></span></li>
+              <li><b>Deliverable and format</b><span>a runbook, a test plan, a checklist, configuration notes, or a summary, with its shape and length</span><span class="parts"><i class="part">Format</i></span></li>
+              <li><b>Acceptance criteria</b><span>the must-pass checks, with the checklist that runs them</span></li>
+              <li><b>Constraints</b><span>what the tool must never do, and what it must ask before doing</span><span class="parts"><i class="part">Constraints</i></span></li>
+              <li><b>Review plan</b><span>who checks what, and when</span></li>
+              <li><b>Log</b><span>every prompt, run, and decision, in the prompt log</span></li>
+            </ol>
+          </figure>
+          <div class="wo-side">
+            <p class="part-key"><i class="part">Task</i> a part of a prompt, inside its field</p>
+            <dl class="terms">
+              <dt>Agent-style tool</dt><dd>An AI tool that works through several job steps for you.</dd>
+              <dt>Acceptance criteria</dt><dd>Must-pass checks, each paired with the checklist that runs it.</dd>
+            </dl>
+            <p class="seat">You sit in the manager’s seat, not the builder’s. A person sets the goal and accepts or rejects the result.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Network Ops is moving Copperwind's clients to a new VPN app next month, and Deskside needs a test plan to run with each client office afterward. Read the five gold tags. Step 1 states the goal so the tool knows what done means. Step 2 fences the scope and hands over the facts: technicians work with the client employee over a phone call, have no admin rights on client laptops, and send a failed check to the network team, who fix VPN problems. Step 3 sets the deliverable and the four acceptance criteria. Step 4 sets the limits and names the reviewer. Step 5 is the checkpoint, a point where the tool waits for a person's approval before it does the work. The blue labels are the Work Order fields from the last slide, in order. Send it without the Step lines.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS137 · 11.2</div>
+      <div class="content">
+        <div class="eyebrow">A Work Order with a checkpoint</div>
+        <h2 class="wide-title">The last line makes the tool stop and wait.</h2>
+        <figure class="chat stepped-prompt">
+          <div class="chat-bar">Chat assistant</div>
+          <div class="chat-body">
+            <div class="turn user">
+              <span class="who">You</span>
+              <div class="stepped">
+                <span class="step">Step 1: state the goal, so the tool knows what done means</span>
+                <p class="verbatim"><b class="wf">Work Order. Goal:</b> a test plan our help desk technicians will run with each client office after our network team moves the clients to a new VPN app next month.</p>
+                <span class="step">Step 2: fence the scope and hand over the facts</span>
+                <p class="verbatim"><b class="wf">Scope:</b> use only the facts below, and do not describe the VPN app's settings or menus, because I have not given them to you. <b class="wf">Inputs:</b> [...] Technicians do not have admin rights on client laptops. If a check fails, the help desk does not fix the connection. It sends the ticket to the network team, who fix VPN problems. [...]</p>
+                <span class="step">Step 3: set the deliverable and the checks it must pass</span>
+                <p class="verbatim"><b class="wf">Deliverable and format:</b> a numbered list of checks in plain language, [...] under 250 words, with no commands and no configuration settings. <b class="wf">Acceptance criteria:</b> every check can be done without admin rights; every failed check routes to the network team; no step names a setting or menu of the VPN app; under 250 words.</p>
+                <span class="step">Step 4: set the limits and name the reviewer</span>
+                <p class="verbatim"><b class="wf">Constraints:</b> never invent a feature of the VPN app, and ask before adding any check that needs admin rights. <b class="wf">Review plan:</b> a network team technician reads the plan before anyone uses it. <b class="wf">Log:</b> I keep every prompt and response in my prompt log.</p>
+                <span class="step checkpoint-step">Step 5: make the tool stop at a checkpoint</span>
+                <p class="verbatim"><span class="checkpoint-line">First step: reply only with your plan (the checks you intend to include, one line each) and any questions. Do not write the test plan until I approve.</span></p>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="field-note">Send it without the Step lines. At the checkpoint, the tool waits for a person.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Here is part of the plan that came back. The plan is the cheapest place to catch a problem, because nothing has been written yet. The tool asked five questions. The one shown proves it read the Constraints: it offered to drop a check instead of guessing about admin rights. Now look at the marked line, planned check 4. The employee opens a file and saves a small change. Saving a change means changing a client's file. Ask the room: does the Work Order say whether a check may do that? Hold the answer for the next slide. Read the plan against the Work Order before you approve it.&#10;&#10;Time: 19-21 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 11.2</div>
+      <div class="content visual-split text-wide">
+        <div class="stack">
+          <div class="eyebrow">At the checkpoint</div>
+          <h2>The plan is the cheapest place to catch a problem.</h2>
+          <figure class="chat plan-chat">
+            <div class="chat-bar">The plan <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <p class="verbatim"><b>Planned checks (one line each):</b></p>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim">4. Employee opens a file from the shared drive <span class="mark note" data-label="changes a file">and saves a small change.</span></p>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim"><span class="mark holds" data-label="read the constraints">2. Should the disconnect/reconnect check (6) stay in?</span> It assumes the employee can disconnect and reconnect without admin rights, which I can't confirm from your facts. If it needs admin rights, I'll drop it unless you approve it.</p>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim">I'll wait for your approval before writing the plan.</p>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/checkpoint-gate.png" alt="A person stands at an open gate, reading a plan on a clipboard with a pen ready. Behind a dashed line on the ground, a small helper robot holding a stack of blank pages waits and does not cross."><figcaption>Read the plan against the Work Order before you approve it.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is the approval the author sent in the same conversation: add a check that the employee can open a file, not only see the folder. Planned check 4 already had the employee open a file. An approval written without a close read of the plan adds nothing, and this one also left the tool's five questions unanswered. The test plan came back with a self-check, all four criteria marked Pass. A self-check is a claim, so run the review plan on it. A word counter puts the test plan at 220 words with its title, not about 190. The criterion still passes, but the evidence the tool gave for it was wrong. Check 5 has the employee change and save a file on the client's shared drive. The Scope field never said whether a check may change client files. The plan said so in check 4, and the approval let it through. The next version closes the gap with one line: the checks may open files and may not change them. The tool passed its own test, and a person still found two things to fix. That is why the Review plan names a person. The chapter's home lab Work Order shows the same eight fields on a personal project, with each acceptance criterion naming its checklist.&#10;&#10;Time: 21-24 minutes.">
+      <div class="brand">CIS137 · 11.2</div>
+      <div class="content">
+        <div class="eyebrow">A self-check is a claim</div>
+        <h2 class="wide-title">The tool passed its own test.<br> A person still found two things.</h2>
+        <ol class="review" role="img" aria-label="Four stages, left to right. One, the approval: add a check that the employee can open a file. It added nothing, because planned check 4 already opened a file, and it left five questions unanswered. Two, the sample test plan and its self-check: check 5 has the employee change a test file on the shared drive and save it, and the self-check marks all four criteria Pass, including under 250 words at about 190 words. Three, the person's review: a word counter finds 220 words, so about 190 is wrong though under 250 still passes, and check 5 exposes a Scope gap, because Scope never said whether a check may change client files. Four, the next Work Order adds one Scope line: the checks may open files and may not change them.">
+          <li>
+            <span class="stage">The approval</span>
+            <p class="verbatim">Approved, with one change: add a check that the employee can open a file on the shared drive, not only see the folder. [...]</p>
+            <span class="claim">Added nothing</span>
+            <p>Planned check 4 already opened a file. Five questions left unanswered.</p>
+          </li>
+          <li>
+            <span class="stage">Test plan and self-check</span>
+            <span class="stamp">Sample, Oct 2026. Your output will differ.</span>
+            <p class="verbatim">5. Save a change. The employee changes a test file on the shared drive and saves it. [...]</p>
+            <p class="verbatim">(About 190 words.) [...]</p>
+            <ul class="mini-crit verbatim">
+              <li><span>Every check can be done without admin rights</span><b>Pass</b></li>
+              <li class="cut"><span>[...]</span></li>
+              <li><span>Under 250 words</span><b>Pass</b></li>
+              <li class="cut"><span>About 190 words. [...]</span></li>
+            </ul>
+            <span class="claim">All four marked Pass</span>
+          </li>
+          <li>
+            <span class="stage">The person’s review</span>
+            <span class="verdict contradicted">“About 190” is wrong</span>
+            <p>A word counter: 220 words with the title. Under 250 still passes.</p>
+            <span class="gap-chip">Scope gap: check 5</span>
+            <p>Scope never said whether a check may change client files.</p>
+          </li>
+          <li class="fix-stage">
+            <span class="stage">The next Work Order</span>
+            <p><b class="wf">Scope:</b> the checks may open files and may not change them.</p>
+            <p>One line closes the gap. That is why the Review plan names a person.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 11.2, question 2. Everyone writes the field and one line before the reveal. The tool stopped at its checkpoint because the Work Order left the guest policy open. The field that says what the tool may touch and what it may not is Scope, the same field the VPN test plan's gap belonged to. Either line works, include it or leave it out, as long as Scope says so. Students who pick Deliverable and format should explain why the content of the deliverable is not a scope question. Push them back to the VPN case: one line in Scope closed that gap.&#10;&#10;Time: 24-26 minutes.">
+      <div class="brand">CIS137 · 11.2</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 11.2</div>
+        <h2 class="check-title">“Should I include the guest policy?”<br> Which field answers it?</h2>
+        <div class="prompt">
+          <p class="verbatim">At its checkpoint, a university housing office's tool asks, "Should I include the guest policy?" Decide which Work Order field should have answered the question, and write the line.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Scope</strong>, the field that says what the tool may touch and what it may not. One line settles it either way, for example “Scope: may use the guest policy” or “Scope: leave the guest policy out.” Like the VPN plan’s file change, the question marks a gap in the Work Order.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Sorting is the pattern work at volume that Chapter 9 found AI strong at, and the triage sheet asks for nothing a general assistant on the approved list cannot do. The Work Order's fields fold into one prompt: the task, the six categories plus other, the urgency rule from the sheet, the table format, and add nothing else. The eight tickets were written for the chapter, with no identifiers. Before students read the sort, ask: which ticket is the judgment call? Then score it against a key a technician wrote before the run, because the person's sort is the standard. Categories 8 of 8, urgency 8 of 8. Ticket 7 has no category of its own, so Other is right, and an office with no internet is urgent. Ticket 4 is the judgment call. The VPN drops but comes back, so the person can still work, and Deskside's rule makes it routine. One run is a lead, not a result. Section 11.4 runs the pilot.&#10;&#10;Time: 26-29 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow">Mei Lin’s first job · inbox triage</div>
+        <h2 class="wide-title">8 of 8 in one run.<br> One run is a lead, not a result.</h2>
+        <div class="triage">
+          <figure class="chat triage-prompt">
+            <div class="chat-bar">Your prompt</div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">You are sorting a small IT help desk's morning inbox. Put each ticket in one category: password reset, VPN connection failure, printer offline, new-hire device setup, slow laptop, shared mailbox access, or other. Then mark it urgent or routine. <span class="chalk" data-label="the urgency rule">Urgent means the person cannot work at all right now.</span> Answer as a table with three columns: ticket number, category, urgency. Add nothing else.</p></div>
+            </div>
+            <figcaption class="prompt-note">The eight tickets follow in the same message. They appear in the ticket table.</figcaption>
+          </figure>
+          <figure class="sort-table">
+            <div class="chat-bar">Tickets and the sort <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <table>
+              <thead><tr><th scope="col">#</th><th scope="col">Ticket, from your prompt</th><th scope="col">Category</th><th scope="col">Urgency</th></tr></thead>
+              <tbody class="verbatim">
+                <tr><td>1</td><td>“Locked out after three tries, can't get into anything, and I have a client at 9.”</td><td>Password reset</td><td>Urgent</td></tr>
+                <tr><td>2</td><td>“The front desk printer shows offline again.”</td><td>Printer offline</td><td>Routine</td></tr>
+                <tr><td>3</td><td>“New paralegal starts Monday and needs a laptop ready.”</td><td>New-hire device setup</td><td>Routine</td></tr>
+                <tr class="call"><td>4</td><td>“VPN keeps dropping every ten minutes, then comes back.”</td><td>VPN connection failure</td><td><span class="mark holds" data-label="can still work">Routine</span></td></tr>
+                <tr><td>5</td><td>“Can I get access to the billing@ mailbox? My manager said OK.”</td><td>Shared mailbox access</td><td>Routine</td></tr>
+                <tr><td>6</td><td>“Laptop takes 15 minutes to boot. It's been like this all week.”</td><td>Slow laptop</td><td>Routine</td></tr>
+                <tr><td>7</td><td>“Nobody in our office can reach the internet.”</td><td><span class="mark holds" data-label="no category of its own">Other</span></td><td>Urgent</td></tr>
+                <tr><td>8</td><td>“Can you send me last month's invoice?”</td><td>Other</td><td>Routine</td></tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <p class="score-strip"><span class="verdict holds">Categories 8 of 8</span> <span class="verdict holds">Urgency 8 of 8</span> <span>Scored against a technician’s key, written before the run.</span></p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The owner asked which kind of ticket takes the most technician time. The answer lives in deskside-tickets.csv, a synthetic sample of 80 of the four weeks' tickets in six columns, with a client type but no client names. The must-pass line is strict: every total matches the file. The Inputs line lets the table go into the chat assistant Copperwind already uses, which is on the approved list, because the table holds no names. The bars are the tool's totals. Run the Accuracy Audit: sort the file by category in a spreadsheet and add each group. Same six totals, same ticket counts, 1,909 minutes in all. Six checked, six hold. The tool also caught the point the owner needs: password reset has the most tickets, and new-hire setup takes the most time. Now the cost test. The spreadsheet sort is the no-AI option and the check at once, so the tool saved the writing, not the counting. If writing two sentences for the owner takes less time than reading and checking the tool's answer, the no-AI option wins. One more measured job sits in Try It Yourself 11.3: the Monday stand-up summary for Mei Lin passed 5 of 5 criteria at 114 words, and the unowned policy question carried owner not named.&#10;&#10;Time: 29-31 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow">The owner’s data question</div>
+        <h2 class="wide-title">Password reset has the most tickets. New-hire setup takes the most time.</h2>
+        <div class="minutes-chart" role="img" aria-label="Bar chart of total handle minutes by ticket category over four weeks, largest first, with ticket counts. New-hire device setup 552 minutes from 8 tickets, the longest bar, highlighted gold. VPN connection failure 365 minutes, 14 tickets. Slow laptop 322 minutes, 10 tickets. Printer offline 284 minutes, 15 tickets. Password reset 227 minutes from 21 tickets, the most tickets, circled. Shared mailbox access 159 minutes, 12 tickets.">
+          <div class="mc-head"><span>Category</span><span>Total handle minutes, four weeks</span><span>Tickets</span></div>
+          <div class="mc-row focus"><span class="cat">new-hire device setup</span><span class="track"><span class="bar" style="--v: 552"></span><b>552</b></span><span class="tix">8</span></div>
+          <div class="mc-row"><span class="cat">VPN connection failure</span><span class="track"><span class="bar" style="--v: 365"></span><b>365</b></span><span class="tix">14</span></div>
+          <div class="mc-row"><span class="cat">slow laptop</span><span class="track"><span class="bar" style="--v: 322"></span><b>322</b></span><span class="tix">10</span></div>
+          <div class="mc-row"><span class="cat">printer offline</span><span class="track"><span class="bar" style="--v: 284"></span><b>284</b></span><span class="tix">15</span></div>
+          <div class="mc-row"><span class="cat">password reset</span><span class="track"><span class="bar" style="--v: 227"></span><b>227</b></span><span class="tix most">21<span class="tix-note">most</span></span></div>
+          <div class="mc-row"><span class="cat">shared mailbox access</span><span class="track"><span class="bar" style="--v: 159"></span><b>159</b></span><span class="tix">12</span></div>
+        </div>
+        <p class="audit-line"><span class="stamp">Sample, Oct 2026. Your output will differ.</span> <span class="verdict holds">6 of 6 totals hold</span> <span>1,909 minutes in all, checked by a spreadsheet sort.</span></p>
+        <p class="field-note">The counting is a tie. Review time decides the cost test.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Fix It 11.1. A Deskside technician has three tickets waiting before 9 a.m. He opens the free chat assistant he uses at home, because it is fast, and writes a short Work Order in a hurry, three of the eight fields on purpose. Symptom: every acceptance criterion passes. Each reply runs under 80 words, 58, 61, and 55 by a word counter, is ready to send, promises no fix time, and repeats the client's details. Diagnose before anyone touches the Work Order. Give the room 30 seconds to name the decision he made before anyone defined the problem. He chose the tool first and pasted what he had. No Requirements Sheet existed, so nobody wrote down what never goes in. Ticket 1 came from a physical therapy office and named a patient, the kind of client Chapter 8 flagged as a HIPAA touchpoint. Reply 1 proves the data went in, and the criterion invited it, because it said to repeat the client's details. Repair: write the sheet first. Its privacy constraint points away from his home tool to the pilot tool on the approved list, a switch that belongs to the Selection Decision and that this run cannot test. Its Inputs line sets the one change: the ticket text with names and contact details removed. Verify: 64, 59, and 56 words, no name, no phone number. Then the Output Checklist, because the sheet does not replace it. Both versions add printing advice no one gave, so Nothing added fails in each. The next Work Order needs nothing added as an acceptance criterion, a refinement-loop change for its own log row. The names and the number are the chapter's fictional examples of a leak.&#10;&#10;Time: 31-35 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow">Fix It 11.1: three quick replies</div>
+        <h2 class="wide-title">Every criterion passed,<br> and a patient’s name still went in.</h2>
+        <p class="diagnose"><span class="ba-label">Diagnose</span> He chose the tool first. No Requirements Sheet said what never goes in.</p>
+        <div class="before-after fixit">
+          <div class="fix-col">
+            <span class="ba-label">Symptom</span>
+            <p class="fix-prompt verbatim">[...] Acceptance criteria: each reply is ready to send with no blanks, promises no fix time, and <span class="mark note" data-label="invited the leak">repeats the details the client gave</span> so they know we read the ticket.</p>
+            <p class="fix-prompt verbatim">Ticket 1, from <span class="mark wrong" data-label="leak">Dana</span> at a physical therapy office, <span class="mark wrong" data-label="leak">602-555-0131</span>: "The front desk printer won't print <span class="mark wrong" data-label="patient">Mr. Hal Benton's</span> home exercise sheet, and he's waiting at the desk." [...]</p>
+            <div class="fix-reply"><span class="stamp">Sample, Oct 2026. Your output will differ.</span><p class="verbatim">[...] We got your ticket: the front desk printer won't print <span class="mark wrong" data-label="patient">Mr. Hal Benton's</span> home exercise sheet, and he's waiting at the desk. We're looking at it now and will call you at <span class="mark wrong" data-label="leak">602-555-0131</span>. [...]</p></div>
+            <p class="fix-stat"><span class="verdict holds">58, 61, 55 words</span> Every criterion passes.</p>
+          </div>
+          <div class="fix-col">
+            <span class="ba-label">Repair: one change</span>
+            <p class="fix-prompt verbatim">Ticket 1, from a physical therapy office: "The front desk printer won't print a patient's home exercise sheet, and the patient is waiting at the desk." [...]</p>
+            <div class="fix-reply"><span class="stamp">Sample, Oct 2026. Your output will differ.</span><p class="verbatim">[...] In the meantime, if possible, <span class="mark add" data-label="added">please try printing from another computer</span> or send the sheet to a different printer. [...]</p></div>
+            <ul class="verify-list">
+              <li><span class="verdict holds">Verify</span> <span>64, 59, 56 words. No name, no phone number.</span></li>
+              <li><span class="verdict not-in-source">Nothing added? Fails</span> <span>Printing advice no one gave, in both versions.</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="cost-line"><b>The repair fixed what went in.</b> “Nothing added” joins the next Work Order as its own log row.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Priya's flyer request stays for the Skills Lab, so a community garden stands in. The coordinator asked for an image generator prompt before anyone wrote a Requirements Sheet. Read what came back: the image prompt asks the generator to draw five lines of text, and all four details are among them. Chapter 3 showed that generators often produce letters that look like words and are not. A later tip in the same response says generators often misspell text and suggests making the art without text and adding the words in a document. That is the better split. The cut part also asks for a few diverse neighbors, which needs Chapter 3's face check, and Priya's brief bans real-looking faces. The date tip holds: March 7 is a Saturday in 2026 and a Sunday in 2027, so the flyer needs its year. If the flyer also goes out by email, as Priya's does, some readers use a screen reader. WCAG 2.2 success criterion 1.4.5, Images of Text, asks for real text wherever the technology allows it, read on October 21, 2026. So the image generator makes the picture only, and the words go into the document as real text, with alt text and a disclosure line.&#10;&#10;Time: 35-37 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow">The flyer image</div>
+        <h2 class="wide-title">The picture carries no text. The words go in as real text.</h2>
+        <div class="flyer">
+          <figure class="chat flyer-chat">
+            <div class="chat-bar">Chat assistant <span class="stamp">Sample, Oct 2026. Your output will differ.</span></div>
+            <div class="chat-body">
+              <div class="turn user"><span class="who">You</span><p class="verbatim">Write a prompt I can paste into an image generator to make the flyer for our community garden's spring workday: Saturday, March 7, from 8 to 11 a.m., at the garden at 5th Street and Palm Lane. Bring gloves and water. Tools are provided.</p></div>
+              <div class="turn assistant"><span class="who">Assistant</span>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim"><span class="mark note" data-label="five lines of drawn text">Text to include, spelled exactly:</span></p>
+                <p class="verbatim">Headline: "Spring Workday at the Community Garden"</p>
+                <p class="verbatim">Details:</p>
+                <ul class="drawn verbatim">
+                  <li>"Saturday, March 7"</li>
+                  <li>"8-11 a.m."</li>
+                  <li>"5th Street &amp; Palm Lane"</li>
+                  <li>"Bring gloves and water. Tools provided!"</li>
+                </ul>
+                <p class="verbatim">[...]</p>
+                <p class="verbatim">- <span class="mark holds" data-label="holds">Double-check the date: March 7 falls on a Saturday in 2026, but in 2027 it's a Sunday.</span> Make sure the day and date match the year of your event.</p>
+              </div>
+            </div>
+          </figure>
+          <div class="split-job" role="img" aria-label="The flyer job split in two. Left, the image generator makes the picture only, with no text in the image. Right, the document carries the words as real text, with alt text and a disclosure line. Below both, WCAG 2.2 success criterion 1.4.5, Images of Text: use text instead of pictures of text.">
+            <div class="job-half"><span class="list-head">Image generator</span><span class="mini-pic" aria-hidden="true"></span><b>The picture only</b><span>No text in the image.</span></div>
+            <div class="job-half"><span class="list-head">Document</span><span class="mini-doc" aria-hidden="true"></span><b>The words as real text</b><span>With alt text and a disclosure line.</span></div>
+            <p class="wcag">WCAG 2.2 SC 1.4.5, Images of Text: <span class="verbatim">“Use text instead of pictures of text.”</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The disputed invoice is the lab's fourth scenario, so a plumbing contractor stands in. The office gets a warranty claim: a customer's photos of a leaking water heater the company installed, plus the payment record for the job. The office manager asks whether a tool could decide the claim. Run the three tests in order. The input test: yes, the claim rests on the photos and the payment record. The decision test: yes, approving commits the company to a repair at its own cost. The cost test: yes, a person reads one claim in about 15 minutes. One yes can sometimes be fixed: you remove the names, or a person makes the decision and the tool drafts around it. A fix stops working when removing the forbidden input removes the job, or when the decision is the whole job. Both happen here. Decision: no AI here. A tool may still draft a generic claim received notice with no customer details, as a separate job. Then the difference. Decline says this tool failed this job. No AI here says this job should not go to any AI tool, and it names the reasons, so the next person with a shiny tool can read them.&#10;&#10;Time: 37-39 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content visual-split tests-split">
+        <div class="stack">
+          <div class="eyebrow">A plumbing warranty claim</div>
+          <h2>Three yes answers, no fix left: no AI here.</h2>
+          <ol class="tests">
+            <li><b>The input test</b><span class="q">Must something from “What never goes in” go in for the job to work?</span><span class="stamp">Yes</span><span class="why verbatim">The claim rests on the photos of the customer's home and the payment record</span></li>
+            <li><b>The decision test</b><span class="q">Does the output commit someone to a decision that a tool cannot answer for?</span><span class="stamp">Yes</span><span class="why verbatim">Approving the claim commits the company to a repair at its own cost</span></li>
+            <li><b>The cost test</b><span class="q">Does the no-AI option beat every candidate on time and risk?</span><span class="stamp">Yes</span><span class="why verbatim">A person reads one claim against the warranty terms and the install record in about 15 minutes</span></li>
+          </ol>
+          <p class="fix-line">A fix works when removing the input or letting a person decide still leaves a job. Here it does not.</p>
+          <p class="decision-line"><span class="outcome chosen">No AI here</span> Decline: this tool failed this job. No AI here: no AI tool should get it.</p>
+        </div>
+        <figure class="visual-art print-frame"><img src="assets/no-ai-here.png" alt="A person at a desk studies an open folder holding two photos of a leaking water heater and a payment card, under a desk lamp. A closed laptop sits pushed aside at the far edge of the desk."><figcaption>When removing the evidence removes the job, a person keeps it.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Here is where the scenarios stand, in the chapter's own table. Read the Tool column top to bottom. A general assistant, a general assistant, a general assistant or no AI, an image generator for the picture with a document for the words, and none. That answers the technician on the first slide. One tool for everything fails twice: the flyer needs a split, and the warranty claim gets no AI at all. Now read the second column. In every row, a line from the Requirements Sheet decided it, not the tool someone already had. The stand-up row comes from Try It Yourself 11.3. The plumbing claim is a stand-in, and the disputed invoice, the fifth job on Mei Lin's list, is decided in the lab with your own three tests. Leave the room's guesses from the hook slide open until then.&#10;&#10;Time: 39-42 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow">Copperwind · where the scenarios stand</div>
+        <h2 class="wide-title">Each job got its own answer.<br> The stand-in got no AI.</h2>
+        <table class="fit-chart">
+          <thead><tr><th scope="col">Scenario</th><th scope="col">The sheet line that decided it</th><th scope="col">Tool, by type</th><th scope="col">Measured result</th></tr></thead>
+          <tbody class="verbatim">
+            <tr><th scope="row">Inbox triage</th><td data-label="Sheet line">Must-pass: Deskside's urgency rule</td><td data-label="Tool, by type">A general assistant on the approved list</td><td data-label="Result">8 of 8 categories and 8 of 8 urgency, one run</td></tr>
+            <tr><th scope="row">Stand-up summary</th><td data-label="Sheet line">Must-pass: no owner invented</td><td data-label="Tool, by type">A general assistant</td><td data-label="Result">5 of 5 criteria, 114 words</td></tr>
+            <tr><th scope="row">Data question</th><td data-label="Sheet line">Must-pass: every total matches the file</td><td data-label="Tool, by type">A general assistant, or no AI if review takes longer than writing (the cost test is close)</td><td data-label="Result">6 of 6 totals hold</td></tr>
+            <tr><th scope="row">Flyer</th><td data-label="Sheet line">Output required: readable by a screen reader, facts exact</td><td data-label="Tool, by type">An image generator for the picture only, and the document for the words</td><td data-label="Result">The first image prompt asked for 5 lines of drawn text</td></tr>
+            <tr class="no-ai"><th scope="row">Plumbing warranty claim</th><td data-label="Sheet line">Inputs: photos and a payment record</td><td data-label="Tool, by type"><span class="outcome chosen">None</span></td><td data-label="Result">No AI here, with three yes answers</td></tr>
+            <tr class="lab"><th scope="row">Disputed invoice</th><td data-label="Sheet line">Decided by your three tests</td><td data-label="Tool, by type">Decided in Skills Lab 11A</td><td data-label="Result">Decided in Skills Lab 11A</td></tr>
+            <tr class="lab"><th scope="row">Your IT project</th><td data-label="Sheet line">The line you wrote in Try It Yourself 11.1</td><td data-label="Tool, by type">Your choice, from your Tool Survey</td><td data-label="Result">Your counts</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 11.3, question 1. Pairs run the three tests in writing, a yes or no and one reason each, before the reveal. Input test: the totals rest on the pasted statements, which hold client account and payment details from What never goes in. Decision test: calling an expense deductible commits the firm to a judgment a tool cannot answer for. Cost test: close, as the chapter calls the data question. A person checks every total against the statements anyway, so the counting is a tie, and once a person makes every deductible call the sum is a spreadsheet job. That leans yes. Then the chapter's fix rule. A fix would have to strip the payment records the totals rest on, or have a person decide every line, and either one removes the job, so the answer is no AI here. An answer of a tool with a fix earns credit when the student names what is removed, who decides, and how the totals are checked.&#10;&#10;Time: 42-44 minutes.">
+      <div class="brand">CIS137 · 11.3</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 11.3</div>
+        <h2 class="check-title">Pasted bank statements: a tool, a fix, or no AI here?</h2>
+        <div class="prompt">
+          <p class="verbatim">A small accounting firm wants a chat assistant to total each client's deductible expenses from pasted bank statements. Run the three tests, and decide whether the job gets a tool, a tool with a fix, or no AI here.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>Input: yes.</strong> The totals rest on the statements, a client’s payment records. <strong>Decision: yes.</strong> Calling an expense deductible commits the firm. <strong>Cost: leans yes.</strong> Once a person makes every deductible call, the sum is a spreadsheet job. A fix would have to strip the payment records the totals rest on, or have a person decide every line, and either one removes the job: <strong>no AI here</strong>.</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="One good run is a lead. The pilot from Chapter 9 turns it into evidence: the same Work Order, several fresh runs, scored with counts and minutes. The triage prompt ran three times in Tool A and three times in Tool B, each a fresh conversation, the fair test from Chapter 10. Tool A and Tool B are two models from one vendor in the author's test setup, not two chat apps. Tools from different vendors on your roster may differ more. Read the grid. Both tools put every ticket in the right category in all six runs. The difference is one ticket. Tool B marked the dropping VPN urgent every time, and the person on that ticket can still work. A miss that repeats is easier to manage than a random one, because the reviewer knows where to look. It also points the cheaper way: a routine ticket flagged urgent costs a few minutes, and an urgent ticket marked routine can miss the 30-minute target. The pilot is still small. Three runs of eight tickets is 24 sorts per tool, on tickets written for the chapter, not a real morning, and the author's runs did not time a technician's review.&#10;&#10;Time: 44-46 minutes.">
+      <div class="brand">CIS137 · 11.4</div>
+      <div class="content">
+        <div class="eyebrow">The pilot: three fresh runs per tool</div>
+        <h2 class="wide-title">A miss that repeats<br> tells the reviewer where to look.</h2>
+        <div class="runs" role="img" aria-label="A grid of urgency results for tickets 1 to 8, three runs per tool. Tool A, runs 1, 2, and 3: every ticket matches the key, 8 of 8 categories and 8 of 8 urgency each time. Tool B, runs 1, 2, and 3: every category matches, and ticket 4 is marked urgent in every run, the one red cell in each row, so urgency is 7 of 8 each time.">
+          <div class="tool-block">
+            <span class="tool-name">Tool A</span>
+            <div class="run-head"><span>Urgency by ticket</span><span>Categories · urgency</span></div>
+            <div class="run"><span class="run-label">Run 1</span><span class="cells"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 8 of 8</b></div>
+            <div class="run"><span class="run-label">Run 2</span><span class="cells"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 8 of 8</b></div>
+            <div class="run"><span class="run-label">Run 3</span><span class="cells"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 8 of 8</b></div>
+          </div>
+          <div class="tool-block">
+            <span class="tool-name">Tool B</span>
+            <div class="run-head"><span>Urgency by ticket</span><span>Categories · urgency</span></div>
+            <div class="run"><span class="run-label">Run 1</span><span class="cells"><i>1</i><i>2</i><i>3</i><i class="miss">4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 7 of 8</b></div>
+            <div class="run"><span class="run-label">Run 2</span><span class="cells"><i>1</i><i>2</i><i>3</i><i class="miss">4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 7 of 8</b></div>
+            <div class="run"><span class="run-label">Run 3</span><span class="cells"><i>1</i><i>2</i><i>3</i><i class="miss">4</i><i>5</i><i>6</i><i>7</i><i>8</i></span><b>8 of 8 · 7 of 8</b></div>
+          </div>
+        </div>
+        <p class="grid-key"><span>Matches the technician’s key</span><span class="k-miss">Ticket 4 marked urgent (U), against the key</span></p>
+        <p class="tool-note">Tool A and Tool B: two models from one vendor, in the author’s test setup.</p>
+        <dl class="pilot-tally" aria-label="What the pilot can and cannot show">
+          <div><dt>Sorts per tool</dt><dd>24</dd></div>
+          <div><dt>Tickets</dt><dd>Written for the chapter</dd></div>
+          <div class="missing"><dt>Review minutes</dt><dd>Missing</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="A Selection Decision is the record of which tool a job gets, or whether it gets one at all, backed by a measured pilot. Read the seven fields in order: Requirements Sheet, Candidates, Pilot, Use Evaluation, Decision, Why, and Rules that apply. Candidates include the no-AI option, about 15 minutes by hand. The Use Evaluation from Chapter 9 is honest about its holes. Cost is missing, since no price was checked for either tool. Time saved is missing, since review minutes were not timed. Error cost: an urgent ticket marked routine can miss the 30-minute target. Risk: ticket text going into a tool. Workforce impact: technicians keep the first read and every reply. The Decision is one of four: adopt, extend the pilot, decline, or no AI here, and no AI here sits beside the others as an equal outcome. The Why is two sentences a colleague could check. The Selection Decision feeds the Memo from Chapter 9: its Decision becomes the Memo's first sentence, its Use Evaluation lines become the factor paragraphs, and its missing numbers go under what we do not know. The Requirements Sheet, the Work Order, and the Selection Decision templates go in your Toolkit.&#10;&#10;Time: 46-49 minutes.">
+      <div class="brand">CIS137 · 11.4</div>
+      <div class="content">
+        <div class="eyebrow">The Selection Decision</div>
+        <h2 class="wide-title">One of four decisions,<br> with a Why a colleague can check.</h2>
+        <div class="sd-split">
+          <figure class="artifact-card sd-card">
+            <span class="card-tab">Selection Decision</span>
+            <dl class="card-fields">
+              <dt class="head">Field</dt><dd class="head">Deskside morning triage</dd>
+              <dt>Requirements Sheet</dt><dd class="verbatim">The triage sheet in Section 11.1, attached</dd>
+              <dt>Candidates</dt><dd class="verbatim">Tool A and Tool B from the Tool Survey, and the no-AI option (a technician sorts by hand, about 15 minutes)</dd>
+              <dt>Pilot</dt><dd class="verbatim">The triage prompt, 3 fresh runs per tool on 8 chapter tickets, scored against a technician's key. [...]</dd>
+              <dt>Use Evaluation</dt><dd class="verbatim">Cost: missing, since no price was checked for either tool. Time saved: missing, since review minutes were not timed. [...]</dd>
+              <dt>Decision</dt><dd class="verbatim"><span class="decision-pick">Extend the pilot</span></dd>
+              <dt>Why</dt><dd class="verbatim">Tool A matched the key in all 3 runs, but 8 written tickets are not a real morning, and no review was timed. A one-week pilot on real mornings with names removed, with review minutes timed, decides between Tool A and the no-AI option.</dd>
+              <dt>Rules that apply</dt><dd class="verbatim">What never goes in (names, signatures, and typed passwords). Approved tools (Tool A must be on the list). Review before use (a technician reads every sorted table)</dd>
+            </dl>
+          </figure>
+          <div class="outcomes">
+            <span class="list-head">Four equal outcomes</span>
+            <ul>
+              <li class="outcome">Adopt</li>
+              <li class="outcome chosen">Extend the pilot</li>
+              <li class="outcome">Decline</li>
+              <li class="outcome">No AI here</li>
+            </ul>
+            <p>The Decision becomes the Memo’s first sentence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Quick Check 11.4, question 2. Everyone rewrites the line before the reveal. The critique: great and likes are opinions a colleague cannot check, and the line names no count, no run, and no missing number. The rewrite pulls from the pilot table and keeps the chapter's rule, two sentences a colleague could check: Tool A matched the key in all 3 runs, 8 of 8 categories and 8 of 8 urgency, while Tool B marked ticket 4 urgent in all 3. The second sentence names the gap: no review was timed, so time saved is still unknown. Read two aloud and ask whether a colleague could check every word against the log.&#10;&#10;Time: 49-51 minutes.">
+      <div class="brand">CIS137 · 11.4</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Quick Check 11.4</div>
+        <h2 class="check-title">“Tool A is great.”<br> Rewrite it so a colleague can check it.</h2>
+        <div class="prompt">
+          <p class="verbatim">A Why line reads "Tool A is great and the team likes it." Critique the line, and rewrite it from the triage pilot's counts.</p>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer">“Great” and “likes” are opinions with no count, so a colleague has nothing to check. A two-sentence rewrite: “Tool A matched the key in all <strong>3 runs</strong> (<strong>8 of 8</strong> categories, <strong>8 of 8</strong> urgency), while Tool B marked ticket 4 urgent in all 3. No review was timed, so time saved is still unknown.”</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Hand off Skills Lab 11A. Part 1: write the privacy plan in two columns, fill a Requirements Sheet for each of the four scenarios before naming any tool, and run the three tests on each. Part 2: choose a tool for the triage, the data question, and the flyer with scenario alignment, write your own key for the 12 tickets in deskside-inbox-day.txt before you run the triage, send a Work Order for each in a fresh conversation, and score each result with a count or a quote. Note that the lab's data question differs from today's: how many first replies missed the 30-minute target, and which category had the most misses. Part 3: pilot one scenario three times with review minutes timed, fill two Selection Decisions, one for the pilot and one for the disputed invoice, and write the Memo to Mei Lin under 400 words, decision first. Exit ticket: answer the technician from the first slide. That resolves the opening question. Chapter 12 puts all of it to work in one project, with a Verification Trail, a presentation, and an Ethics Statement.&#10;&#10;Time: 51-55 minutes.">
+      <div class="brand">CIS137 · Lab 11A</div>
+      <div class="content">
+        <div class="eyebrow">Skills Lab 11A</div>
+        <h2 class="wide-title">Four scenarios for Mei Lin.</h2>
+        <ol class="lab-parts">
+          <li><span class="part-no">Part 1</span><strong>Privacy plan, four sheets, three tests</strong><span>Triage, data question, flyer, disputed invoice. No tool named yet.</span></li>
+          <li><span class="part-no">Part 2</span><strong>Match, direct, and score</strong><span>Your own key for 12 tickets first. A Work Order for each of three scenarios.</span></li>
+          <li><span class="part-no">Part 3</span><strong>Pilot, decide, write the Memo</strong><span>Three runs, two Selection Decisions, a Memo under 400 words.</span></li>
+        </ol>
+        <div class="prompt exit">
+          <p><strong>Exit ticket:</strong> Answer “Use it for everything.” Name one job that gets a tool and one that gets no AI, each with the sheet line that decided it.</p>
+        </div>
+        <p class="ahead">Next: Chapter 12 puts all of it to work in one project.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+</html>

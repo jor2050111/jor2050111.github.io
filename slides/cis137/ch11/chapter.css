@@ -1,0 +1,1955 @@
+/* CIS137 Chapter 11: made to measure
+   The chapter answers "use it for everything" (one size fits all) by
+   measuring the job before anything is cut, so the room is a tailor's
+   cutting table: a tape measure along the top edge with plain ticks and
+   a metal end tab, a faint chalk line, and a pattern piece held by two
+   pins in the corner. The pin-and-baste fitting is the Work Order's
+   checkpoint, and a round-headed pin is the brand glyph. All of it is
+   painted as background layers so nothing positioned can overflow the
+   slide or trap focus. */
+
+body {
+    /* Roles keep one color wherever they appear. Requirements Sheet
+       lines are white paper with a navy rule, Tool Survey card fields are
+       support blue, prompt parts are pale mist chips, chalk marks (the
+       lines a person measured) are dashed blue, and the four Selection
+       Decision outcomes are equal navy-ruled stamps with the chosen one
+       filled gold. Green and red stay reserved for pass or holds and for
+       wrong or leaked. */
+    --survey: var(--blue);
+    --part-bg: var(--mist);
+    --chalk: var(--blue);
+}
+
+.slide {
+    background-color: var(--canvas);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 40'%3E%3Crect x='0' y='6' width='470' height='28' rx='2' fill='rgba(255,200,69,0.30)'/%3E%3Cpath d='M6 6v20M12 6v9M18 6v9M24 6v9M30 6v9M36 6v15M42 6v9M48 6v9M54 6v9M60 6v9M66 6v20M72 6v9M78 6v9M84 6v9M90 6v9M96 6v15M102 6v9M108 6v9M114 6v9M120 6v9M126 6v20M132 6v9M138 6v9M144 6v9M150 6v9M156 6v15M162 6v9M168 6v9M174 6v9M180 6v9M186 6v20M192 6v9M198 6v9M204 6v9M210 6v9M216 6v15M222 6v9M228 6v9M234 6v9M240 6v9M246 6v20M252 6v9M258 6v9M264 6v9M270 6v9M276 6v15M282 6v9M288 6v9M294 6v9M300 6v9M306 6v20M312 6v9M318 6v9M324 6v9M330 6v9M336 6v15M342 6v9M348 6v9M354 6v9M360 6v9M366 6v20M372 6v9M378 6v9M384 6v9M390 6v9M396 6v15M402 6v9M408 6v9M414 6v9M420 6v9M426 6v20M432 6v9M438 6v9M444 6v9M450 6v9M456 6v15M462 6v9' stroke='rgba(0,46,93,0.30)' stroke-width='1.6' fill='none'/%3E%3Crect x='466' y='2' width='12' height='36' rx='2' fill='rgba(3,116,181,0.35)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 260'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M70 40h170q30 0 34 30l18 150H52L44 90q-4-50 26-50z' stroke='rgba(3,116,181,0.20)' stroke-width='3'/%3E%3Cpath d='M78 54h156q20 0 24 22l16 130H66L60 94q-2-40 18-40z' stroke='rgba(3,116,181,0.16)' stroke-width='2' stroke-dasharray='7 6'/%3E%3Cpath d='M160 80v110M152 92l8-12 8 12M152 178l8 12 8-12' stroke='rgba(3,116,181,0.16)' stroke-width='2'/%3E%3Cpath d='M120 220l8-10 8 10' stroke='rgba(3,116,181,0.20)' stroke-width='2.5'/%3E%3Cpath d='M20 246q90-22 180-8t130-6' stroke='rgba(0,46,93,0.14)' stroke-width='3' stroke-dasharray='2 7'/%3E%3Cpath d='M96 70l40 36M236 120l-34 40' stroke='rgba(0,46,93,0.22)' stroke-width='2.5'/%3E%3C/g%3E%3Ccircle cx='92' cy='66' r='7' fill='rgba(224,169,46,0.60)'/%3E%3Ccircle cx='240' cy='115' r='7' fill='rgba(224,169,46,0.60)'/%3E%3C/svg%3E"), linear-gradient(160deg, #fbf9f3, var(--canvas));
+}
+
+/* deck.css sets .dark and .gold with the background shorthand, which
+   resets size and position, so the motif geometry is restated for all
+   three fields here. */
+.slide,
+.slide.dark,
+.slide.gold {
+    background-position: left clamp(6rem, 12vw, 14rem) top 0, right -2.5rem bottom -1.8rem, 0 0;
+    background-size: clamp(16rem, 25vw, 30rem) auto, clamp(14rem, 19vw, 21rem) auto, auto;
+    background-repeat: no-repeat;
+}
+
+.slide.dark {
+    background-color: var(--navy);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 40'%3E%3Crect x='0' y='6' width='470' height='28' rx='2' fill='rgba(255,255,255,0.07)'/%3E%3Cpath d='M6 6v20M12 6v9M18 6v9M24 6v9M30 6v9M36 6v15M42 6v9M48 6v9M54 6v9M60 6v9M66 6v20M72 6v9M78 6v9M84 6v9M90 6v9M96 6v15M102 6v9M108 6v9M114 6v9M120 6v9M126 6v20M132 6v9M138 6v9M144 6v9M150 6v9M156 6v15M162 6v9M168 6v9M174 6v9M180 6v9M186 6v20M192 6v9M198 6v9M204 6v9M210 6v9M216 6v15M222 6v9M228 6v9M234 6v9M240 6v9M246 6v20M252 6v9M258 6v9M264 6v9M270 6v9M276 6v15M282 6v9M288 6v9M294 6v9M300 6v9M306 6v20M312 6v9M318 6v9M324 6v9M330 6v9M336 6v15M342 6v9M348 6v9M354 6v9M360 6v9M366 6v20M372 6v9M378 6v9M384 6v9M390 6v9M396 6v15M402 6v9M408 6v9M414 6v9M420 6v9M426 6v20M432 6v9M438 6v9M444 6v9M450 6v9M456 6v15M462 6v9' stroke='rgba(255,200,69,0.62)' stroke-width='1.6' fill='none'/%3E%3Crect x='466' y='2' width='12' height='36' rx='2' fill='rgba(255,200,69,0.7)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 260'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M70 40h170q30 0 34 30l18 150H52L44 90q-4-50 26-50z' stroke='rgba(255,255,255,0.15)' stroke-width='3'/%3E%3Cpath d='M78 54h156q20 0 24 22l16 130H66L60 94q-2-40 18-40z' stroke='rgba(255,255,255,0.12)' stroke-width='2' stroke-dasharray='7 6'/%3E%3Cpath d='M160 80v110M152 92l8-12 8 12M152 178l8 12 8-12' stroke='rgba(255,255,255,0.12)' stroke-width='2'/%3E%3Cpath d='M120 220l8-10 8 10' stroke='rgba(255,255,255,0.15)' stroke-width='2.5'/%3E%3Cpath d='M20 246q90-22 180-8t130-6' stroke='rgba(255,255,255,0.12)' stroke-width='3' stroke-dasharray='2 7'/%3E%3Cpath d='M96 70l40 36M236 120l-34 40' stroke='rgba(255,255,255,0.22)' stroke-width='2.5'/%3E%3C/g%3E%3Ccircle cx='92' cy='66' r='7' fill='rgba(255,200,69,0.55)'/%3E%3Ccircle cx='240' cy='115' r='7' fill='rgba(255,200,69,0.55)'/%3E%3C/svg%3E"), linear-gradient(160deg, #001a36, var(--navy));
+}
+
+.slide.gold {
+    background-color: var(--gold);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 40'%3E%3Crect x='0' y='6' width='470' height='28' rx='2' fill='rgba(255,255,255,0.40)'/%3E%3Cpath d='M6 6v20M12 6v9M18 6v9M24 6v9M30 6v9M36 6v15M42 6v9M48 6v9M54 6v9M60 6v9M66 6v20M72 6v9M78 6v9M84 6v9M90 6v9M96 6v15M102 6v9M108 6v9M114 6v9M120 6v9M126 6v20M132 6v9M138 6v9M144 6v9M150 6v9M156 6v15M162 6v9M168 6v9M174 6v9M180 6v9M186 6v20M192 6v9M198 6v9M204 6v9M210 6v9M216 6v15M222 6v9M228 6v9M234 6v9M240 6v9M246 6v20M252 6v9M258 6v9M264 6v9M270 6v9M276 6v15M282 6v9M288 6v9M294 6v9M300 6v9M306 6v20M312 6v9M318 6v9M324 6v9M330 6v9M336 6v15M342 6v9M348 6v9M354 6v9M360 6v9M366 6v20M372 6v9M378 6v9M384 6v9M390 6v9M396 6v15M402 6v9M408 6v9M414 6v9M420 6v9M426 6v20M432 6v9M438 6v9M444 6v9M450 6v9M456 6v15M462 6v9' stroke='rgba(0,46,93,0.30)' stroke-width='1.6' fill='none'/%3E%3Crect x='466' y='2' width='12' height='36' rx='2' fill='rgba(0,46,93,0.30)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 260'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M70 40h170q30 0 34 30l18 150H52L44 90q-4-50 26-50z' stroke='rgba(0,46,93,0.16)' stroke-width='3'/%3E%3Cpath d='M78 54h156q20 0 24 22l16 130H66L60 94q-2-40 18-40z' stroke='rgba(0,46,93,0.13)' stroke-width='2' stroke-dasharray='7 6'/%3E%3Cpath d='M160 80v110M152 92l8-12 8 12M152 178l8 12 8-12' stroke='rgba(0,46,93,0.13)' stroke-width='2'/%3E%3Cpath d='M120 220l8-10 8 10' stroke='rgba(0,46,93,0.16)' stroke-width='2.5'/%3E%3Cpath d='M20 246q90-22 180-8t130-6' stroke='rgba(0,46,93,0.12)' stroke-width='3' stroke-dasharray='2 7'/%3E%3Cpath d='M96 70l40 36M236 120l-34 40' stroke='rgba(0,46,93,0.22)' stroke-width='2.5'/%3E%3C/g%3E%3Ccircle cx='92' cy='66' r='7' fill='rgba(255,255,255,0.75)'/%3E%3Ccircle cx='240' cy='115' r='7' fill='rgba(255,255,255,0.75)'/%3E%3C/svg%3E"), linear-gradient(160deg, #ffd573, var(--gold));
+}
+
+/* The title field keeps only the tape so the hero art blends into flat
+   navy without a seam. */
+.slide.dark.title-slide {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 40'%3E%3Crect x='0' y='6' width='470' height='28' rx='2' fill='rgba(255,255,255,0.07)'/%3E%3Cpath d='M6 6v20M12 6v9M18 6v9M24 6v9M30 6v9M36 6v15M42 6v9M48 6v9M54 6v9M60 6v9M66 6v20M72 6v9M78 6v9M84 6v9M90 6v9M96 6v15M102 6v9M108 6v9M114 6v9M120 6v9M126 6v20M132 6v9M138 6v9M144 6v9M150 6v9M156 6v15M162 6v9M168 6v9M174 6v9M180 6v9M186 6v20M192 6v9M198 6v9M204 6v9M210 6v9M216 6v15M222 6v9M228 6v9M234 6v9M240 6v9M246 6v20M252 6v9M258 6v9M264 6v9M270 6v9M276 6v15M282 6v9M288 6v9M294 6v9M300 6v9M306 6v20M312 6v9M318 6v9M324 6v9M330 6v9M336 6v15M342 6v9M348 6v9M354 6v9M360 6v9M366 6v20M372 6v9M378 6v9M384 6v9M390 6v9M396 6v15M402 6v9M408 6v9M414 6v9M420 6v9M426 6v20M432 6v9M438 6v9M444 6v9M450 6v9M456 6v15M462 6v9' stroke='rgba(255,200,69,0.62)' stroke-width='1.6' fill='none'/%3E%3Crect x='466' y='2' width='12' height='36' rx='2' fill='rgba(255,200,69,0.7)'/%3E%3C/svg%3E");
+    background-color: var(--navy);
+    background-position: left clamp(6rem, 12vw, 14rem) top 0;
+    background-size: clamp(16rem, 25vw, 30rem) auto;
+}
+
+/* Round-headed pin glyph in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: 1.1em;
+    height: 1.1em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.dark .brand::before {
+    background: var(--gold);
+}
+
+/* Titles that carry a full claim get a wider measure and a smaller size
+   so they hold two lines instead of four. */
+h2.wide-title,
+h2.check-title {
+    max-width: 32ch;
+    font-size: clamp(2rem, 3.4vw, 3.9rem);
+}
+
+.visual-split h2 {
+    font-size: clamp(1.9rem, 2.9vw, 3.3rem);
+    max-width: 22ch;
+}
+
+/* Split slides whose text column carries a quote or a chat get the
+   wider share, so their claim titles hold two lines. */
+.visual-split.text-wide {
+    grid-template-columns: minmax(0, 1.12fr) minmax(19rem, .88fr);
+    gap: clamp(1.6rem, 3.6vw, 4.4rem);
+}
+
+/* A header row sits above the index card's red rule, the way the
+   chapter's tables put "Field" over each artifact. */
+.card-fields .head,
+.wo-fields li.wo-head > span {
+    padding-bottom: .5rem;
+    color: var(--navy);
+    font-family: var(--body);
+    font-size: clamp(.64rem, .85vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.wo-fields li.wo-head {
+    counter-increment: none;
+}
+
+.wo-fields li.wo-head::before {
+    content: "";
+}
+
+.wo-fields li.wo-head > span:last-child {
+    justify-self: end;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.5vw, 1.4rem);
+}
+
+.field-note {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: clamp(.92rem, 1.2vw, 1.25rem);
+}
+
+.field-note::before {
+    flex: none;
+    content: "";
+    width: 2.8rem;
+    height: .25rem;
+    background: var(--gold);
+}
+
+.dark .field-note {
+    color: var(--gold);
+}
+
+.list-head {
+    display: inline-block;
+    justify-self: start;
+    padding: .22rem .65rem;
+    border-radius: .3rem;
+    background: var(--gold);
+    color: #001a36;
+    font-size: clamp(.72rem, .95vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+/* ---------- Chalk marks and outcome stamps ---------------------------- */
+
+/* A chalk mark is a line a person measured and marked on purpose, so it
+   is dashed blue, never the gold "model added this" mark. */
+.chalk {
+    padding: 0 .1em;
+    border-bottom: .2rem dashed var(--chalk);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+/* A neutral pointer: the author marking a line for the room to look
+   at. It claims nothing about the model (no hedge, nothing added), so it
+   stays in quiet navy. */
+.mark.note {
+    background: color-mix(in srgb, var(--blue) 12%, transparent);
+    border-bottom: .2rem solid color-mix(in srgb, var(--navy) 55%, transparent);
+}
+
+.chalk[data-label]::after {
+    content: attr(data-label);
+    display: inline-block;
+    margin-left: .35em;
+    padding: .05rem .4rem;
+    vertical-align: .12em;
+    border-radius: .25rem;
+    background: var(--chalk);
+    color: #fff;
+    font-family: var(--body);
+    font-size: .62em;
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* The four Selection Decision outcomes share one shape so "no AI here"
+   reads as an equal answer, not a failure state. */
+.outcome {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .3rem .8rem;
+    border: .14rem solid var(--navy);
+    border-radius: .35rem;
+    background: #fff;
+    color: var(--navy);
+    font-size: clamp(.78rem, 1vw, 1.15rem);
+    font-weight: 900;
+    letter-spacing: .05em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.outcome.chosen {
+    background: var(--gold);
+    color: #001a36;
+}
+
+.outcome.chosen::before {
+    flex: none;
+    content: "";
+    width: .95em;
+    height: .95em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.term-line {
+    font-size: clamp(.95rem, 1.3vw, 1.45rem);
+}
+
+.term-line b {
+    margin-right: .5rem;
+    color: var(--blue);
+}
+
+.dark .term-line b {
+    color: var(--gold);
+}
+
+/* ---------- Slide 2: targets as pattern pieces ------------------------ */
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.8rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.targets li {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: .45rem;
+    padding: clamp(1.2rem, 2vw, 1.9rem);
+    background: #fff;
+    border: .12rem solid rgba(0, 46, 93, .3);
+    border-radius: .2rem;
+    box-shadow: .45rem .5rem 0 rgba(0, 46, 93, .1);
+}
+
+/* The dashed seam allowance inside the cut line is the pattern-piece
+   cue. It sits inside the card, so it cannot overflow the slide. */
+.targets li::before {
+    position: absolute;
+    inset: .5rem;
+    content: "";
+    border: .12rem dashed rgba(3, 116, 181, .35);
+    pointer-events: none;
+}
+
+.t-num {
+    color: var(--blue);
+    font-size: clamp(1.6rem, 2.6vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.targets strong {
+    color: var(--navy);
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+}
+
+.targets p {
+    font-size: clamp(.95rem, 1.3vw, 1.3rem);
+}
+
+.t-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    margin-top: .3rem;
+    color: var(--blue);
+    font-size: clamp(.72rem, .95vw, 1.02rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.t-tool::before {
+    flex: none;
+    content: "";
+    width: 1em;
+    height: 1em;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 10l11 11' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='7.5' cy='7.5' r='5.5' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Slide 3: the hook ----------------------------------------- */
+
+.tech-quote {
+    margin: 0;
+    padding: .2rem 0 .2rem 1.1rem;
+    border-left: .35rem solid var(--gold);
+}
+
+.tech-quote p {
+    font-size: clamp(1.2rem, 1.9vw, 2.05rem);
+    font-weight: 800;
+    line-height: 1.22;
+}
+
+.tech-quote cite {
+    display: block;
+    margin-top: .4rem;
+    color: var(--gold);
+    font-size: clamp(.76rem, 1vw, 1.08rem);
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.job-list {
+    display: grid;
+    gap: .6rem;
+}
+
+.job-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.job-list li {
+    padding: .25rem .7rem;
+    border: .12rem dashed rgba(255, 255, 255, .55);
+    border-radius: .25rem;
+    font-size: clamp(.85rem, 1.1vw, 1.25rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 4: the tool-first answer ---------------------------- */
+
+.first-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(1.2rem, 2.4vw, 2.8rem);
+    align-items: start;
+}
+
+.first-pair .turn {
+    max-width: 100%;
+    font-size: clamp(.9rem, 1.25vw, 1.5rem);
+}
+
+.chat-bar {
+    font-size: clamp(.7rem, .95vw, 1.1rem);
+}
+
+.chat .who {
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+}
+
+.chat-bar .stamp {
+    margin-left: auto;
+    transform: rotate(-2deg);
+    color: var(--blue);
+    letter-spacing: .06em;
+}
+
+.never-asked {
+    display: grid;
+    gap: .9rem;
+    align-content: start;
+}
+
+.never-asked ol {
+    display: grid;
+    gap: clamp(.5rem, 1vw, 1rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: q;
+}
+
+/* Each unasked question gets a short piece of tape: a measurement the
+   answer never took. */
+.never-asked li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .75rem;
+    align-items: start;
+    color: var(--navy);
+    font-size: clamp(.95rem, 1.35vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.28;
+    counter-increment: q;
+}
+
+.never-asked li::before {
+    display: grid;
+    place-items: end center;
+    min-width: 2.4rem;
+    height: 1.75rem;
+    padding-bottom: .1rem;
+    content: counter(q);
+    border-radius: .15rem;
+    background: repeating-linear-gradient(90deg, rgba(0, 46, 93, .4) 0 .08rem, transparent .08rem .4rem) top / 100% .5rem no-repeat, var(--gold);
+    color: #001a36;
+    font-size: .8em;
+    font-weight: 900;
+}
+
+.count-chip {
+    padding: .45rem .8rem;
+    border-left: .3rem solid var(--blue);
+    background: #fff;
+    font-size: clamp(.86rem, 1.15vw, 1.35rem);
+}
+
+.count-chip b {
+    color: var(--navy);
+}
+
+/* ---------- Slide 5: the Requirements Sheet --------------------------- */
+
+.req-card {
+    margin-top: 1.4rem;
+}
+
+.req-card .card-fields {
+    gap: clamp(.25rem, .5vw, .6rem) 1.2rem;
+}
+
+.req-card .card-fields dt,
+.sd-card .card-fields dt {
+    font-size: clamp(.68rem, .92vw, 1.1rem);
+}
+
+.req-card .card-fields dd {
+    font-size: clamp(.76rem, 1.02vw, 1.16rem);
+    line-height: 1.48;
+}
+
+.term-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 2.6rem;
+    margin: 0;
+}
+
+.term-row div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .2rem .6rem;
+    align-items: baseline;
+}
+
+.term-row dt {
+    color: var(--blue);
+    font-size: clamp(.98rem, 1.3vw, 1.5rem);
+    font-weight: 900;
+}
+
+.dark .term-row dt {
+    color: var(--gold);
+}
+
+.term-row dd {
+    margin: 0;
+    font-size: clamp(.94rem, 1.25vw, 1.45rem);
+}
+
+/* ---------- Slide 6: scenario alignment ------------------------------- */
+
+.align {
+    display: grid;
+    gap: clamp(.4rem, .8vw, .85rem);
+}
+
+.align-head,
+.align-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(3.4rem, 6vw, 7rem) minmax(0, 1.6fr);
+    align-items: center;
+}
+
+.align-head span {
+    color: var(--blue);
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.align-head span:last-child {
+    grid-column: 3;
+}
+
+.sheet-line {
+    padding: .42rem .8rem;
+    background: #fff;
+    border-left: .35rem solid var(--navy);
+    box-shadow: .25rem .3rem 0 rgba(0, 46, 93, .08);
+    color: var(--navy);
+    font-size: clamp(.86rem, 1.2vw, 1.45rem);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* A dashed chalk line with a pin head joins each sheet line to the card
+   field that answers it. */
+.pin-line {
+    position: relative;
+    height: .22rem;
+    margin: 0 .35rem;
+    background: repeating-linear-gradient(90deg, var(--chalk) 0 .5rem, transparent .5rem .85rem);
+}
+
+.pin-line::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.05rem;
+    height: 1.05rem;
+    content: "";
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 .14rem var(--navy);
+    transform: translate(-50%, -50%);
+}
+
+.survey-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .2rem .7rem;
+    padding: .42rem .8rem;
+    border: .12rem solid rgba(3, 116, 181, .45);
+    border-radius: .3rem;
+    background: var(--mist);
+    color: #001a36;
+    font-size: clamp(.84rem, 1.15vw, 1.38rem);
+    line-height: 1.28;
+}
+
+.survey-field b {
+    padding: .05rem .5rem;
+    border-radius: .2rem;
+    background: var(--survey);
+    color: #fff;
+    font-size: .92em;
+}
+
+.align-row.no-match .sheet-line {
+    border-left-color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 14%, #fff);
+}
+
+.align-row.no-match .outcome {
+    justify-self: start;
+}
+
+/* ---------- Slide 8: the Work Order ----------------------------------- */
+
+.wo-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(14rem, .7fr);
+    gap: clamp(1.4rem, 3vw, 3.4rem);
+    align-items: center;
+}
+
+.wo-card {
+    margin-top: 1.4rem;
+}
+
+.wo-fields {
+    display: grid;
+    gap: clamp(.3rem, .55vw, .6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: wf;
+}
+
+.wo-fields li {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(8rem, 12.5rem) minmax(0, 1fr) auto;
+    gap: .2rem .8rem;
+    align-items: baseline;
+    counter-increment: wf;
+}
+
+.wo-fields li::before {
+    content: counter(wf);
+    color: var(--blue);
+    font-size: clamp(.8rem, 1.05vw, 1.25rem);
+    font-weight: 900;
+}
+
+.wo-fields b {
+    color: var(--navy);
+    font-size: clamp(.82rem, 1.1vw, 1.32rem);
+    line-height: 1.25;
+}
+
+.wo-fields span {
+    font-size: clamp(.76rem, 1vw, 1.2rem);
+    line-height: 1.35;
+}
+
+.parts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: .3rem;
+}
+
+.part {
+    padding: .06rem .5rem;
+    border: .12rem solid var(--blue);
+    border-radius: 1rem;
+    background: var(--part-bg);
+    color: var(--navy);
+    font-size: clamp(.62rem, .82vw, .98rem);
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.wo-side {
+    display: grid;
+    gap: clamp(.8rem, 1.4vw, 1.4rem);
+}
+
+.part-key {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    font-size: clamp(.86rem, 1.1vw, 1.3rem);
+}
+
+.terms {
+    display: grid;
+    gap: .2rem;
+    margin: 0;
+}
+
+.terms dt {
+    margin-top: .45rem;
+    color: var(--gold);
+    font-size: clamp(1rem, 1.35vw, 1.55rem);
+    font-weight: 900;
+}
+
+.terms dd {
+    margin: 0;
+    font-size: clamp(.9rem, 1.2vw, 1.4rem);
+    line-height: 1.3;
+}
+
+.seat {
+    padding: .6rem .9rem;
+    border-left: .3rem solid var(--gold);
+    background: rgba(255, 255, 255, .08);
+    font-size: clamp(.95rem, 1.3vw, 1.5rem);
+    font-weight: 700;
+}
+
+/* ---------- Slide 9: the VPN Work Order ------------------------------- */
+
+.stepped-prompt {
+    max-width: 92rem;
+}
+
+.stepped-prompt .turn.user {
+    justify-self: stretch;
+    max-width: 100%;
+}
+
+.stepped-prompt .stepped {
+    grid-template-columns: minmax(12rem, 15vw) 1fr;
+    gap: clamp(.4rem, .7vw, .75rem) 1rem;
+}
+
+.stepped-prompt .turn {
+    font-size: clamp(.82rem, 1.12vw, 1.36rem);
+    line-height: 1.38;
+}
+
+.stepped-prompt .step {
+    font-size: clamp(.68rem, .9vw, 1.08rem);
+}
+
+/* Field names in the prompt use the Work Order card's blue, so the
+   eight fields read as the same eight fields. */
+.wf {
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.step.checkpoint-step {
+    border-left-color: var(--navy);
+    background: var(--gold);
+}
+
+.checkpoint-line {
+    padding: .25rem .55rem;
+    border-radius: .25rem;
+    background: color-mix(in srgb, var(--gold) 34%, #fff);
+    font-weight: 700;
+}
+
+/* ---------- Slide 10: the plan at the checkpoint ---------------------- */
+
+.plan-chat .turn {
+    max-width: 100%;
+    font-size: clamp(.82rem, 1.08vw, 1.3rem);
+}
+
+.plan-chat .turn p + p {
+    margin-top: .2rem;
+}
+
+/* ---------- Slide 11: the review strip -------------------------------- */
+
+.review {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.1rem, 2.2vw, 2.4rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: st;
+}
+
+.review > li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+    padding: .85rem 1rem 1rem;
+    background: #fff;
+    border-top: .4rem solid var(--navy);
+    border-radius: .2rem;
+    box-shadow: .35rem .4rem 0 rgba(0, 46, 93, .08);
+    counter-increment: st;
+}
+
+.review > li:not(:last-child)::after {
+    position: absolute;
+    top: 50%;
+    right: clamp(-2rem, -1.75vw, -.95rem);
+    content: "\2192";
+    color: var(--navy);
+    font-size: 1.5rem;
+    font-weight: 900;
+    transform: translateY(-50%);
+}
+
+.review > li.fix-stage {
+    border-top-color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 12%, #fff);
+}
+
+.stage {
+    color: var(--blue);
+    font-size: clamp(.7rem, .92vw, 1.08rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.stage::before {
+    content: counter(st) ". ";
+}
+
+.review p,
+.review li li {
+    font-size: clamp(.78rem, 1.04vw, 1.24rem);
+    line-height: 1.34;
+}
+
+.review .verbatim {
+    color: #001a36;
+}
+
+.claim {
+    display: inline-block;
+    justify-self: start;
+    padding: .1rem .55rem;
+    border: .12rem dashed var(--navy);
+    border-radius: 1rem;
+    color: var(--navy);
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.review .verdict {
+    justify-self: start;
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+    white-space: normal;
+}
+
+.review .stamp {
+    justify-self: start;
+    font-size: clamp(.58rem, .74vw, .88rem);
+    white-space: normal;
+}
+
+/* A gap in the Work Order needs attention, so it takes the warning
+   color with its words, never red (nothing here is wrong yet). */
+.gap-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    justify-self: start;
+    padding: .2rem .65rem;
+    border: .12rem solid var(--warning);
+    border-radius: 2rem;
+    background: color-mix(in srgb, var(--warning) 14%, #fff);
+    color: color-mix(in srgb, var(--warning) 70%, #000);
+    font-size: clamp(.68rem, .9vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+
+.gap-chip::before {
+    content: "!";
+    display: grid;
+    place-items: center;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    background: var(--warning);
+    color: #fff;
+}
+
+.mini-crit {
+    display: grid;
+    gap: .25rem;
+    margin: 0;
+    padding: .45rem .55rem;
+    border: .1rem solid rgba(0, 46, 93, .18);
+    border-radius: .3rem;
+    list-style: none;
+}
+
+.mini-crit li {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.mini-crit b {
+    color: var(--navy);
+}
+
+.mini-crit li.cut {
+    color: color-mix(in srgb, #001a36 70%, #fff);
+}
+
+/* ---------- Slide 13: inbox triage ------------------------------------ */
+
+.triage {
+    display: grid;
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr);
+    gap: clamp(1rem, 2vw, 2.2rem);
+    align-items: start;
+}
+
+.triage-prompt .turn {
+    max-width: 100%;
+    font-size: clamp(.82rem, 1.1vw, 1.32rem);
+}
+
+.prompt-note {
+    padding: 0 clamp(.75rem, 1.3vw, 1.2rem) clamp(.6rem, 1vw, 1rem);
+    color: color-mix(in srgb, var(--ink) 80%, #fff);
+    font-size: clamp(.74rem, .95vw, 1.12rem);
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.sort-table {
+    margin: 0;
+    overflow: hidden;
+    border-radius: .9rem;
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 1rem 2.4rem rgba(0, 26, 54, .3);
+}
+
+.sort-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sort-table th {
+    padding: .35rem .7rem;
+    background: color-mix(in srgb, var(--mist) 60%, #fff);
+    color: var(--navy);
+    font-size: clamp(.62rem, .82vw, .98rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.sort-table td {
+    padding: clamp(.18rem, .36vw, .42rem) .7rem;
+    border-top: .08rem solid rgba(0, 46, 93, .12);
+    font-size: clamp(.76rem, 1.02vw, 1.22rem);
+    line-height: 1.28;
+    vertical-align: top;
+}
+
+.sort-table td:first-child {
+    color: var(--blue);
+    font-weight: 900;
+}
+
+.sort-table td:nth-child(3),
+.sort-table td:nth-child(4) {
+    color: var(--navy);
+    font-weight: 700;
+}
+
+.sort-table td:nth-child(3) {
+    white-space: nowrap;
+}
+
+.sort-table tr.call td {
+    background: color-mix(in srgb, var(--gold) 16%, #fff);
+}
+
+.score-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem 1rem;
+    font-size: clamp(.86rem, 1.15vw, 1.35rem);
+}
+
+.score-strip .verdict {
+    font-size: clamp(.75rem, 1vw, 1.18rem);
+}
+
+/* ---------- Slide 14: the data question ------------------------------- */
+
+.minutes-chart {
+    display: grid;
+    gap: clamp(.35rem, .7vw, .75rem);
+}
+
+.mc-head,
+.mc-row {
+    display: grid;
+    grid-template-columns: clamp(11rem, 16vw, 19rem) minmax(0, 1fr) clamp(6rem, 8vw, 9rem);
+    gap: 1rem;
+    align-items: center;
+}
+
+.mc-head span {
+    color: var(--blue);
+    font-size: clamp(.66rem, .88vw, 1.02rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.mc-head span:last-child,
+.mc-row .tix {
+    justify-self: center;
+}
+
+.mc-row .cat {
+    color: var(--navy);
+    font-size: clamp(.84rem, 1.12vw, 1.35rem);
+    font-weight: 800;
+}
+
+.mc-row .track {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+/* Bars run to the largest total, so the focus bar fills the measure. */
+.mc-row .bar {
+    width: calc(var(--v) / 552 * 86%);
+    height: clamp(1.1rem, 1.9vw, 2.1rem);
+    border-radius: .15rem;
+    background: color-mix(in srgb, var(--blue) 40%, #fff);
+}
+
+.mc-row b {
+    color: var(--navy);
+    font-size: clamp(.9rem, 1.2vw, 1.45rem);
+}
+
+.mc-row.focus .bar {
+    background: var(--gold);
+    box-shadow: inset 0 0 0 .12rem rgba(0, 46, 93, .35);
+}
+
+.mc-row .tix {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.6rem;
+    padding: .05rem .5rem;
+    border: .14rem solid transparent;
+    border-radius: 1rem;
+    color: var(--navy);
+    font-size: clamp(.86rem, 1.15vw, 1.38rem);
+    font-weight: 800;
+}
+
+.mc-row .tix.most {
+    border-color: var(--blue);
+    background: #fff;
+    color: var(--blue);
+}
+
+.tix-note {
+    margin-left: .35rem;
+    font-size: .7em;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.audit-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem 1rem;
+    font-size: clamp(.86rem, 1.15vw, 1.35rem);
+}
+
+.audit-line .verdict {
+    font-size: clamp(.75rem, 1vw, 1.18rem);
+}
+
+/* ---------- Slide 15: Fix It ------------------------------------------ */
+
+.diagnose {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem .9rem;
+    font-size: clamp(.95rem, 1.35vw, 1.6rem);
+    font-weight: 700;
+}
+
+.fixit {
+    align-items: start;
+}
+
+.fix-col {
+    display: grid;
+    gap: clamp(.5rem, .9vw, 1rem);
+    align-content: start;
+}
+
+.fixit .ba-label,
+.diagnose .ba-label {
+    justify-self: start;
+    font-size: clamp(.7rem, .95vw, 1.12rem);
+}
+
+.fix-prompt,
+.fix-reply {
+    padding: clamp(.5rem, .75vw, .9rem) clamp(.8rem, 1.05vw, 1.25rem);
+    border-radius: .6rem;
+    color: #001a36;
+    font-size: clamp(.8rem, 1.02vw, 1.2rem);
+    line-height: 1.34;
+}
+
+.fix-prompt {
+    background: var(--mist);
+}
+
+.fix-reply {
+    display: grid;
+    gap: .3rem;
+    background: #fff;
+}
+
+.fix-reply p {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.fix-reply .stamp {
+    justify-self: start;
+    margin-bottom: .6rem;
+    color: var(--blue);
+    font-size: clamp(.6rem, .78vw, .9rem);
+}
+
+/* A leaked phone number or name stays in one piece so the strike and
+   its label read as one mark. */
+.fixit .mark.wrong {
+    white-space: nowrap;
+}
+
+.fix-stat {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .8rem;
+    font-size: clamp(.86rem, 1.15vw, 1.35rem);
+}
+
+.verify-list {
+    display: grid;
+    gap: clamp(.4rem, .8vw, .9rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.verify-list li {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .6rem;
+    align-items: start;
+    font-size: clamp(.84rem, 1.12vw, 1.36rem);
+    line-height: 1.32;
+}
+
+.fix-stat .verdict,
+.verify-list .verdict {
+    font-size: clamp(.72rem, .98vw, 1.15rem);
+}
+
+.cost-line {
+    font-size: clamp(.95rem, 1.35vw, 1.6rem);
+}
+
+.dark .cost-line b {
+    color: var(--gold);
+}
+
+/* ---------- Slide 16: the flyer --------------------------------------- */
+
+.flyer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(1.2rem, 2.4vw, 2.6rem);
+    align-items: start;
+}
+
+.flyer-chat .turn {
+    max-width: 100%;
+    font-size: clamp(.78rem, 1.02vw, 1.22rem);
+}
+
+.flyer-chat .turn p + p {
+    margin-top: .15rem;
+}
+
+.drawn {
+    margin: .1rem 0;
+    padding-left: 1.1rem;
+}
+
+.drawn li {
+    font-size: inherit;
+    line-height: 1.32;
+}
+
+.split-job {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.7rem, 1.2vw, 1.2rem);
+    align-content: start;
+}
+
+.job-half {
+    display: grid;
+    align-content: start;
+    gap: .45rem;
+    padding: .9rem 1rem;
+    background: #fff;
+    border-top: .4rem solid var(--navy);
+    border-radius: .2rem;
+    box-shadow: .35rem .4rem 0 rgba(0, 46, 93, .08);
+}
+
+.job-half .list-head {
+    background: var(--mist);
+    color: var(--navy);
+}
+
+.job-half b {
+    color: var(--navy);
+    font-size: clamp(1rem, 1.35vw, 1.6rem);
+    line-height: 1.15;
+}
+
+.job-half > span:last-child {
+    font-size: clamp(.82rem, 1.05vw, 1.25rem);
+    line-height: 1.3;
+}
+
+/* Tiny CSS stand-ins: a picture with no letters, and a document whose
+   lines are real text. Decorative, so they are hidden from readers. */
+.mini-pic {
+    height: clamp(3.2rem, 5vw, 5.6rem);
+    border: .12rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        radial-gradient(circle at 74% 30%, var(--gold) 0 .9rem, transparent .95rem),
+        linear-gradient(160deg, transparent 58%, var(--blue) 58.5%),
+        linear-gradient(20deg, transparent 52%, color-mix(in srgb, var(--blue) 55%, #fff) 52.5%),
+        var(--mist);
+}
+
+.mini-doc {
+    height: clamp(3.2rem, 5vw, 5.6rem);
+    border: .12rem solid var(--navy);
+    border-radius: .2rem;
+    background:
+        linear-gradient(var(--navy), var(--navy)) .7rem .7rem / 55% .32rem no-repeat,
+        repeating-linear-gradient(transparent 0 .62rem, rgba(0, 46, 93, .45) .62rem .78rem) .7rem 1.55rem / calc(100% - 1.4rem) calc(100% - 2.1rem) no-repeat,
+        #fff;
+}
+
+.wcag {
+    grid-column: 1 / -1;
+    padding: .55rem .85rem;
+    border-left: .3rem solid var(--gold);
+    background: #fff;
+    font-size: clamp(.84rem, 1.1vw, 1.32rem);
+}
+
+/* ---------- Slide 17: the three tests --------------------------------- */
+
+.tests-split {
+    grid-template-columns: minmax(0, 1.18fr) minmax(19rem, .82fr);
+}
+
+.tests {
+    display: grid;
+    gap: clamp(.4rem, .8vw, .85rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tests li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .15rem .9rem;
+    align-items: center;
+    padding: .5rem .85rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .08);
+}
+
+.tests b {
+    color: var(--gold);
+    font-size: clamp(.95rem, 1.25vw, 1.45rem);
+}
+
+.tests .q,
+.tests .why {
+    grid-column: 1;
+    font-size: clamp(.8rem, 1.02vw, 1.22rem);
+    line-height: 1.3;
+}
+
+.tests .q {
+    color: color-mix(in srgb, #fff 78%, transparent);
+}
+
+.tests .stamp {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    font-size: clamp(.78rem, 1vw, 1.15rem);
+}
+
+.fix-line {
+    padding: .45rem .85rem;
+    border-left: .35rem solid var(--white);
+    background: rgba(255, 255, 255, .08);
+    font-size: clamp(.86rem, 1.12vw, 1.32rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.decision-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem .9rem;
+    font-size: clamp(.86rem, 1.12vw, 1.32rem);
+}
+
+/* ---------- Slide 18: the scenario fitting chart ---------------------- */
+
+.fit-chart {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: .4rem;
+    background: #fff;
+    box-shadow: .45rem .5rem 0 rgba(0, 46, 93, .1);
+}
+
+.fit-chart th,
+.fit-chart td {
+    padding: clamp(.28rem, .5vw, .6rem) clamp(.5rem, .8vw, .9rem);
+    border-top: .08rem solid rgba(0, 46, 93, .12);
+    font-size: clamp(.74rem, .98vw, 1.18rem);
+    line-height: 1.28;
+    text-align: left;
+    vertical-align: top;
+}
+
+.fit-chart thead th {
+    border-top: 0;
+    background: var(--navy);
+    color: #fff;
+    font-size: clamp(.62rem, .82vw, .98rem);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.fit-chart tbody th {
+    color: var(--navy);
+    font-weight: 900;
+}
+
+/* The tool column is the answer to "use it for everything", so it
+   carries the weight. */
+.fit-chart tbody td:nth-child(3) {
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.fit-chart tr.no-ai th,
+.fit-chart tr.no-ai td {
+    background: color-mix(in srgb, var(--gold) 20%, #fff);
+}
+
+.fit-chart tr.lab th,
+.fit-chart tr.lab td {
+    background: repeating-linear-gradient(135deg, transparent 0 .5rem, rgba(3, 116, 181, .05) .5rem 1rem);
+    color: color-mix(in srgb, var(--ink) 80%, #fff);
+}
+
+.fit-chart .outcome {
+    font-size: clamp(.66rem, .86vw, 1rem);
+}
+
+/* ---------- Slide 20: the pilot grid ---------------------------------- */
+
+.runs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.6vw, 3rem);
+}
+
+.tool-block {
+    display: grid;
+    gap: clamp(.45rem, .8vw, .8rem);
+    padding: clamp(.8rem, 1.2vw, 1.2rem) clamp(.9rem, 1.3vw, 1.3rem);
+    border-top: .35rem solid var(--gold);
+    border-radius: .25rem;
+    background: rgba(255, 255, 255, .07);
+}
+
+.tool-name {
+    color: var(--gold);
+    font-size: clamp(1rem, 1.4vw, 1.65rem);
+    font-weight: 900;
+}
+
+.run-head,
+.run {
+    display: grid;
+    grid-template-columns: clamp(3.4rem, 4.6vw, 5rem) minmax(0, 1fr) clamp(7.4rem, 10vw, 11.5rem);
+    gap: .8rem;
+    align-items: center;
+}
+
+.run-head span {
+    color: color-mix(in srgb, #fff 75%, transparent);
+    font-size: clamp(.6rem, .78vw, .92rem);
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.run-head span:first-child {
+    grid-column: 2;
+}
+
+.run-label {
+    font-size: clamp(.7rem, .9vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.cells {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: .3rem;
+}
+
+.cells i {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1.15;
+    border-radius: .2rem;
+    background: var(--mist);
+    color: var(--navy);
+    font-size: clamp(.68rem, .92vw, 1.08rem);
+    font-style: normal;
+    font-weight: 900;
+}
+
+/* The one wrong cell is the only colored cell: red with a white ring
+   and a raised U so the miss reads without color. */
+.cells i.miss {
+    background: var(--danger);
+    color: #fff;
+    box-shadow: 0 0 0 .15rem #fff;
+}
+
+.cells i.miss::after {
+    content: "U";
+    margin-top: -.2em;
+    font-size: .62em;
+    line-height: 1;
+}
+
+.run b {
+    font-size: clamp(.78rem, 1.02vw, 1.22rem);
+    white-space: nowrap;
+}
+
+.grid-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.6rem;
+    font-size: clamp(.8rem, 1.02vw, 1.2rem);
+}
+
+.grid-key span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.grid-key span::before {
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    border-radius: .15rem;
+    background: var(--mist);
+}
+
+.grid-key .k-miss::before {
+    background: var(--danger);
+    box-shadow: 0 0 0 .12rem #fff;
+}
+
+.tool-note {
+    color: color-mix(in srgb, #fff 75%, transparent);
+    font-size: clamp(.78rem, 1vw, 1.15rem);
+}
+
+.pilot-tally {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: 0;
+}
+
+.pilot-tally div {
+    display: grid;
+    gap: .1rem;
+    padding: .4rem .8rem;
+    border: .12rem solid rgba(255, 255, 255, .35);
+    border-radius: .3rem;
+    background: rgba(255, 255, 255, .06);
+}
+
+.pilot-tally dt {
+    color: var(--gold);
+    font-size: clamp(.64rem, .82vw, .95rem);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pilot-tally dd {
+    margin: 0;
+    font-size: clamp(.95rem, 1.3vw, 1.5rem);
+    font-weight: 900;
+}
+
+.pilot-tally .missing {
+    border-style: dashed;
+    border-color: var(--gold);
+}
+
+/* ---------- Slide 21: the Selection Decision -------------------------- */
+
+.sd-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(13rem, .6fr);
+    gap: clamp(1.4rem, 3vw, 3.2rem);
+    align-items: center;
+}
+
+.sd-card {
+    margin-top: 1.4rem;
+    transform: rotate(-.3deg);
+}
+
+.sd-card .card-fields {
+    gap: clamp(.2rem, .42vw, .5rem) 1.1rem;
+}
+
+.sd-card .card-fields dd {
+    font-size: clamp(.72rem, 1vw, 1.2rem);
+    line-height: 1.45;
+}
+
+.decision-pick {
+    padding: .05rem .35rem;
+    background: var(--gold);
+    color: #001a36;
+    font-weight: 800;
+}
+
+.outcomes {
+    display: grid;
+    justify-items: start;
+    gap: .8rem;
+}
+
+.outcomes ul {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.outcomes p {
+    font-size: clamp(.9rem, 1.2vw, 1.4rem);
+    line-height: 1.3;
+}
+
+/* ---------- Slide 23: lab handoff ------------------------------------- */
+
+.lab-parts {
+    display: grid;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lab-parts li {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .1rem .8rem;
+    padding: .55rem .9rem;
+    border-left: .35rem solid var(--gold);
+    background: rgba(255, 255, 255, .07);
+}
+
+.lab-parts .part-no {
+    grid-row: span 2;
+    padding-top: .2rem;
+    color: var(--gold);
+    font-size: clamp(.74rem, .92vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.lab-parts strong {
+    font-size: clamp(1rem, 1.35vw, 1.5rem);
+    line-height: 1.2;
+}
+
+.lab-parts span:last-child {
+    font-size: clamp(.86rem, 1.05vw, 1.2rem);
+}
+
+.prompt.exit p {
+    font-size: clamp(1rem, 1.35vw, 1.45rem);
+}
+
+.ahead {
+    color: color-mix(in srgb, #fff 80%, transparent);
+    font-size: clamp(.9rem, 1.15vw, 1.3rem);
+}
+
+/* ---------- Gold check slides ----------------------------------------- */
+
+.slide.gold .prompt p {
+    font-size: clamp(1.05rem, 1.5vw, 1.55rem);
+}
+
+/* ---------- Laptop height --------------------------------------------- */
+
+@media (min-width: 761px) and (max-height: 820px) {
+    .slide {
+        padding-top: 3.2rem;
+        padding-bottom: 4.2rem;
+    }
+
+    .content {
+        gap: .8rem;
+    }
+
+    h2.wide-title,
+    h2.check-title,
+    .visual-split h2 {
+        font-size: clamp(1.7rem, 2.8vw, 3rem);
+    }
+
+    .req-card,
+    .wo-card,
+    .sd-card {
+        margin-top: 1.1rem;
+        padding-bottom: .8rem;
+    }
+
+    .card-fields .head,
+    .wo-fields li.wo-head > span {
+        padding-bottom: .85rem;
+    }
+
+    .req-card .card-fields dd,
+    .sd-card .card-fields dd {
+        font-size: .86rem;
+        line-height: 1.36;
+    }
+
+    .stepped-prompt .turn {
+        padding: .45rem .7rem;
+        font-size: .86rem;
+        line-height: 1.3;
+    }
+
+    .stepped-prompt .chat-body,
+    .plan-chat .chat-body,
+    .flyer-chat .chat-body,
+    .triage-prompt .chat-body {
+        padding: .45rem;
+    }
+
+    .stepped-prompt .stepped {
+        gap: .3rem .8rem;
+    }
+
+    .targets p,
+    .review p,
+    .review li li {
+        font-size: .86rem;
+    }
+
+    .targets li {
+        padding: 1rem;
+    }
+
+    .review > li {
+        padding: .6rem .7rem .7rem;
+        gap: .4rem;
+    }
+
+    .first-pair .turn,
+    .plan-chat .turn,
+    .triage-prompt .turn {
+        font-size: .9rem;
+        line-height: 1.32;
+    }
+
+    .flyer-chat .turn {
+        font-size: .84rem;
+        line-height: 1.28;
+    }
+
+    .sort-table td {
+        padding: .14rem .55rem;
+        font-size: .82rem;
+    }
+
+    .fix-prompt,
+    .fix-reply,
+    .verify-list li {
+        font-size: .86rem;
+        line-height: 1.3;
+    }
+
+    .fit-chart th,
+    .fit-chart td {
+        padding: .28rem .55rem;
+        font-size: .9rem;
+    }
+
+    .tests li {
+        padding: .35rem .7rem;
+    }
+
+    .tests .q,
+    .tests .why {
+        font-size: .84rem;
+    }
+
+    .wo-fields span {
+        font-size: .82rem;
+    }
+
+    .mc-row .bar {
+        height: 1.15rem;
+    }
+
+    .job-half {
+        padding: .6rem .7rem;
+    }
+
+    .align-row .sheet-line,
+    .align-row .survey-field {
+        padding: .3rem .6rem;
+    }
+}
+
+/* ---------- Phone ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+    .slide,
+    .slide.dark,
+    .slide.gold {
+        background-size: 12rem auto, 10rem auto, auto;
+        background-position: left 1rem top 0, right -2rem bottom 3rem, 0 0;
+    }
+
+    .slide.dark.title-slide {
+        background-size: 12rem auto;
+        background-position: left 1rem top 0;
+    }
+
+    .brand {
+        right: auto;
+        left: 1.25rem;
+    }
+
+    /* Two-class split rules outrank course.css's one-class phone
+       collapse, so they are collapsed here by name. */
+    .visual-split.text-wide,
+    .visual-split.tests-split,
+    .targets,
+    .first-pair,
+    .wo-split,
+    .review,
+    .triage,
+    .flyer,
+    .split-job,
+    .runs,
+    .sd-split,
+    .tests-split {
+        grid-template-columns: 1fr;
+    }
+
+    .align-head {
+        display: none;
+    }
+
+    .align-row {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+    }
+
+    .pin-line {
+        display: none;
+    }
+
+    .wo-fields li {
+        grid-template-columns: 1.6rem 1fr;
+    }
+
+    .wo-fields li.wo-head,
+    .card-fields dt.head {
+        display: none;
+    }
+
+    .verify-list .verdict {
+        justify-self: start;
+    }
+
+    .wo-fields li > span,
+    .wo-fields .parts {
+        grid-column: 2;
+        justify-content: start;
+    }
+
+    .review > li:not(:last-child)::after {
+        top: auto;
+        right: 45%;
+        bottom: -1.35rem;
+        transform: rotate(90deg);
+    }
+
+    .mc-head {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: .6rem;
+    }
+
+    .mc-head span:first-child {
+        display: none;
+    }
+
+    .mc-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: .2rem .6rem;
+    }
+
+    .mc-row .cat {
+        grid-column: 1 / -1;
+    }
+
+    .run-head,
+    .run {
+        grid-template-columns: 3rem minmax(0, 1fr);
+    }
+
+    .run-head span:last-child {
+        display: none;
+    }
+
+    .run b {
+        grid-column: 2;
+        white-space: normal;
+    }
+
+    /* Tables keep their header cells for screen readers but reflow each
+       row into a stacked card, so nothing scrolls sideways. */
+    .sort-table thead,
+    .fit-chart thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    .sort-table tr {
+        display: grid;
+        grid-template-columns: 2rem minmax(0, 1fr);
+        border-top: .08rem solid rgba(0, 46, 93, .12);
+    }
+
+    .sort-table td {
+        border-top: 0;
+    }
+
+    .sort-table td:nth-child(3),
+    .sort-table td:nth-child(4) {
+        grid-column: 2;
+        white-space: normal;
+    }
+
+    .fit-chart,
+    .fit-chart tbody,
+    .fit-chart tr,
+    .fit-chart th,
+    .fit-chart td {
+        display: block;
+    }
+
+    .fit-chart tr {
+        padding: .4rem 0;
+        border-top: .12rem solid rgba(0, 46, 93, .2);
+    }
+
+    .fit-chart th,
+    .fit-chart td {
+        border-top: 0;
+    }
+
+    .fit-chart td::before {
+        display: block;
+        content: attr(data-label);
+        color: var(--blue);
+        font-size: .68rem;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .chat-bar {
+        flex-wrap: wrap;
+    }
+
+    .verify-list li {
+        grid-template-columns: 1fr;
+    }
+
+    .stepped-prompt .stepped {
+        grid-template-columns: 1fr;
+    }
+
+    .outcome,
+    .verdict,
+    .run b,
+    .stamp {
+        white-space: normal;
+    }
+
+    .term-row div {
+        display: block;
+    }
+}
