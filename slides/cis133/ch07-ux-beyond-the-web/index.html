@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS133 Chapter 7 companion presentation: UX beyond the web, the five UX principles applied to cybersecurity, networking, support, administration, hardware, and data.">
+  <meta name="theme-color" content="#001A36">
+  <title>CIS133: UX Beyond the Web</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Crect x='10' y='14' width='44' height='36' rx='4' fill='%230b2342' stroke='%23bcd0e6' stroke-width='3'/%3E%3Ccircle cx='20' cy='24' r='4' fill='%23FFD573'/%3E%3Ccircle cx='20' cy='40' r='4' fill='%234d80ba'/%3E%3Crect x='29' y='22' width='18' height='4' fill='%23bcd0e6'/%3E%3Crect x='29' y='38' width='14' height='4' fill='%23bcd0e6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS133: UX Beyond the Web" data-course="cis133"
+  data-chapter="ch07-ux-beyond-the-web" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+    <section class="slide dark active title-slide" data-notes="Companion to the Chapter 7 deck. Run it after section 7.2, once the class can tell UX from UI and name the five principles. Ask for a show of hands: who plans to work in cybersecurity, networking, support, system administration, hardware, or data? Then make the promise: every one of those jobs ships an interface, and the five principles still measure it.&#10;&#10;Time: 0-1 minute.">
+      <div class="brand">Phoenix College · CIS133</div>
+      <div class="content">
+        <div class="eyebrow">Chapter 7 · 7.2 companion · 25 minutes</div>
+        <div class="rule"></div>
+        <h1>UX beyond the web</h1>
+        <p class="lede">Every IT job ships an interface. Most of them are not web pages.</p>
+        <div class="deck-tag" aria-hidden="true">five principles · any field</div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Set the scene. An on-call engineer wakes to an alert at 3:07 a.m. That engineer is the visitor, and the alert is the whole visit. Ask: what does the alert need to say in the first line? What broke, where, and what to do first. If it says 'threshold exceeded on host 14' and nothing else, the visit fails. Nobody on that team calls this UX. It is UX anyway.&#10;&#10;Hold the 3:07 alert. The last slide comes back to it.&#10;&#10;Time: 1-3 minutes.&#10;&#10;Visual: flat-vector course illustration created for this deck.">
+      <div class="brand">CIS133 · The 3:07 alert</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">One visitor, one visit</div>
+          <h2>At 3:07 a.m., an alert has exactly one user.</h2>
+          <p class="lede">Does the first line say what broke, where, and what to do first? That is UX. Nobody on the team calls it that.</p>
+        </div>
+        <figure>
+          <img src="assets/alert-at-307.png" alt="A phone propped on a nightstand in a dark room buzzes with a warning alert on its screen while a wall clock reads a few minutes past three.">
+          <figcaption>The on-call engineer is the visitor. The alert is the visit.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three targets, the same three verbs the lab uses. Recognize: find the interface in a field that never uses the word. Sort: UX or UI, the 7.2 skill. Score: hold it against the five principles and name the one that fails first.&#10;&#10;Time: 3-4 minutes.">
+      <div class="brand">CIS133 · Targets</div>
+      <div class="content">
+        <div class="eyebrow">By the end of this companion, you can...</div>
+        <h2>Recognize, sort, and score the interface in your field.</h2>
+        <div class="target-rows">
+          <p><span>01</span><strong>Recognize</strong>Find the interface in a job that never says the word UX.</p>
+          <p><span>02</span><strong>Sort</strong>Place one decision in the UX layer or the UI layer.</p>
+          <p><span>03</span><strong>Score</strong>Hold it against the five principles and name the one that fails first.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Translate each principle out of the browser. Read the right column aloud. Usability: the task finishes without guesswork, so the alert says what to do first. Accessibility: every user, including the tech reading a phone one-handed in a dark closet, or working over a slow remote link. Consistency: the same thing in the same place, so port labels match the diagram. Feedback: every action gets an answer, so the command confirms what it did. Responsiveness: serve the device the user brought, which might be a five-inch phone or a crash cart in a server room.&#10;&#10;Point out that the definitions did not change. Only the page did.&#10;&#10;Time: 4-7 minutes.">
+      <div class="brand">CIS133 · Five principles</div>
+      <div class="content">
+        <div class="eyebrow">Same five, no browser required</div>
+        <h2>The definitions did not change. Only the page did.</h2>
+        <div class="principle-rows">
+          <div class="head" aria-hidden="true"><span>On a web page</span><span>Anywhere else in IT</span></div>
+          <p class="u"><b>U</b><strong>Usability</strong><span>Tasks finish without guesswork.</span><em>The alert says what to do first.</em></p>
+          <p class="a"><b>A</b><strong>Accessibility</strong><span>Works with a screen reader and a keyboard.</span><em>Works one-handed, on a phone, in the dark, over a slow link.</em></p>
+          <p class="c"><b>C</b><strong>Consistency</strong><span>Same nav in the same place on every page.</span><em>The rack label matches the diagram and the port.</em></p>
+          <p class="f"><b>F</b><strong>Feedback</strong><span>The link answers the pointer and the Tab key.</span><em>The command confirms what it did, or what it would do.</em></p>
+          <p class="r"><b>R</b><strong>Responsiveness</strong><span>The layout fits the screen the visitor brought.</span><em>The tool fits the device the user has in hand right now.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Cybersecurity. The sticky note is the classic. A password rule nobody can remember is a usability failure, and the user fixes it with a sticky note on the bezel, which turns it into a security failure. Two more: a one-click Report Phishing button gets used, while 'forward it to the abuse mailbox' does not. An MFA prompt that shows where the sign-in came from gives the user the feedback to deny the one they did not start.&#10;&#10;Land the claim: when the secure path is harder than the workaround, the workaround ships.&#10;&#10;Time: 7-9 minutes.&#10;&#10;Visual: flat-vector course illustration created for this deck.">
+      <div class="brand">CIS133 · Cybersecurity</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/sticky-note-password.png" alt="A monitor shows a login screen with a padlock and a filled password field, and a yellow sticky note with scribbled lines is stuck to the corner of the bezel.">
+          <figcaption>When the secure path is harder than the workaround, the workaround ships.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Security is a visit too</div>
+          <h2>The secure path must be the easy path.</h2>
+          <div class="field-rows">
+            <p><span>usability</span>A rule nobody can follow lands on a sticky note.</p>
+            <p><span>feedback</span>The MFA prompt shows where the sign-in came from.</p>
+            <p><span>usability</span>One Report Phishing button beats a mailbox address.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide visual-slide" data-notes="Network infrastructure. The visitor is the next technician, often at 2 a.m. in a wiring closet. Consistency: every closet switch puts its uplinks on ports 47 and 48, so nobody has to relearn a rack. Consistency again: the label on the cable, the port, and the diagram all say the same thing. Feedback: a switch command line that marks where the typo sits is answering the action. Responsiveness: the guest Wi-Fi captive portal has to work on whatever phone walks in.&#10;&#10;Time: 9-11 minutes.&#10;&#10;Visual: flat-vector course illustration created for this deck.">
+      <div class="brand">CIS133 · Network infrastructure</div>
+      <div class="content visual-grid">
+        <div>
+          <div class="eyebrow">The visitor is the next tech</div>
+          <h2>A rack is an interface. The label is its UI.</h2>
+          <div class="field-rows">
+            <p><span>consistency</span>Uplinks on ports 47 and 48 in every closet, every time.</p>
+            <p><span>consistency</span>Cable, port, and diagram carry the same label.</p>
+            <p><span>feedback</span>The switch marks the exact spot the command went wrong.</p>
+            <p><span>responsiveness</span>The guest portal works on whatever phone walks in.</p>
+          </div>
+        </div>
+        <figure>
+          <img src="assets/rack-patch-labels.png" alt="A rack with a patch panel above a switch. Three colored cables run between them, each with a label flag, and a diagram card beside the rack repeats the same three colors.">
+          <figcaption>The next tech reads this rack at 2 a.m. Label it for them.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Help desk and support. Two ticket forms, rebuilt on the slide. The left form asks eleven required fields before it asks what is wrong, so students skip it and walk to the desk. The right form asks the real question first, then two more, and answers the submission with a ticket number and a response window. That answer is feedback. Ask: which form will people use, and which one gives the technician a readable queue?&#10;&#10;Traced value: ticket 48213. Keep it; the exit ticket borrows the idea.&#10;&#10;Time: 11-13 minutes.">
+      <div class="brand">CIS133 · Help desk and support</div>
+      <div class="content">
+        <div class="eyebrow">A ticket form is a visit</div>
+        <h2>Ask the real question first.</h2>
+        <div class="ticket-compare">
+          <div class="ticket" role="img" aria-label="A support form with eleven required fields, such as building, floor, asset tag, and department, before the field that asks what is wrong. Verdict: fights usability.">
+            <h3>Form A</h3>
+            <div class="row"><span>Building</span><i></i></div>
+            <div class="row"><span>Floor</span><i></i></div>
+            <div class="row"><span>Asset tag</span><i></i></div>
+            <div class="row"><span>Department</span><i></i></div>
+            <div class="row"><span>Cost center</span><i></i></div>
+            <p class="more">six more required fields</p>
+            <div class="row"><span>Problem</span><i></i></div>
+            <div class="button">Submit</div>
+            <p class="verdict fail">fights usability</p>
+          </div>
+          <div class="ticket good" role="img" aria-label="A support form with three fields: what is wrong, where you are, and how urgent, followed by a confirmation that ticket 48213 was received and a first reply arrives within four business hours. Verdict: serves usability and feedback.">
+            <h3>Form B</h3>
+            <div class="row"><span>What's wrong?</span><i class="tall"></i></div>
+            <div class="row"><span>Where are you?</span><i></i></div>
+            <div class="row"><span>How urgent?</span><i></i></div>
+            <div class="button">Submit</div>
+            <p class="confirm">Ticket #48213 received. First reply within 4 business hours.</p>
+            <p class="verdict pass">serves usability · feedback</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="System administration and scripting. A command line is an interface with one user: the admin. Left: PowerShell's -WhatIf answers before anything happens, naming the folder it would remove. Right: rm -rf answers with silence, and the only feedback arrives when someone asks where the night build went. Same principle as the link that answers the Tab key. Mention error messages too: a hex code sends the user to a search engine, while a sentence that names the fix is feedback.&#10;&#10;Time: 13-15 minutes.">
+      <div class="brand">CIS133 · System administration</div>
+      <div class="content">
+        <div class="eyebrow">The admin is the visitor</div>
+        <h2>A command that says nothing is a trap.</h2>
+        <div class="cli-pair">
+          <div>
+            <p class="cli-label">Answers before it acts</p>
+            <pre class="cli" aria-label="PowerShell session. The command Remove-Item night-build recurse WhatIf prints: What if: performing the operation Remove Directory on target C colon backslash builds backslash night-build."><span class="prompt-mark">PS C:\builds&gt;</span> Remove-Item .\night-build -Recurse <span class="flag">-WhatIf</span>
+<span class="answer-line">What if: Performing the operation "Remove Directory"
+on target "C:\builds\night-build".</span></pre>
+          </div>
+          <div>
+            <p class="cli-label">Answers with silence</p>
+            <pre class="cli" aria-label="Shell session. The command rm dash r f night-build prints nothing and returns to the prompt."><span class="prompt-mark">$</span> rm -rf night-build/
+<span class="silence">(nothing)</span>
+<span class="prompt-mark">$</span> </pre>
+          </div>
+        </div>
+        <p class="claim-plate">Feedback: the tool answers before the damage, not after.</p>
+      </div>
+    </section>
+
+    <section class="slide dark visual-slide" data-notes="Hardware and the A+ path. Before any screen exists, the machine still has to answer the user. One short beep at power-on says the self-test passed. A repeating pattern says which part failed, which is feedback delivered with no display at all. The front-panel power light and disk light are feedback too. Then accessibility in the physical world: a lab kiosk whose card reader sits too high for a wheelchair user fails the same principle as an image with no alt text.&#10;&#10;Time: 15-17 minutes.&#10;&#10;Visual: flat-vector course illustration created for this deck.">
+      <div class="brand">CIS133 · Hardware and support</div>
+      <div class="content visual-grid reverse">
+        <figure>
+          <img src="assets/bench-beep-codes.png" alt="An open PC case on a workbench with one memory stick highlighted, a lit power light, and sound arcs leaving the case speaker, while a dark monitor shows nothing.">
+          <figcaption>Before any screen exists, the machine still has to answer.</figcaption>
+        </figure>
+        <div>
+          <div class="eyebrow">Physical interfaces count</div>
+          <h2>Beep codes are feedback. The power button is UI.</h2>
+          <div class="field-rows">
+            <p><span>feedback</span>One short beep: self-test passed. A pattern: which part failed.</p>
+            <p><span>accessibility</span>A card reader mounted too high fails a wheelchair user.</p>
+            <p><span>consistency</span>Power light, disk light, same spot on every machine in the lab.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Data and databases, for the CIS215 and CIS376 crowd. A column name is an interface for the next analyst. cust_dt_1 needs a decoder; signup_date does not. One naming rule across every table is consistency. A dashboard with forty tiles fails usability the same way a page with forty links does, and a chart with the claim in its title serves it. Even an error message counts: a database that names the line with the typo is feedback.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS133 · Data and databases</div>
+      <div class="content">
+        <div class="eyebrow">The next analyst is the visitor</div>
+        <h2>A column name is an interface.</h2>
+        <div class="name-pairs">
+          <p><code class="before">cust_dt_1</code><span class="arrow" aria-hidden="true">→</span><code class="after">signup_date</code><span>Usability: read it without a decoder.</span></p>
+          <p><code class="before">flag2</code><span class="arrow" aria-hidden="true">→</span><code class="after">is_active</code><span>Usability: the name says what true means.</span></p>
+          <p><code class="before">tbl_x</code><span class="arrow" aria-hidden="true">→</span><code class="after">orders</code><span>Consistency: one naming rule across every table.</span></p>
+        </div>
+        <p class="claim-plate">Forty tiles on a dashboard fail usability the same way forty links on a page do.</p>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Sort with the class. Give pairs 45 seconds per row. Row 1 is about where the reader sits, so UX, and the principle is accessibility. Row 2 is a rule about where things go, so UX serving consistency. Row 3 is whether the tool answers, so UX serving feedback. Row 4 is about the look of a control, so UI, and it serves consistency. Read the pattern afterward: the same test from 7.2 works. Structure and whether it answers is UX. How the control looks is UI.&#10;&#10;Time: 19-22 minutes.">
+      <div class="brand">CIS133 · Retrieval check</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Sort the decisions</div>
+        <h2>Which layer? Which principle?</h2>
+        <ol class="sort-list">
+          <li>The lab kiosk's card reader sits 40 inches off the floor, within reach from a wheelchair.</li>
+          <li>Every closet switch puts its uplinks on ports 47 and 48.</li>
+          <li>The cleanup script prints each file it would delete before it deletes anything.</li>
+          <li>Every admin tool on the team uses the same trash-can icon for Delete.</li>
+        </ol>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>1:</strong> UX · accessibility · <strong>2:</strong> UX · consistency · <strong>3:</strong> UX · feedback · <strong>4:</strong> UI · consistency</div>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="The pattern under every field. People do not tolerate bad UX; they route around it, and the workaround becomes the incident. A rule nobody can follow becomes a sticky note, then a breach. An alert nobody can read becomes a muted channel, then an outage. Read both chains left to right.&#10;&#10;Land the claim: good UX is a security control and an uptime control. The word is from web design. The stakes are not.&#10;&#10;Time: 22-24 minutes.">
+      <div class="brand">CIS133 · The pattern</div>
+      <div class="content">
+        <div class="eyebrow">Why every field cares</div>
+        <h2>Unusable gets worked around. The workaround is the incident.</h2>
+        <div class="chain" role="img" aria-label="Chain one: a rule nobody can follow leads to a sticky note on the monitor, which leads to a breach.">
+          <div class="cause"><strong>Rule nobody can follow</strong>14 characters, rotated monthly, no reuse</div>
+          <span aria-hidden="true">→</span>
+          <div><strong>Workaround</strong>the sticky note on the bezel</div>
+          <span aria-hidden="true">→</span>
+          <div class="incident"><strong>Breach</strong>a visitor reads it from the doorway</div>
+        </div>
+        <div class="chain" role="img" aria-label="Chain two: an alert nobody can read leads to a muted channel, which leads to an outage.">
+          <div class="cause"><strong>Alert nobody can read</strong>300 a night, none say what to do</div>
+          <span aria-hidden="true">→</span>
+          <div><strong>Workaround</strong>the channel gets muted</div>
+          <span aria-hidden="true">→</span>
+          <div class="incident"><strong>Outage</strong>the real one at 3:07 goes unread</div>
+        </div>
+        <p class="claim-plate">Good UX is a security control and an uptime control.</p>
+      </div>
+    </section>
+
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The 3:07 alert still has one user, and so does every interface students will ship in their field. Pairs take three minutes: name the field, name one interface a human operates there that is not a web page, score it on the five, and propose one fix. Collect the exit ticket before dismissal. It feeds the Skills Lab 7.6 audit habit.&#10;&#10;Time: 24-25 minutes.">
+      <div class="brand">CIS133 · Exit ticket</div>
+      <div class="content">
+        <div class="eyebrow">Close the loop</div>
+        <h2>At 3:07 a.m. the alert still has one user. Build for them.</h2>
+        <div class="prompt">
+          <p><strong>Pairs, 3 minutes:</strong> name your field, one interface a human operates there that is not a web page, the principle it fails first, and one fix.</p>
+          <p><strong>Exit ticket:</strong> the first interface you expect to ship in that field, and the principle it most needs.</p>
+        </div>
+        <p class="next-step">Next: Skills Lab 7.6 audits the club site with the same five questions.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
