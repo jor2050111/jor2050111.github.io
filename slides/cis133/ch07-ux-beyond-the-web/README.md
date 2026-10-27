@@ -20,7 +20,7 @@ score it against the five principles, because the principles from section
 
 - Palette: `midnight-gold`
 - Treatment: ops floor, with rack-unit rule lines, a mounting rail, lit indicators, and monitor-bezel figure frames
-- Image source: flat-vector course illustrations created for this deck in the deck palette, with no readable words
+- Image source: Codex-rendered flat-vector illustrations in the deck palette, styled after the Chapter 8 set, with no readable words
 - Content source: section 7.2 of the CIS133 textbook, extended with field examples
 
 Run the full repository check from the site root:
