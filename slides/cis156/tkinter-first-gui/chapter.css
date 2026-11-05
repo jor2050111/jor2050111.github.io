@@ -1,0 +1,1079 @@
+/* CIS156 tkinter first GUI: the diner counter and its service bell.
+   The bell is the event, the server is the event loop, and the
+   instruction card beside the bell is the function handed to command=.
+   The bell is painted as a background layer, never as a positioned
+   box, so it can bleed off the slide edge without creating scrollable
+   overflow inside the slide. */
+
+.slide {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 240'%3E%3Cg fill='none' stroke='rgba(29,94,163,0.13)' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M60 180a100 100 0 0 1 200 0z'/%3E%3Cpath d='M30 180h260v26H30z'/%3E%3Cpath d='M160 80V58M144 58h32'/%3E%3C/g%3E%3C/svg%3E") right -4rem bottom -3.5rem / 22rem auto no-repeat,
+        radial-gradient(circle at 88% 6%, rgba(255, 213, 115, .22), transparent 22rem),
+        linear-gradient(150deg, #f4f8fc, var(--canvas));
+}
+
+.slide.dark {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 240'%3E%3Cg fill='none' stroke='rgba(255,213,115,0.15)' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M60 180a100 100 0 0 1 200 0z'/%3E%3Cpath d='M30 180h260v26H30z'/%3E%3Cpath d='M160 80V58M144 58h32'/%3E%3C/g%3E%3C/svg%3E") right -4rem bottom -3.5rem / 22rem auto no-repeat,
+        radial-gradient(circle at 86% 8%, rgba(255, 213, 115, .14), transparent 24rem),
+        linear-gradient(150deg, #000f20, #001a36 55%, #032a52);
+}
+
+.slide.gold {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 240'%3E%3Cg fill='none' stroke='rgba(0,26,54,0.13)' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M60 180a100 100 0 0 1 200 0z'/%3E%3Cpath d='M30 180h260v26H30z'/%3E%3Cpath d='M160 80V58M144 58h32'/%3E%3C/g%3E%3C/svg%3E") right -4rem bottom -3.5rem / 22rem auto no-repeat,
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .42), transparent 24rem),
+        linear-gradient(150deg, #ffe3a3, var(--gold));
+}
+
+/* Title: the diner counter is the slide's own background layer. The
+   left third of the render is calm navy, so the title sits there. */
+.slide.dark.title-slide {
+    background:
+        linear-gradient(90deg, #001a36 0%, #001a36 22%, rgba(0, 26, 54, .78) 40%, rgba(0, 26, 54, .1) 66%, transparent 80%),
+        url("assets/title-diner-counter.png") right center / cover no-repeat,
+        #001a36;
+}
+
+.title-slide .content {
+    width: min(100%, 92rem);
+    margin-left: 0;
+    padding-right: min(46vw, 48rem);
+}
+
+.title-slide h1 {
+    max-width: 11ch;
+}
+
+/* Wider stage so code lines stay whole at the shared code size. */
+.content {
+    width: min(100%, 92rem);
+}
+
+/* One-line claims. The shared h2 caps at 17ch, which forces two
+   lines on most sentence titles. */
+h2 {
+    max-width: none;
+    font-size: clamp(1.9rem, 2.9vw, 3.5rem);
+    line-height: 1.02;
+}
+
+.code {
+    max-width: none;
+    border-radius: .7rem;
+}
+
+.slide > .brand {
+    z-index: 3;
+}
+
+/* The service bell in the corner label. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand::before {
+    content: "";
+    width: 1.25em;
+    height: 1em;
+    background: var(--blue);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='9' y='0' width='2' height='3' fill='%23000'/%3E%3Cpath d='M3 12a7 7 0 0 1 14 0z' fill='%23000'/%3E%3Crect x='1' y='12.6' width='18' height='2.6' rx='1' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='9' y='0' width='2' height='3' fill='%23000'/%3E%3Cpath d='M3 12a7 7 0 0 1 14 0z' fill='%23000'/%3E%3Crect x='1' y='12.6' width='18' height='2.6' rx='1' fill='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.dark .brand::before {
+    background: var(--gold);
+}
+
+.slide.gold .brand::before {
+    background: var(--navy);
+}
+
+/* ---------- Semantic color ------------------------------------------- */
+
+/* Gold marks what is live or shown: the function handed to command=,
+   the placing call, the waiting state, today's import style. */
+.code .live {
+    color: #001a36;
+    background: #ffd573;
+    border-radius: .22rem;
+    padding: 0 .18rem;
+}
+
+.code .mark-bad {
+    color: #ffffff;
+    background: #a6321f;
+    border-radius: .22rem;
+    padding: 0 .12rem;
+    outline: .14rem solid #ff9d8f;
+}
+
+.code .error {
+    color: #ff9d8f;
+    font-weight: 700;
+}
+
+.code-chip {
+    display: inline-block;
+    width: fit-content;
+    padding: .5rem .9rem;
+    color: #eaf4ff;
+    background: #06192f;
+    border-left: .4rem solid var(--gold);
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-size: clamp(1rem, 1.45vw, 1.75rem);
+    font-weight: 700;
+}
+
+.cue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem .9rem;
+    font-weight: 800;
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+}
+
+.cue .label {
+    color: var(--blue);
+    font-size: .78em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.dark .cue .label {
+    color: var(--gold);
+}
+
+.keycap {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.6rem;
+    padding: .35rem .7rem;
+    color: #001a36;
+    background: linear-gradient(180deg, #ffffff, #e9eef4);
+    border: .12rem solid rgba(0, 26, 54, .24);
+    border-radius: .5rem;
+    box-shadow: 0 .26rem 0 rgba(0, 26, 54, .28);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: .9em;
+}
+
+.cue .sep {
+    color: #536577;
+}
+
+/* ---------- Tool surfaces: tkinter window and IDLE shell --------------- */
+
+.tk-window {
+    width: min(100%, 28rem);
+    margin: 0;
+    overflow: hidden;
+    color: #111;
+    background: #ececec;
+    border: .1rem solid #9aa6b2;
+    border-radius: .55rem;
+    box-shadow: 0 1.1rem 2.6rem rgba(0, 26, 54, .26);
+    font-family: var(--body);
+}
+
+.tk-bar,
+.shell-bar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .42rem .7rem;
+    color: #22303d;
+    background: linear-gradient(180deg, #f7f8fa, #dfe4ea);
+    border-bottom: .08rem solid #b5bfca;
+    font-size: clamp(.78rem, 1vw, .98rem);
+    font-weight: 700;
+}
+
+.tk-bar .tk-title,
+.shell-bar .tk-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tk-controls {
+    display: inline-flex;
+    gap: .45rem;
+}
+
+.tk-controls span {
+    width: .72rem;
+    height: .72rem;
+    border-radius: 50%;
+    background: #b5bfca;
+    border: .08rem solid #8995a3;
+}
+
+.tk-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .55rem;
+    padding: .7rem .8rem;
+    aspect-ratio: 320 / 160;
+    font-size: clamp(.9rem, 1.2vw, 1.22rem);
+}
+
+.tk-body.h180 {
+    aspect-ratio: 320 / 180;
+}
+
+.tk-label {
+    padding: .1rem .3rem;
+    border: .12rem solid transparent;
+    border-radius: .2rem;
+}
+
+.tk-button {
+    padding: .25rem .9rem;
+    background: #f6f6f6;
+    border: .1rem solid #8a8a8a;
+    border-radius: .25rem;
+    box-shadow: inset 0 -.12rem 0 rgba(0, 0, 0, .12);
+}
+
+.tk-entry {
+    display: flex;
+    align-items: center;
+    width: 62%;
+    min-height: 1.8em;
+    padding: .1rem .35rem;
+    background: #fff;
+    border: .1rem solid #8a8a8a;
+    box-shadow: inset 0 .1rem .2rem rgba(0, 0, 0, .14);
+    font-family: var(--body);
+}
+
+.caret {
+    display: inline-block;
+    width: .12rem;
+    height: 1.05em;
+    margin-left: .08rem;
+    background: #111;
+    animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.tk-result {
+    min-width: 62%;
+    min-height: 1.6em;
+    text-align: center;
+    border: .12rem dashed #a8b6c5;
+    border-radius: .2rem;
+    color: #536577;
+    font-size: .82em;
+}
+
+.tk-result.shown {
+    color: #001a36;
+    background: #ffd573;
+    border: .12rem solid #b8860b;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.tk-empty-note {
+    margin: auto;
+    color: #7d8794;
+    font-size: .8em;
+    font-style: normal;
+}
+
+.dimension {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin-top: .55rem;
+    color: var(--blue);
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.82rem, 1.05vw, 1rem);
+}
+
+.dimension::before,
+.dimension::after {
+    content: "";
+    flex: 1;
+    height: .12rem;
+    background: currentColor;
+    opacity: .5;
+}
+
+.mock-stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.3rem);
+    justify-items: start;
+}
+
+.shell {
+    width: min(100%, 24rem);
+    overflow: hidden;
+    background: #fff;
+    border: .1rem solid #9aa6b2;
+    border-radius: .55rem;
+    box-shadow: 0 1.1rem 2.6rem rgba(0, 26, 54, .2);
+}
+
+.shell-body {
+    margin: 0;
+    padding: .8rem 1rem;
+    color: #111;
+    font: clamp(.9rem, 1.25vw, 1.35rem)/1.5 var(--code);
+    white-space: pre-wrap;
+}
+
+.shell-body .out {
+    color: #1d5ea3;
+}
+
+.shell-body .typed {
+    color: #111;
+    font-weight: 700;
+}
+
+.shell-body .prompt-mark {
+    color: #7c3626;
+    font-weight: 700;
+}
+
+/* ---------- Layouts ---------------------------------------------------- */
+
+.code-mock {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 28rem);
+    gap: clamp(1.4rem, 3.5vw, 4rem);
+    align-items: center;
+}
+
+.code-mock.wide-code {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
+}
+
+/* Slide 2: the shell and the question sit side by side. */
+.hook {
+    display: grid;
+    grid-template-columns: minmax(0, 36rem) minmax(0, 1fr);
+    gap: clamp(1.4rem, 4vw, 4.5rem);
+    align-items: center;
+}
+
+.hook .shell {
+    width: 100%;
+}
+
+.hook .shell-body {
+    font-size: clamp(1rem, 1.45vw, 1.75rem);
+}
+
+.hook .prompt p {
+    font-size: clamp(1.22rem, 2.1vw, 2rem);
+    line-height: 1.28;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.3rem);
+}
+
+.mock-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: clamp(1rem, 3vw, 3rem);
+}
+
+.mock-row .tk-window {
+    width: min(100%, 24rem);
+}
+
+.visual-split {
+    display: grid;
+    grid-template-columns: minmax(21rem, 1.1fr) minmax(0, .9fr);
+    gap: clamp(2rem, 4.5vw, 5.5rem);
+    align-items: center;
+}
+
+/* ---------- Frame device: an order ticket clipped to the rail ---------- */
+
+.ticket-frame {
+    position: relative;
+    margin: .9rem 0 0;
+    padding: .7rem .7rem 0;
+    background: #fff;
+    border: .1rem solid rgba(0, 26, 54, .22);
+    border-radius: .2rem;
+    box-shadow: .7rem .8rem 0 rgba(0, 26, 54, .22);
+    transform: rotate(-.4deg);
+}
+
+/* The steel rail the ticket hangs from, and its gold clip. */
+.ticket-frame::before {
+    position: absolute;
+    top: -.95rem;
+    left: -1.2rem;
+    right: -1.2rem;
+    height: .55rem;
+    content: "";
+    background: linear-gradient(180deg, #bcd0e6, #4d80ba);
+    border-radius: .3rem;
+}
+
+.ticket-frame::after {
+    position: absolute;
+    top: -1.15rem;
+    left: calc(50% - 1.4rem);
+    width: 2.8rem;
+    height: 1.6rem;
+    content: "";
+    background: #ffd573;
+    border: .12rem solid #b8860b;
+    border-radius: .3rem .3rem .5rem .5rem;
+}
+
+.ticket-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+}
+
+.ticket-frame figcaption {
+    padding: .7rem .3rem .8rem;
+    border-top: .14rem dashed #a8b6c5;
+    margin-top: .7rem;
+    color: #001a36;
+    font-size: clamp(.92rem, 1.25vw, 1.25rem);
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+/* ---------- Slide 3: targets with Bloom chips ------------------------- */
+
+.targets {
+    display: grid;
+    gap: clamp(.8rem, 1.6vw, 1.3rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 70rem;
+}
+
+.targets li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    align-items: center;
+    gap: 1.2rem;
+    padding: clamp(.8rem, 1.4vw, 1.2rem) clamp(1rem, 1.6vw, 1.4rem);
+    background: rgba(255, 255, 255, .72);
+    border-left: .45rem solid var(--blue);
+    border-radius: .5rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .08);
+    font-size: clamp(1.05rem, 1.6vw, 1.55rem);
+}
+
+.bloom {
+    justify-self: start;
+    padding: .3rem .7rem;
+    color: #fff;
+    background: var(--blue);
+    border-radius: 2rem;
+    font-size: clamp(.72rem, .95vw, .92rem);
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.bloom.analyze {
+    color: #001a36;
+    background: #bcd0e6;
+}
+
+/* ---------- Slide 4: script ladder vs event loop ---------------------- */
+
+.compare {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: clamp(1.4rem, 4vw, 5rem);
+    align-items: start;
+    margin: 0;
+}
+
+.compare h3 {
+    margin-bottom: .9rem;
+}
+
+.ladder-steps {
+    display: grid;
+    gap: .2rem;
+    justify-items: start;
+}
+
+.ladder-steps .line {
+    padding: .5rem .9rem;
+    color: #eaf4ff;
+    background: #06192f;
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-size: clamp(.86rem, 1.2vw, 1.25rem);
+}
+
+.ladder-steps .down {
+    padding-left: 1.2rem;
+    color: #4d80ba;
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.ladder-steps .end {
+    padding: .5rem .9rem;
+    color: #536577;
+    background: #eef2f6;
+    border: .12rem dashed #a8b6c5;
+    border-radius: .45rem;
+    font-weight: 800;
+}
+
+.cycle {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .5rem 2.1rem;
+    align-items: stretch;
+}
+
+.cycle .node {
+    position: relative;
+    display: grid;
+    align-content: center;
+    gap: .3rem;
+    padding: .9rem 1rem;
+    color: #001a36;
+    background: #fff;
+    border: .14rem solid #1d5ea3;
+    border-radius: .6rem;
+    font-weight: 800;
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    text-align: center;
+}
+
+.cycle .node small {
+    color: #40556b;
+    font-size: .72em;
+    font-weight: 700;
+}
+
+.cycle .node.wait {
+    background: #ffd573;
+    border-color: #b8860b;
+    box-shadow: 0 0 0 .3rem rgba(255, 213, 115, .35);
+}
+
+.cycle .node + .node::before {
+    position: absolute;
+    left: -1.75rem;
+    top: 50%;
+    content: "→";
+    color: #1d5ea3;
+    font-size: 1.6rem;
+    font-weight: 800;
+    transform: translateY(-50%);
+}
+
+.cycle .return {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    margin-top: .3rem;
+    padding: .45rem;
+    color: #7a5a00;
+    border: .14rem solid #b8860b;
+    border-top: 0;
+    border-radius: 0 0 .8rem .8rem;
+    font-weight: 800;
+    font-size: clamp(.9rem, 1.15vw, 1.15rem);
+}
+
+/* ---------- Predict slides --------------------------------------------- */
+
+.predict {
+    display: grid;
+    grid-template-columns: auto minmax(18rem, 1fr);
+    gap: clamp(1.4rem, 4vw, 4.5rem);
+    align-items: start;
+}
+
+.predict.stacked {
+    grid-template-columns: 1fr;
+}
+
+.choices {
+    display: grid;
+    gap: .65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.choices li {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    align-items: center;
+    gap: .8rem;
+    padding: .6rem .9rem;
+    background: rgba(255, 255, 255, .55);
+    border: .12rem solid rgba(0, 26, 54, .2);
+    border-radius: .5rem;
+}
+
+.choices .letter {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: #fff;
+    background: #001a36;
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+/* The revealed answer is the line the class waited for. The shared
+   reveal control sets no size, so it rendered smaller than the choices. */
+.answer {
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+}
+
+.choices-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+}
+
+/* ---------- Slide 11: two term rows ------------------------------------ */
+
+.terms {
+    display: grid;
+    gap: clamp(.9rem, 1.6vw, 1.3rem);
+}
+
+.term {
+    display: grid;
+    gap: .45rem;
+    padding: clamp(.9rem, 1.4vw, 1.2rem) clamp(1rem, 1.6vw, 1.4rem);
+    background: rgba(255, 255, 255, .75);
+    border-left: .45rem solid #ffd573;
+    border-radius: .5rem;
+    box-shadow: 0 .6rem 1.4rem rgba(0, 26, 54, .08);
+}
+
+.term.now {
+    border-left-color: #a6321f;
+}
+
+.term p {
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+}
+
+.term .code-chip .live {
+    color: #001a36;
+    background: #ffd573;
+    border-radius: .22rem;
+    padding: 0 .18rem;
+}
+
+/* ---------- Slide 14: get() string flow -------------------------------- */
+
+.flow {
+    display: grid;
+    gap: clamp(1.4rem, 2.6vw, 2.4rem);
+    margin: 0;
+}
+
+.flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+}
+
+.val {
+    display: grid;
+    justify-items: center;
+    gap: .25rem;
+}
+
+.val b {
+    display: grid;
+    place-items: center;
+    min-width: 5.4rem;
+    padding: .65rem .9rem;
+    color: #001a36;
+    background: #fff;
+    border: .15rem solid #1d5ea3;
+    border-radius: .55rem;
+    font-family: var(--code);
+    font-size: clamp(1.05rem, 1.6vw, 1.6rem);
+}
+
+.val.traced b {
+    background: #ffd573;
+    border-color: #b8860b;
+}
+
+.val small {
+    color: #40556b;
+    font-family: var(--code);
+    font-size: clamp(.74rem, .95vw, .92rem);
+    font-weight: 700;
+}
+
+.val .entry-box {
+    min-width: 6rem;
+    justify-content: flex-start;
+    background: #fff;
+    border: .1rem solid #8a8a8a;
+    border-radius: 0;
+    box-shadow: inset 0 .1rem .2rem rgba(0, 0, 0, .14);
+    font-family: var(--body);
+}
+
+.op {
+    display: grid;
+    justify-items: center;
+    gap: .1rem;
+    color: #1d5ea3;
+    font-family: var(--code);
+    font-weight: 800;
+    font-size: clamp(.86rem, 1.15vw, 1.15rem);
+}
+
+.op::after {
+    content: "→";
+    font-family: var(--body);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.flow-row.bad {
+    opacity: .82;
+    padding: .8rem 1rem;
+    border: .14rem dashed #a8b6c5;
+    border-radius: .7rem;
+}
+
+.flow-row.bad .val b {
+    color: #536577;
+    background: #eef2f6;
+    border-style: dashed;
+    border-color: #8995a3;
+}
+
+.flow-row.bad .val.error b {
+    color: #fff;
+    background: #a6321f;
+    border: .15rem solid #a6321f;
+}
+
+.flow-row.bad .val.reply b {
+    color: #001a36;
+    background: #fff;
+    border-style: solid;
+    font-family: var(--body);
+    font-weight: 700;
+}
+
+.flow-row.bad .op {
+    color: #7c3626;
+}
+
+.row-tag {
+    width: 100%;
+    color: var(--blue);
+    font-size: clamp(.9rem, 1.2vw, 1.2rem);
+    font-weight: 800;
+}
+
+.row-tag code {
+    font-family: var(--code);
+}
+
+.flow-row.bad .row-tag {
+    color: #7c3626;
+}
+
+/* ---------- Slide 15: requirement rows --------------------------------- */
+
+.reqs {
+    display: grid;
+    gap: .8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: req;
+}
+
+.reqs li {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    align-items: center;
+    gap: .9rem;
+    padding: .7rem .9rem;
+    background: rgba(255, 255, 255, .75);
+    border-radius: .5rem;
+    box-shadow: 0 .5rem 1.2rem rgba(0, 26, 54, .08);
+    counter-increment: req;
+}
+
+.reqs li::before {
+    content: counter(req);
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: #fff;
+    background: var(--blue);
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+/* ---------- Slide 16: solution result ---------------------------------- */
+
+.result-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .9rem;
+    width: fit-content;
+    padding: .6rem 1rem;
+    color: #001a36;
+    background: #ffd573;
+    border: .15rem solid #b8860b;
+    border-radius: .5rem;
+    font-weight: 800;
+    font-size: clamp(1rem, 1.45vw, 1.5rem);
+}
+
+.result-chip .in {
+    color: #40556b;
+    font-size: .78em;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.result-chip output {
+    white-space: pre;
+}
+
+/* ---------- Slide 17: symptom, then fix -------------------------------- */
+
+.fixes {
+    display: grid;
+    gap: clamp(.8rem, 1.5vw, 1.2rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fixes li {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) auto minmax(0, 1.05fr);
+    align-items: center;
+    gap: 1rem;
+}
+
+.symptom {
+    padding: .7rem 1rem;
+    color: #fff;
+    background: #06192f;
+    border-left: .45rem solid #a6321f;
+    border-radius: .45rem;
+    font-family: var(--code);
+    font-size: clamp(.92rem, 1.3vw, 1.35rem);
+}
+
+.symptom.plain {
+    font-family: var(--body);
+    font-weight: 700;
+}
+
+.fixes .arrow {
+    color: #1d5ea3;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.fix {
+    font-size: clamp(1rem, 1.45vw, 1.45rem);
+}
+
+.fix strong {
+    color: #1d5ea3;
+}
+
+/* ---------- Slide 18: readings ----------------------------------------- */
+
+.readings {
+    display: grid;
+    gap: clamp(.7rem, 1.3vw, 1rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.readings li {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr) 10rem;
+    align-items: center;
+    gap: 1.2rem;
+    padding: .75rem 1rem;
+    background: rgba(255, 255, 255, .7);
+    border: .12rem solid rgba(0, 26, 54, .14);
+    border-radius: .5rem;
+}
+
+.readings .site {
+    font-weight: 800;
+    font-size: clamp(1rem, 1.35vw, 1.35rem);
+    overflow-wrap: anywhere;
+}
+
+.readings code {
+    justify-self: start;
+    font-family: var(--code);
+    font-size: clamp(.95rem, 1.4vw, 1.45rem);
+    color: #001a36;
+}
+
+.readings li.today {
+    background: #fff7dc;
+    border: .16rem solid #b8860b;
+}
+
+.readings li.today code {
+    padding: .1rem .3rem;
+    background: #ffd573;
+    border-radius: .25rem;
+}
+
+.today-tag {
+    justify-self: start;
+    white-space: nowrap;
+    padding: .25rem .6rem;
+    color: #001a36;
+    background: #ffd573;
+    border: .12rem solid #b8860b;
+    border-radius: 2rem;
+    font-size: clamp(.72rem, .95vw, .9rem);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.footnote {
+    max-width: 62rem;
+    color: #40556b;
+    font-size: clamp(.92rem, 1.25vw, 1.2rem);
+}
+
+.footnote code {
+    font-family: var(--code);
+    font-weight: 700;
+    color: #001a36;
+}
+
+/* ---------- Slide 19: exit steps ---------------------------------------- */
+
+.exit-steps .panel h3 {
+    color: var(--gold);
+}
+
+.exit-steps .panel p strong {
+    color: var(--gold);
+}
+
+@media (max-width: 760px) {
+
+    .slide.dark.title-slide {
+        background:
+            linear-gradient(180deg, rgba(0, 26, 54, .55), #001a36 70%),
+            url("assets/title-diner-counter.png") 70% top / auto 55% no-repeat,
+            #001a36;
+    }
+
+    .title-slide .content {
+        margin: auto;
+        padding-right: 0;
+    }
+
+    .code-mock,
+    .code-mock.wide-code,
+    .hook,
+    .compare,
+    .predict,
+    .visual-split,
+    .choices-row {
+        grid-template-columns: 1fr;
+    }
+
+    .cycle {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+    }
+
+    .cycle .node + .node::before {
+        left: 50%;
+        top: -1.55rem;
+        content: "↓";
+        transform: translateX(-50%);
+    }
+
+    .targets li {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .fixes li {
+        grid-template-columns: 1fr;
+        gap: .4rem;
+    }
+
+    .fixes .arrow {
+        transform: rotate(90deg);
+        justify-self: start;
+        padding-left: 1rem;
+    }
+
+    .readings li {
+        grid-template-columns: 1fr;
+        gap: .4rem;
+    }
+
+    .ticket-frame::before {
+        left: -.5rem;
+        right: -.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .caret {
+        animation: none;
+    }
+}

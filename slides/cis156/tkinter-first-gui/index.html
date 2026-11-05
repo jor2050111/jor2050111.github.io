@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CIS156 classroom presentation: Your first GUI with tkinter. Build a window with a label, a button, and an entry box.">
+  <meta name="theme-color" content="#001A36">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23001A36'/%3E%3Crect x='30' y='12' width='4' height='7' fill='%23FFD573'/%3E%3Cpath d='M14 44a18 18 0 0 1 36 0z' fill='%23FFD573'/%3E%3Crect x='9' y='46' width='46' height='6' rx='2' fill='%234D80BA'/%3E%3C/svg%3E">
+  <title>CIS156: Your first GUI with tkinter</title>
+  <link rel="stylesheet" href="../../shared/deck.css">
+  <link rel="stylesheet" href="chapter.css">
+</head>
+
+<body data-deck-title="CIS156: Your first GUI with tkinter" data-course="cis156"
+  data-chapter="tkinter-first-gui" data-palette="midnight-gold">
+  <main class="deck" id="presentation" aria-live="polite">
+
+    <section class="slide dark active title-slide" data-notes="Welcome everyone. Introduce yourself as today's substitute for Mr. Tagart. Ask everyone to type their name in chat for attendance. While names come in, ask students to open IDLE now, so it is ready when we start typing in ten minutes.&#10;&#10;Today is a code-along: you type, they type, and nobody watches passively.&#10;&#10;Illustration: Codex image generation.&#10;&#10;Time: 0-3 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">CIS156 · Python Programming: Level I</div>
+        <div class="rule"></div>
+        <h1>Your first GUI with tkinter</h1>
+        <p class="lede">Live online. Code along in IDLE.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Show the shell exchange. This is every program they have written so far: Python asks, the person types, Python prints, and the program ends.&#10;&#10;Ask the question on the slide and take answers in chat. Expect: windows, buttons, menus, text boxes, things you click. Read a few answers aloud. Name the shared idea: that software waits for you to do something. Today they build a program that does the same.&#10;&#10;Time: 3-5 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Where we start</div>
+        <h2>So far, your programs talk through the shell.</h2>
+        <div class="hook">
+          <div class="shell" role="img" aria-label="An IDLE shell. Python prints What is your name, the user types Ada, and Python prints Hello, Ada!">
+            <div class="shell-bar"><span class="tk-title">IDLE Shell</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+            <pre class="shell-body"><span class="out">What is your name? </span><span class="typed">Ada</span>
+<span class="out">Hello, Ada!</span>
+<span class="prompt-mark">&gt;&gt;&gt;</span> </pre>
+          </div>
+          <div class="prompt">
+            <p><strong>In chat:</strong> What does the software you use all day do instead?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Read the three targets. Two are Apply: they build it today with their own hands. The third is Analyze: by the end they can say how a GUI program differs from the scripts they already write. That third target is also the exit ticket, so tell them now.&#10;&#10;Time: 5-6 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Today’s target</div>
+        <h2>By the end of the hour, you can:</h2>
+        <ul class="targets">
+          <li><span class="bloom">Apply</span><span>Build a window that holds a label, a button, and an entry box.</span></li>
+          <li><span class="bloom">Apply</span><span>Connect a button to a function with <code>command=</code>.</span></li>
+          <li><span class="bloom analyze">Analyze</span><span>Compare an event-driven program with a top-to-bottom script.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The one idea of the day. Left side: a script runs each line once, top to bottom, and then it is done. Right side: a GUI program sets up its window, then waits. A click is an event. The event runs your function, and then the program goes back to waiting. Point at the gold box: most of the time, a GUI program is waiting.&#10;&#10;Ask: in the left ladder, when does the user get a turn? Only when input() stops the line. In the right loop, the user can act at any time.&#10;&#10;Time: 6-8 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">The big idea</div>
+        <h2>A script runs top to bottom. A GUI waits.</h2>
+        <figure class="compare" role="img" aria-label="Left: a script runs name equals input, then print, then the program ends. Right: a GUI program waits, a click arrives as an event, it runs your function, and then it goes back to waiting.">
+          <div>
+            <h3>A script</h3>
+            <div class="ladder-steps">
+              <span class="line">name = input("What is your name? ")</span>
+              <span class="down" aria-hidden="true">↓</span>
+              <span class="line">print("Hello, " + name + "!")</span>
+              <span class="down" aria-hidden="true">↓</span>
+              <span class="end">Done. The program ends.</span>
+            </div>
+          </div>
+          <div>
+            <h3>A GUI program</h3>
+            <div class="cycle">
+              <div class="node wait">Wait<small>for the user</small></div>
+              <div class="node">Event<small>a click</small></div>
+              <div class="node">Run<small>your function</small></div>
+              <div class="return"><span aria-hidden="true">↩</span>Back to wait</div>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The image for today: a diner counter. The server is mainloop(). The server stands at the counter and waits. Nothing happens until someone rings the bell, and a bell ring is an event, like a click.&#10;&#10;root.mainloop() is the line that hands control to tkinter. Every program today ends with it. Code after it does not run until the window closes.&#10;&#10;Illustration: Codex image generation.&#10;&#10;Time: 8-10 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">The event loop</div>
+        <h2>mainloop() is the server at the counter.</h2>
+        <div class="visual-split">
+          <figure class="ticket-frame"><img src="assets/waiting-at-the-bell.png" alt="A server in an apron stands behind a diner counter, hands resting on it, beside a gold service bell. The stools are empty."><figcaption>Nothing runs until someone rings.</figcaption></figure>
+          <div class="stack">
+            <span class="code-chip">root.mainloop()</span>
+            <p class="lede">This line hands your program to tkinter. From here it waits for clicks and key presses until someone closes the window.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Live-code this in IDLE: File, New File. Type the five lines with the class following along. Save as my_gui.py, then press F5.&#10;&#10;Warn them now: never name the file tkinter.py. Python would import your file instead of the real tkinter.&#10;&#10;Walk the lines: Tk() builds the main window, and every program needs exactly one. title() sets the text in the title bar. geometry() sets width by height in pixels. mainloop() starts the wait. Nothing prints in the shell.&#10;&#10;Wait for a thumbs-up in chat from the class before moving on. If a window does not appear, check behind IDLE (slide 17 has the fixes).&#10;&#10;Time: 10-17 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Step 1 · Code along</div>
+        <h2>Five lines open a window.</h2>
+        <div class="code-mock">
+          <pre class="code"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+root = tk.Tk()
+root.title(<span class="string">"My First GUI"</span>)
+root.geometry(<span class="string">"320x160"</span>)
+
+root.mainloop()</pre>
+          <div class="mock-stack">
+            <figure class="tk-window" role="img" aria-label="An empty window titled My First GUI, 320 by 160 pixels.">
+              <div class="tk-bar"><span class="tk-title">My First GUI</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+              <div class="tk-body"></div>
+            </figure>
+            <div class="dimension" aria-hidden="true" style="width:min(100%, 24rem);">320 × 160</div>
+          </div>
+        </div>
+        <div class="cue"><span class="label">Your turn</span>Type it <span class="sep">·</span> Save <span class="sep">·</span> Press <span class="keycap">F5</span></div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="Students commit in chat first: type A, B, or C. Give it twenty seconds, then reveal.&#10;&#10;Answer: B, an empty window. tk.Label() builds the label in memory, but nothing places it, so the window stays empty. No error either, which is what makes this bug sneaky.&#10;&#10;Time: 17-19 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict first</div>
+        <h2>Predict: what shows up in the window?</h2>
+        <div class="predict">
+          <pre class="code"><span class="comment"># ... import, root, title, size ...</span>
+label = tk.Label(root, text=<span class="string">"Click the button."</span>)
+root.mainloop()</pre>
+          <div>
+            <ol class="choices">
+              <li><span class="letter">A</span>The label text</li>
+              <li><span class="letter">B</span>An empty window</li>
+              <li><span class="letter">C</span>An error</li>
+            </ol>
+            <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+            <div class="answer"><strong>B, an empty window.</strong> Python built the label, and nothing placed it.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The dish is cooked and sitting in the kitchen window. Nobody has set it on the counter, so the customer sees nothing. That is a widget you created and never placed.&#10;&#10;pack() is the placing call. pady=10 adds 10 pixels of space above and below. Today we use pack() for everything.&#10;&#10;Illustration: Codex image generation.&#10;&#10;Time: 19-20 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Create, then place</div>
+        <h2>Created is not placed.</h2>
+        <div class="visual-split">
+          <figure class="ticket-frame"><img src="assets/plated-not-served.png" alt="A finished sandwich waits on the kitchen pass-through shelf under a heat lamp, while the place setting on the counter has an empty spot."><figcaption>A widget exists when you create it. It shows when you place it.</figcaption></figure>
+          <div class="stack">
+            <span class="code-chip">label.<span class="accent">pack</span>(pady=10)</span>
+            <p class="lede">Add this line after the label, and the text appears in the window.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Live-code step 2. Above the root lines, define say_hello() with one print line. Then add the Button line and button.pack(). Run it with F5 and click the button a few times.&#10;&#10;Follow the gold: say_hello in the def line is the same say_hello handed to command=. The button holds on to the function and calls it on every click.&#10;&#10;Ask: where does the message show up? In the IDLE shell, not in the window. print() still talks to the shell. We fix that in step 3.&#10;&#10;Time: 20-24 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Step 2 · Code along</div>
+        <h2>A button needs a function to call.</h2>
+        <pre class="code"><span class="keyword">def</span> <span class="live">say_hello</span>():
+    print(<span class="string">"Hello from the button!"</span>)
+<span class="comment"># ... root, title, geometry, and the label ...</span>
+button = tk.Button(root, text=<span class="string">"Say hello"</span>, command=<span class="live">say_hello</span>)
+button.pack()</pre>
+        <div class="mock-row">
+          <figure class="tk-window" role="img" aria-label="The My First GUI window shows the label Click the button, and below it a Say hello button.">
+            <div class="tk-bar"><span class="tk-title">My First GUI</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+            <div class="tk-body"><span class="tk-label">Click the button.</span><span class="tk-button">Say hello</span></div>
+          </figure>
+          <div class="shell" role="img" aria-label="The IDLE shell after one click prints Hello from the button!">
+            <div class="shell-bar"><span class="tk-title">IDLE Shell</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+            <pre class="shell-body"><span class="out">Hello from the button!</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide gold" data-notes="One small change: parentheses after say_hello. Students commit A, B, or C in chat, then reveal.&#10;&#10;Answer: B. The parentheses call say_hello right now, while Python builds the button, so the message prints once at startup. tkinter receives what the call returns, which is None, so later clicks do nothing.&#10;&#10;If time allows, try it live so they see the single print.&#10;&#10;Time: 24-25 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow navy-text">Predict first</div>
+        <h2>Predict: what do two parentheses change?</h2>
+        <div class="predict stacked">
+          <pre class="code">button = tk.Button(root, text=<span class="string">"Say hello"</span>, command=say_hello<span class="mark-bad">()</span>)</pre>
+          <ol class="choices choices-row">
+            <li><span class="letter">A</span>It prints on every click</li>
+            <li><span class="letter">B</span>It prints once at startup, and the button does nothing</li>
+            <li><span class="letter">C</span>Python raises an error</li>
+          </ol>
+        </div>
+        <button class="reveal" type="button" aria-expanded="false">Reveal answer</button>
+        <div class="answer"><strong>B.</strong> The parentheses call the function right now.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The instruction card waits beside the bell. The kitchen does nothing with it until the bell rings. Handing tkinter say_hello, with no parentheses, is setting the card beside the bell.&#10;&#10;say_hello is the function itself. say_hello() runs it now. With command=, you want the first.&#10;&#10;Illustration: Codex image generation.&#10;&#10;Time: 25-26 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">command=</div>
+        <h2>Hand over the function. Don’t call it.</h2>
+        <div class="visual-split">
+          <figure class="ticket-frame"><img src="assets/ticket-by-the-bell.png" alt="An instruction card stands in a holder beside a gold service bell, and a finger reaches in to tap the bell. The kitchen behind is quiet."><figcaption>The instructions wait beside the bell until it rings.</figcaption></figure>
+          <div class="terms">
+            <div class="term">
+              <span class="code-chip"><span class="live">say_hello</span></span>
+              <p>The function itself, for tkinter to call later.</p>
+            </div>
+            <div class="term now">
+              <span class="code-chip">say_hello()</span>
+              <p>Calls it now, once.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Live-code step 3 as a new file, greeter.py. The window is titled Greeter and is 320 by 180. Add the prompt label, then the Entry and its pack(), then the Greet me button, then a result label that starts empty.&#10;&#10;An Entry is a one-line box the user types into. The result label starts with empty text: it holds a spot that greet() fills in on the next slide.&#10;&#10;Do not run it yet. The button line names greet, which we write on the next slide, so running now stops with a NameError.&#10;&#10;Time: 26-30 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Step 3 · Code along</div>
+        <h2>An entry box lets the user type.</h2>
+        <div class="code-mock">
+          <pre class="code"><span class="comment"># ... same start, plus a prompt label ...</span>
+name_entry = tk.Entry(root)
+name_entry.pack()
+<span class="comment"># ... a Greet me button, command=greet ...</span>
+result_label = tk.Label(root, text=<span class="string">""</span>)
+result_label.pack()
+<span class="comment"># ... root.mainloop() stays last ...</span></pre>
+          <figure class="tk-window" role="img" aria-label="A window titled Greeter shows the prompt What is your name, an entry box holding Ada with a blinking cursor, a Greet me button, and an empty result line.">
+            <div class="tk-bar"><span class="tk-title">Greeter</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+            <div class="tk-body h180"><span class="tk-label">What is your name?</span><span class="tk-entry">Ada<span class="caret"></span></span><span class="tk-button">Greet me</span><span class="tk-result">empty</span></div>
+          </figure>
+        </div>
+        <div class="cue"><span class="label">Your turn</span>New file <span class="sep">·</span> Type it <span class="sep">·</span> Don’t run yet</div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Ask first: print() sends text to the shell. Where should a GUI send it? Take answers in chat. The answer: into a widget in the window.&#10;&#10;Walk greet(). get() reads what is in the box. If the box is empty, the label asks for a name. Otherwise config() changes the result label's text after it was built. That is how a GUI prints.&#10;&#10;Type greet() above the widget lines, right under the import. The button line names greet, so the function has to exist before Python reaches that line.&#10;&#10;Run it, type Ada, click Greet me. Then click with the box empty.&#10;&#10;Time: 30-33 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Step 3 · Answer in the window</div>
+        <h2>config() is how a GUI prints.</h2>
+        <div class="code-mock wide-code">
+          <pre class="code"><span class="keyword">def</span> greet():
+    name = name_entry.get()
+    <span class="keyword">if</span> name == <span class="string">""</span>:
+        result_label.config(text=<span class="string">"Type a name first."</span>)
+    <span class="keyword">else</span>:
+        result_label.<span class="live">config</span>(text=<span class="string">"Hello, "</span> + name + <span class="string">"!"</span>)</pre>
+          <figure class="tk-window" role="img" aria-label="The Greeter window after a click. The entry holds Ada, and the result line now reads Hello, Ada!">
+            <div class="tk-bar"><span class="tk-title">Greeter</span><span class="tk-controls" aria-hidden="true"><span></span><span></span><span></span></span></div>
+            <div class="tk-body h180"><span class="tk-label">What is your name?</span><span class="tk-entry">Ada</span><span class="tk-button">Greet me</span><span class="tk-result shown">Hello, Ada!</span></div>
+          </figure>
+        </div>
+        <div class="cue"><span class="label">Your turn</span>Put greet() above the button line <span class="sep">·</span> Press <span class="keycap">F5</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Before the challenge, one trap. Whatever the user types, get() hands back a string. Trace the gold path: the box shows 50, get() returns the string &quot;50&quot;, float() turns it into the number 50.0, and times 0.20 gives 10.0.&#10;&#10;The dashed path is the failure: a user types abc. float() cannot convert it and raises ValueError. A try and except catches that, and the label answers Enter a number, like 42.50 instead of the program showing an error in the shell.&#10;&#10;Time: 33-35 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Before the challenge</div>
+        <h2>get() always hands you a string.</h2>
+        <figure class="flow" role="img" aria-label="Main path: the entry box shows 50. get returns the string 50. float makes the number 50.0. Times 0.20 gives 10.0. Failure path: the string abc goes into float, which raises ValueError, and except answers Enter a number, like 42.50.">
+          <div class="flow-row">
+            <span class="row-tag">Typed <code>50</code></span>
+            <span class="val"><b class="entry-box">50</b><small>entry box</small></span>
+            <span class="op">get()</span>
+            <span class="val traced"><b>"50"</b><small>str</small></span>
+            <span class="op">float()</span>
+            <span class="val traced"><b>50.0</b><small>float</small></span>
+            <span class="op">* 0.20</span>
+            <span class="val traced"><b>10.0</b><small>the tip</small></span>
+          </div>
+          <div class="flow-row bad">
+            <span class="row-tag">Typed <code>abc</code></span>
+            <span class="val"><b>"abc"</b><small>str</small></span>
+            <span class="op">float()</span>
+            <span class="val error"><b>ValueError</b><small>raised</small></span>
+            <span class="op">except</span>
+            <span class="val reply"><b>Enter a number, like 42.50</b><small>label text</small></span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Challenge time, about twelve minutes. Start from your greeter: rename the labels, swap greet() for a function that reads a bill amount, and show a 20% tip and the total in the window.&#10;&#10;Students paste code in chat or share a screen when stuck. Circulate through chat. Common snags: forgetting float(), and forgetting that get() returns a string.&#10;&#10;Stretch goal for fast finishers: add a second entry box for the tip percent.&#10;&#10;Illustration: Codex image generation.&#10;&#10;Time: 35-47 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Challenge</div>
+        <h2>Your turn: build a tip calculator.</h2>
+        <div class="visual-split">
+          <figure class="ticket-frame"><img src="assets/receipt-on-the-tray.png" alt="A paper receipt with one gold highlighted line lies in a check tray on a diner counter, beside a few coins and a coffee cup."><figcaption>The bill is in. Your window works out the tip.</figcaption></figure>
+          <div class="stack">
+            <ol class="reqs">
+              <li>Type a bill amount.</li>
+              <li>Click the button.</li>
+              <li>See a 20% tip and the total in the window.</li>
+            </ol>
+            <div class="cue"><span class="label">Hint</span>Start from your greeter.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Show one solution. TIP_RATE is a named constant, so the rate changes in one place. The conversion sits inside try, because float() raises ValueError on abc or an empty box. The except branch answers in the label and returns early.&#10;&#10;Then the math and one config() call. The :.2f format keeps two decimal places. Typing 50 shows Tip: $10.00 and Total: $60.00.&#10;&#10;Invite students who built it differently to share: any version that converts, catches, and answers in the window is right.&#10;&#10;Time: 47-50 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Step 4 · One solution</div>
+        <h2>One solution: convert inside try, answer in the label.</h2>
+        <pre class="code">TIP_RATE = 0.20
+
+<span class="keyword">def</span> calculate():
+    <span class="keyword">try</span>:
+        bill = float(bill_entry.get())
+    <span class="keyword">except</span> ValueError:
+        result_label.config(text=<span class="string">"Enter a number, like 42.50"</span>)
+        <span class="keyword">return</span>
+
+    tip = bill * TIP_RATE
+    total = bill + tip
+    result_label.config(text=<span class="string">f"Tip: ${tip:.2f}   Total: ${total:.2f}"</span>)</pre>
+        <div class="result-chip"><span class="in">Typed 50</span><output>Tip: $10.00   Total: $60.00</output></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Three problems cover most stuck students.&#10;&#10;One: an AttributeError mentioning no attribute 'Tk' means the file is named tkinter.py, so Python imported it instead of the real module. Rename the file and run it again.&#10;&#10;Two: No module named '_tkinter' means this Python install has no Tk. Use the python.org installer, or a campus PC.&#10;&#10;Three: no window appears. It usually opened behind IDLE. Check the taskbar on Windows or the Dock on a Mac.&#10;&#10;Time: 50-52 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Troubleshooting</div>
+        <h2>When it breaks, check these three first.</h2>
+        <ul class="fixes">
+          <li><span class="symptom">no attribute 'Tk'</span><span class="arrow" aria-hidden="true">→</span><span class="fix">Your file is named <strong>tkinter.py</strong>. Rename it.</span></li>
+          <li><span class="symptom">No module named '_tkinter'</span><span class="arrow" aria-hidden="true">→</span><span class="fix">This Python has no Tk. Use the <strong>python.org</strong> installer or a campus PC.</span></li>
+          <li><span class="symptom plain">No window appears</span><span class="arrow" aria-hidden="true">→</span><span class="fix">It opened behind IDLE. Check the <strong>taskbar</strong> or the <strong>Dock</strong>.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="The three readings on the course page each import tkinter a different way. All three work, and they reach the same toolkit. Today's style, import tkinter as tk, is the one in gold: every name gets a tk. prefix, so you always know where it came from.&#10;&#10;The link to the zetcode reading on the course page is dead. Paste the working link in chat now: zetcode.com/tkinter/introduction.&#10;&#10;Warn about old tutorials: Tkinter with a capital T is Python 2, and that import fails in Python 3.&#10;&#10;Time: 52-55 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Readings</div>
+        <h2>Three readings, three import styles, one toolkit.</h2>
+        <ul class="readings">
+          <li><span class="site">python-textbok.readthedocs.io</span><code>from tkinter import Tk, Label, Button</code><span></span></li>
+          <li><span class="site">zetcode.com/tkinter/introduction</span><code>from tkinter import Tk, BOTH</code><span></span></li>
+          <li class="today"><span class="site">python-course.eu/tkinter</span><code>import tkinter as tk</code><span class="today-tag">Today’s style</span></li>
+        </ul>
+        <p class="footnote">Old tutorials write <code>Tkinter</code> with a capital T. That is Python 2, and it fails in Python 3.</p>
+      </div>
+    </section>
+
+    <section class="slide dark" data-notes="Close the loop on the opening question. The software they use all day waits for them, and now their programs can too.&#10;&#10;One: the exit ticket in chat. One sentence on how a GUI program differs from a script. Read a few aloud.&#10;&#10;Two: the three readings and the video on the course page.&#10;&#10;Three: send Mr. Tagart your TRUTHFUL email. It is worth 5 points.&#10;&#10;Collect any questions in chat to carry back to Mr. Tagart. Thank the class.&#10;&#10;Time: 55-60 minutes.">
+      <div class="brand">CIS156 · tkinter</div>
+      <div class="content">
+        <div class="eyebrow">Before you go</div>
+        <h2>Three things before you log off.</h2>
+        <div class="three-up exit-steps">
+          <article class="panel">
+            <div class="number">1</div>
+            <h3>Exit ticket</h3>
+            <p>In chat, one sentence: how does a GUI program differ from a script?</p>
+          </article>
+          <article class="panel">
+            <div class="number">2</div>
+            <h3>Read and watch</h3>
+            <p>Work through the three readings and the video.</p>
+          </article>
+          <article class="panel">
+            <div class="number">3</div>
+            <h3>Email</h3>
+            <p>Send Mr. Tagart your <strong>TRUTHFUL</strong> email. It’s worth 5 points.</p>
+          </article>
+        </div>
+        <p class="lede">The software you use all day waits for you. Now your programs can too.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notes" id="notes" aria-live="polite" aria-label="Presenter notes">
+    <h2>Presenter notes</h2>
+    <p id="notes-content"></p>
+  </div>
+  <nav class="nav" aria-label="Presentation controls">
+    <button type="button" id="previous" aria-label="Previous slide">←</button>
+    <button type="button" id="toggle-notes" aria-label="Show presenter notes"
+      aria-controls="notes" aria-pressed="false">N</button>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script src="../../shared/deck.js"></script>
+</body>
+
+</html>
