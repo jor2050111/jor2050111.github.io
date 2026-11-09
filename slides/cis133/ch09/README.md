@@ -12,7 +12,7 @@ plus the seven human checks.
 - Course level: CIS133, closing Part III, Design for Every User
 - Prior knowledge: semantic HTML and alt text, CSS, px and rem, focus states, UX principles, responsive habits
 - Delivery: 55-minute instructor-led class with review value after class
-- Opening problem: A clubmate's flyer validated almost clean and still locked Devon out
+- Opening problem: A teammate's Drive Day flyer validated almost clean and still locked Devon out
 - Evidence and practice: POUR sorting, the heading outline, the keyboard walk, contrast math with real ratios, rem conversion, alt jobs, and audit triage
 - Final application: Skills Lab 9A, repairing the flyer's 8 barriers and closing the Part III milestone
 

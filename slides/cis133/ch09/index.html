@@ -15,13 +15,13 @@
 <body data-deck-title="CIS133: Web Accessibility" data-course="cis133"
   data-chapter="ch09" data-palette="twilight-data">
   <main class="deck" id="presentation" aria-live="polite">
-    <section class="slide dark active title-slide" data-notes="Open with the flyer story. A clubmate built a Drive Day flyer between classes: bright teal and sand, every date in place. Then Devon, whose email opened Chapter 3, tried to read it with a screen reader and gave up halfway down.&#10;&#10;Chapter 8 ended on the question this chapter answers: the site serves every screen size. Does it serve every visitor? The surprise: students have been building the answer since Chapter 1. This chapter names the standard behind their habits.&#10;&#10;Time: 0-3 minutes.">
+    <section class="slide dark active title-slide" data-notes="Open with the flyer story. A teammate on Copperwind's outreach team rushed out a Drive Day flyer between support tickets: bright teal and sand, every date in place. Then Devon, whose email opened Chapter 3, tried to read it with a screen reader and gave up halfway down.&#10;&#10;Chapter 8 ended on the question this chapter answers: the site serves every screen size. Does it serve every visitor? The surprise: students have been building the answer since Chapter 1. This chapter names the standard behind their habits.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS133</div>
       <div class="content">
         <div class="eyebrow">Chapter 9 · 55 minutes</div>
         <div class="rule"></div>
         <h1>Web Accessibility</h1>
-        <p class="lede">The flyer was loud, cheerful, and closed to one of the club's own members.</p>
+        <p class="lede">The flyer was loud, cheerful, and closed to one of the neighbors it was made for.</p>
         <div class="audit-tag" aria-hidden="true">WCAG · Level AA</div>
       </div>
     </section>
@@ -157,7 +157,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Chapter 3 built the landmark skeleton and admitted the payoff was invisible. Name it precisely now. Header is announced as the banner. Nav is announced with its link count before reading one. A single keystroke jumps to main, skipping the repeated banner and menu, which was the whole ask in Devon's Chapter 3 email. Footer is announced as content info.&#10;&#10;The club's pages have carried all four since Lab 3A, which is why the lab's checks here are confirmation walks, not repairs.&#10;&#10;Time: 21-23 minutes.">
+    <section class="slide dark" data-notes="Chapter 3 built the landmark skeleton and admitted the payoff was invisible. Name it precisely now. Header is announced as the banner. Nav is announced with its link count before reading one. A single keystroke jumps to main, skipping the repeated banner and menu, which was the whole ask in Devon's Chapter 3 email. Footer is announced as content info.&#10;&#10;Copperwind's pages have carried their landmarks since Lab 3A, which is why the lab's checks here are confirmation walks, not repairs. The contact page skips the footer on purpose, a Lab 3A decision, so a landmark check that notes only that reads clean.&#10;&#10;Time: 21-23 minutes.">
       <div class="brand">CIS133 · Landmarks</div>
       <div class="content">
         <div class="eyebrow">The doors, named</div>
@@ -222,7 +222,7 @@ Read our exam-week study tips</code></pre>
       </div>
     </section>
 
-    <section class="slide dark visual-slide" data-notes="The math the palette file has promised since Chapter 4. A contrast ratio compares how much light two colors give off. The scale runs 1.00, text on its own exact color, to 21.00, pure black on pure white. Level AA: 4.5 to 1 for body text, 3 to 1 for large text at 24px and up, or bold 18.7px and up.&#10;&#10;Put numbers on the club's own history: the Chapter 6 footer fix measures 4.85, past the bar. The wart it repaired, default link blue on deep teal, measures 1.26. Invisible ink, and every visitor squinting through glare met it head-on.&#10;&#10;Time: 30-33 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide dark visual-slide" data-notes="The math the palette file has promised since Chapter 4. A contrast ratio compares how much light two colors give off. The scale runs 1.00, text on its own exact color, to 21.00, pure black on pure white. Level AA: 4.5 to 1 for body text, 3 to 1 for large text at 24px and up, or bold 18.7px and up.&#10;&#10;Put numbers on the Copperwind site's own history: the Chapter 6 footer fix measures 4.85, past the bar. The wart it repaired, default link blue on deep teal, measures 1.26. Invisible ink, and every visitor squinting through glare met it head-on.&#10;&#10;Time: 30-33 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
       <div class="brand">CIS133 · Contrast ratio</div>
       <div class="content visual-grid reverse">
         <figure>
@@ -330,6 +330,7 @@ Read our exam-week study tips</code></pre>
           <h2>Tools catch absence. Humans judge honesty.</h2>
           <ul class="scope-list">
             <li><strong>HTML validator:</strong> missing alt, skipped levels</li>
+            <li><strong>CSS validator:</strong> stylesheet syntax, nothing about readability</li>
             <li><strong>Contrast checker:</strong> one pairing, graded</li>
             <li><strong>WAVE:</strong> a whole rendered page, flagged</li>
             <li><strong>Seven human checks:</strong> truth, order, zoom</li>
@@ -351,10 +352,10 @@ Read our exam-week study tips</code></pre>
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Frame Skills Lab 9A. The flyer from the opening ships in the pack, broken on purpose: 8 planted barriers, and the HTML validator catches exactly 2 of them, because its sins are decisions, not syntax. Students audit before repairing, fix structure, then perceivability, then prove the whole club site with WAVE, the seven-check list, and both validators.&#10;&#10;The lab closes the Part III milestone: plan, adapt, include.&#10;&#10;Time: 50-53 minutes.">
+    <section class="slide dark" data-notes="Frame Skills Lab 9A. The flyer from the opening ships in the pack, broken on purpose: 8 planted barriers, and the HTML validator catches exactly 2 of them, because its sins are decisions, not syntax. Students audit before repairing, fix structure, then perceivability, then prove the whole Copperwind site with WAVE, the seven-check list, and both validators.&#10;&#10;The lab closes the Part III milestone: plan, adapt, include.&#10;&#10;Time: 50-53 minutes.">
       <div class="brand">CIS133 · Skills Lab 9A</div>
       <div class="content">
-        <div class="eyebrow">The club site passes the audit</div>
+        <div class="eyebrow">The Copperwind site passes the audit</div>
         <h2>Eight barriers. The validator catches two.</h2>
         <div class="lab-pipeline">
           <article><span>1</span><strong>Audit</strong><p>Log all findings before the first fix.</p></article>
@@ -366,7 +367,7 @@ Read our exam-week study tips</code></pre>
       </div>
     </section>
 
-    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: POUR with one owned technique each, the two AA thresholds with their text sizes, the two type promises, and the division of labor between tools and humans. Tie answers to the flyer and the club site.&#10;&#10;Time: 53-54 minutes.">
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: POUR with one owned technique each, the two AA thresholds with their text sizes, the two type promises, and the division of labor between tools and humans. Tie answers to the flyer and the Copperwind site.&#10;&#10;Time: 53-54 minutes.">
       <div class="brand">CIS133 · Retrieval map</div>
       <div class="content">
         <div class="eyebrow">Four checkpoints</div>
