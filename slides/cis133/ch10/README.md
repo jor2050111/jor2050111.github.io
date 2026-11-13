@@ -11,7 +11,7 @@ as a styled schedule that survives a phone.
 
 - Course level: CIS133, opening Part IV, The Promised Pages
 - Prior knowledge: semantic structure, CSS selectors and the box model, pseudo-classes, responsive habits, and the Level AA standard
-- Delivery: 50-minute instructor-led class with review value after class
+- Delivery: two 50-minute instructor-led sessions (slides 1-14, then slides 15-21 plus lab work time) with review value after class
 - Opening problem: A volunteer pasted the fall schedule in as six paragraphs, and nobody could find the workshop
 - Evidence and practice: The two-axes test, the layout-table prohibition, the position promise, the silent tbody repair, table anatomy with scope, the stripe count trap, and the phone floor
 - Final application: Skills Lab 10A, the events page live in every page's navigation
