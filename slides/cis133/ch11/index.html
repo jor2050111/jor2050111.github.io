@@ -15,18 +15,18 @@
 <body data-deck-title="CIS133: HTML Forms" data-course="cis133"
   data-chapter="ch11" data-palette="canyon-sand">
   <main class="deck" id="presentation" aria-live="polite">
-    <section class="slide dark active title-slide" data-notes="Open with the drive table. Interested students crowd it, an officer collects names on whatever paper is handy, and by the next meeting half the scraps are gone. The officers named this problem in their Chapter 7 brief: collect the name and email of every student who wants to hear from us.&#10;&#10;The events page shipped in Chapter 10. The join page is the site plan's second promised addition, and it needs something no page in this course has carried: an element that listens back.&#10;&#10;Time: 0-3 minutes.">
+    <section class="slide dark active title-slide" data-notes="Open with the last ten minutes of any drive Copperwind runs. Interested neighbors crowd the sorting station, a team member collects names on whatever paper is handy, and by the next event half the scraps are gone. Priya Sharma named this problem in her Chapter 7 brief: collect the name and email of everyone who wants to hear from us.&#10;&#10;The events page shipped in Chapter 10. The join page is the site plan's second promised addition, and it needs something no page in this course has carried: an element that listens back.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS133</div>
       <div class="content">
         <div class="eyebrow">Chapter 11 · 55 minutes</div>
         <div class="rule"></div>
         <h1>HTML Forms</h1>
-        <p class="lede">Half the sign-up scraps were gone by the next meeting. The join page ends that.</p>
+        <p class="lede">Half the sign-up scraps were gone by the next event. The join page ends that.</p>
         <div class="counter-tag" aria-hidden="true">The element that listens back</div>
       </div>
     </section>
 
-    <section class="slide" data-notes="Three build targets. Students will construct labeled controls for every shape of answer, trace where submitted data travels, and design the club's join page. The middle target is the chapter's surprise: Chapter 1's query string comes home, written by a form they can edit.&#10;&#10;Time: 3-5 minutes.">
+    <section class="slide" data-notes="Three build targets. Students will construct labeled controls for every shape of answer, trace where submitted data travels, and design Copperwind's join page. The middle target is the chapter's surprise: Chapter 1's query string comes home, written by a form they can edit.&#10;&#10;Time: 3-5 minutes.">
       <div class="brand">CIS133 · Build targets</div>
       <div class="content">
         <div class="eyebrow">By the end of this module, you will be able to...</div>
@@ -51,20 +51,20 @@
       </div>
     </section>
 
-    <section class="slide dark visual-slide" data-notes="Put the problem in pictures. The paper system loses half its answers, and the officers' third request asks the site to do the collecting: name and email, so an officer can invite students to the next meeting.&#10;&#10;Note what they wrote beside the request: an explicit and-nothing-else list, plus a one-sentence promise the page must display. That discipline returns at the end of the hour.&#10;&#10;Time: 5-7 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide dark visual-slide" data-notes="Put the problem in pictures. The paper system loses half its answers, and the brief's third request asks the site to do the collecting: name and email, so a team member can invite neighbors to the next event.&#10;&#10;Note what Priya wrote beside the request: an explicit and-nothing-else list, plus a one-sentence promise the page must display. That discipline returns at the end of the hour.&#10;&#10;Time: 5-7 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
       <div class="brand">CIS133 · The third request</div>
       <div class="content visual-grid">
         <div>
-          <div class="eyebrow">From the officers' brief</div>
+          <div class="eyebrow">From Priya's brief</div>
           <h2>Paper loses half its answers. The page will not.</h2>
           <ul class="scope-list">
             <li><strong>Collect:</strong> name and email, nothing else</li>
-            <li><strong>Purpose:</strong> invite students to the next meeting</li>
+            <li><strong>Purpose:</strong> invite neighbors to the next event</li>
             <li><strong>Promise:</strong> one sentence about the data, on the page</li>
           </ul>
         </div>
         <figure>
-          <img src="assets/paper-scraps.png" alt="Torn sign-up scraps scatter away from a club table while a tidy form card holds its rows safely.">
+          <img src="assets/paper-scraps.png" alt="Torn sign-up scraps scatter away from a sign-up table while a tidy form card holds its rows safely.">
           <figcaption>The join page is the site plan's second promised addition.</figcaption>
         </figure>
       </div>
@@ -147,7 +147,7 @@
           <p><code>type="email"</code><span>same box, plus a promise the browser records</span><span class="mock mock-text mock-email" aria-hidden="true"><i></i><b>@</b></span></p>
           <p><code>type="radio"</code><span>one choice among a few · picking releases the rest</span><span class="mock mock-radio" aria-hidden="true"><i class="on"></i><i></i><i></i></span></p>
           <p><code>type="checkbox"</code><span>any number of independent yes-or-no answers</span><span class="mock mock-check" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span></p>
-          <p><code>&lt;select&gt;</code><span>one choice among many, folded into a menu</span><span class="mock mock-select" aria-hidden="true"><b>Wednesday</b><i>▾</i></span></p>
+          <p><code>&lt;select&gt;</code><span>one choice among many, folded into a menu</span><span class="mock mock-select" aria-hidden="true"><b>Algebra</b><i>▾</i></span></p>
           <p><code>&lt;textarea&gt;</code><span>a paragraph or more · <code>&lt;button&gt;</code> starts the trip</span><span class="mock mock-area" aria-hidden="true"><i></i><b>Join</b></span></p>
         </div>
       </div>
@@ -175,14 +175,14 @@
         <div class="eyebrow">The group's own label contract</div>
         <h2>Labels name options. The legend names the question.</h2>
         <pre class="code-card"><code>&lt;fieldset&gt;
-  <mark>&lt;legend&gt;Which days can you meet?&lt;/legend&gt;</mark>
+  <mark>&lt;legend&gt;What are you interested in?&lt;/legend&gt;</mark>
   &lt;p&gt;
-    &lt;input type="checkbox" id="day-monday"
-           name="meeting-day" value="monday"&gt;
-    &lt;label for="day-monday"&gt;Monday&lt;/label&gt;
+    &lt;input type="checkbox" id="interest-drop-off"
+           name="interest" value="drop-off-days"&gt;
+    &lt;label for="interest-drop-off"&gt;Drop-off days&lt;/label&gt;
   &lt;/p&gt;
 &lt;/fieldset&gt;</code></pre>
-        <p class="counter-note">Devon hears "Which days can you meet? Monday", never a bare "Monday".</p>
+        <p class="counter-note">Devon hears "What are you interested in? Drop-off days", never a bare "Drop-off days".</p>
       </div>
     </section>
 
@@ -259,7 +259,7 @@
       </div>
     </section>
 
-    <section class="slide dark visual-slide" data-notes="The honest heart of the section. A form is a mailbox, and this course ships no mail carrier. Something on a server, a program with storage behind it, must receive the pairs and act on them. The form's action attribute names that receiving address, and every form in this chapter omits it, so the pairs travel to the page's own URL where students can read them and nothing more happens.&#10;&#10;The join page will admit this plainly, right on the page, in the officers' own words. Chapter 12 tells the server's half.&#10;&#10;Time: 36-38 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide dark visual-slide" data-notes="The honest heart of the section. A form is a mailbox, and this course ships no mail carrier. Something on a server, a program with storage behind it, must receive the pairs and act on them. The form's action attribute names that receiving address, and every form in this chapter omits it, so the pairs travel to the page's own URL where students can read them and nothing more happens.&#10;&#10;The join page will admit this plainly, right on the page. Chapter 12 tells the server's half.&#10;&#10;Time: 36-38 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
       <div class="brand">CIS133 · The missing carrier</div>
       <div class="content visual-grid reverse">
         <figure>
@@ -309,7 +309,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="The styling takes no new machinery: Chapter 10 declared nth-child the last new selector, and the promise holds. Labels render inline, so one declaration stacks each question on its own line. Controls fill the readable column, and the type is restated on purpose, because form controls ship with a small font of their own and ignore the body's rules until spoken to directly.&#10;&#10;Then the law that will not bend: the focus ring. Chapter 6 wrote it for links and it covers controls unchanged. Never remove the signal without a replacement at least as visible, and measure the replacement: the club's teal ring computes 3.04 to 1 against the sand background, past WCAG's 3 to 1 for non-text marks.&#10;&#10;Time: 43-46 minutes.">
+    <section class="slide" data-notes="The styling takes no new machinery: Chapter 10 declared nth-child the last new selector, and the promise holds. Labels render inline, so one declaration stacks each question on its own line. Controls fill the readable column, and the type is restated on purpose, because form controls ship with a small font of their own and ignore the body's rules until spoken to directly.&#10;&#10;Then the law that will not bend: the focus ring. Chapter 6 wrote it for links and it covers controls unchanged. Never remove the signal without a replacement at least as visible, and measure the replacement: the Copperwind teal ring computes 3.04 to 1 against the sand background, past WCAG's 3 to 1 for non-text marks.&#10;&#10;Time: 43-46 minutes.">
       <div class="brand">CIS133 · Dressing the form</div>
       <div class="content">
         <div class="eyebrow">Owned selectors only</div>
@@ -341,14 +341,14 @@ input:focus, select:focus, textarea:focus {
       </div>
     </section>
 
-    <section class="slide dark visual-slide" data-notes="The chapter's quiet rule governs what should travel at all. Chapter 1 made the promise: every field is a promise to handle someone's information responsibly, so collect only what the page needs and say what you will do with it. The officers honored it from their side: name, email, an explicit and-nothing-else list, and the one-sentence promise the page must display.&#10;&#10;The lab hands students a chance to break the rule, a field a lesser form would add, and Part 3 asks them to defend refusing it.&#10;&#10;Time: 48-50 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide dark visual-slide" data-notes="The chapter's quiet rule governs what should travel at all. Chapter 1 made the promise: every field is a promise to handle someone's information responsibly, so collect only what the page needs and say what you will do with it. Priya Sharma's join-page notes honor it from the program's side: name, email, an explicit and-nothing-else list, and the one-sentence promise the page must display.&#10;&#10;The lab hands students a chance to break the rule, a field a lesser form would add, and Part 3 asks them to defend refusing it.&#10;&#10;Time: 48-50 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
       <div class="brand">CIS133 · The collection rule</div>
       <div class="content visual-grid">
         <div>
           <div class="eyebrow">Chapter 1's promise, paid</div>
           <h2>Every field is a promise. Collect only what the page needs.</h2>
           <ul class="scope-list">
-            <li><strong>The officers:</strong> name, email, "and nothing else"</li>
+            <li><strong>Priya's notes:</strong> name, email, "and nothing else"</li>
             <li><strong>The page:</strong> displays the one-sentence data promise</li>
             <li><strong>The lab:</strong> asks you to refuse a field, out loud</li>
           </ul>
@@ -360,11 +360,11 @@ input:focus, select:focus, textarea:focus {
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Frame Skills Lab 11A. The officers' field list ships in the pack: the two required fields, the optional menu that wants the neutral option, the interest checkboxes, the question box, and the promise sentence, word for word. Build the controls on the contract, add the helping attributes, dress everything from the passing list, then run the demonstration: submit, read the address bar, and log which pairs traveled.&#10;&#10;Part 3 closes with the collection defense: name the field a lesser form would add, and refuse it in writing.&#10;&#10;Time: 50-52 minutes.">
+    <section class="slide dark" data-notes="Frame Skills Lab 11A. Priya's field list ships in the pack: the two required fields, the optional menu that wants the neutral option, the interest checkboxes, the question box, and the promise sentence, word for word. Build the controls on the contract, add the helping attributes, dress everything from the passing list, then run the demonstration: submit, read the address bar, and log which pairs traveled.&#10;&#10;Part 3 closes with the collection defense: name the field a lesser form would add, and refuse it in writing.&#10;&#10;Time: 50-52 minutes.">
       <div class="brand">CIS133 · Skills Lab 11A</div>
       <div class="content">
         <div class="eyebrow">The join page ships</div>
-        <h2>Signups the club can finally keep.</h2>
+        <h2>Signups Copperwind can finally keep.</h2>
         <div class="lab-pipeline">
           <article><span>1</span><strong>Build</strong><p>Every control on the contract, the promise on the page.</p></article>
           <article><span>2</span><strong>Help</strong><p>required, autocomplete, and the placeholder law held.</p></article>
@@ -375,7 +375,7 @@ input:focus, select:focus, textarea:focus {
       </div>
     </section>
 
-    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: the contract with both attributes and both beneficiaries, the control for each shape of answer, the trip from button press to query string, and the collection rule with the officers' own list as evidence.&#10;&#10;Time: 52-54 minutes.">
+    <section class="slide" data-notes="Retrieval map. One student per checkpoint, no notes: the contract with both attributes and both beneficiaries, the control for each shape of answer, the trip from button press to query string, and the collection rule with Priya's own list as evidence.&#10;&#10;Time: 52-54 minutes.">
       <div class="brand">CIS133 · Retrieval map</div>
       <div class="content">
         <div class="eyebrow">Four checkpoints</div>
@@ -389,7 +389,7 @@ input:focus, select:focus, textarea:focus {
       </div>
     </section>
 
-    <section class="slide dark closing-slide" data-notes="Resolve the opening. The scraps are retired: the join page collects the two answers the officers asked for, announces every control, and promises visitors exactly what happens to their data. The pairs still land in the address bar, and the page says so honestly.&#10;&#10;One chapter remains, and it keeps three promises at once: the server's half of this form's story, the site plan's missing front door, and the move to a live https address. The book's last chapter ships the site.&#10;&#10;Time: 54-55 minutes.">
+    <section class="slide dark closing-slide" data-notes="Resolve the opening. The scraps are retired: the join page collects the two answers Priya asked for, announces every control, and promises visitors exactly what happens to their data. The pairs still land in the address bar, and the page says so honestly.&#10;&#10;One chapter remains, and it keeps three promises at once: the server's half of this form's story, the site plan's missing front door, and the move to a live https address. The book's last chapter ships the site.&#10;&#10;Time: 54-55 minutes.">
       <div class="brand">CIS133 · Exit ticket</div>
       <div class="content">
         <div class="eyebrow">Close the loop · one promise left</div>
