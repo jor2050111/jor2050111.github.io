@@ -15,7 +15,7 @@
 <body data-deck-title="CIS133: Scripting Concepts and Publishing" data-course="cis133"
   data-chapter="ch12" data-palette="phoenix-classic">
   <main class="deck" id="presentation" aria-live="polite">
-    <section class="slide dark active title-slide" data-notes="Open with the officers' question. The join page shipped, sign-ups beat the paper scraps, and at Tuesday's meeting they ask the question every stakeholder saves for last: it works on your machine, when can everyone see it? The question is fair. Every page lives at a file:// address, one visitor's private workshop.&#10;&#10;This last chapter pays three debts: the behind-the-scenes piece the join page admits it owes, the site plan's missing front door, and Chapter 2's promise that these files would earn their https.&#10;&#10;Time: 0-3 minutes.">
+    <section class="slide dark active title-slide" data-notes="Open with Priya Sharma's question. The join page shipped, the program inbox beats the paper scraps, and with her thanks and one last content brief she asks the question every stakeholder saves for last: it works on your machine, when can everyone see it? The question is fair. Every page lives at a file:// address, one visitor's private workshop.&#10;&#10;This last chapter pays three debts: the behind-the-scenes piece the join page admits it owes, the site plan's missing front door, and Chapter 2's promise that these files would earn their https.&#10;&#10;Time: 0-3 minutes.">
       <div class="brand">Phoenix College · CIS133</div>
       <div class="content">
         <div class="eyebrow">Chapter 12 · 55 minutes</div>
@@ -83,7 +83,7 @@
       </div>
     </section>
 
-    <section class="slide dark" data-notes="The chapter's centerpiece: the one script the club ships, one line of working code, read left to right. document is the page itself. getElementById finds the one element carrying that id, unique per page, the same rule the label contract leaned on. textContent is that element's own text, ready to be replaced. And new Date().getFullYear() asks the machine running the script for the current year.&#10;&#10;Put together: find the span, write this year into it. Nobody edits the site every January.&#10;&#10;Time: 10-13 minutes.">
+    <section class="slide dark" data-notes="The chapter's centerpiece: the one script the Copperwind site ships, one line of working code, read left to right. document is the page itself. getElementById finds the one element carrying that id, unique per page, the same rule the label contract leaned on. textContent is that element's own text, ready to be replaced. And new Date().getFullYear() asks the machine running the script for the current year.&#10;&#10;Put together: find the span, write this year into it. Nobody edits the site every January.&#10;&#10;Time: 10-13 minutes.">
       <div class="brand">CIS133 · Script anatomy</div>
       <div class="content">
         <div class="eyebrow">One line, read left to right</div>
@@ -104,7 +104,7 @@
         <div class="eyebrow">A contract in two files</div>
         <h2>The span is empty on purpose.</h2>
         <pre class="code-card"><code>&lt;footer&gt;
-  &lt;p&gt;&amp;copy; <mark>&lt;span id="footer-year"&gt;&lt;/span&gt;</mark> PC Computer Club&lt;/p&gt;
+  &lt;p&gt;&amp;copy; <mark>&lt;span id="footer-year"&gt;&lt;/span&gt;</mark> Copperwind Community&lt;/p&gt;
 &lt;/footer&gt;
 &lt;script src=&quot;footer-year.js&quot;&gt;&lt;/script&gt;</code></pre>
         <p class="console-note">The script supplies the digits, so the markup never goes stale.</p>
@@ -161,7 +161,7 @@
       <div class="brand">CIS133 · Retrieval check</div>
       <div class="content">
         <div class="eyebrow navy-text">Find the flaw</div>
-        <h2>Type the pass phrase to read the officers' note. No server involved.</h2>
+        <h2>Type the pass phrase to read the team members' note. No server involved.</h2>
         <div class="prompt">
           <p><strong>Answer two:</strong> where must the correct phrase live for the check to work, and could a visitor find it without guessing?</p>
         </div>
@@ -175,8 +175,8 @@
       <div class="content">
         <div class="eyebrow">Everything traveled together</div>
         <h2>A client-side secret is a drawing of a lock.</h2>
-        <pre class="code-card"><code>if (passPhraseBox.value === <mark>"cactus-club-2026"</mark>) {
-    gateAnswer.textContent = <mark>"Welcome, officer. ..."</mark>;
+        <pre class="code-card"><code>if (passPhraseBox.value === <mark>"copperwind-2026"</mark>) {
+    gateAnswer.textContent = <mark>"Welcome, team member. ..."</mark>;
 } else {
     gateAnswer.textContent = "That is not the pass phrase.";
 }</code></pre>
@@ -216,7 +216,7 @@
       </div>
     </section>
 
-    <section class="slide" data-notes="The server's half is someone's job to provide, and for a site like the club's that someone is a web host: a business or service keeping your folder on an always-on server with a public address. You rent a folder the whole world can read.&#10;&#10;The club's site is a static site: the server hands every visitor the same ready-made files. That is a strength: fast, cheap to host, nothing on the server to break. And Chapter 1's law gains a live site to govern: the join page collects names and emails, so the live site must serve https. Your instructor provides the host, address, and credentials: the moves are the same on every host.&#10;&#10;Time: 31-33 minutes.">
+    <section class="slide" data-notes="The server's half is someone's job to provide, and for a site like Copperwind's that someone is a web host: a business or service keeping your folder on an always-on server with a public address. You rent a folder the whole world can read.&#10;&#10;Copperwind's site is a static site: the server hands every visitor the same ready-made files. That is a strength: fast, cheap to host, nothing on the server to break. And Chapter 1's law gains a live site to govern: the join page collects names and emails, so the live site must serve https. Your instructor provides the host, address, and credentials: the moves are the same on every host.&#10;&#10;Time: 31-33 minutes.">
       <div class="brand">CIS133 · Hosting</div>
       <div class="content">
         <div class="eyebrow">Renting a folder the world can read</div>
@@ -235,15 +235,15 @@
       <div class="content">
         <div class="eyebrow">Chapter 1's appointment, kept</div>
         <h2>Copy the contents. Keep the structure.</h2>
-        <pre class="code-card"><code><span class="comment">Your laptop                     The server's public folder</span>
-site-folder/index.html       →  index.html
-site-folder/club-styles.css  →  club-styles.css
-site-folder/images/logo.png  →  <mark>images/logo.png</mark></code></pre>
+        <pre class="code-card"><code><span class="comment">Your laptop                           The server's public folder</span>
+site-folder/index.html             →  index.html
+site-folder/copperwind-styles.css  →  copperwind-styles.css
+site-folder/images/logo.png        →  <mark>images/logo.png</mark></code></pre>
         <p class="console-note">SFTP or FTPS, never plain FTP: unencrypted credentials are plain http's sin all over again.</p>
       </div>
     </section>
 
-    <section class="slide visual-slide" data-notes="The payoff the course has arranged since Chapter 2. Why does a site built at file:// addresses work untouched at https://? Because no address ever mentioned the machine. Every href and src gives directions from the file's own folder: contact.html next door, images/club-logo.png one folder down. The move keeps the relationships, so the move keeps the links.&#10;&#10;The address that does not survive names a machine: an absolute local path points at a disk, and on every other machine on earth, including the server, that disk does not exist.&#10;&#10;Time: 35-37 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
+    <section class="slide visual-slide" data-notes="The payoff the course has arranged since Chapter 2. Why does a site built at file:// addresses work untouched at https://? Because no address ever mentioned the machine. Every href and src gives directions from the file's own folder: contact.html next door, images/copperwind-logo.png one folder down. The move keeps the relationships, so the move keeps the links.&#10;&#10;The address that does not survive names a machine: an absolute local path points at a disk, and on every other machine on earth, including the server, that disk does not exist.&#10;&#10;Time: 35-37 minutes.&#10;&#10;Visual: AI-generated course illustration created for this deck.">
       <div class="brand">CIS133 · Why the site survives</div>
       <div class="content visual-grid reverse">
         <figure>
@@ -254,8 +254,8 @@ site-folder/images/logo.png  →  <mark>images/logo.png</mark></code></pre>
           <div class="eyebrow">Directions, not places</div>
           <h2>You never wrote an address that named your machine.</h2>
           <ul class="scope-list">
-            <li><strong>Survives:</strong> <code>images/club-logo.png</code> · one folder down</li>
-            <li><strong>Dies:</strong> <code>C:\Users\officer\...</code> · one machine's disk</li>
+            <li><strong>Survives:</strong> <code>images/copperwind-logo.png</code> · one folder down</li>
+            <li><strong>Dies:</strong> <code>C:\Users\team-member\...</code> · one machine's disk</li>
             <li><strong>The rule:</strong> relative links describe relationships</li>
           </ul>
         </div>
@@ -344,7 +344,7 @@ site-folder/images/logo.png  →  <mark>images/logo.png</mark></code></pre>
       </div>
     </section>
 
-    <section class="slide dark" data-notes="Frame Skills Lab 12A. Part 1 builds the front door from the officers' content and grows the nav to its final six links, Home first. Part 2 attaches footer-year.js on its contract and traces one sign-up's full trip on paper. Part 3 runs the pre-flight on all six pages, publishes over the secure method with the instructor's hosting details, and verifies live, validator's address tab included.&#10;&#10;If live hosting is unavailable, the local pre-flight plus packaging stands in, per the lab note. The lab is also the dress rehearsal for any independent project site.&#10;&#10;Time: 48-51 minutes.">
+    <section class="slide dark" data-notes="Frame Skills Lab 12A. Part 1 builds the front door from Priya's content and grows the nav to its final six links, Home first. Part 2 attaches footer-year.js on its contract and traces one sign-up's full trip on paper. Part 3 runs the pre-flight on all six pages, publishes over the secure method with the instructor's hosting details, and verifies live, validator's address tab included.&#10;&#10;If live hosting is unavailable, the local pre-flight plus packaging stands in, per the lab note. The lab is also the dress rehearsal for any independent project site.&#10;&#10;Time: 48-51 minutes.">
       <div class="brand">CIS133 · Skills Lab 12A</div>
       <div class="content">
         <div class="eyebrow">The site ships</div>
@@ -373,7 +373,7 @@ site-folder/images/logo.png  →  <mark>images/logo.png</mark></code></pre>
       </div>
     </section>
 
-    <section class="slide dark closing-slide" data-notes="Resolve the officers' question, and the course. Six pages promised in Chapter 7, six pages live at an address anyone can visit. The answer to when can everyone see it is: everyone, now.&#10;&#10;For the first time, no chapter waits after this one. Students know how to build, validate, and ship accessible sites, and every site they publish from now on carries their name. Close the hour with the book's last line: the course ends where the web begins.&#10;&#10;Time: 53-55 minutes.">
+    <section class="slide dark closing-slide" data-notes="Resolve Priya's question, and the course. Six pages promised in Chapter 7, six pages live at an address anyone can visit. The answer to when can everyone see it is: everyone, now.&#10;&#10;For the first time, no chapter waits after this one. Students know how to build, validate, and ship accessible sites, and every site they publish from now on carries their name. Close the hour with the book's last line: the course ends where the web begins.&#10;&#10;Time: 53-55 minutes.">
       <div class="brand">CIS133 · Exit ticket</div>
       <div class="content">
         <div class="eyebrow">Close the loop · course complete</div>
